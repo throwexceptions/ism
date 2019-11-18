@@ -25,6 +25,7 @@
     export default {
         mounted() {
             var $this = this;
+
             $this.dt = $('#table-shipment').DataTable({
                 processing: true,
                 serverSide: true,
@@ -37,11 +38,11 @@
                 },
                 columns: [
                     {data: 'id', title: 'ID'},
-                    {data: 'batch_no', title: 'Batch #'},
+                    {data: 'batch_no', title: 'Batch No.'},
                     {data: 'customer_id', title: 'Customer'},
                     {data: 'date_delivered', title: 'Date'},
-                    {data: 'dr_no', title: 'DR #'},
-                    {data: 'qty_out', title: 'QNTY-OUT'},
+                    {data: 'dr_no', title: 'DR No.'},
+                    {data: 'qty_out', title: 'Qty Out'},
                     {data: 'status', title: 'Status'},
                     {
                         data: function (value) {

@@ -23,12 +23,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/product/table', 'ProductController@table');
     Route::post('/product/store', 'ProductController@store');
     Route::post('/product/update', 'ProductController@update');
+    Route::post('/product/list', 'ProductController@getList');
 
     Route::post('/receive/table', 'ReceiveController@table');
 
     Route::post('/shipment/table', 'ShipmentController@table');
 
     Route::post('/customer/table', 'CustomerController@table');
+    Route::post('/customer/list', 'CustomerController@getList');
 
     Route::post('/user/table', 'UsersController@table');
     Route::post('/user/store', 'UsersController@store');

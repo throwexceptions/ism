@@ -20,7 +20,7 @@ class BatchTableSeeder extends Seeder
             $batch->customer_id  = \App\Customer::all()->random(5)[0]->id;
             $batch->batch_no     = $faker->randomNumber();
             $batch->container_no = $faker->randomNumber();
-            $batch->date_arrival = $faker->dateTime();
+            $batch->date_arrival = $faker->dateTimeBetween($startDate = '-3 years', $endDate = '-1 years', $timezone = null);
             $batch->qty_in       = $qty_in;
             $batch->overall      = $qty_in;
             $batch->remarks      = $faker->paragraph();

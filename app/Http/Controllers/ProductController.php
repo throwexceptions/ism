@@ -71,4 +71,12 @@ class ProductController extends Controller
 
         return ['success' => true];
     }
+
+    public function getList(Request $request)
+    {
+        return Product::query()
+            ->selectRaw('id,name')
+            ->where('name', 'LIKE', "%{$request->q}%")
+            ->get();
+    }
 }

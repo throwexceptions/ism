@@ -20,7 +20,7 @@ class ShipmentTableSeeder extends Seeder
             $shipment->batch_id       = $rec_id;
             $shipment->customer_id    = \App\Customer::all()->random(5)[0]->id;
             $shipment->transaction_no = $faker->randomNumber();
-            $shipment->date_delivered = $faker->dateTime();
+            $shipment->date_delivered = $faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now', $timezone = null);
             $shipment->dr_no          = $faker->randomNumber();
             $shipment->qty_out        = 100;
             $shipment->remarks        = $faker->paragraph();

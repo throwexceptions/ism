@@ -12,8 +12,9 @@ class ReceiveController extends Controller
     public function table()
     {
         $batch = DB::table('batches')
-            ->selectRaw('batches.*, products.name')
-            ->leftJoin('products', 'products.id', '=', 'batches.product_id');
+            ->selectRaw('batches.*, products.name, customers.name as customer_name')
+            ->leftJoin('products', 'products.id', '=', 'batches.product_id')
+            ->leftJoin('customers', 'customers.id', '=', 'batches.customer_id');
 
         return DataTables::of($batch)->make(true);
     }

@@ -12,4 +12,12 @@ class CustomerController extends Controller
     {
         return DataTables::of(Customer::all())->make(true);
     }
+
+    public function getList(Request $request)
+    {
+        return Customer::query()
+            ->selectRaw('id,name')
+            ->where('name', 'LIKE', "%{$request->q}%")
+            ->get();
+    }
 }
