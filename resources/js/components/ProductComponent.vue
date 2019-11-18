@@ -40,12 +40,8 @@
                     <div class="modal-body">
                         <form id="form-data" enctype="multipart/form-data">
                             <div class="row">
-                                <div v-show="overview.id != '' && overview.path" class="col-md-12">
-                                    <img v-bind:src="'app/public/' + overview.path" style="
-                                        width: 400px;
-                                        border-radius: .2rem;
-                                        box-shadow: 1px 1px 14px -5px #000;
-                                    ">
+                                <div v-show="overview.id != '' && overview.path" class="col-md-12" >
+                                    <img v-bind:src="'app/public/' + overview.path" class="rounded img-thumbnail" width="200" height="200">
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">

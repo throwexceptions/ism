@@ -2160,76 +2160,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log('Component mounted.');
@@ -2354,10 +2284,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
 //
 //
 //
@@ -90246,7 +90172,7 @@ var staticRenderFns = [
         ]
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "row", attrs: { hidden: "" } }, [
         _c("div", { staticClass: "col-xl-3 col-md-6 mb-4" }, [
           _c(
             "div",
@@ -90438,6 +90364,248 @@ var staticRenderFns = [
               ])
             ]
           )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-4" }, [
+          _c("div", { staticClass: "card shadow mb-4" }, [
+            _c("div", { staticClass: "card-header py-3" }, [
+              _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
+                _vm._v("Today's Shipment\n                        "),
+                _c(
+                  "a",
+                  {
+                    staticClass:
+                      "d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm float-right",
+                    attrs: { href: "#" }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fas fa-download fa-sm text-white-50"
+                    }),
+                    _vm._v(" Report\n                        ")
+                  ]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
+              _c("table", { staticClass: "table table-striped" }, [
+                _c("thead", [
+                  _c("th", [_vm._v("column1")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("column2")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("column3")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("column4")])
+                ]),
+                _vm._v(" "),
+                _c("tbody", [
+                  _c("tr", [
+                    _c("td", [_vm._v("sample1")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample2")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample3")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample4")])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _c("td", [_vm._v("sample1")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample2")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample3")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample4")])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _c("td", [_vm._v("sample1")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample2")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample3")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample4")])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _c("td", [_vm._v("sample1")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample2")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample3")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample4")])
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-4" }, [
+          _c("div", { staticClass: "card shadow mb-4" }, [
+            _c("div", { staticClass: "card-header py-3" }, [
+              _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
+                _vm._v("Shipment Returned\n                        "),
+                _c(
+                  "a",
+                  {
+                    staticClass:
+                      "d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm float-right",
+                    attrs: { href: "#" }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fas fa-download fa-sm text-white-50"
+                    }),
+                    _vm._v(" Report\n                        ")
+                  ]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
+              _c("table", { staticClass: "table table-striped" }, [
+                _c("thead", [
+                  _c("th", [_vm._v("column1")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("column2")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("column3")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("column4")])
+                ]),
+                _vm._v(" "),
+                _c("tbody", [
+                  _c("tr", [
+                    _c("td", [_vm._v("sample1")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample2")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample3")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample4")])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _c("td", [_vm._v("sample1")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample2")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample3")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample4")])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _c("td", [_vm._v("sample1")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample2")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample3")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample4")])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _c("td", [_vm._v("sample1")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample2")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample3")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample4")])
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-4" }, [
+          _c("div", { staticClass: "card shadow mb-4" }, [
+            _c("div", { staticClass: "card-header py-3" }, [
+              _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
+                _vm._v("Product Out Of Stock\n                        "),
+                _c(
+                  "a",
+                  {
+                    staticClass:
+                      "d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm float-right",
+                    attrs: { href: "#" }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fas fa-download fa-sm text-white-50"
+                    }),
+                    _vm._v(" Report\n                        ")
+                  ]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
+              _c("table", { staticClass: "table table-striped" }, [
+                _c("thead", [
+                  _c("th", [_vm._v("column1")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("column2")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("column3")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("column4")])
+                ]),
+                _vm._v(" "),
+                _c("tbody", [
+                  _c("tr", [
+                    _c("td", [_vm._v("sample1")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample2")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample3")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample4")])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _c("td", [_vm._v("sample1")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample2")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample3")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample4")])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _c("td", [_vm._v("sample1")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample2")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample3")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample4")])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _c("td", [_vm._v("sample1")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample2")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample3")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("sample4")])
+                  ])
+                ])
+              ])
+            ])
+          ])
         ])
       ])
     ])
@@ -90632,12 +90800,12 @@ var render = function() {
                         },
                         [
                           _c("img", {
-                            staticStyle: {
-                              width: "400px",
-                              "border-radius": ".2rem",
-                              "box-shadow": "1px 1px 14px -5px #000"
-                            },
-                            attrs: { src: "app/public/" + _vm.overview.path }
+                            staticClass: "rounded img-thumbnail",
+                            attrs: {
+                              src: "app/public/" + _vm.overview.path,
+                              width: "200",
+                              height: "200"
+                            }
                           })
                         ]
                       ),
