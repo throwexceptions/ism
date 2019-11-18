@@ -13,6 +13,9 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
+                        <button class="btn btn-success"><i class="fa fa-plus"></i> Add New Customer</button>
+                    </div>
+                    <div class="col-md-12 mt-3">
                         <table id="table-customer" class="table table-hover" width="100%" cellspacing="0"></table>
                     </div>
                 </div>

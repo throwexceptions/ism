@@ -1861,6 +1861,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     var $this = this;
@@ -1912,36 +1915,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2743,6 +2716,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
 //
 //
 //
@@ -90254,6 +90230,13 @@ var staticRenderFns = [
         _c("div", { staticClass: "card-body" }, [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-md-12" }, [
+              _c("button", { staticClass: "btn btn-success" }, [
+                _c("i", { staticClass: "fa fa-plus" }),
+                _vm._v(" Add New Customer")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-12 mt-3" }, [
               _c("table", {
                 staticClass: "table table-hover",
                 attrs: { id: "table-customer", width: "100%", cellspacing: "0" }
@@ -90530,52 +90513,32 @@ var staticRenderFns = [
                 _c("thead", [
                   _c("th", [_vm._v("column1")]),
                   _vm._v(" "),
-                  _c("th", [_vm._v("column2")]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v("column3")]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v("column4")])
+                  _c("th", [_vm._v("column2")])
                 ]),
                 _vm._v(" "),
                 _c("tbody", [
                   _c("tr", [
                     _c("td", [_vm._v("sample1")]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("sample2")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("sample3")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("sample4")])
+                    _c("td", [_vm._v("sample2")])
                   ]),
                   _vm._v(" "),
                   _c("tr", [
                     _c("td", [_vm._v("sample1")]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("sample2")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("sample3")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("sample4")])
+                    _c("td", [_vm._v("sample2")])
                   ]),
                   _vm._v(" "),
                   _c("tr", [
                     _c("td", [_vm._v("sample1")]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("sample2")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("sample3")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("sample4")])
+                    _c("td", [_vm._v("sample2")])
                   ]),
                   _vm._v(" "),
                   _c("tr", [
                     _c("td", [_vm._v("sample1")]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("sample2")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("sample3")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("sample4")])
+                    _c("td", [_vm._v("sample2")])
                   ])
                 ])
               ])
@@ -90610,52 +90573,32 @@ var staticRenderFns = [
                 _c("thead", [
                   _c("th", [_vm._v("column1")]),
                   _vm._v(" "),
-                  _c("th", [_vm._v("column2")]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v("column3")]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v("column4")])
+                  _c("th", [_vm._v("column2")])
                 ]),
                 _vm._v(" "),
                 _c("tbody", [
                   _c("tr", [
                     _c("td", [_vm._v("sample1")]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("sample2")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("sample3")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("sample4")])
+                    _c("td", [_vm._v("sample2")])
                   ]),
                   _vm._v(" "),
                   _c("tr", [
                     _c("td", [_vm._v("sample1")]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("sample2")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("sample3")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("sample4")])
+                    _c("td", [_vm._v("sample2")])
                   ]),
                   _vm._v(" "),
                   _c("tr", [
                     _c("td", [_vm._v("sample1")]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("sample2")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("sample3")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("sample4")])
+                    _c("td", [_vm._v("sample2")])
                   ]),
                   _vm._v(" "),
                   _c("tr", [
                     _c("td", [_vm._v("sample1")]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("sample2")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("sample3")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("sample4")])
+                    _c("td", [_vm._v("sample2")])
                   ])
                 ])
               ])
@@ -90690,52 +90633,32 @@ var staticRenderFns = [
                 _c("thead", [
                   _c("th", [_vm._v("column1")]),
                   _vm._v(" "),
-                  _c("th", [_vm._v("column2")]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v("column3")]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v("column4")])
+                  _c("th", [_vm._v("column2")])
                 ]),
                 _vm._v(" "),
                 _c("tbody", [
                   _c("tr", [
                     _c("td", [_vm._v("sample1")]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("sample2")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("sample3")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("sample4")])
+                    _c("td", [_vm._v("sample2")])
                   ]),
                   _vm._v(" "),
                   _c("tr", [
                     _c("td", [_vm._v("sample1")]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("sample2")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("sample3")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("sample4")])
+                    _c("td", [_vm._v("sample2")])
                   ]),
                   _vm._v(" "),
                   _c("tr", [
                     _c("td", [_vm._v("sample1")]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("sample2")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("sample3")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("sample4")])
+                    _c("td", [_vm._v("sample2")])
                   ]),
                   _vm._v(" "),
                   _c("tr", [
                     _c("td", [_vm._v("sample1")]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("sample2")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("sample3")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("sample4")])
+                    _c("td", [_vm._v("sample2")])
                   ])
                 ])
               ])
@@ -91702,6 +91625,13 @@ var staticRenderFns = [
         _c("div", { staticClass: "card-body" }, [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-md-12" }, [
+              _c("button", { staticClass: "btn btn-success" }, [
+                _c("i", { staticClass: "fa fa-plus" }),
+                _vm._v(" Add New Shipment")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-12 mt-3" }, [
               _c("table", {
                 staticClass: "table table-hover",
                 attrs: { id: "table-shipment", width: "100%", cellspacing: "0" }

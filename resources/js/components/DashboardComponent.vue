@@ -113,36 +113,26 @@
                     <div class="card-body">
                         <table class="table table-striped">
                             <thead>
-                               <th>column1</th>
-                               <th>column2</th>
-                               <th>column3</th>
-                               <th>column4</th>
+                            <th>column1</th>
+                            <th>column2</th>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>sample1</td>
-                                    <td>sample2</td>
-                                    <td>sample3</td>
-                                    <td>sample4</td>
-                                </tr>
-                                <tr>
-                                    <td>sample1</td>
-                                    <td>sample2</td>
-                                    <td>sample3</td>
-                                    <td>sample4</td>
-                                </tr>
-                                <tr>
-                                    <td>sample1</td>
-                                    <td>sample2</td>
-                                    <td>sample3</td>
-                                    <td>sample4</td>
-                                </tr>
-                                <tr>
-                                    <td>sample1</td>
-                                    <td>sample2</td>
-                                    <td>sample3</td>
-                                    <td>sample4</td>
-                                </tr>
+                            <tr>
+                                <td>sample1</td>
+                                <td>sample2</td>
+                            </tr>
+                            <tr>
+                                <td>sample1</td>
+                                <td>sample2</td>
+                            </tr>
+                            <tr>
+                                <td>sample1</td>
+                                <td>sample2</td>
+                            </tr>
+                            <tr>
+                                <td>sample1</td>
+                                <td>sample2</td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -162,33 +152,23 @@
                             <thead>
                             <th>column1</th>
                             <th>column2</th>
-                            <th>column3</th>
-                            <th>column4</th>
                             </thead>
                             <tbody>
                             <tr>
                                 <td>sample1</td>
                                 <td>sample2</td>
-                                <td>sample3</td>
-                                <td>sample4</td>
                             </tr>
                             <tr>
                                 <td>sample1</td>
                                 <td>sample2</td>
-                                <td>sample3</td>
-                                <td>sample4</td>
                             </tr>
                             <tr>
                                 <td>sample1</td>
                                 <td>sample2</td>
-                                <td>sample3</td>
-                                <td>sample4</td>
                             </tr>
                             <tr>
                                 <td>sample1</td>
                                 <td>sample2</td>
-                                <td>sample3</td>
-                                <td>sample4</td>
                             </tr>
                             </tbody>
                         </table>
@@ -209,33 +189,23 @@
                             <thead>
                             <th>column1</th>
                             <th>column2</th>
-                            <th>column3</th>
-                            <th>column4</th>
                             </thead>
                             <tbody>
                             <tr>
                                 <td>sample1</td>
                                 <td>sample2</td>
-                                <td>sample3</td>
-                                <td>sample4</td>
                             </tr>
                             <tr>
                                 <td>sample1</td>
                                 <td>sample2</td>
-                                <td>sample3</td>
-                                <td>sample4</td>
                             </tr>
                             <tr>
                                 <td>sample1</td>
                                 <td>sample2</td>
-                                <td>sample3</td>
-                                <td>sample4</td>
                             </tr>
                             <tr>
                                 <td>sample1</td>
                                 <td>sample2</td>
-                                <td>sample3</td>
-                                <td>sample4</td>
                             </tr>
                             </tbody>
                         </table>
