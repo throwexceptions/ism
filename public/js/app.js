@@ -91042,19 +91042,6 @@ var render = function() {
                 _c(
                   "button",
                   {
-                    staticClass: "btn btn-secondary",
-                    attrs: { type: "button", "data-dismiss": "modal" }
-                  },
-                  [
-                    _vm._v(
-                      "\n                        Close\n                    "
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
                     directives: [
                       {
                         name: "show",
@@ -91114,6 +91101,19 @@ var render = function() {
                   [
                     _vm._v(
                       "\n                        Save As New\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Close\n                    "
                     )
                   ]
                 )
@@ -91558,17 +91558,17 @@ var staticRenderFns = [
     return _c("div", { staticClass: "modal-footer" }, [
       _c(
         "button",
+        { staticClass: "btn btn-primary", attrs: { type: "button" } },
+        [_vm._v("Save changes")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
         {
           staticClass: "btn btn-secondary",
           attrs: { type: "button", "data-dismiss": "modal" }
         },
         [_vm._v("Close")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "button" } },
-        [_vm._v("Save changes")]
       )
     ])
   }
@@ -91855,15 +91855,6 @@ var render = function() {
                 _c(
                   "button",
                   {
-                    staticClass: "btn btn-secondary",
-                    attrs: { type: "button", "data-dismiss": "modal" }
-                  },
-                  [_vm._v("Close")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
                     directives: [
                       {
                         name: "show",
@@ -91931,6 +91922,15 @@ var render = function() {
                     on: { click: _vm.destroy }
                   },
                   [_vm._v("Delete\n                    ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("Close")]
                 )
               ])
             ])

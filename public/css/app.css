@@ -5334,5 +5334,8 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
     display: inline-block;
   }
 }
-
+.bg-login-image {
+  background-position: center;
+  background-size: cover;
+}
 

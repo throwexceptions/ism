@@ -75,9 +75,6 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                            Close
-                        </button>
                         <button v-show="overview.id != ''" @click="update" type="button" class="btn btn-primary" data-dismiss="modal">
                             Update
                         </button>
@@ -87,6 +84,9 @@
                         <button v-show="overview.id == ''" @click="store" type="button" class="btn btn-success"
                                 data-dismiss="modal">
                             Save As New
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Close
                         </button>
                     </div>
                 </div>

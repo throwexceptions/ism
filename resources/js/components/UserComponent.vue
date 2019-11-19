@@ -59,7 +59,6 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button v-show="overview.id == ''" @click="store" type="button" class="btn btn-success"
                                 data-dismiss="modal">Save changes
                         </button>
@@ -72,6 +71,7 @@
                         <button v-show="overview.id != ''" @click="destroy" type="button" class="btn btn-danger"
                                 data-dismiss="modal">Delete
                         </button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
