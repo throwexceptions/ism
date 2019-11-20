@@ -12,9 +12,11 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         \App\Log::truncate();
+        $this->call(UserTableSeeder::class);
         $this->call(SupplierTableSeeder::class);
         $this->call(CustomerTableSeeder::class);
         $this->call(ProductTableSeeder::class);
+        $this->call(ContainerTableSeeder::class);
         $this->call(BatchTableSeeder::class);
         $this->call(ShipmentTableSeeder::class);
     }

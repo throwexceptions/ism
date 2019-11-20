@@ -2456,6 +2456,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2469,6 +2473,7 @@ __webpack_require__.r(__webpack_exports__);
         name: "",
         pack_qty: "",
         size: "",
+        color: "",
         thickness: "",
         type: "",
         updated_at: ""
@@ -2486,6 +2491,7 @@ __webpack_require__.r(__webpack_exports__);
       formData.append('size', $this.overview.size);
       formData.append('thickness', $this.overview.thickness);
       formData.append('type', $this.overview.type);
+      formData.append('color', $this.overview.color);
       formData.append('id', $this.overview.id);
       $.ajax({
         url: '/product/update',
@@ -2501,6 +2507,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     store: function store() {
       var $this = this;
+      $('input[type=file]').val('');
       var formData = new FormData();
       formData.append('file', $('input[type=file]')[0].files[0]);
       formData.append('name', $this.overview.name);
@@ -2562,6 +2569,9 @@ __webpack_require__.r(__webpack_exports__);
         data: 'name',
         title: 'Name'
       }, {
+        data: 'quantity',
+        title: 'Quantity'
+      }, {
         data: 'pack_qty',
         title: 'Pack Quantity'
       }, {
@@ -2570,6 +2580,9 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         data: 'thickness',
         title: 'Thickness'
+      }, {
+        data: 'color',
+        title: 'Color'
       }, {
         data: 'type',
         title: 'Type'
@@ -2721,6 +2734,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2732,11 +2746,8 @@ __webpack_require__.r(__webpack_exports__);
         customer_id: "",
         qty_in: "",
         date_arrival: "",
-        overall: "",
         product_id: "",
         remarks: "",
-        updated_at: "",
-        created_at: "",
         customer_name: ""
       }
     };
@@ -2799,43 +2810,97 @@ __webpack_require__.r(__webpack_exports__);
         title: 'ID'
       }, {
         data: 'batch_no',
+        name: 'batches.batch_no',
         title: 'Batch No.',
         width: '10%'
       }, {
         data: 'container_no',
+        name: 'containers.container_no',
         title: 'Container No.',
         width: '13%'
       }, {
         data: 'name',
+        name: 'products.name',
         title: 'Product Name'
-      }, {
-        data: 'overall',
-        title: 'Remaining Overall',
-        width: '18%'
       }, {
         data: 'qty_in',
         title: 'Qty. In'
       }, {
         data: 'date_arrival',
+        name: 'containers.date_arrival',
         title: 'Date Arrival'
+      }, {
+        data: function data(value) {
+          if (!value.checked_by) {
+            return '<button class="btn btn-sm btn-success btn-checked">Checked Now!</button>';
+          } else {
+            return value.user_name;
+          }
+        },
+        name: 'checked_by',
+        title: 'Checked By',
+        width: '15%'
+      }, {
+        data: function data(value) {
+          if (!value.approved_by) {
+            return '<button class="btn btn-sm btn-success btn-approved">Approve Now!</button>';
+          }
+        },
+        name: 'approved_by',
+        title: 'Approved By',
+        width: '15%'
       }, {
         data: function data(value) {
           return '<span class="badge badge-pill badge-danger d-inline-block text-truncate" style="max-width: 150px;">' + value.remarks + '</span>';
         },
-        name: 'remarks',
+        name: 'containers.remarks',
         title: 'Remarks'
       }],
       drawCallback: function drawCallback() {
-        $('#table-batch tbody').on('click', 'tr', function () {
-          var hold = $this.dt.row(this).data();
-          $this.overview = hold;
-          $('#formModal').modal('show');
-          $('input[type=file]').val('');
-          console.log(hold);
-          var newOption = new Option(hold.name, hold.product_id, true, true);
-          $('.product-select').append(newOption).trigger('change');
-          var newOption = new Option(hold.customer_name, hold.customer_id, true, true);
-          $('.customer-select').append(newOption).trigger('change');
+        // $('#').on('click', 'tr', function () {
+        //     let hold = $this.dt.row(this).data();
+        //     $this.overview = hold;
+        //     $('#formModal').modal('show');
+        //     $('input[type=file]').val('');
+        //     console.log(hold);
+        //     var newOption = new Option(hold.name, hold.product_id, true, true);
+        //     $('.product-select').append(newOption).trigger('change');
+        //     var newOption = new Option(hold.customer_name, hold.customer_id, true, true);
+        //     $('.customer-select').append(newOption).trigger('change');
+        // });
+        $('.btn-checked').on('click', function () {
+          var tr = $(this).parent().parent();
+          var hold = $this.dt.row(tr).data();
+          Swal.fire({
+            title: 'Are you sure?',
+            text: 'Batch No. ' + hold.batch_no + ' will be checked.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, checked it!'
+          }).then(function (result) {
+            if (result.value) {
+              Swal.fire('Approve!', 'Batch has been checked!', 'success');
+            }
+          });
+        });
+        $('.btn-approved').on('click', function () {
+          var tr = $(this).parent().parent();
+          var hold = $this.dt.row(tr).data();
+          Swal.fire({
+            title: 'Are you sure?',
+            text: 'Batch No. ' + hold.batch_no + ' will be approved.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, approve it!'
+          }).then(function (result) {
+            if (result.value) {
+              Swal.fire('Approve!', 'Batch has been approved!', 'success');
+            }
+          });
         });
       }
     });
@@ -94484,6 +94549,41 @@ var render = function() {
                               }
                             }
                           })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { staticClass: "col-form-label" }, [
+                            _vm._v("Color")
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.overview.color,
+                                expression: "overview.color"
+                              }
+                            ],
+                            class: {
+                              "form-control-plaintext": _vm.isView,
+                              "form-control": !_vm.isView
+                            },
+                            attrs: { readonly: _vm.isView, name: "size" },
+                            domProps: { value: _vm.overview.color },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.overview,
+                                  "color",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
                         ])
                       ]),
                       _vm._v(" "),
@@ -94764,7 +94864,7 @@ var render = function() {
               { staticClass: "btn btn-success", on: { click: _vm.addForm } },
               [
                 _c("i", { staticClass: "fa fa-box-open" }),
-                _vm._v(" New Receivables\n                    ")
+                _vm._v(" Create Receivable\n                    ")
               ]
             )
           ]),
@@ -94783,7 +94883,7 @@ var render = function() {
       [
         _c(
           "div",
-          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          { staticClass: "modal-dialog modal-lg", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
               _vm._m(3),

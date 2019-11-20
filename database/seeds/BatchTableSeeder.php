@@ -14,16 +14,14 @@ class BatchTableSeeder extends Seeder
         \App\Batch::truncate();
         for ($x = 0; $x <= 500; $x++) {
             $faker               = Faker\Factory::create();
-            $qty_in              = $faker->randomNumber();
+
             $batch               = new \App\Batch();
+            $batch->container_id = \App\Container::all()->random(2)[0]->id;
             $batch->product_id   = \App\Product::all()->random(5)[0]->id;
-            $batch->customer_id  = \App\Customer::all()->random(5)[0]->id;
             $batch->batch_no     = $faker->randomNumber();
-            $batch->container_no = $faker->randomNumber();
-            $batch->date_arrival = $faker->dateTimeBetween($startDate = '-3 years', $endDate = '-1 years', $timezone = null);
-            $batch->qty_in       = $qty_in;
-            $batch->overall      = $qty_in;
-            $batch->remarks      = $faker->paragraph();
+            $batch->qty_in       = $faker->randomDigit();
+            $batch->checked_by   = '';
+            $batch->approved_by  = '';
             $batch->save();
 
             $log = new \App\Log();

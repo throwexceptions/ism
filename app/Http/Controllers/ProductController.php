@@ -28,6 +28,8 @@ class ProductController extends Controller
         $product->thickness = $request->thickness;
         $product->pack_qty  = $request->pack_qty;
         $product->type      = $request->type;
+        $product->color     = $request->color;
+        $product->quantity  = 0;
         $product->save();
 
         if ($request->file('file')) {
@@ -51,6 +53,7 @@ class ProductController extends Controller
         $product->thickness = $request->thickness;
         $product->pack_qty  = $request->pack_qty;
         $product->type      = $request->type;
+        $product->color     = $request->color;
         $product->save();
 
         if ($request->file('file')) {

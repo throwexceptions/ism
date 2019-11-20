@@ -15,14 +15,12 @@ class CreateBatchesTable extends Migration
     {
         Schema::create('batches', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('container_id');
             $table->integer('product_id');
             $table->string('batch_no', 200)->nullable();
-            $table->string('container_no', 200)->nullable();
-            $table->dateTime('date_arrival')->nullable();
-            $table->integer('customer_id')->nullable();
             $table->integer('qty_in')->nullable();
-            $table->integer('overall')->nullable();
-            $table->text('remarks')->nullable();
+            $table->text('checked_by')->nullable();
+            $table->text('approved_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

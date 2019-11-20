@@ -14,7 +14,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <button class="btn btn-success" @click="addForm">
-                            <i class="fa fa-box-open"></i> New Receivables
+                            <i class="fa fa-box-open"></i> Create Receivable
                         </button>
                     </div>
                     <div class="col-md-12 mt-3">
@@ -26,8 +26,9 @@
                 </div>
             </div>
         </div>
+
         <div id="formModal" class="modal" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Receivables Form</h5>
@@ -101,11 +102,8 @@
                     customer_id: "",
                     qty_in: "",
                     date_arrival: "",
-                    overall: "",
                     product_id: "",
                     remarks: "",
-                    updated_at: "",
-                    created_at: "",
                     customer_name: "",
                 }
             }
@@ -162,29 +160,88 @@
                 },
                 columns: [
                     {data: 'id', title: 'ID'},
-                    {data: 'batch_no', title: 'Batch No.', width: '10%'},
-                    {data: 'container_no', title: 'Container No.', width: '13%'},
-                    {data: 'name', title: 'Product Name'},
-                    {data: 'overall', title: 'Remaining Overall', width: '18%'},
+                    {data: 'batch_no', name: 'batches.batch_no',title: 'Batch No.', width: '10%'},
+                    {data: 'container_no', name: 'containers.container_no', title: 'Container No.', width: '13%'},
+                    {data: 'name', name: 'products.name', title: 'Product Name'},
                     {data: 'qty_in', title: 'Qty. In'},
-                    {data: 'date_arrival', title: 'Date Arrival'},
+                    {data: 'date_arrival', name: 'containers.date_arrival', title: 'Date Arrival'},
+                    {
+                        data: function (value) {
+                            if(!value.checked_by) {
+                                return '<button class="btn btn-sm btn-success btn-checked">Checked Now!</button>';
+                            } else {
+                                return value.user_name
+                            }
+                        }, name:'checked_by', title: 'Checked By', width: '15%',
+                    },
+                    {
+                        data: function (value) {
+                            if(!value.approved_by) {
+                                return '<button class="btn btn-sm btn-success btn-approved">Approve Now!</button>';
+                            }
+                        }, name:'approved_by', title: 'Approved By', width: '15%',
+                    },
                     {
                         data: function (value) {
                             return '<span class="badge badge-pill badge-danger d-inline-block text-truncate" style="max-width: 150px;">' + value.remarks + '</span>';
-                        }, name:'remarks', title: 'Remarks'
+                        }, name: 'containers.remarks', title: 'Remarks'
                     },
                 ],
                 drawCallback: function () {
-                    $('#table-batch tbody').on('click', 'tr', function () {
-                        let hold = $this.dt.row(this).data();
-                        $this.overview = hold;
-                        $('#formModal').modal('show');
-                        $('input[type=file]').val('');
-                        console.log(hold);
-                        var newOption = new Option(hold.name, hold.product_id, true, true);
-                        $('.product-select').append(newOption).trigger('change');
-                        var newOption = new Option(hold.customer_name, hold.customer_id, true, true);
-                        $('.customer-select').append(newOption).trigger('change');
+                    // $('#').on('click', 'tr', function () {
+                    //     let hold = $this.dt.row(this).data();
+                    //     $this.overview = hold;
+                    //     $('#formModal').modal('show');
+                    //     $('input[type=file]').val('');
+                    //     console.log(hold);
+                    //     var newOption = new Option(hold.name, hold.product_id, true, true);
+                    //     $('.product-select').append(newOption).trigger('change');
+                    //     var newOption = new Option(hold.customer_name, hold.customer_id, true, true);
+                    //     $('.customer-select').append(newOption).trigger('change');
+                    // });
+                    $('.btn-checked').on('click', function() {
+                            let tr = $(this).parent().parent();
+                            let hold = $this.dt.row(tr).data();
+                            Swal.fire({
+                            title: 'Are you sure?',
+                            text: 'Batch No. ' + hold.batch_no +' will be checked.',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes, checked it!'
+                            }).then((result) => {
+                                if (result.value) {
+                                    Swal.fire(
+                                    'Approve!',
+                                    'Batch has been checked!',
+                                    'success'
+                                    )
+                                }
+                            });
+                    });
+
+                    $('.btn-approved').on('click', function() {
+                            let tr = $(this).parent().parent();
+                            let hold = $this.dt.row(tr).data();
+                            Swal.fire({
+                            title: 'Are you sure?',
+                            text: 'Batch No. ' + hold.batch_no +' will be approved.',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes, approve it!'
+                            }).then((result) => {
+                                if (result.value) {
+                                    Swal.fire(
+                                    'Approve!',
+                                    'Batch has been approved!',
+                                    'success'
+                                    )
+                                }
+                            });
+
                     });
                 }
             });

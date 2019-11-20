@@ -15,9 +15,11 @@ class ProductTableSeeder extends Seeder
         for ($x = 0; $x <= 2000; $x++) {
             $faker              = Faker\Factory::create();
             $product            = new \App\Product();
-            $product->name      = $faker->bankAccountNumber;
+            $product->name      = $faker->word;
             $product->size      = $faker->randomNumber();
             $product->thickness = $faker->randomFloat();
+            $product->color     = $faker->colorName();
+            $product->quantity   = '0';
             $product->pack_qty  = '45';
             $product->type      = 'Pcs./Box';
             $product->save();

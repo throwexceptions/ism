@@ -56,6 +56,10 @@
                                         <label class="col-form-label">Size</label>
                                         <input v-bind:readonly="isView" v-bind:class="{ 'form-control-plaintext': isView, 'form-control': !isView }" name="size" v-model="overview.size">
                                     </div>
+                                    <div class="form-group">
+                                        <label class="col-form-label">Color</label>
+                                        <input v-bind:readonly="isView" v-bind:class="{ 'form-control-plaintext': isView, 'form-control': !isView }" name="size" v-model="overview.color">
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -106,6 +110,7 @@
                     name: "",
                     pack_qty: "",
                     size: "",
+                    color: "",
                     thickness: "",
                     type: "",
                     updated_at: "",
@@ -125,6 +130,7 @@
                 formData.append('size', $this.overview.size);
                 formData.append('thickness', $this.overview.thickness);
                 formData.append('type', $this.overview.type);
+                formData.append('color', $this.overview.color);
                 formData.append('id', $this.overview.id);
                 $.ajax({
                     url: '/product/update',
@@ -140,6 +146,7 @@
             },
             store() {
                 var $this = this;
+                $('input[type=file]').val('');
                 var formData = new FormData();
                 formData.append('file', $('input[type=file]')[0].files[0]);
                 formData.append('name', $this.overview.name);
@@ -204,9 +211,11 @@
                     },
                     {data: 'id', title: 'ID'},
                     {data: 'name', title: 'Name'},
+                    {data: 'quantity', title: 'Quantity'},
                     {data: 'pack_qty', title: 'Pack Quantity'},
                     {data: 'size', title: 'Size'},
                     {data: 'thickness', title: 'Thickness'},
+                    {data: 'color', title: 'Color'},
                     {data: 'type', title: 'Type'},
                     {data: 'created_at', title: 'Date Inserted'},
                 ],
