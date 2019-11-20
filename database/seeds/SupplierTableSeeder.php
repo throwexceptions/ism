@@ -12,7 +12,7 @@ class SupplierTableSeeder extends Seeder
     public function run()
     {
         \App\Supplier::truncate();
-        for ($x = 0; $x <= 10000; $x++) {
+        for ($x = 0; $x <= 1000; $x++) {
             $faker             = Faker\Factory::create();
             $supplier          = new \App\Supplier();
             $supplier->name    = $faker->company;

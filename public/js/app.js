@@ -1864,7 +1864,81 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      isView: false,
+      overview: {
+        id: "",
+        address: "",
+        contact_no: "",
+        email: "",
+        name: ""
+      }
+    };
+  },
+  methods: {
+    edit: function edit() {},
+    save: function save() {},
+    editDialog: function editDialog() {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(function (result) {
+        if (result.value) {
+          Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+        }
+      });
+    }
+  },
   mounted: function mounted() {
     var $this = this;
     $this.dt = $('#table-customer').DataTable({
@@ -1878,6 +1952,13 @@ __webpack_require__.r(__webpack_exports__);
         method: "POST"
       },
       columns: [{
+        title: 'Actions',
+        name: 'id',
+        width: '12%',
+        data: function data(value) {
+          return "<div class=\"btn-group btn-group-sm\" role=\"group\">\n" + "  <button type=\"button\" class=\"btn btn-info btn-view\"><i class='fa fa-eye'></i></button>\n" + "  <button type=\"button\" class=\"btn btn-warning btn-edit\"><i class='fa fa-edit'></i></button>\n" + "  <button type=\"button\" class=\"btn btn-danger btn-destroy\"><i class='fa fa-trash-alt'></i></button>\n" + "</div>";
+        }
+      }, {
         data: 'id',
         title: 'ID'
       }, {
@@ -1891,12 +1972,36 @@ __webpack_require__.r(__webpack_exports__);
         title: 'Contact No.'
       }],
       drawCallback: function drawCallback() {
-        $('#table-customer tbody').on('click', 'tr', function () {
-          var hold = $this.dt.row(this).data();
-          $this.overview = hold;
+        $('.btn-add').on('click', function () {
+          $this.overview = {
+            id: "",
+            name: "",
+            address: "",
+            email: "",
+            phone: ""
+          };
+          $this.isView = false;
           $('#formModal').modal('show');
-          $('input[type=file]').val('');
-          console.log(hold);
+        });
+        $('.btn-view').on('click', function () {
+          var tr = $(this).parent().parent().parent();
+          var hold = $this.dt.row(tr).data();
+          $this.overview = hold;
+          $this.isView = true;
+          $('#formModal').modal('show');
+        });
+        $('.btn-edit').on('click', function () {
+          var tr = $(this).parent().parent().parent();
+          var hold = $this.dt.row(tr).data();
+          $this.overview = hold;
+          $this.isView = false;
+          $('#formModal').modal('show');
+        });
+        $('.btn-destroy').on('click', function () {
+          var tr = $(this).parent().parent().parent();
+          var hold = $this.dt.row(tr).data();
+          $this.overview = hold;
+          $this.editDialog();
         });
       }
     });
@@ -2351,12 +2456,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      isView: false,
       dt: null,
       root: this.$root.$options,
       overview: {
@@ -2373,21 +2476,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    addForm: function addForm() {
-      $('input[type=file]').val('');
-      $('#formModal').modal('show');
-      this.overview = {
-        path: "",
-        deleted_at: null,
-        id: "",
-        name: "",
-        pack_qty: "",
-        size: "",
-        thickness: "",
-        type: "",
-        updated_at: ""
-      };
-    },
     destroy: function destroy() {},
     update: function update() {
       var $this = this;
@@ -2431,6 +2519,21 @@ __webpack_require__.r(__webpack_exports__);
           $this.dt.draw();
         }
       });
+    },
+    destroyDialog: function destroyDialog() {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(function (result) {
+        if (result.value) {
+          Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+        }
+      });
     }
   },
   mounted: function mounted() {
@@ -2446,6 +2549,13 @@ __webpack_require__.r(__webpack_exports__);
         method: "POST"
       },
       columns: [{
+        title: 'Actions',
+        name: 'id',
+        width: '12%',
+        data: function data(value) {
+          return "<div class=\"btn-group btn-group-sm\" role=\"group\">\n" + "  <button type=\"button\" class=\"btn btn-info btn-view\"><i class='fa fa-eye'></i></button>\n" + "  <button type=\"button\" class=\"btn btn-warning btn-edit\"><i class='fa fa-edit'></i></button>\n" + "  <button type=\"button\" class=\"btn btn-danger btn-destroy\"><i class='fa fa-trash-alt'></i></button>\n" + "</div>";
+        }
+      }, {
         data: 'id',
         title: 'ID'
       }, {
@@ -2468,12 +2578,40 @@ __webpack_require__.r(__webpack_exports__);
         title: 'Date Inserted'
       }],
       drawCallback: function drawCallback() {
-        $('#table-products tbody').on('click', 'tr', function () {
-          var hold = $this.dt.row(this).data();
-          $this.overview = hold;
+        $('.btn-add').on('click', function () {
+          $this.overview = {
+            path: "",
+            deleted_at: null,
+            id: "",
+            name: "",
+            pack_qty: "",
+            size: "",
+            thickness: "",
+            type: "",
+            updated_at: ""
+          };
+          $this.isView = false;
           $('#formModal').modal('show');
-          $('input[type=file]').val('');
-          console.log(hold);
+        });
+        $('.btn-view').on('click', function () {
+          var tr = $(this).parent().parent().parent();
+          var hold = $this.dt.row(tr).data();
+          $this.overview = hold;
+          $this.isView = true;
+          $('#formModal').modal('show');
+        });
+        $('.btn-edit').on('click', function () {
+          var tr = $(this).parent().parent().parent();
+          var hold = $this.dt.row(tr).data();
+          $this.overview = hold;
+          $this.isView = false;
+          $('#formModal').modal('show');
+        });
+        $('.btn-destroy').on('click', function () {
+          var tr = $(this).parent().parent().parent();
+          var hold = $this.dt.row(tr).data();
+          $this.overview = hold;
+          $this.destroyDialog();
         });
       }
     });
@@ -2893,7 +3031,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     edit: function edit() {},
     save: function save() {},
-    editDialog: function editDialog() {
+    destroyDialog: function destroyDialog() {
       Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -2925,7 +3063,7 @@ __webpack_require__.r(__webpack_exports__);
       columns: [{
         title: 'Actions',
         name: 'id',
-        width: '10%',
+        width: '12%',
         data: function data(value) {
           return "<div class=\"btn-group btn-group-sm\" role=\"group\">\n" + "  <button type=\"button\" class=\"btn btn-info btn-view\"><i class='fa fa-eye'></i></button>\n" + "  <button type=\"button\" class=\"btn btn-warning btn-edit\"><i class='fa fa-edit'></i></button>\n" + "  <button type=\"button\" class=\"btn btn-danger btn-destroy\"><i class='fa fa-trash-alt'></i></button>\n" + "</div>";
         }
@@ -2972,7 +3110,7 @@ __webpack_require__.r(__webpack_exports__);
           var tr = $(this).parent().parent().parent();
           var hold = $this.dt.row(tr).data();
           $this.overview = hold;
-          $this.editDialog();
+          $this.destroyDialog();
         });
       }
     });
@@ -93372,52 +93510,272 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "container-fluid" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _vm._m(1),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal",
+        attrs: { id: "formModal", tabindex: "-1", role: "dialog" }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog modal-lg", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "control-form-label" }, [
+                        _vm._v("Name")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.overview.name,
+                            expression: "overview.name"
+                          }
+                        ],
+                        class: {
+                          "form-control-plaintext": _vm.isView,
+                          "form-control": !_vm.isView
+                        },
+                        attrs: { readonly: _vm.isView },
+                        domProps: { value: _vm.overview.name },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.overview, "name", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "control-form-label" }, [
+                        _vm._v("Email")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.overview.email,
+                            expression: "overview.email"
+                          }
+                        ],
+                        class: {
+                          "form-control-plaintext": _vm.isView,
+                          "form-control": !_vm.isView
+                        },
+                        attrs: { readonly: _vm.isView },
+                        domProps: { value: _vm.overview.email },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.overview, "email", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "control-form-label" }, [
+                        _vm._v("Phone")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.overview.contact_no,
+                            expression: "overview.contact_no"
+                          }
+                        ],
+                        class: {
+                          "form-control-plaintext": _vm.isView,
+                          "form-control": !_vm.isView
+                        },
+                        attrs: { readonly: _vm.isView },
+                        domProps: { value: _vm.overview.contact_no },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.overview,
+                              "contact_no",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "control-form-label" }, [
+                        _vm._v("Address")
+                      ]),
+                      _vm._v(" "),
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.overview.address,
+                            expression: "overview.address"
+                          }
+                        ],
+                        class: {
+                          "form-control-plaintext": _vm.isView,
+                          "form-control": !_vm.isView
+                        },
+                        attrs: { readonly: _vm.isView, rows: "5" },
+                        domProps: { value: _vm.overview.address },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.overview,
+                              "address",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _vm.isView == false && _vm.overview.id != ""
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button" },
+                        on: { click: _vm.edit }
+                      },
+                      [_vm._v("Save Changes")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.isView == false && _vm.overview.id == ""
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success",
+                        attrs: { type: "button" },
+                        on: { click: _vm.save }
+                      },
+                      [_vm._v("Add New")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("Close")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container-fluid" }, [
-      _c(
-        "div",
-        {
-          staticClass:
-            "d-sm-flex align-items-center justify-content-between mb-4"
-        },
-        [
-          _c("h1", { staticClass: "h3 mb-0 text-gray-800" }, [
-            _vm._v("Customer Management")
-          ])
-        ]
-      ),
+    return _c(
+      "div",
+      {
+        staticClass: "d-sm-flex align-items-center justify-content-between mb-4"
+      },
+      [
+        _c("h1", { staticClass: "h3 mb-0 text-gray-800" }, [
+          _vm._v("Customer Management")
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card shadow mb-4" }, [
+      _c("div", { staticClass: "card-header py-3" }, [
+        _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
+          _vm._v("Customer Overview")
+        ])
+      ]),
       _vm._v(" "),
-      _c("div", { staticClass: "card shadow mb-4" }, [
-        _c("div", { staticClass: "card-header py-3" }, [
-          _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
-            _vm._v("Customer Overview")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-12" }, [
-              _c("button", { staticClass: "btn btn-success" }, [
-                _c("i", { staticClass: "fa fa-plus" }),
-                _vm._v(" Add New Customer")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-12 mt-3" }, [
-              _c("table", {
-                staticClass: "table table-hover",
-                attrs: { id: "table-customer", width: "100%", cellspacing: "0" }
-              })
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("button", { staticClass: "btn btn-success btn-add" }, [
+              _c("i", { staticClass: "fa fa-plus" }),
+              _vm._v(" Add New Customer")
             ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-12 mt-3" }, [
+            _c("table", {
+              staticClass: "table table-hover",
+              attrs: { id: "table-customer", width: "100%", cellspacing: "0" }
+            })
           ])
         ])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h5", { staticClass: "modal-title" }, [_vm._v("Customer Detail")]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
     ])
   }
 ]
@@ -93976,26 +94334,7 @@ var render = function() {
   return _c("div", { staticClass: "container-fluid" }, [
     _vm._m(0),
     _vm._v(" "),
-    _c("div", { staticClass: "card shadow mb-4" }, [
-      _vm._m(1),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-12" }, [
-            _c(
-              "button",
-              { staticClass: "btn btn-success", on: { click: _vm.addForm } },
-              [
-                _c("i", { staticClass: "fa fa-plus" }),
-                _vm._v(" Add New Product\n                    ")
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _vm._m(2)
-        ])
-      ])
-    ]),
+    _vm._m(1),
     _vm._v(" "),
     _c(
       "div",
@@ -94006,7 +94345,7 @@ var render = function() {
           { staticClass: "modal-dialog modal-lg", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(3),
+              _vm._m(2),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c(
@@ -94056,8 +94395,11 @@ var render = function() {
                                 expression: "overview.name"
                               }
                             ],
-                            staticClass: "form-control",
-                            attrs: { name: "name" },
+                            class: {
+                              "form-control-plaintext": _vm.isView,
+                              "form-control": !_vm.isView
+                            },
+                            attrs: { readonly: _vm.isView, name: "name" },
                             domProps: { value: _vm.overview.name },
                             on: {
                               input: function($event) {
@@ -94088,8 +94430,11 @@ var render = function() {
                                 expression: "overview.pack_qty"
                               }
                             ],
-                            staticClass: "form-control",
-                            attrs: { name: "pack_qty" },
+                            class: {
+                              "form-control-plaintext": _vm.isView,
+                              "form-control": !_vm.isView
+                            },
+                            attrs: { readonly: _vm.isView, name: "pack_qty" },
                             domProps: { value: _vm.overview.pack_qty },
                             on: {
                               input: function($event) {
@@ -94120,8 +94465,11 @@ var render = function() {
                                 expression: "overview.size"
                               }
                             ],
-                            staticClass: "form-control",
-                            attrs: { name: "size" },
+                            class: {
+                              "form-control-plaintext": _vm.isView,
+                              "form-control": !_vm.isView
+                            },
+                            attrs: { readonly: _vm.isView, name: "size" },
                             domProps: { value: _vm.overview.size },
                             on: {
                               input: function($event) {
@@ -94154,8 +94502,11 @@ var render = function() {
                                 expression: "overview.thickness"
                               }
                             ],
-                            staticClass: "form-control",
-                            attrs: { name: "size" },
+                            class: {
+                              "form-control-plaintext": _vm.isView,
+                              "form-control": !_vm.isView
+                            },
+                            attrs: { readonly: _vm.isView, name: "size" },
                             domProps: { value: _vm.overview.thickness },
                             on: {
                               input: function($event) {
@@ -94186,8 +94537,11 @@ var render = function() {
                                 expression: "overview.type"
                               }
                             ],
-                            staticClass: "form-control",
-                            attrs: { name: "type" },
+                            class: {
+                              "form-control-plaintext": _vm.isView,
+                              "form-control": !_vm.isView
+                            },
+                            attrs: { readonly: _vm.isView, name: "type" },
                             domProps: { value: _vm.overview.type },
                             on: {
                               input: function($event) {
@@ -94204,7 +94558,35 @@ var render = function() {
                           })
                         ]),
                         _vm._v(" "),
-                        _vm._m(4)
+                        _c(
+                          "div",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: !_vm.isView,
+                                expression: "!isView"
+                              }
+                            ],
+                            staticClass: "form-group"
+                          },
+                          [
+                            _c(
+                              "label",
+                              { attrs: { for: "exampleFormControlFile1" } },
+                              [_vm._v("Example file input")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              staticClass: "form-control-file",
+                              attrs: {
+                                type: "file",
+                                id: "exampleFormControlFile1"
+                              }
+                            })
+                          ]
+                        )
                       ])
                     ])
                   ]
@@ -94219,8 +94601,8 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.overview.id != "",
-                        expression: "overview.id != ''"
+                        value: _vm.isView == false && _vm.overview.id != "",
+                        expression: "isView == false && overview.id != ''"
                       }
                     ],
                     staticClass: "btn btn-primary",
@@ -94241,30 +94623,8 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.overview.id != "",
-                        expression: "overview.id != ''"
-                      }
-                    ],
-                    staticClass: "btn btn-danger",
-                    attrs: { type: "button", "data-dismiss": "modal" },
-                    on: { click: _vm.destroy }
-                  },
-                  [
-                    _vm._v(
-                      "\n                        Delete\n                    "
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.overview.id == "",
-                        expression: "overview.id == ''"
+                        value: _vm.isView == false && _vm.overview.id == "",
+                        expression: "isView == false && overview.id == ''"
                       }
                     ],
                     staticClass: "btn btn-success",
@@ -94319,22 +94679,31 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header py-3" }, [
-      _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
-        _vm._v("Product Overview")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12 mt-2" }, [
-      _c("div", { staticClass: "table-responsive" }, [
-        _c("table", {
-          staticClass: "table table-hover",
-          attrs: { id: "table-products", width: "100%", cellspacing: "0" }
-        })
+    return _c("div", { staticClass: "card shadow mb-4" }, [
+      _c("div", { staticClass: "card-header py-3" }, [
+        _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
+          _vm._v("Product Overview")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("button", { staticClass: "btn btn-success btn-add" }, [
+              _c("i", { staticClass: "fa fa-plus" }),
+              _vm._v(" Add New Product\n                    ")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-12 mt-3" }, [
+            _c("div", { staticClass: "table-responsive" }, [
+              _c("table", {
+                staticClass: "table table-striped",
+                attrs: { id: "table-products", width: "100%", cellspacing: "0" }
+              })
+            ])
+          ])
+        ])
       ])
     ])
   },
@@ -94357,21 +94726,6 @@ var staticRenderFns = [
         },
         [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
       )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "exampleFormControlFile1" } }, [
-        _vm._v("Example file input")
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control-file",
-        attrs: { type: "file", id: "exampleFormControlFile1" }
-      })
     ])
   }
 ]

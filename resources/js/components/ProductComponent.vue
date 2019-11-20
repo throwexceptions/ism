@@ -14,13 +14,13 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <button class="btn btn-success" @click="addForm">
+                        <button class="btn btn-success btn-add">
                             <i class="fa fa-plus"></i> Add New Product
                         </button>
                     </div>
-                    <div class="col-md-12 mt-2">
+                    <div class="col-md-12 mt-3">
                         <div class="table-responsive">
-                            <table id="table-products" class="table table-hover" width="100%"
+                            <table id="table-products" class="table table-striped" width="100%"
                                    cellspacing="0"></table>
                         </div>
                     </div>
@@ -46,27 +46,27 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Name</label>
-                                        <input class="form-control" name="name" v-model="overview.name">
+                                        <input v-bind:readonly="isView" v-bind:class="{ 'form-control-plaintext': isView, 'form-control': !isView }" name="name" v-model="overview.name">
                                     </div>
                                     <div class="form-group">
                                         <label class="col-form-label">Pack Quantity</label>
-                                        <input class="form-control" name="pack_qty" v-model="overview.pack_qty">
+                                        <input v-bind:readonly="isView" v-bind:class="{ 'form-control-plaintext': isView, 'form-control': !isView }" name="pack_qty" v-model="overview.pack_qty">
                                     </div>
                                     <div class="form-group">
                                         <label class="col-form-label">Size</label>
-                                        <input class="form-control" name="size" v-model="overview.size">
+                                        <input v-bind:readonly="isView" v-bind:class="{ 'form-control-plaintext': isView, 'form-control': !isView }" name="size" v-model="overview.size">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Thickness</label>
-                                        <input class="form-control" name="size" v-model="overview.thickness">
+                                        <input v-bind:readonly="isView" v-bind:class="{ 'form-control-plaintext': isView, 'form-control': !isView }" name="size" v-model="overview.thickness">
                                     </div>
                                     <div class="form-group">
                                         <label class="col-form-label">Type</label>
-                                        <input class="form-control" name="type" v-model="overview.type">
+                                        <input v-bind:readonly="isView" v-bind:class="{ 'form-control-plaintext': isView, 'form-control': !isView }" name="type" v-model="overview.type">
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" v-show="!isView">
                                         <label for="exampleFormControlFile1">Example file input</label>
                                         <input type="file" class="form-control-file" id="exampleFormControlFile1">
                                     </div>
@@ -75,13 +75,10 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button v-show="overview.id != ''" @click="update" type="button" class="btn btn-primary" data-dismiss="modal">
+                        <button v-show="isView == false && overview.id != ''" @click="update" type="button" class="btn btn-primary" data-dismiss="modal">
                             Update
                         </button>
-                        <button v-show="overview.id != ''" @click="destroy" type="button" class="btn btn-danger" data-dismiss="modal">
-                            Delete
-                        </button>
-                        <button v-show="overview.id == ''" @click="store" type="button" class="btn btn-success"
+                        <button v-show="isView == false && overview.id == ''" @click="store" type="button" class="btn btn-success"
                                 data-dismiss="modal">
                             Save As New
                         </button>
@@ -99,6 +96,7 @@
     export default {
         data() {
             return {
+                isView: false,
                 dt: null,
                 root: this.$root.$options,
                 overview: {
@@ -115,21 +113,6 @@
             };
         },
         methods: {
-            addForm() {
-                $('input[type=file]').val('');
-                $('#formModal').modal('show');
-                this.overview = {
-                    path: "",
-                    deleted_at: null,
-                    id: "",
-                    name: "",
-                    pack_qty: "",
-                    size: "",
-                    thickness: "",
-                    type: "",
-                    updated_at: "",
-                }
-            },
             destroy() {
 
             },
@@ -175,6 +158,25 @@
                         $this.dt.draw();
                     }
                 });
+            },
+            destroyDialog() {
+                Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+                        Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                        )
+                    }
+                });
             }
         },
         mounted() {
@@ -190,6 +192,16 @@
                     method: "POST",
                 },
                 columns: [
+                    {
+                        title: 'Actions', name: 'id', width: '12%',
+                        data: function (value) {
+                            return "<div class=\"btn-group btn-group-sm\" role=\"group\">\n" +
+                                "  <button type=\"button\" class=\"btn btn-info btn-view\"><i class='fa fa-eye'></i></button>\n" +
+                                "  <button type=\"button\" class=\"btn btn-warning btn-edit\"><i class='fa fa-edit'></i></button>\n" +
+                                "  <button type=\"button\" class=\"btn btn-danger btn-destroy\"><i class='fa fa-trash-alt'></i></button>\n" +
+                                "</div>";
+                        }
+                    },
                     {data: 'id', title: 'ID'},
                     {data: 'name', title: 'Name'},
                     {data: 'pack_qty', title: 'Pack Quantity'},
@@ -199,12 +211,44 @@
                     {data: 'created_at', title: 'Date Inserted'},
                 ],
                 drawCallback: function () {
-                    $('#table-products tbody').on('click', 'tr', function () {
-                        let hold = $this.dt.row(this).data();
-                        $this.overview = hold;
+                    
+                    $('.btn-add').on('click', function () {
+                        $this.overview = {
+                            path: "",
+                            deleted_at: null,
+                            id: "",
+                            name: "",
+                            pack_qty: "",
+                            size: "",
+                            thickness: "",
+                            type: "",
+                            updated_at: "",
+                        };
+                        $this.isView = false;
                         $('#formModal').modal('show');
-                        $('input[type=file]').val('');
-                        console.log(hold);
+                    });
+
+                    $('.btn-view').on('click', function () {
+                        let tr = $(this).parent().parent().parent()
+                        let hold = $this.dt.row(tr).data();
+                        $this.overview = hold;
+                        $this.isView = true;
+                        $('#formModal').modal('show');
+                    });
+
+                    $('.btn-edit').on('click', function () {
+                        let tr = $(this).parent().parent().parent()
+                        let hold = $this.dt.row(tr).data();
+                        $this.overview = hold;
+                        $this.isView = false;
+                        $('#formModal').modal('show');
+                    });
+
+                    $('.btn-destroy').on('click', function () {
+                        let tr = $(this).parent().parent().parent()
+                        let hold = $this.dt.row(tr).data();
+                        $this.overview = hold;
+                        $this.destroyDialog();
                     });
                 }
             });

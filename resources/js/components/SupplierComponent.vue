@@ -88,7 +88,7 @@
             save() {
 
             },
-            editDialog() {
+            destroyDialog() {
                 Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
@@ -123,7 +123,7 @@
                 },
                 columns: [
                     {
-                        title: 'Actions', name: 'id', width: '10%',
+                        title: 'Actions', name: 'id', width: '12%',
                         data: function (value) {
                             return "<div class=\"btn-group btn-group-sm\" role=\"group\">\n" +
                                 "  <button type=\"button\" class=\"btn btn-info btn-view\"><i class='fa fa-eye'></i></button>\n" +
@@ -170,7 +170,7 @@
                         let tr = $(this).parent().parent().parent()
                         let hold = $this.dt.row(tr).data();
                         $this.overview = hold;
-                        $this.editDialog();
+                        $this.destroyDialog();
                     });
                 }
             });
