@@ -20,41 +20,48 @@
 
     <!-- Nav Item - Batch  -->
     <li class="nav-item">
-        <a class="nav-link" href="JavaScript:void(0);" v-on:click="panel=5">
+        <a class="nav-link" href="JavaScript:void(0);" v-on:click="panel=2">
+            <i class="fas fa-fw fa-balance-scale"></i>
+            <span>Supplier</span></a>
+    </li>
+
+    <!-- Nav Item - Batch  -->
+    <li class="nav-item">
+        <a class="nav-link" href="JavaScript:void(0);" v-on:click="panel=3">
             <i class="fas fa-fw fa-building"></i>
             <span>Costumers</span></a>
     </li>
 
     <!-- Nav Item - Products -->
     <li class="nav-item">
-        <a class="nav-link" href="JavaScript:void(0);" v-on:click="panel=2">
+        <a class="nav-link" href="JavaScript:void(0);" v-on:click="panel=4">
             <i class="fas fa-fw fa-project-diagram"></i>
             <span>Products</span></a>
     </li>
     <!-- Nav Item - Batch  -->
     <li class="nav-item">
-        <a class="nav-link" href="JavaScript:void(0);" v-on:click="panel=3">
+        <a class="nav-link" href="JavaScript:void(0);" v-on:click="panel=5">
             <i class="fas fa-fw fa-boxes"></i>
             <span>Receiving</span></a>
     </li>
 
     <!-- Nav Item - Batch  -->
     <li class="nav-item">
-        <a class="nav-link" href="JavaScript:void(0);" v-on:click="panel=4">
+        <a class="nav-link" href="JavaScript:void(0);" v-on:click="panel=6">
             <i class="fas fa-fw fa-truck"></i>
             <span>Shipment</span></a>
     </li>
 
     <!-- Nav Item - Batch  -->
     <li class="nav-item">
-        <a class="nav-link" href="JavaScript:void(0);" v-on:click="panel=6">
+        <a class="nav-link" href="JavaScript:void(0);" v-on:click="panel=7">
             <i class="fas fa-fw fa-users"></i>
             <span>Users</span></a>
     </li>
 
     <!-- Nav Item - Batch  -->
     <li class="nav-item">
-        <a class="nav-link" href="JavaScript:void(0);" v-on:click="panel=7">
+        <a class="nav-link" href="JavaScript:void(0);" v-on:click="panel=8">
             <i class="fas fa-fw fa-history"></i>
             <span>Logs</span></a>
     </li>
