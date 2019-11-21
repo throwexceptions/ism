@@ -16,7 +16,7 @@ class BatchTableSeeder extends Seeder
             $faker               = Faker\Factory::create();
 
             $batch               = new \App\Batch();
-            $batch->container_id = \App\Container::all()->random(2)[0]->id;
+            $batch->receivable_id = \App\Receivable::all()->random(2)[0]->id;
             $batch->product_id   = \App\Product::all()->random(5)[0]->id;
             $batch->batch_no     = $faker->randomNumber();
             $batch->qty_in       = $faker->randomDigit();

@@ -25,11 +25,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/product/update', 'ProductController@update');
     Route::post('/product/list', 'ProductController@getList');
 
-    Route::post('/receive/table', 'ReceiveController@table');
+    Route::post('/receivable/table', 'ReceivableController@table');
+    Route::post('/receivable/checked', 'ReceivableController@checked');
+    Route::post('/receivable/approved', 'ReceivableController@approved');
+    Route::post('/receivable/batches', 'ReceivableController@batches');
 
     Route::post('/shipment/table', 'ShipmentController@table');
 
     Route::post('/supplier/table', 'SupplierController@table');
+    Route::post('/supplier/list', 'SupplierController@getList');
 
     Route::post('/customer/table', 'CustomerController@table');
     Route::post('/customer/list', 'CustomerController@getList');

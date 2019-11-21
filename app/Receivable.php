@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Container extends Model
+class Receivable extends Model
 {
     //
 }

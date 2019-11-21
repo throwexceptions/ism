@@ -12,4 +12,12 @@ class SupplierController extends Controller
     {
         return DataTables::of(Supplier::all())->make(true);
     }
+
+    public function getList(Request $request)
+    {
+        return Supplier::query()
+            ->selectRaw('id,name')
+            ->where('name', 'LIKE', "%{$request->q}%")
+            ->get();
+    }
 }

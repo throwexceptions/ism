@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('size', 200)->nullable();
             $table->string('thickness', 200)->nullable();
             $table->string('color', 200)->nullable();
+            $table->float('weight')->nullable();
             $table->string('pack_qty', 200)->nullable();
             $table->integer('quantity')->nullable();
             $table->string('type', 200)->nullable();

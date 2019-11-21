@@ -11,7 +11,6 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        \App\User::truncate();
         for ($x = 0; $x <= 200; $x++) {
             $faker = \Faker\Factory::create();
             $email = $faker->unique()->safeEmail;

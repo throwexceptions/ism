@@ -6852,3 +6852,28 @@ body.swal2-toast-column .swal2-toast .swal2-validation-message {
   border-bottom: 1px solid #00000040 !important;
 }
 
+.select2-container--default .select2-selection--single {
+  border: 1px solid #d1d3e2 !important;
+  height: 37px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  margin-top: 4px;
+  color: #444c;
+  line-height: 28px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  margin-top: 4px;
+}
+
+.btn-purple {
+  color: #fff;
+  background-color: #ae27d0;
+  border-color: #ae27d0;
+}
+
+.btn-purple:hover {
+  color: #fff;
+}
+

@@ -29,6 +29,7 @@ class ProductController extends Controller
         $product->pack_qty  = $request->pack_qty;
         $product->type      = $request->type;
         $product->color     = $request->color;
+        $product->weight     = $request->weight;
         $product->quantity  = 0;
         $product->save();
 
@@ -54,6 +55,7 @@ class ProductController extends Controller
         $product->pack_qty  = $request->pack_qty;
         $product->type      = $request->type;
         $product->color     = $request->color;
+        $product->weight     = $request->weight;
         $product->save();
 
         if ($request->file('file')) {

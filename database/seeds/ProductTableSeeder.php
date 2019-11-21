@@ -19,6 +19,7 @@ class ProductTableSeeder extends Seeder
             $product->size      = $faker->randomNumber();
             $product->thickness = $faker->randomFloat();
             $product->color     = $faker->colorName();
+            $product->weight   = $faker->randomDigit;
             $product->quantity   = '0';
             $product->pack_qty  = '45';
             $product->type      = 'Pcs./Box';

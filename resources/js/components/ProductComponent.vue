@@ -20,8 +20,7 @@
                     </div>
                     <div class="col-md-12 mt-3">
                         <div class="table-responsive">
-                            <table id="table-products" class="table table-striped" width="100%"
-                                   cellspacing="0"></table>
+                            <table id="table-products" class="table table-striped nowrap" width="100%" cellspacing="0"></table>
                         </div>
                     </div>
                 </div>
@@ -40,35 +39,54 @@
                     <div class="modal-body">
                         <form id="form-data" enctype="multipart/form-data">
                             <div class="row">
-                                <div v-show="overview.id != '' && overview.path" class="col-md-12" >
-                                    <img v-bind:src="'app/public/' + overview.path" class="rounded img-thumbnail" width="200" height="200">
+                                <div v-show="overview.id != '' && overview.path" class="col-md-12">
+                                    <img v-bind:src="'app/public/' + overview.path" class="rounded img-thumbnail"
+                                        width="200" height="200">
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Name</label>
-                                        <input v-bind:readonly="isView" v-bind:class="{ 'form-control-plaintext': isView, 'form-control': !isView }" name="name" v-model="overview.name">
+                                        <input v-bind:readonly="isView"
+                                            v-bind:class="{ 'form-control-plaintext': isView, 'form-control': !isView }"
+                                            name="name" v-model="overview.name">
                                     </div>
                                     <div class="form-group">
                                         <label class="col-form-label">Pack Quantity</label>
-                                        <input v-bind:readonly="isView" v-bind:class="{ 'form-control-plaintext': isView, 'form-control': !isView }" name="pack_qty" v-model="overview.pack_qty">
+                                        <input v-bind:readonly="isView"
+                                            v-bind:class="{ 'form-control-plaintext': isView, 'form-control': !isView }"
+                                            name="pack_qty" v-model="overview.pack_qty">
                                     </div>
                                     <div class="form-group">
                                         <label class="col-form-label">Size</label>
-                                        <input v-bind:readonly="isView" v-bind:class="{ 'form-control-plaintext': isView, 'form-control': !isView }" name="size" v-model="overview.size">
+                                        <input v-bind:readonly="isView"
+                                            v-bind:class="{ 'form-control-plaintext': isView, 'form-control': !isView }"
+                                            name="size" v-model="overview.size">
                                     </div>
                                     <div class="form-group">
                                         <label class="col-form-label">Color</label>
-                                        <input v-bind:readonly="isView" v-bind:class="{ 'form-control-plaintext': isView, 'form-control': !isView }" name="size" v-model="overview.color">
+                                        <input v-bind:readonly="isView"
+                                            v-bind:class="{ 'form-control-plaintext': isView, 'form-control': !isView }"
+                                            name="size" v-model="overview.color">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Thickness</label>
-                                        <input v-bind:readonly="isView" v-bind:class="{ 'form-control-plaintext': isView, 'form-control': !isView }" name="size" v-model="overview.thickness">
+                                        <input v-bind:readonly="isView"
+                                            v-bind:class="{ 'form-control-plaintext': isView, 'form-control': !isView }"
+                                            name="size" v-model="overview.thickness">
                                     </div>
                                     <div class="form-group">
                                         <label class="col-form-label">Type</label>
-                                        <input v-bind:readonly="isView" v-bind:class="{ 'form-control-plaintext': isView, 'form-control': !isView }" name="type" v-model="overview.type">
+                                        <input v-bind:readonly="isView"
+                                            v-bind:class="{ 'form-control-plaintext': isView, 'form-control': !isView }"
+                                            name="type" v-model="overview.type">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-form-label">Weight (kg)</label>
+                                        <input v-bind:readonly="isView"
+                                            v-bind:class="{ 'form-control-plaintext': isView, 'form-control': !isView }"
+                                            name="weight" v-model="overview.weight">
                                     </div>
                                     <div class="form-group" v-show="!isView">
                                         <label for="exampleFormControlFile1">Example file input</label>
@@ -79,11 +97,12 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button v-show="isView == false && overview.id != ''" @click="update" type="button" class="btn btn-primary" data-dismiss="modal">
+                        <button v-show="isView == false && overview.id != ''" @click="update" type="button"
+                            class="btn btn-primary" data-dismiss="modal">
                             Update
                         </button>
-                        <button v-show="isView == false && overview.id == ''" @click="store" type="button" class="btn btn-success"
-                                data-dismiss="modal">
+                        <button v-show="isView == false && overview.id == ''" @click="store" type="button"
+                            class="btn btn-success" data-dismiss="modal">
                             Save As New
                         </button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -114,6 +133,7 @@
                     thickness: "",
                     type: "",
                     updated_at: "",
+                    weight: "",
                 }
             };
         },
@@ -132,6 +152,7 @@
                 formData.append('type', $this.overview.type);
                 formData.append('color', $this.overview.color);
                 formData.append('id', $this.overview.id);
+                formData.append('weight', $this.overview.weight);
                 $.ajax({
                     url: '/product/update',
                     method: 'POST',
@@ -154,6 +175,7 @@
                 formData.append('size', $this.overview.size);
                 formData.append('thickness', $this.overview.thickness);
                 formData.append('type', $this.overview.type);
+                formData.append('weight', $this.overview.weight);
                 $.ajax({
                     url: '/product/store',
                     method: 'POST',
@@ -168,19 +190,19 @@
             },
             destroyDialog() {
                 Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                     if (result.value) {
                         Swal.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                        'success'
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
                         )
                     }
                 });
@@ -193,14 +215,17 @@
                 serverSide: true,
                 scrollX: true,
                 responsive: true,
-                order: [[0, 'desc']],
+                order: [
+                    [0, 'desc']
+                ],
                 ajax: {
                     url: '/product/table',
                     method: "POST",
                 },
-                columns: [
-                    {
-                        title: 'Actions', name: 'id', width: '12%',
+                columns: [{
+                        title: 'Actions',
+                        name: 'id',
+                        width: '12%',
                         data: function (value) {
                             return "<div class=\"btn-group btn-group-sm\" role=\"group\">\n" +
                                 "  <button type=\"button\" class=\"btn btn-info btn-view\"><i class='fa fa-eye'></i></button>\n" +
@@ -209,18 +234,45 @@
                                 "</div>";
                         }
                     },
-                    {data: 'id', title: 'ID'},
-                    {data: 'name', title: 'Name'},
-                    {data: 'quantity', title: 'Quantity'},
-                    {data: 'pack_qty', title: 'Pack Quantity'},
-                    {data: 'size', title: 'Size'},
-                    {data: 'thickness', title: 'Thickness'},
-                    {data: 'color', title: 'Color'},
-                    {data: 'type', title: 'Type'},
-                    {data: 'created_at', title: 'Date Inserted'},
+                    {
+                        data: 'id',
+                        title: 'ID'
+                    },
+                    {
+                        data: 'name',
+                        title: 'Name'
+                    },
+                    {
+                        data: 'quantity',
+                        title: 'Quantity'
+                    },
+                    {
+                        data: 'pack_qty',
+                        title: 'Pack Quantity'
+                    },
+                    {
+                        data: 'size',
+                        title: 'Size'
+                    },
+                    {
+                        data: 'thickness',
+                        title: 'Thickness'
+                    },
+                    {
+                        data: 'color',
+                        title: 'Color'
+                    },
+                    {
+                        data: 'type',
+                        title: 'Type'
+                    },
+                    {
+                        data: 'created_at',
+                        title: 'Date Inserted'
+                    },
                 ],
                 drawCallback: function () {
-                    
+
                     $('.btn-add').on('click', function () {
                         $this.overview = {
                             path: "",
@@ -264,4 +316,5 @@
             console.log('Component mounted.')
         }
     }
+
 </script>
