@@ -15,14 +15,14 @@ class CreateShipmentsTable extends Migration
     {
         Schema::create('shipments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('batch_id');
             $table->integer('customer_id');
-            $table->string('transaction_no', 200);
-            $table->dateTime('date_delivered');
+            $table->string('control_no', 200);
             $table->string('dr_no', 200);
-            $table->integer('qty_out');
-            $table->text('remarks');
-            $table->string('status', 200);
+            $table->string('sales_rep', 200);
+            $table->dateTime('delivery_date');
+            $table->string('tin');
+            $table->text('address');
+            $table->string('created_by', 200);
             $table->softDeletes();
             $table->timestamps();
         });

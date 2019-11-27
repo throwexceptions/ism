@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/receivable/batches', 'ReceivableController@batches');
 
     Route::post('/shipment/table', 'ShipmentController@table');
+    Route::post('/shipment/items', 'ShipmentController@items');
 
     Route::post('/supplier/table', 'SupplierController@table');
     Route::post('/supplier/list', 'SupplierController@getList');

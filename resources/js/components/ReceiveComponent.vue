@@ -287,38 +287,81 @@
             },
             approvedBatch(batch) {
                 var $this = this;
-                $.ajax({
-                    url: '/receivable/approved',
-                    method: 'POST',
-                    data: batch,
-                    success: function (value) {
-                        $this.dt.draw(false);
-                        $this.bindBatches();
-                        Swal.fire(
-                            'Approve!',
-                            'Batch has been approved!',
-                            'success'
-                        )
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, I\'ve approve this',
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: '/receivable/approved',
+                            method: 'POST',
+                            data: batch,
+                            success: function (value) {
+                                $this.dt.draw(false);
+                                $this.bindBatches();
+                                Swal.fire(
+                                    'Approve!',
+                                    'Batch has been approved!',
+                                    'success'
+                                )
+                            }
+                        });
                     }
                 });
             },
             checkedBatch(batch) {
                 var $this = this;
-                $.ajax({
-                    url: '/receivable/checked',
-                    method: 'POST',
-                    data: batch,
-                    success: function (value) {
-                        $this.dt.draw(false);
-                        $this.bindBatches();
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, I\'ve guarded this',
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: '/receivable/checked',
+                            method: 'POST',
+                            data: batch,
+                            success: function (value) {
+                                $this.dt.draw(false);
+                                $this.bindBatches();
+                                Swal.fire(
+                                    'Approve!',
+                                    'Batch has been checked!',
+                                    'success'
+                                )
+                            }
+                        });
+                    }
+                });
+            },
+            destroyDialog() {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
                         Swal.fire(
-                            'Approve!',
-                            'Batch has been checked!',
+                            'Deleted!',
+                            'Your file has been deleted.',
                             'success'
                         )
                     }
                 });
-            },
+            }
         },
         mounted() {
             var $this = this;

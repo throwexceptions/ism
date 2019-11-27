@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ReceivableTableSeeder::class);
         $this->call(BatchTableSeeder::class);
         $this->call(ShipmentTableSeeder::class);
+        $this->call(CartTableSeeder::class);
     }
 }
