@@ -447,7 +447,7 @@
                     },
                     {
                         data: 'total',
-                        name: 'total',
+                        name: 'qty.total',
                         title: 'Total Qty. In'
                     },
                     {

@@ -3086,7 +3086,7 @@ __webpack_require__.r(__webpack_exports__);
         width: '13%'
       }, {
         data: 'total',
-        name: 'total',
+        name: 'qty.total',
         title: 'Total Qty. In'
       }, {
         data: 'po',
