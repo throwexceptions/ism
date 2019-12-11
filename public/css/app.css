@@ -6877,3 +6877,16 @@ body.swal2-toast-column .swal2-toast .swal2-validation-message {
   color: #fff;
 }
 
+.btn-info {
+  color: white !important;
+}
+
+.table td {
+  padding: 0.45rem !important;
+}
+
+.btn {
+  border-radius: 0 !important;
+  box-shadow: 0 0.125rem 0.25rem 0 rgba(58, 59, 69, 0.2) !important;
+}
+

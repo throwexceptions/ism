@@ -1,5 +1,8 @@
 <?php
 
+use App\Product;
+use App\User;
+use Faker\Factory;
 use Illuminate\Database\Seeder;
 
 class ProductTableSeeder extends Seeder
@@ -11,24 +14,20 @@ class ProductTableSeeder extends Seeder
      */
     public function run()
     {
-        \App\Product::truncate();
-        for ($x = 0; $x <= 2000; $x++) {
-            $faker              = Faker\Factory::create();
-            $product            = new \App\Product();
-            $product->name      = $faker->word;
-            $product->size      = $faker->randomNumber();
-            $product->thickness = $faker->randomFloat();
-            $product->color     = $faker->colorName();
-            $product->weight   = $faker->randomDigit;
-            $product->quantity   = '0';
-            $product->pack_qty  = '45';
-            $product->type      = 'Pcs./Box';
+        for($x=0; $x<1000; $x++) {
+            $faker = Factory::create();
+            $product = new Product();
+            $product->name = $faker->word();
+            $product->code = $faker->creditCardNumber();
+            $product->category = $faker->word();
+            $product->color = $faker->colorName;
+            $product->size = $faker->randomFloat();
+            $product->weight = $faker->randomFloat();
+            $product->sku = $faker->bankAccountNumber;
+            $product->manufacturer = $faker->company;
+            $product->discontinued = '0';
+            $product->assigned_to = User::all()->random(2)[0]->id;
             $product->save();
-
-            $log = new \App\Log();
-            $log->user_id = \App\User::all()->random(2)[0]->id;
-            $log->remarks = $product->id.' add product';
-            $log->save();
         }
     }
 }

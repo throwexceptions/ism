@@ -2,86 +2,108 @@
 
 namespace App\Http\Controllers;
 
-use App\Gallery;
 use App\Product;
 use Illuminate\Http\Request;
-use DB;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Controller;
 use Yajra\DataTables\DataTables;
 
 class ProductController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     * @return Response
+     */
+    public function index()
+    {
+        return view('product');
+    }    
+    
     public function table()
     {
-        $product = DB::table('products')
-                     ->selectRaw('products.*, galleries.path')
-                     ->leftJoin('galleries', 'galleries.product_id', '=', 'products.id');
-
-        return DataTables::of($product)->make(true);
+        $products = Product::query()
+            ->selectRaw('products.*, users.name as username')
+            ->join('users', 'users.id','=','products.assigned_to');
+        
+        return DataTables::of($products)->make(true);
     }
 
+    /**
+     * Show the form for creating a new resource.
+     * @return Response
+     */
+    public function create()
+    {
+        $product = collect([
+            "assigned_to" => "",
+            "category" => "",
+            "code" => "",
+            "color" => "",
+            "created_at" => "",
+            "discontinued" => "",
+            "id" => "",
+            "manufacturer" => "",
+            "name" => "",
+            "size" => "",
+            "sku" => "",
+            "updated_at" => "",
+            "username" => "",
+            "weight" => "",
+        ]);
+
+        return view('product_form', compact('product'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     * @param Request $request
+     * @return Response
+     */
     public function store(Request $request)
     {
-        $product            = new Product();
-        $product->name      = $request->name;
-        $product->size      = $request->size;
-        $product->thickness = $request->thickness;
-        $product->pack_qty  = $request->pack_qty;
-        $product->type      = $request->type;
-        $product->color     = $request->color;
-        $product->weight     = $request->weight;
-        $product->quantity  = 0;
-        $product->save();
-
-        if ($request->file('file')) {
-            $path                = $request->file('file')->store('products');
-            $gallery             = new Gallery();
-            $gallery->product_id = $product->id;
-            $gallery->name       = $request->file('file')->getClientOriginalName();
-            $gallery->ext        = $request->file('file')->getExtension();
-            $gallery->path       = $path;
-            $gallery->save();
-        }
-
-        return ['success' => true];
+        //
     }
 
-    public function update(Request $request)
+    /**
+     * Show the specified resource.
+     * @param int $id
+     * @return Response
+     */
+    public function show($id)
     {
-        $product            = Product::find($request->id);
-        $product->name      = $request->name;
-        $product->size      = $request->size;
-        $product->thickness = $request->thickness;
-        $product->pack_qty  = $request->pack_qty;
-        $product->type      = $request->type;
-        $product->color     = $request->color;
-        $product->weight     = $request->weight;
-        $product->save();
+        $product = Product::find($id);
 
-        if ($request->file('file')) {
-            $gallery =  Gallery::query()->where('product_id', $request->id)->get();
-            if(isset($gallery[0])) {
-                Storage::delete($gallery[0]->path);
-                Gallery::destroy($gallery[0]->id);
-            }
-
-            $path                = $request->file('file')->store('products');
-            $gallery             = new Gallery();
-            $gallery->product_id = $product->id;
-            $gallery->name       = $request->file('file')->getClientOriginalName();
-            $gallery->ext        = $request->file('file')->getExtension();
-            $gallery->path       = $path;
-            $gallery->save();
-        }
-
-        return ['success' => true];
+        return view('product_form', compact('product'));
     }
 
-    public function getList(Request $request)
+    /**
+     * Show the form for editing the specified resource.
+     * @param int $id
+     * @return Response
+     */
+    public function edit($id)
     {
-        return Product::query()
-            ->selectRaw('id,name')
-            ->where('name', 'LIKE', "%{$request->q}%")
-            ->get();
+        return view('edit');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     * @param Request $request
+     * @param int $id
+     * @return Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     * @param int $id
+     * @return Response
+     */
+    public function destroy($id)
+    {
+        //
     }
 }
