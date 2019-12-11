@@ -15,7 +15,7 @@ class PurchaseInfoTableSeeder extends Seeder
     public function run()
     {
         PurchaseInfo::truncate();
-        for($x=0; $x<10000; $x++) {
+        for($x=0; $x<200; $x++) {
             $faker = Factory::create();
             $purchase_info = new PurchaseInfo();
             $purchase_info->subject = $faker->company;

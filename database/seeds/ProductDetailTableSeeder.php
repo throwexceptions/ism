@@ -17,7 +17,7 @@ class ProductDetailTableSeeder extends Seeder
     public function run()
     {
         ProductDetail::truncate();
-        for($x=0; $x<3000; $x++) {
+        for($x=0; $x<1000; $x++) {
             $faker = Factory::create();
             $product = Product::all()->random(5)[1];
             $supply = Supply::query()->where('product_id',$product->id)->get()[0];
@@ -34,7 +34,7 @@ class ProductDetailTableSeeder extends Seeder
             $product_detail->save();
         }
 
-        for($x=0; $x<3000; $x++) {
+        for($x=0; $x<1000; $x++) {
             $faker = Factory::create();
             $product = Product::all()->random(5)[1];
             $product_detail = new ProductDetail();
