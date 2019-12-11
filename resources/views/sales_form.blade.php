@@ -10,12 +10,12 @@
                 <!-- Approach -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Purchase Order Details</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Sales Order Details</h6>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <h4>Purchase Order Information</h4>
+                                <h4>Sales Order Information</h4>
                                 <hr>
                             </div>
                             <div class="col-md-4">
@@ -24,27 +24,11 @@
                                     <input type="text" class="form-control form-control-sm" v-model="overview.subject">
                                 </div>
                                 <div class="form-group">
-                                    <label>Requisition No</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.requisition_no">
-                                </div>
-                                <div class="form-group">
-                                    <label>Contact Name</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.contact_name">
-                                </div>
-                                <div class="form-group">
-                                    <label>Due Date</label>
-                                    <input type="date" class="form-control form-control-sm" v-model="overview.due_date">
-                                </div>
-                                <div class="form-group">
-                                    <label>Carrier</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.carrier">
+                                    <label>Phone</label>
+                                    <input type="text" class="form-control form-control-sm" v-model="overview.phone">
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Shipping Method</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.shipping_method">
-                                </div>
                                 <div class="form-group">
                                     <label>Status</label>
                                     <select type="text" class="form-control form-control-sm" v-model="overview.status">
@@ -60,10 +44,6 @@
                                 <div class="form-group">
                                     <label>Customer Name</label>
                                     <input type="text" class="form-control form-control-sm" v-model="overview.customer_id">
-                                </div>
-                                <div class="form-group">
-                                    <label>Phone</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.phone">
                                 </div>
                             </div>
                             <div class="col-md-4">

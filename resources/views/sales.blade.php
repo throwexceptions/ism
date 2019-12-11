@@ -96,6 +96,9 @@ const app = new Vue({
                         title: 'Action'
                     },
                     {data: 'id', name:'sales_orders.id', title: 'ID'},
+                    {data: 'customer_name', name:'customers.acc_name', title: 'Customer'},
+                    {data: 'subject', name:'subject', title: 'Subject'},
+                    {data: 'created_at', name:'created_at', title: 'Date Created'},
                 ],
                 drawCallback: function () {
                     $('table .btn').on('click', function(){
