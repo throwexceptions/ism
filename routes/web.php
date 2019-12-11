@@ -19,7 +19,7 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'DashboardController@index')->name('home');
-    
+
     Route::get('/purchase', 'PurchaseInfoController@index')->name('purchase');
     Route::post('/purchase/table', 'PurchaseInfoController@table')->name('purchase.table');
     Route::get('/purchase/create', 'PurchaseInfoController@create')->name('purchase.create');
@@ -62,4 +62,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/sales/create', 'SalesOrderController@create')->name('sales.create');
     Route::post('/sales/table', 'SalesOrderController@table')->name('sales.table');
     Route::get('/sales/view/{id}', 'SalesOrderController@show')->name('sales.view');
+
+    Route::get('/users', 'UserController@index')->name('users');
+    Route::get('/users/create', 'UserController@create')->name('user.create');
+    Route::post('/users/table', 'UserController@table')->name('user.table');
 });

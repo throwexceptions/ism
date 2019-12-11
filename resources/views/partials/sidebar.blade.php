@@ -5,7 +5,7 @@
         <div class="sidebar-brand-icon">
             <i class="fa fa-user-cog"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">ADMIN SYS</div>
+        <div class="sidebar-brand-text mx-3">MANAGEMENT</div>
     </a>
 
     <!-- Divider -->
@@ -95,7 +95,7 @@
 
     <!-- Nav Item - User Accounts -->
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('home') }}">
+        <a class="nav-link" href="{{ route('users') }}">
             <i class="fas fa-fw fa-user-alt"></i>
             <span>User Accounts</span></a>
     </li>
