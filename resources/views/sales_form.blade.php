@@ -56,10 +56,6 @@
                                     <input type="text" class="form-control form-control-sm" v-model="overview.so_no">
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <h4>Payment Information</h4>
-                                <hr>
-                            </div>
                             <div class="col-md-4">
                                 <div class="form-group" v-if="overview.payment_method == 'Check'">
                                     <label>Account Number</label>
@@ -151,17 +147,6 @@
                                 <div class="form-group row" >
                                     <div class="col-md-12">
                                         <textarea  type="text" class="form-control form-control-sm" v-model="overview.tac" rows="5" style="height: 80px;"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <h4>Description Information</h4>
-                                <hr>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group row" >
-                                    <div class="col-md-12">
-                                        <textarea type="text" class="form-control form-control-sm" v-model="overview.description" rows="5" style="height: 80px;"></textarea>
                                     </div>
                                 </div>
                             </div>
