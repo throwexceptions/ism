@@ -23,7 +23,8 @@ class SupplyController extends Controller
     {
         $vendors = Supply::query()
             ->selectRaw('supplies.*, users.name as username, products.name as product_name, 
-            (SELECT COUNT(*) FROM product_details WHERE product_id=supplies.product_id) as po_count')
+            (SELECT COUNT(id) FROM product_details WHERE purchase_order_id IS NOT NULL and product_id=supplies.product_id) as po_count,
+            (SELECT COUNT(id) FROM product_details WHERE sales_order_id IS NOT NULL and product_id=supplies.product_id) as so_count')
             ->join('products', 'products.id','=','supplies.product_id')
             ->join('users', 'users.id','=','supplies.assigned_to');
         

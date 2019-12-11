@@ -99,6 +99,7 @@ const app = new Vue({
                     {data: 'product_name', name:'products.name', title: 'Product'},
                     {data: 'quantity', name:'supplies.quantity', title: 'Quantity'},
                     {data: 'po_count', bSortable:false,bSearchable:false, title: 'PO'},
+                    {data: 'so_count', bSortable:false,bSearchable:false, title: 'SO'},
                     
                 ],
                 drawCallback: function () {
