@@ -18,7 +18,7 @@ class SalesOrderTableSeeder extends Seeder
     {
         Model::unguard();
         SalesOrder::truncate();
-        for($x=0; $x < 10000; $x++) {
+        for($x=0; $x < 1000; $x++) {
             $faker = Factory::create();
             $purchase_info = new SalesOrder();
             $purchase_info->customer_id  = Customer::all()->random(2)[0]->id;
