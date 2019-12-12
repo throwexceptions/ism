@@ -62,6 +62,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/sales/create', 'SalesOrderController@create')->name('sales.create');
     Route::post('/sales/table', 'SalesOrderController@table')->name('sales.table');
     Route::get('/sales/view/{id}', 'SalesOrderController@show')->name('sales.view');
+    Route::get('/sales/detail/{id}', 'SalesOrderController@show')->name('sales.detail');
 
     Route::get('/users', 'UserController@index')->name('users');
     Route::get('/users/create', 'UserController@create')->name('user.create');
