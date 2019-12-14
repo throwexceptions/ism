@@ -46,8 +46,7 @@ class PurchaseInfoController extends Controller
             "assigned_to"=>"",
             "status"=>"",
             "date_received"=>"",
-            "sales_order"=>"",
-            "purchase_order"=>"",
+            "po_no"=>"",
             "payment_method"=>"",
             "billing_address"=>"",
             "check_number" => "",
@@ -61,7 +60,7 @@ class PurchaseInfoController extends Controller
 
         $summary = collect(array(
             "id" => "",
-            "purchase_info_id" => "",
+            "purchase_order_id" => "",
             "discount" => "0",
             "shipping" => "0",
             "sales_tax" => "0",
@@ -74,7 +73,7 @@ class PurchaseInfoController extends Controller
     {
         $purchase_info = PurchaseInfo::find($id);
         $product_details = ProductDetail::query()->where('purchase_order_id', $id)->get();
-        $summary = Summary::query()->where('purchase_info_id', $id)->get()[0];
+        $summary = Summary::query()->where('purchase_order_id', $id)->get()[0];
 
         return view('purchase_form', compact('purchase_info','product_details','summary'));
     }
@@ -91,15 +90,15 @@ class PurchaseInfoController extends Controller
         DB::table('purchase_infos')->where('id', $data['overview']['id'])
             ->update($data['overview']);
             
-        DB::table('product_details')->where('purchase_info_id', $data['overview']['id'])->delete();
+        DB::table('product_details')->where('purchase_order_id', $data['overview']['id'])->delete();
 
         foreach($data['products'] as $item) {
-            $item['purchase_info_id'] = $data['overview']['id'];
+            $item['purchase_order_id'] = $data['overview']['id'];
             DB::table('product_details')->insert($item);
         }
             
-        DB::table('summaries')->where('purchase_info_id', $data['overview']['id'])->delete();
-        $data['summary']['purchase_info_id'] = $data['overview']['id'];
+        DB::table('summaries')->where('purchase_order_id', $data['overview']['id'])->delete();
+        $data['summary']['purchase_order_id'] = $data['overview']['id'];
         DB::table('summaries')->insert($data['summary']);
 
         return ['success' => true];
@@ -119,22 +118,21 @@ class PurchaseInfoController extends Controller
 
         foreach($data['products'] as $item)
         {
-            dump($item);
-            $item['purchase_info_id'] = $id;
+            $item['purchase_order_id'] = $id;
             DB::table('product_details')->insert($item);
         }
 
-        $data['summary']['purchase_detail_id'] = $id;
+        $data['summary']['purchase_order_id'] = $id;
         DB::table('summaries')->insert($data['summary']);
 
         return ['success' => true];
     }
 
-    public function destory(Request $request)
+    public function destroy(Request $request)
     {
         DB::table('product_details')->where('purchase_info_id', $request->id)->delete();
         DB::table('purchase_infos')->where('id', $request->id)->delete();
-        DB::table('summaries')->where('purchase_info_id', $request->id)->delete();
+        DB::table('summaries')->where('purchase_order_id', $request->id)->delete();
 
         return ['success' => true];
     }

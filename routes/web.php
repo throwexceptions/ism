@@ -23,11 +23,20 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/purchase', 'PurchaseInfoController@index')->name('purchase');
     Route::post('/purchase/table', 'PurchaseInfoController@table')->name('purchase.table');
     Route::get('/purchase/create', 'PurchaseInfoController@create')->name('purchase.create');
+    Route::get('/purchase/view/{id}', 'PurchaseInfoController@show')->name('purchase.view');
     Route::get('/purchase/detail/{id}', 'PurchaseInfoController@show')->name('purchase.detail');
     Route::post('/purchase/update', 'PurchaseInfoController@update')->name('purchase.update');
     Route::post('/purchase/store', 'PurchaseInfoController@store')->name('purchase.store');
-    Route::post('/purchase/destory', 'PurchaseInfoController@destory')->name('purchase.destory');
-    Route::get('/purchase/view/{id}', 'PurchaseInfoController@show')->name('purchase.view');
+    Route::post('/purchase/destroy', 'PurchaseInfoController@destroy')->name('purchase.destroy');
+
+    Route::get('/sales', 'SalesOrderController@index')->name('sales');
+    Route::get('/sales/create', 'SalesOrderController@create')->name('sales.create');
+    Route::post('/sales/table', 'SalesOrderController@table')->name('sales.table');
+    Route::get('/sales/view/{id}', 'SalesOrderController@show')->name('sales.view');
+    Route::get('/sales/detail/{id}', 'SalesOrderController@show')->name('sales.detail');
+    Route::post('/sales/update', 'SalesOrderController@update')->name('sales.update');
+    Route::post('/sales/store', 'SalesOrderController@store')->name('sales.store');
+    Route::post('/purchase/destroy', 'PurchaseInfoController@destroy')->name('purchase.destroy');
 
     Route::get('/vendor', 'VendorController@index')->name('vendor');
     Route::post('/vendor/table', 'VendorController@table')->name('vendor.table');
@@ -38,7 +47,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/inquiry', 'InquiryController@index')->name('inquiry');
     Route::post('/inquiry/table', 'InquiryController@table')->name('inquiry.table');
-    Route::post('/inquiry/destroy', 'InquiryController@destory')->name('inquiry.destory');
+    Route::post('/inquiry/destroy', 'InquiryController@destroy')->name('inquiry.destroy');
 
     Route::get('/customer', 'CustomerController@index')->name('customer');
     Route::post('/customer/table', 'CustomerController@table')->name('customer.table');
@@ -51,18 +60,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/products/create', 'ProductController@create')->name('product.create');
     Route::get('/product/detail/{id}', 'ProductController@show')->name('product.detail');
     Route::get('/product/view/{id}', 'ProductController@show')->name('product.view');
+    Route::post('/product/list', 'ProductController@getList')->name('product.list');
 
     Route::get('/supply', 'SupplyController@index')->name('supply');
     Route::post('/supply/table', 'SupplyController@table')->name('supply.table');
-    Route::get('/supply/detail/{id}', 'SupplyController@show')->name('supply.detail');
-    Route::get('/supply/view/{id}', 'SupplyController@show')->name('supply.view');
-    Route::get('/supply/create', 'SupplyController@create')->name('supply.create');
-
-    Route::get('/sales', 'SalesOrderController@index')->name('sales');
-    Route::get('/sales/create', 'SalesOrderController@create')->name('sales.create');
-    Route::post('/sales/table', 'SalesOrderController@table')->name('sales.table');
-    Route::get('/sales/view/{id}', 'SalesOrderController@show')->name('sales.view');
-    Route::get('/sales/detail/{id}', 'SalesOrderController@show')->name('sales.detail');
 
     Route::get('/users', 'UserController@index')->name('users');
     Route::get('/users/create', 'UserController@create')->name('user.create');

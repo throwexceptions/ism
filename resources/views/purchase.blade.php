@@ -57,14 +57,14 @@ const app = new Vue({
                 confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                 if (result.value) {
-                    axios.post("{{ route('purchase.destory') }}", $this.overview)
-                    .then(function (response) {
-                        console.log(response);
-                        Swal.fire('Deleted!','Your file has been deleted.','success');
-                        $this.dt.draw();
-                    })
-                    .catch(function (error) {
-                        console.log(error);
+                    $.ajax({
+                        url: "{{ route('purchase.destroy') }}",
+                        method:'POST',
+                        data: $this.overview,
+                        success(value) {
+                            Swal.fire('Deleted!','Your file has been deleted.','success');
+                            $this.dt.draw();
+                        }
                     });
                 }
             });

@@ -15,7 +15,7 @@ class CreateSummariesTable extends Migration
     {
         Schema::create('summaries', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('purchase_info_id')->nullable();
+            $table->bigInteger('purchase_order_id')->nullable();
             $table->bigInteger('sales_order_id')->nullable();
             $table->float('discount')->nullable();
             $table->float('sub_total')->nullable();

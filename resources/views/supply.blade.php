@@ -14,9 +14,6 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-12">
-                                <a href="{{ route('supply.create') }}" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> New Supply</a>
-                            </div>
                             <div class="col-md-12 mt-3">
                                 <table id="table-supplies" class="table table-striped nowrap" style="width:100%"></table>
                             </div>
@@ -77,24 +74,12 @@ const app = new Vue({
                 serverSide: true,
                 scrollX: true,
                 responsive: true,
-                order: [[1, 'desc']],
+                order: [[0, 'desc']],
                 ajax: {
                     url: "{{ route('supply.table') }}",
                     method: "POST",
                 },
                 columns: [
-                    {
-                        data: function(value) {
-                            return '<div class="btn-group btn-group-sm shadow-sm" role="group" aria-label="Basic example">' +
-                                    '<a href="/supply/view/' + value.id + '" class="btn btn-primary btn-view"><i class="fa fa-eye"></i></a>' +
-                                    '<a href="/supply/detail/' + value.id + '" class="btn btn-info btn-view"><i class="fa fa-pen"></i></a>' +
-                                    '<button type="button" class="btn btn-danger btn-destroy"><i class="fa fa-trash"></i></button>' +
-                                    '</div>'
-                        },
-                        searchable: false,
-                        bSortable: false,
-                        title: 'Action'
-                    },
                     {data: 'id', name:'supplies.id', title: 'ID'},
                     {data: 'product_name', name:'products.name', title: 'Product'},
                     {data: 'quantity', name:'supplies.quantity', title: 'Quantity'},

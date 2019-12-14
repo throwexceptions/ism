@@ -19,6 +19,7 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin-2.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <link href="{{ asset('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css">
@@ -110,6 +111,9 @@
 <!-- Custom scripts for all pages-->
 <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
 
+<!-- Custom scripts for all pages-->
+<script src="{{ asset('js/select2.full.min.js') }}"></script>
+
 <!-- Page level plugins -->
 <script src="{{ asset('vendor/chart.js/Chart.min.js') }}"></script>
 
@@ -118,7 +122,7 @@
 <script src="{{ asset('js/demo/chart-pie-demo.js') }}"></script> --}}
 <script src="{{ asset('js/app.js') }}"></script>
 {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> --}}
-@yield('scripts')
+@yield('scripts') dd
 </body>
 
 </html>

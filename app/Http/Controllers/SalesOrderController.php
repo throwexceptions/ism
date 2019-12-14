@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Yajra\DataTables\DataTables;
+use DB;
 
 class SalesOrderController extends Controller
 {
@@ -68,68 +69,61 @@ class SalesOrderController extends Controller
         return DataTables::of($vendors)->make(true);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     *
-     * @return array
-     */
+    public function show($id)
+    {
+        $sales_order     = SalesOrder::find($id);
+        $product_details = ProductDetail::query()->where('sales_order_id', $id)->get();
+        $summary         = Summary::query()->where('sales_order_id', $id)->get()[0];
+
+        return view('sales_form', compact('sales_order', 'product_details', 'summary'));
+    }
+
     public function store(Request $request)
     {
+        $data = $request->input();
+
+        $data['overview']['assigned_to'] = auth()->user()->id;
+
+        $id = DB::table('sales_orders')->insertGetId($data['overview']);
+        foreach ($data['products'] as $item) {
+            $item['sales_order_id'] = $id;
+            DB::table('product_details')->insert($item);
+        }
+
+        $data['summary']['sales_order_id'] = $id;
+        DB::table('summaries')->insert($data['summary']);
+
         return ['success' => true];
     }
 
-    /**
-     * Show the specified resource.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show($id)
+    public function update(Request $request)
     {
-        $sales_order = SalesOrder::find($id);
-        $product_details = ProductDetail::query()->where('sales_order_id', $id)->get();
-        $summary = Summary::query()->where('sales_order_id', $id)->get()[0];
+        $data = $request->input();
 
-        return view('sales_form', compact('sales_order','product_details','summary'));
+        DB::table('sales_orders')->where('id', $data['overview']['id'])
+          ->update($data['overview']);
+
+        DB::table('product_details')->where('sales_order_id', $data['overview']['id'])->delete();
+
+        foreach ($data['products'] as $item) {
+            $item['sales_order_id'] = $data['overview']['id'];
+            DB::table('product_details')->insert($item);
+        }
+
+        DB::table('summaries')->where('sales_order_id', $data['overview']['id'])->delete();
+
+        $data['summary']['sales_order_id'] = $data['overview']['id'];
+        DB::table('summaries')->insert($data['summary']);
+
+        return ['success' => true];
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function edit($id)
+    public function destroy(Request $request)
     {
-        return view('edit');
-    }
+        DB::table('product_details')->where('purchase_info_id', $request->id)->delete();
+        DB::table('salesorders')->where('id', $request->id)->delete();
+        DB::table('summaries')->where('sales_order_id', $request->id)->delete();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param int     $id
-     *
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
+        return ['success' => true];
     }
 }

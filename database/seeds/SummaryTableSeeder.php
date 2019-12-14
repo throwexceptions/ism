@@ -20,7 +20,7 @@ class SummaryTableSeeder extends Seeder
         foreach($ids as $id) {
             $faker = Factory::create();
             $summary = new Summary();
-            $summary->purchase_info_id = $id;
+            $summary->purchase_order_id = $id;
             $summary->discount = $faker->randomDigit();
             $summary->sub_total = 0;
             $summary->shipping = $faker->randomDigit();
