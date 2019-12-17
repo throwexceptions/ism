@@ -27,6 +27,10 @@
                                     <label>Phone</label>
                                     <input type="text" class="form-control form-control-sm" v-model="overview.phone">
                                 </div>
+                                <div class="form-group">
+                                    <label>Agent</label>
+                                    <input type="text" class="form-control form-control-sm" v-model="overview.agent">
+                                </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -256,7 +260,11 @@
                                 'Good job!',
                                 'Operation is successful.',
                                 'success'
-                            )
+                            ).then((result) => {
+                                if (result.value) {
+                                    window.location = '{{ route('sales') }}'
+                                }
+                            })
                         }
                     })
                 },
@@ -275,7 +283,11 @@
                                 'Good job!',
                                 'Operation is successful.',
                                 'success'
-                            )
+                            ).then((result) => {
+                                if (result.value) {
+                                    window.location = '{{ route('sales') }}'
+                                }
+                            })
                         }
                     })
                 },

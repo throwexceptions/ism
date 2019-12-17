@@ -36,14 +36,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/sales/detail/{id}', 'SalesOrderController@show')->name('sales.detail');
     Route::post('/sales/update', 'SalesOrderController@update')->name('sales.update');
     Route::post('/sales/store', 'SalesOrderController@store')->name('sales.store');
-    Route::post('/purchase/destroy', 'PurchaseInfoController@destroy')->name('purchase.destroy');
+    Route::post('/sales/destroy', 'SalesOrderController@destroy')->name('sales.destroy');
 
     Route::get('/vendor', 'VendorController@index')->name('vendor');
     Route::post('/vendor/table', 'VendorController@table')->name('vendor.table');
     Route::get('/vendor/create', 'VendorController@create')->name('vendor.create');
     Route::get('/vendor/detail/{id}', 'VendorController@show')->name('vendor.detail');
-    Route::post('/vendor/destroy', 'VendorController@destroy')->name('vendor.destroy');
     Route::get('/vendor/view/{id}', 'VendorController@show')->name('vendor.view');
+    Route::post('/vendor/update', 'VendorController@update')->name('vendor.update');
+    Route::post('/vendor/store', 'VendorController@store')->name('vendor.store');
+    Route::post('/vendor/destroy', 'VendorController@destroy')->name('vendor.destroy');
 
     Route::get('/inquiry', 'InquiryController@index')->name('inquiry');
     Route::post('/inquiry/table', 'InquiryController@table')->name('inquiry.table');
@@ -51,9 +53,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/customer', 'CustomerController@index')->name('customer');
     Route::post('/customer/table', 'CustomerController@table')->name('customer.table');
-    Route::get('/customer/create', 'CustomerController@create')->name('customer.create');
     Route::get('/customer/detail/{id}', 'CustomerController@show')->name('customer.detail');
     Route::get('/customer/view/{id}', 'CustomerController@show')->name('customer.view');
+    Route::get('/customer/create', 'CustomerController@create')->name('customer.create');
+    Route::post('/customer/update', 'CustomerController@update')->name('customer.update');
+    Route::post('/customer/store', 'CustomerController@store')->name('customer.store');
+    Route::post('/customer/destroy', 'CustomerController@destroy')->name('customer.destroy');
 
     Route::get('/products', 'ProductController@index')->name('products');
     Route::post('/products/table', 'ProductController@table')->name('product.table');
@@ -61,6 +66,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/product/detail/{id}', 'ProductController@show')->name('product.detail');
     Route::get('/product/view/{id}', 'ProductController@show')->name('product.view');
     Route::post('/product/list', 'ProductController@getList')->name('product.list');
+    Route::post('/product/store', 'ProductController@store')->name('product.store');
+    Route::post('/product/update', 'ProductController@update')->name('product.update');
+    Route::post('/product/image/upload', 'ProductController@imageUpload')->name('product.image.upload');
+    Route::post('/product/destroy', 'ProductController@destroy')->name('product.destroy');
 
     Route::get('/supply', 'SupplyController@index')->name('supply');
     Route::post('/supply/table', 'SupplyController@table')->name('supply.table');

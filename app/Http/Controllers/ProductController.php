@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Gallery;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 use DB;
 
@@ -28,19 +30,18 @@ class ProductController extends Controller
     public function create()
     {
         $product = collect([
+            "id"           => "",
             "assigned_to"  => "",
             "category"     => "",
             "code"         => "",
             "color"        => "",
             "created_at"   => "",
             "discontinued" => "",
-            "id"           => "",
             "manufacturer" => "",
             "name"         => "",
             "size"         => "",
             "sku"          => "",
             "updated_at"   => "",
-            "username"     => "",
             "weight"       => "",
         ]);
 
@@ -59,43 +60,56 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        //
+        $data                = $request->input();
+        $data['assigned_to'] = auth()->user()->id;
+        $id                  = Product::query()->insertGetId($data);
+
+        return ['success' => true, 'id' => $id];
+    }
+
+    public function update(Request $request)
+    {
+        Product::query()->where('id', $request->id)->update($request->input());
+
+        return ['success' => true];
+    }
+
+    public function imageUpload(Request $request)
+    {
+        if (count($request->file()) > 0) {
+            if (Gallery::query()->where('product_id', $request->id)->count()) {
+                $gallery = Gallery::query()->where('product_id', $request->id)->get()[0];
+                Storage::delete($gallery->path);
+                Gallery::query()->where('product_id', $request->id)->delete();
+            }
+
+            $path = $request->image->store('images');
+
+            $gallery             = new Gallery();
+            $gallery->product_id = $request->id;
+            $gallery->name       = $path;
+            $gallery->path       = $path;
+            $gallery->extension  = $request->image->extension();
+            $gallery->size       = $request->image->getSize();
+            $gallery->created_by = auth()->user()->id;
+            $gallery->save();
+        }
+
+        return ['success' => true];
     }
 
     public function show($id)
     {
         $product = Product::find($id);
+        $gallery = Gallery::query()->where('product_id', $id)->get();
 
-        return view('product_form', compact('product'));
+        return view('product_form', compact('product', 'gallery'));
     }
 
-    public function edit($id)
+    public function destroy(Request $request)
     {
-        return view('edit');
-    }
+        Product::query()->where('id', $request->id)->delete();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param int     $id
-     *
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
+        return ['success' => true];
     }
 }

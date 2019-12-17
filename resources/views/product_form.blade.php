@@ -2,10 +2,8 @@
 
 @section('content')
     <div id='app' class="container-fluid">
-
         <!-- Content Row -->
         <div class="row">
-
             <div class="col-lg-12 mb-4">
                 <!-- Approach -->
                 <div class="card shadow mb-4">
@@ -76,8 +74,19 @@
                                 <h4>Product Image</h4>
                                 <hr>
                             </div>
+                            <div class="col-md-4" v-if="viewType != 2">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlFile1">Image Upload</label>
+                                        <input type="file" class="form-control-file" name="image-file">
+                                    </div>
+                                </form>
+                            </div>
                             <div class="col-md-12">
-                                <div class="text-center">
+                                <div class="text-center" v-for="image in images">
+                                    <img v-bind:src="'/app/public/' + image.path" class="rounded" width="200px">
+                                </div>
+                                <div v-if="images.length == 0" class="text-center">
                                     <img src="{{ asset('img/storage/product-placeholder.jpeg') }}" class="rounded" width="200px">
                                 </div>
                             </div>
@@ -102,48 +111,65 @@ const app = new Vue({
         return {
             viewType: 0,
             overview: {!! $product !!},
+            images: {!! $gallery !!}
         }
     },
     methods: {
         store() {
             var $this = this;
             $.ajax({
-                url: '{{ route('purchase.store') }}',
+                url: '{{ route('product.store') }}',
                 method: 'POST',
-                data: {
-                    overview: $this.overview,
-                    products: $this.products,
-                    summary: $this.summary,
-                },
+                data: $this.overview,
                 success: function(value) {
+                    $this.imageUpload(value.id);
                     Swal.fire(
                         'Good job!',
                         'Operation is successful.',
                         'success'
-                    )
+                    ).then((result) => {
+                        if (result.value) {
+                            window.location = '{{ route('products') }}'
+                        }
+                    })
                 }
             })
-
         },
         update() {
             var $this = this;
             $.ajax({
-                url: '{{ route('purchase.update') }}',
+                url: '{{ route('product.update') }}',
                 method: 'POST',
-                data: {
-                    overview: $this.overview,
-                    products: $this.products,
-                    summary: $this.summary,
-                },
+                data: $this.overview,
                 success: function(value) {
+                    $this.imageUpload($this.overview.id);
                     Swal.fire(
                         'Good job!',
                         'Operation is successful.',
                         'success'
-                    )
+                    ).then((result) => {
+                        if (result.value) {
+                            window.location = '{{ route('products') }}'
+                        }
+                    })
                 }
-            })
+            });
         },
+        imageUpload(id) {
+            var formData = new FormData();
+            formData.append('id', id);
+            formData.append('image', $('input[type=file]')[0].files[0]);
+            $.ajax({
+                url: '{{ route('product.image.upload') }}',
+                method: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(value) {
+
+                }
+            });
+        }
     },
     mounted() {
         var $this = this;

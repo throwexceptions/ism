@@ -114,19 +114,19 @@ const app = new Vue({
         store() {
             var $this = this;
             $.ajax({
-                url: '{{ route('purchase.store') }}',
+                url: '{{ route('vendor.store') }}',
                 method: 'POST',
-                data: {
-                    overview: $this.overview,
-                    products: $this.products,
-                    summary: $this.summary,
-                },
+                data: $this.overview,
                 success: function(value) {
                     Swal.fire(
                         'Good job!',
                         'Operation is successful.',
                         'success'
-                    )
+                    ).then((result) => {
+                        if (result.value) {
+                            window.location = '{{ route('vendor') }}'
+                        }
+                    })
                 }
             })
 
@@ -134,19 +134,19 @@ const app = new Vue({
         update() {
             var $this = this;
             $.ajax({
-                url: '{{ route('purchase.update') }}',
+                url: '{{ route('vendor.update') }}',
                 method: 'POST',
-                data: {
-                    overview: $this.overview,
-                    products: $this.products,
-                    summary: $this.summary,
-                },
+                data: $this.overview,
                 success: function(value) {
                     Swal.fire(
                         'Good job!',
                         'Operation is successful.',
                         'success'
-                    )
+                    ).then((result) => {
+                        if (result.value) {
+                            window.location = '{{ route('vendor') }}'
+                        }
+                    })
                 }
             })
         },

@@ -318,7 +318,11 @@
                                 'Good job!',
                                 'Operation is successful.',
                                 'success'
-                            )
+                            ).then((result) => {
+                                if (result.value) {
+                                    window.location = '{{ route('purchase') }}'
+                                }
+                            })
                         }
                     })
 
@@ -338,7 +342,11 @@
                                 'Good job!',
                                 'Operation is successful.',
                                 'success'
-                            )
+                            ).then((result) => {
+                                if (result.value) {
+                                    window.location = '{{ route('purchase') }}'
+                                }
+                            })
                         }
                     })
                 },
@@ -386,7 +394,6 @@
                         url: '{{ route('product.list') }}',
                         method: 'POST',
                         dataType: 'json'
-                        // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
                     }
                 });
 

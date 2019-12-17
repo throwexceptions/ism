@@ -25,13 +25,6 @@ class VendorController extends Controller
         return DataTables::of($vendors)->make(true);
     }
 
-    public function destroy(Request $request)
-    {
-        DB::table('vendors')->where('id', $request->id)->delete();
-
-        return ['success' => true];
-    }
-    
     public function show($id)
     {
         $vendor = Vendor::find($id);
@@ -62,5 +55,28 @@ class VendorController extends Controller
         ));
 
         return view('vendor_form', compact('vendor'));
+    }
+
+    public function update(Request $request)
+    {
+        Vendor::query()->where('id', $request->id)->update($request->input());
+
+        return ['success' => true];
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->input();
+        $data['assigned_to'] = auth()->user()->id;
+        Vendor::query()->insert($data);
+
+        return ['success' => true];
+    }
+
+    public function destroy(Request $request)
+    {
+        DB::table('vendors')->where('id', $request->id)->delete();
+
+        return ['success' => true];
     }
 }

@@ -58,7 +58,7 @@ const app = new Vue({
                 }).then((result) => {
                 if (result.value) {
                     $.ajax({
-                        url: "{{ route('vendor.destroy') }}",
+                        url: "{{ route('customer.destroy') }}",
                         method:'POST',
                         data: $this.overview,
                         success(value) {
