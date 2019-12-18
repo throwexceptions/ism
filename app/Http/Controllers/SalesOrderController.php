@@ -71,7 +71,9 @@ class SalesOrderController extends Controller
 
     public function show($id)
     {
-        $sales_order     = SalesOrder::find($id);
+        $sales_order     = SalesOrder::query()->selectRaw('sales_orders.*, customers.acc_name as customer_name')
+                                     ->join('customers', 'customers.id', '=', 'sales_orders.customer_id')
+                                     ->where('sales_orders.id', $id)->get()[0];
         $product_details = ProductDetail::query()->where('sales_order_id', $id)->get();
         $summary         = Summary::query()->where('sales_order_id', $id)->get()[0];
 
@@ -99,19 +101,21 @@ class SalesOrderController extends Controller
     public function update(Request $request)
     {
         $data = $request->input();
-
+        unset($data['overview']['customer_name']);
         DB::table('sales_orders')->where('id', $data['overview']['id'])
           ->update($data['overview']);
 
-        DB::table('product_details')->where('sales_order_id', $data['overview']['id'])->delete();
-
-        foreach ($data['products'] as $item) {
-            $item['sales_order_id'] = $data['overview']['id'];
-            DB::table('product_details')->insert($item);
+        // Insert To Product
+        if (isset($data['products'])) {
+            DB::table('product_details')->where('sales_order_id', $data['overview']['id'])->delete();
+            foreach ($data['products'] as $item) {
+                $item['sales_order_id'] = $data['overview']['id'];
+                DB::table('product_details')->insert($item);
+            }
         }
 
+        // Insert to Summary
         DB::table('summaries')->where('sales_order_id', $data['overview']['id'])->delete();
-
         $data['summary']['sales_order_id'] = $data['overview']['id'];
         DB::table('summaries')->insert($data['summary']);
 

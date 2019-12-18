@@ -91,17 +91,9 @@
     <div id="collapseSecurity" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Custom Components:</h6>
-            <a class="collapse-item" href="#">
-                <i class="fas fa-fw fa-user-shield"></i>
-                <span>Assign Roles</span>
-            </a>
-            <a class="collapse-item" href="#">
+            <a class="collapse-item" href="{{ route('role') }}">
                 <i class="fas fa-fw fa-user-lock"></i>
                 <span>Roles</span>
-            </a>
-            <a class="collapse-item" href="#">
-                <i class="fas fa-fw fa-id-badge"></i>
-                <span>Abilities</span>
             </a>
         </div>
     </div>

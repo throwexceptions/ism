@@ -97,7 +97,7 @@ const app = new Vue({
                     },
                     {data: 'id', name:'purchase_infos.id', title: 'ID'},
                     {data: 'subject', title: 'Subject'},
-                    {data: 'vendor_name', title: 'Vendor Name'},
+                    {data: 'vendor_name', name: 'vendors.name', title: 'Vendor Name'},
                     {data: 'tracking_number', title: 'Tracking Number'},
                     {data: 'requisition_no', title: 'Requisition No'},
                     {data: 'name', name:'users.name', title: 'Assigned To'},

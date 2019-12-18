@@ -18,10 +18,10 @@ class VendorController extends Controller
     public function table()
     {
         $vendors = Vendor::query()
-            ->selectRaw('vendors.id, vendors.phone,
+                         ->selectRaw('vendors.id, vendors.phone,
             vendors.name, vendors.email, users.name as username')
-            ->join('users', 'users.id','=','vendors.assigned_to');
-        
+                         ->join('users', 'users.id', '=', 'vendors.assigned_to');
+
         return DataTables::of($vendors)->make(true);
     }
 
@@ -34,25 +34,25 @@ class VendorController extends Controller
 
     public function create()
     {
-        $vendor = collect(array(
-            "id" => "",
-            "name" => "",
-            "acct_no" => "",
-            "phone" => "",
-            "other_phone" => "",
-            "email" => "",
-            "fax" => "",
-            "website" => "",
-            "assigned_to" => "",
-            "parent_company" => "",
-            "credit_limit" => "",
+        $vendor = collect([
+            "id"               => "",
+            "name"             => "",
+            "acct_no"          => "",
+            "phone"            => "",
+            "other_phone"      => "",
+            "email"            => "",
+            "fax"              => "",
+            "website"          => "",
+            "assigned_to"      => "",
+            "parent_company"   => "",
+            "credit_limit"     => "",
             "credit_available" => "",
-            "payment_method" => "",
-            "tax" => "",
-            "tac" => "",
-            "shipping_method" => "",
-            "address" => "",
-        ));
+            "payment_method"   => "",
+            "tax"              => "",
+            "tac"              => "",
+            "shipping_method"  => "",
+            "address"          => "",
+        ]);
 
         return view('vendor_form', compact('vendor'));
     }
@@ -66,7 +66,7 @@ class VendorController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->input();
+        $data                = $request->input();
         $data['assigned_to'] = auth()->user()->id;
         Vendor::query()->insert($data);
 
@@ -78,5 +78,15 @@ class VendorController extends Controller
         DB::table('vendors')->where('id', $request->id)->delete();
 
         return ['success' => true];
+    }
+
+    public function getList(Request $request)
+    {
+        return [
+            "results" => DB::table('vendors')
+                           ->selectRaw("id as id, name as text")
+                           ->whereRaw("name LIKE '%{$request->term}%'")
+                           ->get(),
+        ];
     }
 }

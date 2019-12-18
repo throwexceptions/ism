@@ -10,13 +10,13 @@
                 <!-- Approach -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Users Overview</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Roles Overview</h6>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <a href="{{ route('user.create') }}" class="btn btn-sm btn-success"><i
-                                            class="fa fa-plus"></i> New User</a>
+                                <a href="{{ route('role.create') }}" class="btn btn-sm btn-success"><i
+                                            class="fa fa-plus"></i> New Role</a>
                             </div>
                             <div class="col-md-12 mt-3">
                                 <table id="table-user" class="table table-striped nowrap" style="width:100%"></table>
@@ -63,13 +63,6 @@
                 return {
                     dt: null,
                     password: '',
-                    overview: {
-                        id: "",
-                        subject: "",
-                        recipient_email: "",
-                        recipient_name: "",
-                        message: "",
-                    }
                 }
             },
             methods: {
@@ -101,7 +94,7 @@
                     }).then((result) => {
                         if (result.value) {
                             $.ajax({
-                                url: "{{ route('user.destroy') }}",
+                                url: "{{ route('role.destroy') }}",
                                 method: 'POST',
                                 data: $this.overview,
                                 success(value) {
@@ -122,15 +115,14 @@
                     responsive: true,
                     order: [[1, 'desc']],
                     ajax: {
-                        url: "{{ route('user.table') }}",
+                        url: "{{ route('role.table') }}",
                         method: "POST",
                     },
                     columns: [
                         {
                             data: function (value) {
                                 return '<div class="btn-group btn-group-sm shadow-sm" role="group" aria-label="Basic example">' +
-                                    '<a href="#" class="btn btn-warning btn-pass" data-toggle="modal" data-target="#passModal"><i class="fa fa-key"></i></a>' +
-                                    '<a href="/user/detail/' + value.id + '" class="btn btn-info btn-view"><i class="fa fa-pen"></i></a>' +
+                                    '<a href="/role/detail/' + value.id + '" class="btn btn-info btn-view"><i class="fa fa-pen"></i></a>' +
                                     '<button type="button" class="btn btn-danger btn-destroy"><i class="fa fa-trash"></i></button>' +
                                     '</div>'
                             },
@@ -140,7 +132,7 @@
                         },
                         {data: 'id', name: 'id', title: 'ID'},
                         {data: 'name', title: 'Name'},
-                        {data: 'email', title: 'Email'},
+                        {data: 'title', title: 'title'},
                     ],
                     drawCallback: function () {
                         $('table .btn').on('click', function () {

@@ -31,6 +31,10 @@
                                     <label>Agent</label>
                                     <input type="text" class="form-control form-control-sm" v-model="overview.agent">
                                 </div>
+                                <div class="form-group">
+                                    <label>Fax</label>
+                                    <input type="text" class="form-control form-control-sm" v-model="overview.fax">
+                                </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -47,21 +51,16 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Customer Name</label>
+                                    <select class="form-control form-control-sm select2-customer">
+                                    </select>
+                                    <input v-show="viewType == 2" type="text" class="form-control form-control-sm"
+                                           v-model="overview.customer_name">
+                                </div>
+                                <div class="form-group" v-if="overview.payment_method == 'Check'">
+                                    <label>Account Name</label>
                                     <input type="text" class="form-control form-control-sm"
-                                           v-model="overview.customer_id">
+                                           v-model="overview.account_name">
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Fax</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.fax">
-                                </div>
-                                <div class="form-group">
-                                    <label>Sales Order</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.so_no">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
                                 <div class="form-group" v-if="overview.payment_method == 'Check'">
                                     <label>Account Number</label>
                                     <input type="text" class="form-control form-control-sm"
@@ -69,10 +68,9 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="form-group" v-if="overview.payment_method == 'Check'">
-                                    <label>Account Name</label>
-                                    <input type="text" class="form-control form-control-sm"
-                                           v-model="overview.account_name">
+                                <div class="form-group">
+                                    <label>Sales Order</label>
+                                    <input type="text" class="form-control form-control-sm" v-model="overview.so_no">
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -186,7 +184,7 @@
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <a href="{{ route('purchase') }}" class="btn btn-warning">Back</a>
+                                <a href="{{ route('sales') }}" class="btn btn-warning">Back</a>
                                 <button class="btn btn-info" v-if="viewType == 1" @click="store">Save New</button>
                                 <button class="btn btn-primary" v-if="viewType == 0" @click="update">Update Now</button>
                             </div>
@@ -335,9 +333,22 @@
                         url: '{{ route('product.list') }}',
                         method: 'POST',
                         dataType: 'json'
-                        // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
                     }
                 });
+
+                $('.select2-customer').select2({
+                    width: '100%',
+                    ajax: {
+                        url: '{{ route('customer.list') }}',
+                        method: 'POST',
+                        dataType: 'json'
+                    }
+                }).on('select2:select', function (e) {
+                    var data = e.params.data;
+                    $this.overview.customer_id = data.id;
+                });
+                var newOption = new Option($this.overview.customer_name, $this.overview.customer_id, true, true);
+                $('.select2-customer').append(newOption).trigger('change');
 
                 if ('{{ Route::currentRouteName() }}' == 'sales.detail') {
                     this.viewType = 0;
@@ -349,6 +360,7 @@
                     this.viewType = 2;
                     $('label').addClass('font-weight-bold');
                     $('.form-control').addClass('form-control-plaintext').removeClass('form-control');
+                    $('.select2').attr('hidden','hidden');
                 }
             }
         });

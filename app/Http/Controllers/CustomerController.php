@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Customer;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Yajra\DataTables\DataTables;
+use DB;
 
 class CustomerController extends Controller
 {
@@ -83,5 +83,15 @@ class CustomerController extends Controller
         Customer::query()->where('id', $request->id)->delete();
 
         return ['success' => true];
+    }
+
+    public function getList(Request $request)
+    {
+        return [
+            "results" => DB::table('customers')
+                           ->selectRaw("id as id, acc_name as text")
+                           ->whereRaw("acc_name LIKE '%{$request->term}%'")
+                           ->get(),
+        ];
     }
 }

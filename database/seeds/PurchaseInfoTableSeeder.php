@@ -19,7 +19,7 @@ class PurchaseInfoTableSeeder extends Seeder
             $faker = Factory::create();
             $purchase_info = new PurchaseInfo();
             $purchase_info->subject = $faker->company;
-            $purchase_info->vendor_name = $faker->word;
+            $purchase_info->vendor_id = \App\Vendor::all()->random(1)[0]->id;
             $purchase_info->requisition_no = $faker->bankAccountNumber;
             $purchase_info->tracking_number = $faker->bankAccountNumber;
             $purchase_info->contact_name = $faker->firstName();

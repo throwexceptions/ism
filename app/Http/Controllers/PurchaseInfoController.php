@@ -20,83 +20,88 @@ class PurchaseInfoController extends Controller
     public function table()
     {
         $purchase_info = PurchaseInfo::query()
-            ->selectRaw('purchase_infos.id, purchase_infos.subject,
-            purchase_infos.vendor_name, purchase_infos.tracking_number,
+                                     ->selectRaw('purchase_infos.id, purchase_infos.subject,
+            vendors.name as vendor_name, purchase_infos.tracking_number,
             purchase_infos.requisition_no, users.name')
-            ->join('users', 'users.id','=','purchase_infos.assigned_to');
-        
+                                     ->join('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
+                                     ->join('users', 'users.id', '=', 'purchase_infos.assigned_to');
+
         return DataTables::of($purchase_info)->make(true);
     }
 
     public function create()
     {
-        $purchase_info = collect(array(
-            "id"=> "",
-            "subject"=> "",
-            "vendor_name"=> "",
-            "requisition_no"=> "",
-            "tracking_number"=> "",
-            "contact_name"=> "",
-            "phone"=> "",
-            "due_date"=> "",
-            "fax"=> "",
-            "carrier"=>"",
-            "deliver_to"=>"",
-            "shipping_method"=>"",
-            "assigned_to"=>"",
-            "status"=>"",
-            "date_received"=>"",
-            "po_no"=>"",
-            "payment_method"=>"",
-            "billing_address"=>"",
-            "check_number" => "",
-            "check_writer" => "",
-            "delivery_address"=>"",
-            "tac"=> "",
-            "description"=> ""
-        ));
+        $purchase_info = collect([
+            "id"               => "",
+            "subject"          => "",
+            "vendor_name"      => "",
+            "requisition_no"   => "",
+            "tracking_number"  => "",
+            "contact_name"     => "",
+            "phone"            => "",
+            "due_date"         => "",
+            "fax"              => "",
+            "carrier"          => "",
+            "deliver_to"       => "",
+            "shipping_method"  => "",
+            "assigned_to"      => "",
+            "status"           => "",
+            "date_received"    => "",
+            "po_no"            => "",
+            "payment_method"   => "",
+            "billing_address"  => "",
+            "check_number"     => "",
+            "check_writer"     => "",
+            "delivery_address" => "",
+            "tac"              => "",
+            "description"      => "",
+        ]);
 
         $product_details = collect([]);
 
-        $summary = collect(array(
-            "id" => "",
+        $summary = collect([
+            "id"                => "",
             "purchase_order_id" => "",
-            "discount" => "0",
-            "shipping" => "0",
-            "sales_tax" => "0",
-        ));
+            "discount"          => "0",
+            "shipping"          => "0",
+            "sales_tax"         => "0",
+        ]);
 
-        return view('purchase_form', compact('purchase_info','product_details','summary'));
+        return view('purchase_form', compact('purchase_info', 'product_details', 'summary'));
     }
 
     public function show($id)
     {
-        $purchase_info = PurchaseInfo::find($id);
+        $purchase_info   = PurchaseInfo::query()->selectRaw('purchase_infos.*, vendors.name as vendor_name')
+                                       ->join('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
+                                       ->where('purchase_infos.id', $id)->get()[0];
         $product_details = ProductDetail::query()->where('purchase_order_id', $id)->get();
-        $summary = Summary::query()->where('purchase_order_id', $id)->get()[0];
+        $summary         = Summary::query()->where('purchase_order_id', $id)->get()[0];
 
-        return view('purchase_form', compact('purchase_info','product_details','summary'));
+        return view('purchase_form', compact('purchase_info', 'product_details', 'summary'));
     }
 
     public function update(Request $request)
     {
         $data = $request->input();
-
-        if($data['overview']['payment_method'] != 'Check') {
+        unset($data['overview']['vendor_name']);
+        if ($data['overview']['payment_method'] != 'Check') {
             $data['overview']['check_number'] = '';
             $data['overview']['check_writer'] = '';
         }
 
         DB::table('purchase_infos')->where('id', $data['overview']['id'])
-            ->update($data['overview']);
-            
+          ->update($data['overview']);
+
         DB::table('product_details')->where('purchase_order_id', $data['overview']['id'])->delete();
 
-        foreach($data['products'] as $item) {
-            $item['purchase_order_id'] = $data['overview']['id'];
-            DB::table('product_details')->insert($item);
+        if (isset($data['products'])) {
+            foreach ($data['products'] as $item) {
+                $item['purchase_order_id'] = $data['overview']['id'];
+                DB::table('product_details')->insert($item);
+            }
         }
-            
+
         DB::table('summaries')->where('purchase_order_id', $data['overview']['id'])->delete();
         $data['summary']['purchase_order_id'] = $data['overview']['id'];
         DB::table('summaries')->insert($data['summary']);
@@ -108,16 +113,15 @@ class PurchaseInfoController extends Controller
     {
         $data = $request->input();
 
-        if($data['overview']['payment_method'] != 'Check') {
+        if ($data['overview']['payment_method'] != 'Check') {
             $data['overview']['check_number'] = '';
             $data['overview']['check_writer'] = '';
         }
 
         $data['overview']['assigned_to'] = auth()->user()->id;
-        $id = DB::table('purchase_infos')->insertGetId($data['overview']);
+        $id                              = DB::table('purchase_infos')->insertGetId($data['overview']);
 
-        foreach($data['products'] as $item)
-        {
+        foreach ($data['products'] as $item) {
             $item['purchase_order_id'] = $id;
             DB::table('product_details')->insert($item);
         }

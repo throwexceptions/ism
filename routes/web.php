@@ -43,6 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/vendor/create', 'VendorController@create')->name('vendor.create');
     Route::get('/vendor/detail/{id}', 'VendorController@show')->name('vendor.detail');
     Route::get('/vendor/view/{id}', 'VendorController@show')->name('vendor.view');
+    Route::post('/vendor/list', 'VendorController@getList')->name('vendor.list');
     Route::post('/vendor/update', 'VendorController@update')->name('vendor.update');
     Route::post('/vendor/store', 'VendorController@store')->name('vendor.store');
     Route::post('/vendor/destroy', 'VendorController@destroy')->name('vendor.destroy');
@@ -55,6 +56,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/customer/table', 'CustomerController@table')->name('customer.table');
     Route::get('/customer/detail/{id}', 'CustomerController@show')->name('customer.detail');
     Route::get('/customer/view/{id}', 'CustomerController@show')->name('customer.view');
+    Route::post('/customer/list', 'CustomerController@getList')->name('customer.list');
     Route::get('/customer/create', 'CustomerController@create')->name('customer.create');
     Route::post('/customer/update', 'CustomerController@update')->name('customer.update');
     Route::post('/customer/store', 'CustomerController@store')->name('customer.store');
@@ -75,6 +77,19 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/supply/table', 'SupplyController@table')->name('supply.table');
 
     Route::get('/users', 'UserController@index')->name('users');
-    Route::get('/users/create', 'UserController@create')->name('user.create');
     Route::post('/users/table', 'UserController@table')->name('user.table');
+    Route::get('/user/detail/{id}', 'UserController@show')->name('user.detail');
+    Route::get('/user/create', 'UserController@create')->name('user.create');
+    Route::post('/user/store', 'UserController@store')->name('user.store');
+    Route::post('/user/update', 'UserController@update')->name('user.update');
+    Route::post('/user/destroy', 'UserController@destroy')->name('user.destroy');
+    Route::post('/user/change/pass', 'UserController@changePass')->name('user.change.pass');
+
+    Route::get('/role', 'SecurityController@roles')->name('role');
+    Route::post('/role/table', 'SecurityController@table')->name('role.table');
+    Route::get('/role/create', 'SecurityController@create')->name('role.create');
+    Route::get('/role/detail/{id}', 'SecurityController@show')->name('role.detail');
+    Route::post('/role/store', 'SecurityController@store')->name('role.store');
+    Route::post('/role/abilities', 'SecurityController@update')->name('role.abilities');
+    Route::post('/role/destroy', 'SecurityController@destroy')->name('role.destroy');
 });

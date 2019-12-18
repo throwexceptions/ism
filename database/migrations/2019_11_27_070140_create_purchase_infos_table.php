@@ -16,7 +16,7 @@ class CreatePurchaseInfosTable extends Migration
         Schema::create('purchase_infos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('subject', 200)->nullable();
-            $table->string('vendor_name', 200)->nullable();
+            $table->string('vendor_id', 200)->nullable();
             $table->string('requisition_no', 200)->nullable();
             $table->string('tracking_number', 200)->nullable();
             $table->string('contact_name', 200)->nullable();

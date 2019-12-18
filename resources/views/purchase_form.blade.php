@@ -21,16 +21,16 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Subject</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.subject">
+                                    <input class="form-control form-control-sm" v-model="overview.subject">
                                 </div>
                                 <div class="form-group">
                                     <label>Requisition No</label>
-                                    <input type="text" class="form-control form-control-sm"
+                                    <input class="form-control form-control-sm"
                                            v-model="overview.requisition_no">
                                 </div>
                                 <div class="form-group">
                                     <label>Contact Name</label>
-                                    <input type="text" class="form-control form-control-sm"
+                                    <input class="form-control form-control-sm"
                                            v-model="overview.contact_name">
                                 </div>
                                 <div class="form-group">
@@ -52,6 +52,7 @@
                                     <label>Status</label>
                                     <select type="text" class="form-control form-control-sm" v-model="overview.status">
                                         <option value="">-- Select Options --</option>
+                                        <option value="Created">Created</option>
                                         <option value="Received">Received</option>
                                         <option value="Paid">Paid</option>
                                         <option value="Completed">Completed</option>
@@ -62,7 +63,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Vendor Name</label>
-                                    <input type="text" class="form-control form-control-sm"
+                                    <select class="form-control form-control-sm select2-vendor">
+                                    </select>
+                                    <input v-show="viewType == 2" class="form-control form-control-sm"
                                            v-model="overview.vendor_name">
                                 </div>
                                 <div class="form-group">
@@ -388,6 +391,7 @@
                 var $this = this;
                 $this.subTotal();
 
+
                 $('.select2-product').select2({
                     width: '100%',
                     ajax: {
@@ -396,6 +400,20 @@
                         dataType: 'json'
                     }
                 });
+
+                $('.select2-vendor').select2({
+                    width: '100%',
+                    ajax: {
+                        url: '{{ route('vendor.list') }}',
+                        method: 'POST',
+                        dataType: 'json'
+                    }
+                }).on('select2:select', function (e) {
+                    var data = e.params.data;
+                    $this.overview.vendor_id = data.id;
+                });
+                var newOption = new Option($this.overview.vendor_name, $this.overview.vendor_id, true, true);
+                $('.select2-vendor').append(newOption).trigger('change');
 
                 if ('{{ Route::currentRouteName() }}' == 'purchase.detail') {
                     this.viewType = 0;
@@ -407,6 +425,7 @@
                     this.viewType = 2;
                     $('label').addClass('font-weight-bold');
                     $('.form-control').addClass('form-control-plaintext').removeClass('form-control');
+                    $('.select2').attr('hidden','hidden');
                 }
             }
         });
