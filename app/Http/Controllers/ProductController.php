@@ -45,7 +45,17 @@ class ProductController extends Controller
             "weight"       => "",
         ]);
 
-        return view('product_form', compact('product'));
+        $gallery = collect([]);
+
+        return view('product_form', compact('product', 'gallery'));
+    }
+
+    public function show($id)
+    {
+        $product = Product::find($id);
+        $gallery = Gallery::query()->where('product_id', $id)->get();
+
+        return view('product_form', compact('product', 'gallery'));
     }
 
     public function getList(Request $request)
@@ -96,14 +106,6 @@ class ProductController extends Controller
         }
 
         return ['success' => true];
-    }
-
-    public function show($id)
-    {
-        $product = Product::find($id);
-        $gallery = Gallery::query()->where('product_id', $id)->get();
-
-        return view('product_form', compact('product', 'gallery'));
     }
 
     public function destroy(Request $request)
