@@ -84,7 +84,7 @@ class VendorController extends Controller
     {
         return [
             "results" => DB::table('vendors')
-                           ->selectRaw("id as id, name as text")
+                           ->selectRaw("id as id, IFNULL(name, '') as text")
                            ->whereRaw("name LIKE '%{$request->term}%'")
                            ->get(),
         ];

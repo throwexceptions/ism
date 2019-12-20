@@ -15,6 +15,11 @@ class SecurityController extends Controller
         'batch_process_retrieve',
         'batch_process_update',
         'batch_process_delete',
+        'purchase_order',
+        'purchase_order_create',
+        'purchase_order_retrieve',
+        'purchase_order_update',
+        'purchase_order_delete',
     ];
 
     public function roles()

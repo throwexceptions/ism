@@ -35,6 +35,7 @@ class SalesOrderController extends Controller
             "subject"        => "",
             "customer_id"    => "",
             "owner"          => "",
+            "so_no"          => SalesOrder::generate()->newSONo(),
             "agent"          => "",
             "assigned_to"    => "",
             "status"         => "",
@@ -63,7 +64,7 @@ class SalesOrderController extends Controller
     {
         $vendors = SalesOrder::query()
                              ->selectRaw('sales_orders.*, users.name as username, customers.acc_name as customer_name')
-                             ->join('customers', 'customers.id', '=', 'sales_orders.customer_id')
+                             ->leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')
                              ->join('users', 'users.id', '=', 'sales_orders.assigned_to');
 
         return DataTables::of($vendors)->make(true);
@@ -71,8 +72,8 @@ class SalesOrderController extends Controller
 
     public function show($id)
     {
-        $sales_order     = SalesOrder::query()->selectRaw('sales_orders.*, customers.acc_name as customer_name')
-                                     ->join('customers', 'customers.id', '=', 'sales_orders.customer_id')
+        $sales_order     = SalesOrder::query()->selectRaw('sales_orders.*, IFNULL(customers.acc_name, \'\') as customer_name')
+                                     ->leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')
                                      ->where('sales_orders.id', $id)->get()[0];
         $product_details = ProductDetail::query()->where('sales_order_id', $id)->get();
         $summary         = Summary::query()->where('sales_order_id', $id)->get()[0];
@@ -87,9 +88,11 @@ class SalesOrderController extends Controller
         $data['overview']['assigned_to'] = auth()->user()->id;
 
         $id = DB::table('sales_orders')->insertGetId($data['overview']);
-        foreach ($data['products'] as $item) {
-            $item['sales_order_id'] = $id;
-            DB::table('product_details')->insert($item);
+        if (isset($data['products'])) {
+            foreach ($data['products'] as $item) {
+                $item['sales_order_id'] = $id;
+                DB::table('product_details')->insert($item);
+            }
         }
 
         $data['summary']['sales_order_id'] = $id;

@@ -23,7 +23,7 @@ class PurchaseInfoController extends Controller
                                      ->selectRaw('purchase_infos.id, purchase_infos.subject,
             vendors.name as vendor_name, purchase_infos.tracking_number,
             purchase_infos.requisition_no, users.name')
-                                     ->join('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
+                                     ->leftJoin('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
                                      ->join('users', 'users.id', '=', 'purchase_infos.assigned_to');
 
         return DataTables::of($purchase_info)->make(true);
@@ -34,7 +34,7 @@ class PurchaseInfoController extends Controller
         $purchase_info = collect([
             "id"               => "",
             "subject"          => "",
-            "vendor_name"      => "",
+            "vendor_id"      => "",
             "requisition_no"   => "",
             "tracking_number"  => "",
             "contact_name"     => "",
@@ -47,7 +47,7 @@ class PurchaseInfoController extends Controller
             "assigned_to"      => "",
             "status"           => "",
             "date_received"    => "",
-            "po_no"            => "",
+            "po_no"            => PurchaseInfo::generate()->newPONo(),
             "payment_method"   => "",
             "billing_address"  => "",
             "check_number"     => "",
@@ -72,8 +72,8 @@ class PurchaseInfoController extends Controller
 
     public function show($id)
     {
-        $purchase_info   = PurchaseInfo::query()->selectRaw('purchase_infos.*, vendors.name as vendor_name')
-                                       ->join('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
+        $purchase_info   = PurchaseInfo::query()->selectRaw('purchase_infos.*, IFNULL(vendors.name, \'\') as vendor_name')
+                                       ->leftJoin('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
                                        ->where('purchase_infos.id', $id)->get()[0];
         $product_details = ProductDetail::query()->where('purchase_order_id', $id)->get();
         $summary         = Summary::query()->where('purchase_order_id', $id)->get()[0];
@@ -121,9 +121,11 @@ class PurchaseInfoController extends Controller
         $data['overview']['assigned_to'] = auth()->user()->id;
         $id                              = DB::table('purchase_infos')->insertGetId($data['overview']);
 
-        foreach ($data['products'] as $item) {
-            $item['purchase_order_id'] = $id;
-            DB::table('product_details')->insert($item);
+        if (isset($data['products'])) {
+            foreach ($data['products'] as $item) {
+                $item['purchase_order_id'] = $id;
+                DB::table('product_details')->insert($item);
+            }
         }
 
         $data['summary']['purchase_order_id'] = $id;

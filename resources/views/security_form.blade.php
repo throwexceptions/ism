@@ -21,77 +21,154 @@
                                 </div>
                             </div>
                             {{--BATCH PROCESS--}}
-                            <div class="col-md-12 row">
-                                <div class="col-md-12 mt-4">
-                                    <h3>Batch Process Permissions</h3>
-                                    <hr>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group row">
-                                        <div class="col-md-3">
-                                            <label class="switch">
-                                                <input type="checkbox" v-model="abilities.batch_process">
-                                                <span class="slider"></span>
-                                            </label>
+                            @if(env('SECTION_BATCHING') == 'show')
+                                <div class="col-md-12 row">
+                                    <div class="col-md-12 mt-4">
+                                        <h3>Batch Process Permissions</h3>
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.batch_process">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Batch Process</label>
+                                            </div>
                                         </div>
-                                        <div class="col-md-auto">
-                                            <label class="switch-label">Batch Process</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.batch_process_create">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Create</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.batch_process_retrieve">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Retrieve</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.batch_process_update">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Update</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.batch_process_delete">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Delete</label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
-                                    <div class="form-group row">
-                                        <div class="col-md-3">
-                                            <label class="switch">
-                                                <input type="checkbox" v-model="abilities.batch_process_create">
-                                                <span class="slider"></span>
-                                            </label>
+                            @endif
+
+                            {{--Process Order--}}
+                            @if(env('SECTION_INVENTORY') == 'show')
+                                <div class="col-md-12 row">
+                                    <div class="col-md-12 mt-4">
+                                        <h3>Purchase Order</h3>
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.purchase_order">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Purchase Order</label>
+                                            </div>
                                         </div>
-                                        <div class="col-md-auto">
-                                            <label class="switch-label">Create</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.purchase_order_create">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Create</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.purchase_order_retrieve">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Retrieve</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.purchase_order_update">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Update</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.purchase_order_delete">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Delete</label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
-                                    <div class="form-group row">
-                                        <div class="col-md-3">
-                                            <label class="switch">
-                                                <input type="checkbox" v-model="abilities.batch_process_retrieve">
-                                                <span class="slider"></span>
-                                            </label>
-                                        </div>
-                                        <div class="col-md-auto">
-                                            <label class="switch-label">Retrieve</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group row">
-                                        <div class="col-md-3">
-                                            <label class="switch">
-                                                <input type="checkbox" v-model="abilities.batch_process_update">
-                                                <span class="slider"></span>
-                                            </label>
-                                        </div>
-                                        <div class="col-md-auto">
-                                            <label class="switch-label">Update</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group row">
-                                        <div class="col-md-3">
-                                            <label class="switch">
-                                                <input type="checkbox" v-model="abilities.batch_process_delete">
-                                                <span class="slider"></span>
-                                            </label>
-                                        </div>
-                                        <div class="col-md-auto">
-                                            <label class="switch-label">Delete</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @endif
                             <div class="col-md-12">
                                 <a href="{{ route('role') }}" class="btn btn-warning">Back</a>
                                 <button class="btn btn-success" v-if="viewType != 2" @click="store">Save</button>

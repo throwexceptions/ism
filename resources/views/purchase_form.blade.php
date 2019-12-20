@@ -89,9 +89,9 @@
                                            v-model="overview.deliver_to">
                                 </div>
                                 <div class="form-group">
-                                    <label>Sales Order</label>
+                                    <label>Purchase Order</label>
                                     <input type="text" class="form-control form-control-sm"
-                                           v-model="overview.sales_order">
+                                           v-model="overview.po_no">
                                 </div>
                             </div>
                             <div class="col-md-12">
