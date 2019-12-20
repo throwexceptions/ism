@@ -31,7 +31,11 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Category</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.category">
+                                    <select class="form-control form-control-sm" v-model="overview.category">
+                                        @foreach(\App\Category::all() as $value)
+                                            <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-4">
