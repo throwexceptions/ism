@@ -17,7 +17,7 @@ class SalesOrder extends Model
 
     public function newSONo()
     {
-        $po_no_list = $this->newQuery()
+        $so_no_list = $this->newQuery()
                            ->where('so_no', 'like', '%SO%')
                            ->orderBy('id', 'desc')
                            ->limit(1)
@@ -25,8 +25,12 @@ class SalesOrder extends Model
                            ->toArray();
         $str_length = 5;
         $year       = Carbon::now()->format('y');
-        $so_no      = $po_no_list[0]["so_no"];
-        if (count($po_no_list) == 0 || substr(explode('-', $so_no)[0], -2) != $year) {
+
+        if (isset($so_no_list[0]["so_no"])) {
+            $so_no = $so_no_list[0]["so_no"];
+        }
+
+        if (count($so_no_list) == 0 || substr(explode('-', $so_no)[0], -2) != $year) {
             $num = 1;
             $str = substr("0000{$num}", -$str_length);
 

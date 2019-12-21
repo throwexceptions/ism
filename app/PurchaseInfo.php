@@ -25,7 +25,9 @@ class PurchaseInfo extends Model
                            ->toArray();
         $str_length = 5;
         $year       = Carbon::now()->format('y');
-        $po_no      = $po_no_list[0]["po_no"];
+        if (isset($po_no_list[0]["po_no"])) {
+            $po_no = $po_no_list[0]["po_no"];
+        }
         if (count($po_no_list) == 0 || substr(explode('-', $po_no)[0], -2) != $year) {
             $num = 1;
             $str = substr("0000{$num}", -$str_length);
