@@ -32,7 +32,7 @@
                         <i class="fas fa-fw fa-boxes"></i>
                         <span>Batching</span>
                     </a>
-                    <a class="collapse-item" href="">
+                    <a class="collapse-item" href="{{ route('orderform') }}">
                         <i class="fas fa-fw fa-parachute-box"></i>
                         <span>Order Form</span>
                     </a>

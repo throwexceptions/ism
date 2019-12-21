@@ -91,5 +91,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/role/detail/{id}', 'SecurityController@show')->name('role.detail');
     Route::post('/role/store', 'SecurityController@store')->name('role.store');
     Route::post('/role/abilities', 'SecurityController@update')->name('role.abilities');
-    Route::post('/role/destroy', 'SecurityController@destroy')->name('role.destroy');
+    Route::post('/role/destroy', 'SecurityController@destroy')->name('role.destroy');\
+
+    Route::get('/orderform', 'OrderFormController@index')->name('orderform');
+    Route::post('/orderform/table', 'OrderFormController@table')->name('orderform.table');
 });
