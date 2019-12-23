@@ -19,7 +19,7 @@ class ProductTableSeeder extends Seeder
             $product               = new Product();
             $product->name         = $faker->word();
             $product->code         = $faker->creditCardNumber();
-            $product->category     = \App\Category::all()->random(2)[0]->id;
+            $product->category     = \App\Category::all()->random(2)[0]->name;
             $product->color        = $faker->colorName;
             $product->size         = $faker->randomFloat();
             $product->weight       = $faker->randomFloat();

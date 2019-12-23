@@ -18,6 +18,49 @@
             <span>Dashboard</span></a>
     </li>
     <!-- Nav Item - Pages Collapse Menu -->
+    @if(env('SECTION_INVENTORY') == 'show')
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('purchase') }}">
+                <i class="fas fa-fw fa-cash-register"></i>
+                <span>Purchase Order</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('sales') }}">
+                <i class="fas fa-fw fa-money-check-alt"></i>
+                <span>Sales Order</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('customer') }}">
+                <i class="fas fa-fw fa-users"></i>
+                <span>Customer</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('vendor') }}">
+                <i class="fas fa-fw fa-store"></i>
+                <span>Vendors</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+               aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-dolly-flatbed"></i>
+                <span>Inventory</span>
+            </a>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Custom Components:</h6>
+                    <a class="collapse-item" href="{{ route('supply') }}">
+                        <i class="fas fa-fw fa-warehouse"></i>
+                        <span>Supplies</span>
+                    </a>
+                    <a class="collapse-item" href="{{ route('products') }}">
+                        <i class="fas fa-fw fa-receipt"></i>
+                        <span>Products</span>
+                    </a>
+                </div>
+            </div>
+        </li>
+    @endif
+<!-- Nav Item - Pages Collapse Menu -->
     @if(env('SECTION_BATCHING') == 'show')
         <li class="nav-item">
             <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
@@ -41,66 +84,27 @@
         </li>
     @endif
 
-    <!-- Nav Item - Pages Collapse Menu -->
-@if(env('SECTION_INVENTORY') == 'show')
-    <li class="nav-item">
-        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
-           aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-dolly-flatbed"></i>
-            <span>Inventory</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Custom Components:</h6>
-                <a class="collapse-item po-mod" href="{{ route('purchase') }}">
-                    <i class="fas fa-fw fa-cash-register"></i>
-                    <span>Purchase Order</span>
-                </a>
-                <a class="collapse-item" href="{{ route('sales') }}">
-                    <i class="fas fa-fw fa-money-check-alt"></i>
-                    <span>Sales Order</span>
-                </a>
-                <a class="collapse-item" href="{{ route('supply') }}">
-                    <i class="fas fa-fw fa-warehouse"></i>
-                    <span>Supplies</span>
-                </a>
-                <a class="collapse-item" href="{{ route('customer') }}">
-                    <i class="fas fa-fw fa-users"></i>
-                    <span>Customers</span>
-                </a>
-                <a class="collapse-item" href="{{ route('vendor') }}">
-                    <i class="fas fa-fw fa-store"></i>
-                    <span>Vendors</span>
-                </a>
-                <a class="collapse-item" href="{{ route('products') }}">
-                    <i class="fas fa-fw fa-receipt"></i>
-                    <span>Products</span>
-                </a>
-            </div>
-        </div>
-    </li>
-@endif
 <!-- Nav Item - Pages Collapse Menu -->
-@if(env('SECTION_SECURITY') == 'show')
+    @if(env('SECTION_SECURITY') == 'show')
         <li class="nav-item">
-    <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseSecurity" aria-expanded="true"
-       aria-controls="collapseTwo">
-        <i class="fas fa-fw fa-shield-alt"></i>
-        <span>Security</span>
-    </a>
-    <div id="collapseSecurity" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Custom Components:</h6>
-            <a class="collapse-item" href="{{ route('role') }}">
-                <i class="fas fa-fw fa-user-lock"></i>
-                <span>Roles</span>
+            <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseSecurity" aria-expanded="true"
+               aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-shield-alt"></i>
+                <span>Security</span>
             </a>
-        </div>
-    </div>
-</li>
+            <div id="collapseSecurity" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Custom Components:</h6>
+                    <a class="collapse-item" href="{{ route('role') }}">
+                        <i class="fas fa-fw fa-user-lock"></i>
+                        <span>Roles</span>
+                    </a>
+                </div>
+            </div>
+        </li>
 @endif
 
-    <!-- Nav Item - User Accounts -->
+<!-- Nav Item - User Accounts -->
     <li class="nav-item">
         <a class="nav-link" href="{{ route('users') }}">
             <i class="fas fa-fw fa-user-alt"></i>

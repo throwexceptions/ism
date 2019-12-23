@@ -33,7 +33,7 @@
                                     <label>Category</label>
                                     <select class="form-control form-control-sm" v-model="overview.category">
                                         @foreach(\App\Category::all() as $value)
-                                            <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                            <option value="{{ $value->name }}">{{ $value->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
