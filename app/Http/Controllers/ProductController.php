@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Gallery;
 use App\Product;
 use Illuminate\Http\Request;
@@ -15,7 +16,9 @@ class ProductController extends Controller
 {
     public function index()
     {
-        return view('product');
+        $category = Category::all()->pluck('name');
+
+        return view('product', compact('category'));
     }
 
     public function table()

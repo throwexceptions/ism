@@ -18,7 +18,8 @@
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <a href="{{ route('product.create') }}" class="btn btn-sm btn-success">
                                         <i class="fa fa-plus"></i> New Product</a>
-                                    <a href="#" class="btn btn-sm btn-info">
+                                    <a href="#" class="btn btn-sm btn-info" data-toggle="modal"
+                                       data-target="#categoryModal">
                                         <i class="fa fa-list-ol"></i> Categories</a>
                                 </div>
                             </div>
@@ -26,6 +27,47 @@
                                 <table id="table-product" class="table table-striped nowrap" style="width:100%"></table>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="categoryModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Product Category</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Insert new Category..."
+                                           aria-label="Recipient's username" v-model="category_new" aria-describedby="button-addon2">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-success" @click="addCategory" type="button" id="button-addon2">
+                                            <i class="fa fa-plus-circle"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <ul class="list-group">
+                                    <li v-for="(category, idx) in categories"
+                                        class="list-group-item d-flex justify-content-between align-items-center">
+                                        @{{ category }}
+                                        <button class="btn btn-sm btn-danger" @click="deleteCategory(idx)"><i class="fa fa-times"></i>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -40,16 +82,38 @@
             data() {
                 return {
                     dt: null,
-                    overview: {
-                        id: "",
-                        subject: "",
-                        recipient_email: "",
-                        recipient_name: "",
-                        message: "",
-                    }
+                    overview: {id: ''},
+                    categories: {!! $category !!},
+                    category_new: ''
                 }
             },
             methods: {
+                addCategory() {
+                    var $this = this;
+                    $.ajax({
+                        url: "{{ route('category.store') }}",
+                        method: 'POST',
+                        data: {category: $this.category_new},
+                        success(value) {
+                            $this.categories = value.categories;
+                            $this.category_new = '';
+                            Swal.fire('Success!', 'A category has been added.', 'success');
+                        }
+                    });
+                },
+                deleteCategory(idx) {
+                    var $this = this;
+                    $this.categories.splice(idx, 1);
+                    $.ajax({
+                        url: "{{ route('category.delete') }}",
+                        method: 'POST',
+                        data: {category: $this.categories},
+                        success(value) {
+                            $this.categories = value.categories;
+                            Swal.fire('Deleted!', 'A category has been deleted.', 'success');
+                        }
+                    });
+                },
                 destroy() {
                     var $this = this;
                     Swal.fire({

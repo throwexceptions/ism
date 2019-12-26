@@ -140,3 +140,7 @@ input:checked + .slider:before {
   margin-top: 4px !important;
   margin-bottom: 0px !important;
 }
+
+.form-control {
+  border-radius: 0 !important;
+}

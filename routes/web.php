@@ -72,6 +72,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/product/update', 'ProductController@update')->name('product.update');
     Route::post('/product/image/upload', 'ProductController@imageUpload')->name('product.image.upload');
     Route::post('/product/destroy', 'ProductController@destroy')->name('product.destroy');
+    Route::post('/category/destroy', 'CategoryController@destroy')->name('category.delete');
+    Route::post('/category/store', 'CategoryController@store')->name('category.store');
 
     Route::get('/supply', 'SupplyController@index')->name('supply');
     Route::post('/supply/table', 'SupplyController@table')->name('supply.table');
