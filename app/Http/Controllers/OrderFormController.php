@@ -56,7 +56,7 @@ class OrderFormController extends Controller
                               ->get()[0];
 
         $product_details = ProductDetail::query()->where('sales_order_id', $orderform->so_no)
-                                        ->orWhere('purchase_order_id', $orderform->po_no)->get();
+                                        ->where('purchase_order_id', $orderform->po_no)->get();
 
         return view('orderform_form', compact('orderform', 'product_details'));
     }
