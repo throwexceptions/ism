@@ -48,19 +48,19 @@
                                     <input type="text" class="form-control form-control-sm"
                                            v-model="overview.shipping_method">
                                 </div>
-                                <div class="form-group">
-                                    <label>Status</label>
-                                    <select type="text" class="form-control form-control-sm" v-model="overview.status">
-                                        <option value="">-- Select Options --</option>
-                                        <option value="Created">Created</option>
-                                        <option value="Received">Received</option>
-                                        <option value="Paid">Paid</option>
-                                        <option value="Completed">Completed</option>
-                                        <option value="Ordered">Ordered</option>
-                                        <option value="Invoice">Invoice</option>
-                                        <option value="Shipped">Shipped</option>
-                                    </select>
-                                </div>
+                                {{--<div class="form-group">--}}
+                                    {{--<label>Status</label>--}}
+                                    {{--<select type="text" class="form-control form-control-sm" v-model="overview.status">--}}
+                                        {{--<option value="">-- Select Options --</option>--}}
+                                        {{--<option value="Created">Created</option>--}}
+                                        {{--<option value="Received">Received</option>--}}
+                                        {{--<option value="Paid">Paid</option>--}}
+                                        {{--<option value="Completed">Completed</option>--}}
+                                        {{--<option value="Ordered">Ordered</option>--}}
+                                        {{--<option value="Invoice">Invoice</option>--}}
+                                        {{--<option value="Shipped">Shipped</option>--}}
+                                    {{--</select>--}}
+                                {{--</div>--}}
                                 <div class="form-group">
                                     <label>Vendor Name</label>
                                     <select class="form-control form-control-sm select2-vendor">
