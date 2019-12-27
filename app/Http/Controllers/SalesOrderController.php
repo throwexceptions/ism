@@ -63,7 +63,7 @@ class SalesOrderController extends Controller
     public function table()
     {
         $vendors = SalesOrder::query()
-                             ->selectRaw('sales_orders.*, users.name as username, customers.acc_name as customer_name')
+                             ->selectRaw('sales_orders.*, users.name as username, customers.name as customer_name')
                              ->leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')
                              ->join('users', 'users.id', '=', 'sales_orders.assigned_to');
 
