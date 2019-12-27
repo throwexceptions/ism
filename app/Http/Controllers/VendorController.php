@@ -18,7 +18,7 @@ class VendorController extends Controller
     public function table()
     {
         $vendors = Vendor::query()
-                         ->selectRaw('vendors.id, vendors.phone,
+                         ->selectRaw('vendors.id, vendors.contact_person,
             vendors.name, vendors.email, users.name as username')
                          ->join('users', 'users.id', '=', 'vendors.assigned_to');
 
@@ -35,23 +35,16 @@ class VendorController extends Controller
     public function create()
     {
         $vendor = collect([
-            "id"               => "",
-            "name"             => "",
-            "acct_no"          => "",
-            "phone"            => "",
-            "other_phone"      => "",
-            "email"            => "",
-            "fax"              => "",
-            "website"          => "",
-            "assigned_to"      => "",
-            "parent_company"   => "",
-            "credit_limit"     => "",
-            "credit_available" => "",
-            "payment_method"   => "",
-            "tax"              => "",
-            "tac"              => "",
-            "shipping_method"  => "",
-            "address"          => "",
+            "id"              => "",
+            "name"            => "",
+            "contact_person"  => "",
+            "landline"        => "",
+            "mobile_phone"    => "",
+            "email"           => "",
+            "payment_method"  => "",
+            "shipping_method" => "",
+            "address"         => "",
+            "assigned_to"     => "",
         ]);
 
         return view('vendor_form', compact('vendor'));

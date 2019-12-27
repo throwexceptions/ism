@@ -20,12 +20,13 @@ class ProductTableSeeder extends Seeder
             $product->name         = $faker->word();
             $product->code         = $faker->creditCardNumber();
             $product->category     = \App\Category::all()->random(2)[0]->name;
+            $product->manufacturer = $faker->company;
+            $product->unit         = $faker->word;
+            $product->description  = $faker->paragraph();
+            $product->batch        = $faker->randomNumber();
             $product->color        = $faker->colorName;
             $product->size         = $faker->randomFloat();
             $product->weight       = $faker->randomFloat();
-            $product->sku          = $faker->bankAccountNumber;
-            $product->manufacturer = $faker->company;
-            $product->discontinued = '0';
             $product->assigned_to  = User::all()->random(2)[0]->id;
             $product->save();
         }

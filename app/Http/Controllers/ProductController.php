@@ -35,17 +35,16 @@ class ProductController extends Controller
     {
         $product = collect([
             "id"           => "",
-            "assigned_to"  => "",
-            "category"     => "",
-            "code"         => "",
-            "color"        => "",
-            "created_at"   => "",
-            "discontinued" => "",
-            "manufacturer" => "",
             "name"         => "",
+            "code"         => "",
+            "category"     => "",
+            "manufacturer" => "",
+            "unit"         => "",
+            "description"  => "",
+            "assigned_to"  => "",
+            "batch"        => "",
+            "color"        => "",
             "size"         => "",
-            "sku"          => "",
-            "updated_at"   => "",
             "weight"       => "",
         ]);
 

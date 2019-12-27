@@ -167,7 +167,7 @@
                         {data: 'id', name: 'products.id', title: 'ID'},
                         {data: 'name', name: 'products.name', title: 'Name'},
                         {data: 'code', name: 'products.code', title: 'Product Code'},
-                        {data: 'sku', name: 'products.sku', title: 'SKU'},
+                        {data: 'manufacturer', name: 'products.manufacturer', title: 'Brand'},
                         {data: 'category', name: 'products.category', title: 'Category'},
                     ],
                     drawCallback: function () {

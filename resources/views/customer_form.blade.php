@@ -20,87 +20,26 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Account Name</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.acc_name">
+                                    <label>Customer Name</label>
+                                    <input type="text" class="form-control form-control-sm" v-model="overview.name">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Phone</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.phone">
+                                    <label>Contact Person</label>
+                                    <input type="text" class="form-control form-control-sm" v-model="overview.contact_person">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Fax</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.fax">
+                                    <label>Landline</label>
+                                    <input type="text" class="form-control form-control-sm" v-model="overview.landline">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Other Phone</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.other_phone">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>E-mail</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.email">
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Parent Company</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.parent_company">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Account Number</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.acc_no">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Website</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.website">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Employees</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.employees">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Industry</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.industry">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Sales Manager</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.sales_manager">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Sales Person</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.sales_person">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Account Status</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.acc_status">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Tax ID</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.tax_id">
+                                    <label>Mobile Phone</label>
+                                    <input type="text" class="form-control form-control-sm" v-model="overview.mobile_phone">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -116,29 +55,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Address</label>
-                                    <textarea class="form-control form-control-sm" cols="30" rows="10" v-model="overview.address"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <h4>Other Informations</h4>
-                                <hr>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Ownership</label>
-                                    <textarea class="form-control form-control-sm" rows="10" v-model="overview.employees" style="height: 80px;"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Terms and Condition</label>
-                                    <textarea class="form-control form-control-sm" rows="10" v-model="overview.tac" style="height: 80px;"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Description</label>
-                                    <textarea class="form-control form-control-sm" rows="10" v-model="overview.tac" style="height: 80px;"></textarea>
+                                    <textarea class="form-control form-control-sm" cols="30" rows="6" v-model="overview.address"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">

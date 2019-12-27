@@ -40,38 +40,59 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Manufacturer</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.manufacturer">
+                                    <label>Brand</label>
+                                    <input type="text" class="form-control form-control-sm"
+                                           v-model="overview.manufacturer">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>SKU</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.sku">
+                                    <label>Unit of Measurement</label>
+                                    <input type="text" class="form-control form-control-sm" v-model="overview.unit">
                                 </div>
+                            </div>
+                            @if(env('PRODUCT_BATCH') == 'show')
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Batch</label>
+                                        <input type="text" class="form-control form-control-sm" v-model="overview.batch">
+                                    </div>
+                                </div>
+                            @endif
+                            @if(env('PRODUCT_SIZE') == 'show')
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Size</label>
+                                        <input type="text" class="form-control form-control-sm" v-model="overview.size">
+                                    </div>
+                                </div>
+                            @endif
+                            @if(env('PRODUCT_WEIGHT') == 'show')
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Weight</label>
+                                        <input type="text" class="form-control form-control-sm" v-model="overview.weight">
+                                    </div>
+                                </div>
+                            @endif
+                            @if(env('PRODUCT_COLOR') == 'show')
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Color</label>
+                                        <input type="text" class="form-control form-control-sm" v-model="overview.color">
+                                    </div>
+                                </div>
+                            @endif
+                            <div class="col-md-12">
+                                <h4>Description Information</h4>
+                                <hr>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Discontinued</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.discontinued">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Size</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.size">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Weight</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.weight">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Color</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.color">
+                                    <label>Description</label>
+                                    <textarea rows="6" type="text" class="form-control form-control-sm"
+                                              v-model="overview.description">
+                                    </textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -91,7 +112,8 @@
                                     <img v-bind:src="'/app/public/' + image.path" class="rounded" width="200px">
                                 </div>
                                 <div v-if="images.length == 0" class="text-center">
-                                    <img src="{{ asset('img/storage/product-placeholder.jpeg') }}" class="rounded" width="200px">
+                                    <img src="{{ asset('img/storage/product-placeholder.jpeg') }}" class="rounded"
+                                         width="200px">
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -108,88 +130,88 @@
 @endsection
 
 @section('scripts')
-<script>
-const app = new Vue({
-    el: '#app',
-    data() {
-        return {
-            viewType: 0,
-            overview: {!! $product !!},
-            images: {!! $gallery !!}
-        }
-    },
-    methods: {
-        store() {
-            var $this = this;
-            $.ajax({
-                url: '{{ route('product.store') }}',
-                method: 'POST',
-                data: $this.overview,
-                success: function(value) {
-                    $this.imageUpload(value.id);
-                    Swal.fire(
-                        'Good job!',
-                        'Operation is successful.',
-                        'success'
-                    ).then((result) => {
-                        if (result.value) {
-                            window.location = '{{ route('products') }}'
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    viewType: 0,
+                    overview: {!! $product !!},
+                    images: {!! $gallery !!}
+                }
+            },
+            methods: {
+                store() {
+                    var $this = this;
+                    $.ajax({
+                        url: '{{ route('product.store') }}',
+                        method: 'POST',
+                        data: $this.overview,
+                        success: function (value) {
+                            $this.imageUpload(value.id);
+                            Swal.fire(
+                                'Good job!',
+                                'Operation is successful.',
+                                'success'
+                            ).then((result) => {
+                                if (result.value) {
+                                    window.location = '{{ route('products') }}'
+                                }
+                            })
                         }
                     })
-                }
-            })
-        },
-        update() {
-            var $this = this;
-            $.ajax({
-                url: '{{ route('product.update') }}',
-                method: 'POST',
-                data: $this.overview,
-                success: function(value) {
-                    $this.imageUpload($this.overview.id);
-                    Swal.fire(
-                        'Good job!',
-                        'Operation is successful.',
-                        'success'
-                    ).then((result) => {
-                        if (result.value) {
-                            window.location = '{{ route('products') }}'
+                },
+                update() {
+                    var $this = this;
+                    $.ajax({
+                        url: '{{ route('product.update') }}',
+                        method: 'POST',
+                        data: $this.overview,
+                        success: function (value) {
+                            $this.imageUpload($this.overview.id);
+                            Swal.fire(
+                                'Good job!',
+                                'Operation is successful.',
+                                'success'
+                            ).then((result) => {
+                                if (result.value) {
+                                    window.location = '{{ route('products') }}'
+                                }
+                            })
                         }
-                    })
-                }
-            });
-        },
-        imageUpload(id) {
-            var formData = new FormData();
-            formData.append('id', id);
-            formData.append('image', $('input[type=file]')[0].files[0]);
-            $.ajax({
-                url: '{{ route('product.image.upload') }}',
-                method: 'POST',
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function(value) {
+                    });
+                },
+                imageUpload(id) {
+                    var formData = new FormData();
+                    formData.append('id', id);
+                    formData.append('image', $('input[type=file]')[0].files[0]);
+                    $.ajax({
+                        url: '{{ route('product.image.upload') }}',
+                        method: 'POST',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function (value) {
 
+                        }
+                    });
                 }
-            });
-        }
-    },
-    mounted() {
-        var $this = this;
-        
-        if('{{ Route::currentRouteName() }}' == 'product.detail') {
-            this.viewType = 0;
-        } 
-        else if('{{ Route::currentRouteName() }}' == 'product.create') {
-            this.viewType = 1;
-        }
-        else if('{{ Route::currentRouteName() }}' == 'product.view') {
-            this.viewType = 2;
-            $('label').addClass('font-weight-bold');
-            $('.form-control').addClass('form-control-plaintext').removeClass('form-control');
-        }
-    }
-});
-</script>
+            },
+            mounted() {
+                var $this = this;
+
+                if ('{{ Route::currentRouteName() }}' == 'product.detail') {
+                    this.viewType = 0;
+                }
+                else if ('{{ Route::currentRouteName() }}' == 'product.create') {
+                    this.viewType = 1;
+                }
+                else if ('{{ Route::currentRouteName() }}' == 'product.view') {
+                    this.viewType = 2;
+                    $('label').addClass('font-weight-bold');
+                    $('.form-control').addClass('form-control-plaintext').removeClass('form-control');
+                }
+            }
+        });
+    </script>
 @endsection

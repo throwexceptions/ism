@@ -96,8 +96,8 @@ const app = new Vue({
                         title: 'Action'
                     },
                     {data: 'id', name:'customers.id', title: 'ID'},
-                    {data: 'acc_name', title: 'Account Name'},
-                    {data: 'phone', title: 'Phone No.'},
+                    {data: 'name', title: 'Customer Name'},
+                    {data: 'contact_person', title: 'Contact Person'},
                     {data: 'username', name:'users.name', title: 'Created By'},
                 ],
                 drawCallback: function () {

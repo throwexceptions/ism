@@ -18,8 +18,7 @@ class CustomerController extends Controller
     public function table()
     {
         $customer = Customer::query()
-                            ->selectRaw('customers.id, customers.phone,
-            customers.acc_name, customers.email, users.name as username')
+                            ->selectRaw('customers.*, users.name as username')
                             ->join('users', 'users.id', '=', 'customers.assigned_to');
 
         return DataTables::of($customer)->make(true);

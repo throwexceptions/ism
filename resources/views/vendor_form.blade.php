@@ -26,38 +26,26 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Account No.</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.acct_no">
+                                    <label>Contact Person</label>
+                                    <input type="text" class="form-control form-control-sm" v-model="overview.contact_person">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Website</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.website">
+                                    <label>Landline</label>
+                                    <input type="text" class="form-control form-control-sm" v-model="overview.landline">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Phone</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.phone">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Other Phone</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.other_phone">
+                                    <label>Mobile Phone</label>
+                                    <input type="text" class="form-control form-control-sm" v-model="overview.mobile_phone">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>E-mail</label>
                                     <input type="text" class="form-control form-control-sm" v-model="overview.email">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Parent Company</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.parent_company">
                                 </div>
                             </div>
                             <div class="col-md-12">
