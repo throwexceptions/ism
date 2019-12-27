@@ -121,6 +121,7 @@ class ProductController extends Controller
     public function destroy(Request $request)
     {
         Product::query()->where('id', $request->id)->delete();
+        Supply::query()->where('product_id', $request->id)->delete();
 
         return ['success' => true];
     }

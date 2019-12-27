@@ -98,4 +98,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/orderform', 'OrderFormController@index')->name('orderform');
     Route::post('/orderform/table', 'OrderFormController@table')->name('orderform.table');
     Route::get('/orderform/create', 'OrderFormController@create')->name('orderform.create');
+    Route::post('/orderform/store', 'OrderFormController@store')->name('orderform.store');
+    Route::post('/orderform/update', 'OrderFormController@update')->name('orderform.update');
+    Route::post('/orderform/destroy', 'OrderFormController@destroy')->name('orderform.destroy');
+    Route::get('/orderform/view/{id}', 'OrderFormController@show')->name('orderform.view');
 });

@@ -127,8 +127,8 @@ class SalesOrderController extends Controller
 
     public function destroy(Request $request)
     {
-        DB::table('product_details')->where('purchase_info_id', $request->id)->delete();
-        DB::table('salesorders')->where('id', $request->id)->delete();
+        DB::table('product_details')->where('sales_order_id', $request->id)->delete();
+        DB::table('sales_orders')->where('id', $request->id)->delete();
         DB::table('summaries')->where('sales_order_id', $request->id)->delete();
 
         return ['success' => true];

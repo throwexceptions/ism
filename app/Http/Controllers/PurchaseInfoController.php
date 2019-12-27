@@ -34,7 +34,7 @@ class PurchaseInfoController extends Controller
         $purchase_info = collect([
             "id"               => "",
             "subject"          => "",
-            "vendor_id"      => "",
+            "vendor_id"        => "",
             "requisition_no"   => "",
             "tracking_number"  => "",
             "contact_name"     => "",
@@ -72,9 +72,11 @@ class PurchaseInfoController extends Controller
 
     public function show($id)
     {
-        $purchase_info   = PurchaseInfo::query()->selectRaw('purchase_infos.*, IFNULL(vendors.name, \'\') as vendor_name')
+        $purchase_info   = PurchaseInfo::query()
+                                       ->selectRaw('purchase_infos.*, IFNULL(vendors.name, \'\') as vendor_name')
                                        ->leftJoin('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
-                                       ->where('purchase_infos.id', $id)->get()[0];
+                                       ->where('purchase_infos.id', $id)
+                                       ->get()[0];
         $product_details = ProductDetail::query()->where('purchase_order_id', $id)->get();
         $summary         = Summary::query()->where('purchase_order_id', $id)->get()[0];
 
