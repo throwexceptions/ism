@@ -72,7 +72,7 @@ class SalesOrderController extends Controller
 
     public function show($id)
     {
-        $sales_order     = SalesOrder::query()->selectRaw('sales_orders.*, IFNULL(customers.acc_name, \'\') as customer_name')
+        $sales_order     = SalesOrder::query()->selectRaw('sales_orders.*, IFNULL(customers.name, \'\') as customer_name')
                                      ->leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')
                                      ->where('sales_orders.id', $id)->get()[0];
         $product_details = ProductDetail::query()->where('sales_order_id', $id)->get();
