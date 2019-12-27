@@ -27,16 +27,12 @@
                                     <label>Phone</label>
                                     <input type="text" class="form-control form-control-sm" v-model="overview.phone">
                                 </div>
+                            </div>
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Agent</label>
                                     <input type="text" class="form-control form-control-sm" v-model="overview.agent">
                                 </div>
-                                <div class="form-group">
-                                    <label>Fax</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.fax">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
                                 {{--<div class="form-group">--}}
                                     {{--<label>Status</label>--}}
                                     {{--<select type="text" class="form-control form-control-sm" v-model="overview.status">--}}
@@ -68,6 +64,10 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Fax</label>
+                                    <input type="text" class="form-control form-control-sm" v-model="overview.fax">
+                                </div>
                                 <div class="form-group">
                                     <label>Sales Order</label>
                                     <input type="text" class="form-control form-control-sm" v-model="overview.so_no">

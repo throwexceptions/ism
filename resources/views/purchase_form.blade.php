@@ -37,10 +37,6 @@
                                     <label>Due Date</label>
                                     <input type="date" class="form-control form-control-sm" v-model="overview.due_date">
                                 </div>
-                                <div class="form-group">
-                                    <label>Carrier</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.carrier">
-                                </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -92,6 +88,10 @@
                                     <label>Purchase Order</label>
                                     <input type="text" class="form-control form-control-sm"
                                            v-model="overview.po_no">
+                                </div>
+                                <div class="form-group">
+                                    <label>Carrier</label>
+                                    <input type="text" class="form-control form-control-sm" v-model="overview.carrier">
                                 </div>
                             </div>
                             <div class="col-md-12">
