@@ -97,4 +97,5 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/orderform', 'OrderFormController@index')->name('orderform');
     Route::post('/orderform/table', 'OrderFormController@table')->name('orderform.table');
+    Route::get('/orderform/create', 'OrderFormController@create')->name('orderform.create');
 });

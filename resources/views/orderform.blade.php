@@ -15,7 +15,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <a href="{{ route('purchase.create') }}" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> New Purchase Order</a>
+                                <a href="{{ route('orderform.create') }}" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> New Purchase Order</a>
                             </div>
                             <div class="col-md-12 mt-3">
                                 <table id="table-inquiry" class="table table-striped nowrap" style="width:100%"></table>
@@ -86,8 +86,8 @@
                         {
                             data: function(value) {
                                 return '<div class="btn-group btn-group-sm shadow-sm" role="group" aria-label="Basic example">' +
-                                    '<a href="/purchase/view/' + value.id + '" class="btn btn-primary btn-view"><i class="fa fa-eye"></i></a>' +
-                                    '<a href="/purchase/detail/' + value.id + '" class="btn btn-info btn-view"><i class="fa fa-pen"></i></a>' +
+                                    '<a href="/orderform/view/' + value.id + '" class="btn btn-primary btn-view"><i class="fa fa-eye"></i></a>' +
+                                    '<a href="/orderform/detail/' + value.id + '" class="btn btn-info btn-view"><i class="fa fa-pen"></i></a>' +
                                     '<button type="button" class="btn btn-danger btn-destroy"><i class="fa fa-trash"></i></button>' +
                                     '</div>'
                             },

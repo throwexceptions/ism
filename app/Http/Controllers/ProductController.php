@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Gallery;
 use App\Product;
+use App\Supply;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -76,6 +77,12 @@ class ProductController extends Controller
         $data                = $request->input();
         $data['assigned_to'] = auth()->user()->id;
         $id                  = Product::query()->insertGetId($data);
+        Supply::query()->insert([
+            "product_id"  => $id,
+            "quantity"    => 0,
+            "unit_cost"   => 0,
+            "assigned_to" => auth()->user()->id,
+        ]);
 
         return ['success' => true, 'id' => $id];
     }

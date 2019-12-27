@@ -20,4 +20,23 @@ class OrderFormController extends Controller
 
         return DataTables::of($purchase_info)->make(true);
     }
+
+    public function create()
+    {
+        $orderform = collect([
+            "customer_id" => "",
+            "acct_exec" => "",
+            "no" => "",
+            "so_no" => "",
+            "po_no" => "",
+            "prepared_by" => "",
+            "stock_card_in" => "",
+            "plate_no" => "",
+            "driver" => "",
+        ]);
+
+        $product_details = collect([]);
+
+        return view('orderform_form', compact('orderform', 'product_details'));
+    }
 }
