@@ -26,7 +26,7 @@ class SalesOrderTableSeeder extends Seeder
             $purchase_info->owner = $faker->firstName();
             $purchase_info->agent = $faker->firstName();
             $purchase_info->assigned_to = User::all()->random(2)[0]->id;
-            $purchase_info->status = $faker->randomElement(['Created','Ordered','Shipped','Received','Invoiced','Paid','Completed']);
+            $purchase_info->status = 'Quote';
             $purchase_info->address = $faker->address;
             $purchase_info->due_date = $faker->dateTime();
             $purchase_info->payment_method = $faker->randomElement(['Cash','Credit','Check']);

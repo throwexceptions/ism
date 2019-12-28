@@ -30,7 +30,7 @@ class PurchaseInfoTableSeeder extends Seeder
             $purchase_info->deliver_to = $faker->country;
             $purchase_info->shipping_method = $faker->word;
             $purchase_info->assigned_to = User::all()->random(2)[0]->id;
-            $purchase_info->status = $faker->randomElement(['Created','Ordered','Shipped','Received','Invoiced','Paid','Completed']);
+            $purchase_info->status = 'Ordered';
             $purchase_info->date_received = $faker->date();
             $purchase_info->po_no = $faker->randomNumber();
             $type = $faker->randomElement(['Cash','Credit','Check']);

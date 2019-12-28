@@ -97,6 +97,7 @@
                             title: 'Action'
                         },
                         {data: 'id', name: 'sales_orders.id', title: 'ID'},
+                        {data: 'status', name: 'status', title: 'Status'},
                         {data: 'customer_name', name: 'customers.name', title: 'Customer'},
                         {data: 'subject', name: 'subject', title: 'Subject'},
                         {data: 'created_at', name: 'created_at', title: 'Date Created'},

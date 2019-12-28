@@ -22,7 +22,7 @@ class PurchaseInfoController extends Controller
         $purchase_info = PurchaseInfo::query()
                                      ->selectRaw('purchase_infos.id, purchase_infos.subject,
             vendors.name as vendor_name, purchase_infos.tracking_number,
-            purchase_infos.requisition_no, users.name')
+            purchase_infos.requisition_no, users.name, purchase_infos.status')
                                      ->leftJoin('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
                                      ->join('users', 'users.id', '=', 'purchase_infos.assigned_to');
 
