@@ -17,7 +17,7 @@
                             <div class="col-md-12">
                             </div>
                             <div class="col-md-12 mt-3">
-                                <table id="table-customer" class="table table-striped nowrap" style="width:100%"></table>
+                                <table id="table-in-stock" class="table table-striped nowrap" style="width:100%"></table>
                             </div>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                             <div class="col-md-12">
                             </div>
                             <div class="col-md-12 mt-3">
-                                <table id="table-customer" class="table table-striped nowrap" style="width:100%"></table>
+                                <table id="table-out-of-stock" class="table table-striped nowrap" style="width:100%"></table>
                             </div>
                         </div>
                     </div>
@@ -44,14 +44,14 @@
                 <!-- Approach -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Latest PO</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">PO in Ordered Status</h6>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
                             </div>
                             <div class="col-md-12 mt-3">
-                                <table id="table-customer" class="table table-striped nowrap" style="width:100%"></table>
+                                <table id="table-po" class="table table-striped nowrap" style="width:100%"></table>
                             </div>
                         </div>
                     </div>
@@ -61,14 +61,14 @@
                 <!-- Approach -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Latest SO</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">SO Quotation</h6>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
                             </div>
                             <div class="col-md-12 mt-3">
-                                <table id="table-customer" class="table table-striped nowrap" style="width:100%"></table>
+                                <table id="table-so" class="table table-striped nowrap" style="width:100%"></table>
                             </div>
                         </div>
                     </div>
@@ -94,6 +94,125 @@ const app = new Vue({
             }
         }
     },
+    mounted() {
+        var $this = this;
+        $this.dt = $('#table-in-stock').DataTable({
+            processing: true,
+            serverSide: true,
+            scrollX: true,
+            responsive: true,
+            order: [[0, 'desc']],
+            ajax: {
+                url: "{{ route('home.instock') }}",
+                method: "POST",
+            },
+            columns: [
+                {data: 'id', name:'supplies.id', title: 'ID'},
+                {data: 'product_name', name:"products.name", title: 'Product'},
+                {data: 'quantity', title: 'Quantity'},
+            ],
+            drawCallback: function () {
+                $('table .btn').on('click', function(){
+                    let data = $(this).parent().parent().parent();
+                    let hold = $this.dt.row(data).data();
+                    $this.overview = hold;
+                    console.log(hold);
+                });
+
+                $('.btn-destroy').on('click', function () {
+                    $this.destroy();
+                });
+            }
+        });
+
+
+        $this.dt = $('#table-out-of-stock').DataTable({
+            processing: true,
+            serverSide: true,
+            scrollX: true,
+            responsive: true,
+            order: [[0, 'desc']],
+            ajax: {
+                url: "{{ route('home.outofstock') }}",
+                method: "POST",
+            },
+            columns: [
+                {data: 'id', name:'supplies.id', title: 'ID'},
+                {data: 'product_name', name:"products.name", title: 'Product'},
+                {data: 'quantity', title: 'Quantity'},
+            ],
+            drawCallback: function () {
+                $('table .btn').on('click', function(){
+                    let data = $(this).parent().parent().parent();
+                    let hold = $this.dt.row(data).data();
+                    $this.overview = hold;
+                    console.log(hold);
+                });
+
+                $('.btn-destroy').on('click', function () {
+                    $this.destroy();
+                });
+            }
+        });
+
+        $this.dt = $('#table-po').DataTable({
+            processing: true,
+            serverSide: true,
+            scrollX: true,
+            responsive: true,
+            order: [[0, 'desc']],
+            ajax: {
+                url: "{{ route('home.po') }}",
+                method: "POST",
+            },
+            columns: [
+                {data: 'id', name:'id', title: 'ID'},
+                {data: 'subject', name:"subject", title: 'Subject'},
+                {data: 'status', title: 'Status'},
+            ],
+            drawCallback: function () {
+                $('table .btn').on('click', function(){
+                    let data = $(this).parent().parent().parent();
+                    let hold = $this.dt.row(data).data();
+                    $this.overview = hold;
+                    console.log(hold);
+                });
+
+                $('.btn-destroy').on('click', function () {
+                    $this.destroy();
+                });
+            }
+        });
+
+        $this.dt = $('#table-so').DataTable({
+            processing: true,
+            serverSide: true,
+            scrollX: true,
+            responsive: true,
+            order: [[0, 'desc']],
+            ajax: {
+                url: "{{ route('home.po') }}",
+                method: "POST",
+            },
+            columns: [
+                {data: 'id', name:'id', title: 'ID'},
+                {data: 'subject', name:"subject", title: 'Subject'},
+                {data: 'status', title: 'Status'},
+            ],
+            drawCallback: function () {
+                $('table .btn').on('click', function(){
+                    let data = $(this).parent().parent().parent();
+                    let hold = $this.dt.row(data).data();
+                    $this.overview = hold;
+                    console.log(hold);
+                });
+
+                $('.btn-destroy').on('click', function () {
+                    $this.destroy();
+                });
+            }
+        });
+    }
 });
 </script>
 @endsection

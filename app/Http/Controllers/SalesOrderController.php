@@ -38,7 +38,7 @@ class SalesOrderController extends Controller
             "so_no"          => SalesOrder::generate()->newSONo(),
             "agent"          => "",
             "assigned_to"    => "",
-            "status"         => "",
+            "status"         => "Quote",
             "address"        => "",
             "due_date"       => "",
             "payment_method" => "",
@@ -132,5 +132,30 @@ class SalesOrderController extends Controller
         DB::table('summaries')->where('sales_order_id', $request->id)->delete();
 
         return ['success' => true];
+    }
+
+    public function updateStatus(Request $request)
+    {
+        $data          = $request->input();
+        $purchase_info = DB::table('sales_orders')->where('id', $data['id'])->get()[0];
+
+        if ($purchase_info->status != $data['status']) {
+            DB::table('sales_orders')->where('id', $data['id'])
+              ->update(['status' => $data['status']]);
+
+            $product_detail = DB::table('product_details')->where('sales_order_id', $data['id'])->get();
+            foreach ($product_detail as $value) {
+                if ('Shipped' == $data['status']) {
+                    DB::table('supplies')->where('product_id', $value->product_id)->decrement('quantity', $value->qty);
+                }
+                if ('Returned' == $data['status']) {
+                    DB::table('supplies')->where('product_id', $value->product_id)->increment('quantity', $value->qty);
+                }
+            }
+
+            return ['success' => true];
+        }
+
+        return ['success' => false];
     }
 }

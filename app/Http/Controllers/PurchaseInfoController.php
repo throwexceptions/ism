@@ -21,7 +21,7 @@ class PurchaseInfoController extends Controller
     {
         $purchase_info = PurchaseInfo::query()
                                      ->selectRaw('purchase_infos.id, purchase_infos.subject,
-            vendors.name as vendor_name, purchase_infos.tracking_number,
+            vendors.name as vendor_name, purchase_infos.tracking_number, purchase_infos.po_no,
             purchase_infos.requisition_no, users.name, purchase_infos.status')
                                      ->leftJoin('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
                                      ->join('users', 'users.id', '=', 'purchase_infos.assigned_to');
@@ -92,9 +92,6 @@ class PurchaseInfoController extends Controller
             $data['overview']['check_writer'] = '';
         }
 
-        DB::table('purchase_infos')->where('id', $data['overview']['id'])
-          ->update($data['overview']);
-
         DB::table('product_details')->where('purchase_order_id', $data['overview']['id'])->delete();
 
         if (isset($data['products'])) {
@@ -143,5 +140,30 @@ class PurchaseInfoController extends Controller
         DB::table('summaries')->where('purchase_order_id', $request->id)->delete();
 
         return ['success' => true];
+    }
+
+    public function updateStatus(Request $request)
+    {
+        $data          = $request->input();
+        $purchase_info = DB::table('purchase_infos')->where('id', $data['id'])->get()[0];
+
+        if ($purchase_info->status != $data['status']) {
+            DB::table('purchase_infos')->where('id', $data['id'])
+              ->update(['status' => $data['status']]);
+
+            $product_detail = DB::table('product_details')->where('purchase_order_id', $data['id'])->get();
+            foreach ($product_detail as $value) {
+                if ('Ordered' == $data['status']) {
+                    DB::table('supplies')->where('product_id', $value->product_id)->decrement('quantity', $value->qty);
+                }
+                if ('Received' == $data['status']) {
+                    DB::table('supplies')->where('product_id', $value->product_id)->increment('quantity', $value->qty);
+                }
+            }
+
+            return ['success' => true];
+        }
+
+        return ['success' => false];
     }
 }

@@ -19,6 +19,10 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'DashboardController@index')->name('home');
+    Route::post('/home/instock', 'DashboardController@inStock')->name('home.instock');
+    Route::post('/home/outofstock', 'DashboardController@outOfStock')->name('home.outofstock');
+    Route::post('/home/po', 'DashboardController@orderedPO')->name('home.po');
+    Route::post('/home/so', 'DashboardController@quoteSO')->name('home.so');
 
     Route::get('/purchase', 'PurchaseInfoController@index')->name('purchase');
     Route::post('/purchase/table', 'PurchaseInfoController@table')->name('purchase.table');
@@ -28,6 +32,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/purchase/update', 'PurchaseInfoController@update')->name('purchase.update');
     Route::post('/purchase/store', 'PurchaseInfoController@store')->name('purchase.store');
     Route::post('/purchase/destroy', 'PurchaseInfoController@destroy')->name('purchase.destroy');
+    Route::post('/purchase/status/update', 'PurchaseInfoController@updateStatus')->name('purchase.status.update');
 
     Route::get('/sales', 'SalesOrderController@index')->name('sales');
     Route::get('/sales/create', 'SalesOrderController@create')->name('sales.create');
@@ -37,6 +42,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/sales/update', 'SalesOrderController@update')->name('sales.update');
     Route::post('/sales/store', 'SalesOrderController@store')->name('sales.store');
     Route::post('/sales/destroy', 'SalesOrderController@destroy')->name('sales.destroy');
+    Route::post('/sales/status/update', 'SalesOrderController@updateStatus')->name('sales.status.update');
 
     Route::get('/vendor', 'VendorController@index')->name('vendor');
     Route::post('/vendor/table', 'VendorController@table')->name('vendor.table');

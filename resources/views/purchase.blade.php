@@ -26,6 +26,36 @@
                 </div>
             </div>
         </div>
+
+        <div id="statusModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Status</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Pick a status</label>
+                                    <select class="form-control" v-model="overview.status">
+                                        <option value="Ordered">Ordered</option>
+                                        <option value="Received">Received</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" @click="update">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -38,14 +68,24 @@
                     dt: null,
                     overview: {
                         id: "",
-                        subject: "",
-                        recipient_email: "",
-                        recipient_name: "",
-                        message: "",
+                        status: "",
                     }
                 }
             },
             methods: {
+                update() {
+                    var $this = this;
+                    $.ajax({
+                        url: '{{ route('purchase.status.update') }}',
+                        method: 'POST',
+                        data: $this.overview,
+                        success: function (value) {
+                            Swal.fire('Updated!', 'Status has been updated.', 'success');
+                            $this.dt.draw();
+                            $('#statusModal').modal('hide');
+                        }
+                    })
+                },
                 destroy() {
                     var $this = this;
                     Swal.fire({
@@ -86,9 +126,14 @@
                     columns: [
                         {
                             data: function (value) {
+                                if(value.status == 'Ordered') {
+                                    edit = '<a href="/purchase/detail/' + value.id + '" class="btn btn-info btn-view"><i class="fa fa-pen"></i></a>';
+                                } else {
+                                    edit = '';
+                                }
                                 return '<div class="btn-group btn-group-sm shadow-sm" role="group" aria-label="Basic example">' +
                                     '<a href="/purchase/view/' + value.id + '" class="btn btn-primary btn-view"><i class="fa fa-eye"></i></a>' +
-                                    '<a href="/purchase/detail/' + value.id + '" class="btn btn-info btn-view"><i class="fa fa-pen"></i></a>' +
+                                    edit +
                                     '<button type="button" class="btn btn-danger btn-destroy"><i class="fa fa-trash"></i></button>' +
                                     '</div>'
                             },
@@ -97,7 +142,13 @@
                             title: 'Action'
                         },
                         {data: 'id', name: 'purchase_infos.id', title: 'ID'},
-                        {data: 'status', name: 'status', title: 'Status'},
+                        {
+                            data: function (value) {
+                                return '<div class="btn-group btn-group-sm shadow-sm" role="group" aria-label="Basic example">' +
+                                    '<a href="#" class="btn btn-info btn-status">' + value.status + '</a>' +
+                                    '</div>'
+                            }, name: 'status', title: 'Status'
+                        },
                         {data: 'subject', title: 'Subject'},
                         {data: 'vendor_name', name: 'vendors.name', title: 'Vendor Name'},
                         {data: 'tracking_number', title: 'Tracking Number'},
@@ -111,9 +162,11 @@
                             $this.overview = hold;
                             console.log(hold);
                         });
-
                         $('.btn-destroy').on('click', function () {
                             $this.destroy();
+                        });
+                        $('.btn-status').on('click', function () {
+                            $('#statusModal').modal('show');
                         });
                     }
                 });
