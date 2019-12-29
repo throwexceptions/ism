@@ -67,4 +67,11 @@ class UserController extends Controller
 
         return ['success' => true];
     }
+
+    public function logoUpload(Request $request)
+    {
+        $request->logo->storeAs('logo', 'logo.jpg');
+
+        return redirect('/users');
+    }
 }

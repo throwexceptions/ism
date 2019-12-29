@@ -92,6 +92,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/user/update', 'UserController@update')->name('user.update');
     Route::post('/user/destroy', 'UserController@destroy')->name('user.destroy');
     Route::post('/user/change/pass', 'UserController@changePass')->name('user.change.pass');
+    Route::post('/users/logo/upload', 'UserController@logoUpload')->name('user.logo.upload');
 
     Route::get('/role', 'SecurityController@roles')->name('role');
     Route::post('/role/table', 'SecurityController@table')->name('role.table');

@@ -14,9 +14,22 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-auto">
                                 <a href="{{ route('user.create') }}" class="btn btn-sm btn-success"><i
                                             class="fa fa-plus"></i> New User</a>
+                            </div>
+                            <div class="col-md-auto">
+                                <form action="{{ route('user.logo.upload') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="form-group row">
+                                        <div class="col-md-6">
+                                            <input type="file" name="logo" class="form-control-file">
+                                        </div>
+                                        <div class="col-md-auto">
+                                            <button class="btn btn-sm btn-primary">Upload Logo</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                             <div class="col-md-12 mt-3">
                                 <table id="table-user" class="table table-striped nowrap" style="width:100%"></table>
