@@ -27,28 +27,14 @@ class CustomerController extends Controller
     public function create()
     {
         $customer = collect([
-            "id"             => "",
-            "acc_name"       => "",
-            "phone"          => "",
-            "other_phone"    => "",
+            "name"           => "",
+            "contact_person" => "",
+            "landline"       => "",
+            "mobile_phone"   => "",
             "email"          => "",
-            "parent_company" => "",
-            "acc_no"         => "",
-            "website"        => "",
-            "fax"            => "",
-            "employees"      => "",
-            "ownership"      => "",
-            "industry"       => "",
-            "sales_manager"  => "",
-            "assigned_to"    => "",
-            "sales_person"   => "",
-            "acc_status"     => "",
-            "tax_id"         => "",
-            "reseller_id"    => "",
-            "payment_method" => "",
-            "tac"            => "",
             "address"        => "",
-            "description"    => "",
+            "payment_method" => "",
+            "assigned_to"    => "",
         ]);
 
         return view('customer_form', compact('customer'));
@@ -56,7 +42,7 @@ class CustomerController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->input();
+        $data                = $request->input();
         $data['assigned_to'] = auth()->user()->id;
         Customer::query()->insert($data);
 
