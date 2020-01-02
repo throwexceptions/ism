@@ -11,7 +11,7 @@ class SuperAdminTableSeeder extends Seeder
      */
     public function run()
     {
-        User::query()->insert(
+        \App\User::query()->insert(
             [
                 'name'              => 'Super Admin',
                 'email'             => 'admin@management.com',
