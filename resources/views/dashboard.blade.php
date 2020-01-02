@@ -101,7 +101,9 @@ const app = new Vue({
             serverSide: true,
             scrollX: true,
             responsive: true,
+            lengthChange: false,
             order: [[0, 'desc']],
+            pageLength: 5,
             ajax: {
                 url: "{{ route('home.instock') }}",
                 method: "POST",
@@ -131,7 +133,9 @@ const app = new Vue({
             serverSide: true,
             scrollX: true,
             responsive: true,
+            lengthChange: false,
             order: [[0, 'desc']],
+            pageLength: 5,
             ajax: {
                 url: "{{ route('home.outofstock') }}",
                 method: "POST",
@@ -160,7 +164,9 @@ const app = new Vue({
             serverSide: true,
             scrollX: true,
             responsive: true,
+            lengthChange: false,
             order: [[0, 'desc']],
+            pageLength: 5,
             ajax: {
                 url: "{{ route('home.po') }}",
                 method: "POST",
@@ -189,7 +195,9 @@ const app = new Vue({
             serverSide: true,
             scrollX: true,
             responsive: true,
+            lengthChange: false,
             order: [[0, 'desc']],
+            pageLength: 5,
             ajax: {
                 url: "{{ route('home.po') }}",
                 method: "POST",
