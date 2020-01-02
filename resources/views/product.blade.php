@@ -46,9 +46,11 @@
                             <div class="col-md-12">
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control" placeholder="Insert new Category..."
-                                           aria-label="Recipient's username" v-model="category_new" aria-describedby="button-addon2">
+                                           aria-label="Recipient's username" v-model="category_new"
+                                           aria-describedby="button-addon2">
                                     <div class="input-group-append">
-                                        <button class="btn btn-success" @click="addCategory" type="button" id="button-addon2">
+                                        <button class="btn btn-success" @click="addCategory" type="button"
+                                                id="button-addon2">
                                             <i class="fa fa-plus-circle"></i>
                                         </button>
                                     </div>
@@ -59,7 +61,8 @@
                                     <li v-for="(category, idx) in categories"
                                         class="list-group-item d-flex justify-content-between align-items-center">
                                         @{{ category }}
-                                        <button class="btn btn-sm btn-danger" @click="deleteCategory(idx)"><i class="fa fa-times"></i>
+                                        <button class="btn btn-sm btn-danger" @click="deleteCategory(idx)"><i
+                                                    class="fa fa-times"></i>
                                         </button>
                                     </li>
                                 </ul>
@@ -167,6 +170,9 @@
                         {data: 'id', name: 'products.id', title: 'ID'},
                         {data: 'name', name: 'products.name', title: 'Name'},
                         {data: 'code', name: 'products.code', title: 'Product Code'},
+                            @if(env('PRODUCT_BATCH_COL') == 'show')
+                        {data: 'batch', name: 'products.batch', title: 'Batch No.'},
+                            @endif
                         {data: 'manufacturer', name: 'products.manufacturer', title: 'Brand'},
                         {data: 'category', name: 'products.category', title: 'Category'},
                     ],
