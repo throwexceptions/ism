@@ -74,8 +74,8 @@ class CustomerController extends Controller
     {
         return [
             "results" => DB::table('customers')
-                           ->selectRaw("id as id, acc_name as text")
-                           ->whereRaw("acc_name LIKE '%{$request->term}%'")
+                           ->selectRaw("id as id, name as text")
+                           ->whereRaw("name LIKE '%{$request->term}%'")
                            ->get(),
         ];
     }

@@ -69,6 +69,7 @@ class OrderFormController extends Controller
             $id = PurchaseInfo::query()->insertGetId([
                 "assigned_to" => auth()->user()->id,
                 "po_no"       => $data['overview']['po_no'],
+                "status"      => "Ordered",
             ]);
             DB::table('summaries')->insert([
                 "purchase_order_id" => $id,
@@ -81,6 +82,7 @@ class OrderFormController extends Controller
         if ($data['overview']['so_no'] != '') {
             $id = SalesOrder::query()->insertGetId([
                 "customer_id" => $data['overview']['customer_id'],
+                "status"      => "Quote",
                 "assigned_to" => auth()->user()->id,
                 "so_no"       => $data['overview']['so_no'],
             ]);
