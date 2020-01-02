@@ -144,6 +144,7 @@
                                 return '<div class="btn-group btn-group-sm shadow-sm" role="group" aria-label="Basic example">' +
                                     '<a href="#" class="btn btn-warning btn-pass" data-toggle="modal" data-target="#passModal"><i class="fa fa-key"></i></a>' +
                                     '<a href="/user/detail/' + value.id + '" class="btn btn-info btn-view"><i class="fa fa-pen"></i></a>' +
+                                    '<button type="button" class="btn btn-primary btn-permission"><i class="fa fa-lock"></i></button>' +
                                     '<button type="button" class="btn btn-danger btn-destroy"><i class="fa fa-trash"></i></button>' +
                                     '</div>'
                             },
