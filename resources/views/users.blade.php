@@ -19,7 +19,8 @@
                                             class="fa fa-plus"></i> New User</a>
                             </div>
                             <div class="col-md-auto">
-                                <form action="{{ route('user.logo.upload') }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('user.logo.upload') }}" method="POST"
+                                      enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-group row">
                                         <div class="col-md-6">
@@ -65,6 +66,37 @@
                 </div>
             </div>
         </div>
+
+        <div id="roleModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Assign Role</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Select a Role</label>
+                                    <select class="form-control" v-model="user_role">
+                                        @foreach($roles as $item)
+                                            <option value="{{$item}}">{{$item}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" @click="assignRole">Assign Role</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -76,6 +108,7 @@
                 return {
                     dt: null,
                     password: '',
+                    user_role: '',
                     overview: {
                         id: "",
                         subject: "",
@@ -98,6 +131,30 @@
                             $this.dt.draw();
                             $('#passModal').modal('hide');
                             $this.password = '';
+                        }
+                    });
+                },
+                getUserRole() {
+                    var $this = this;
+                    $.ajax({
+                        url: "{{ route('user.role') }}",
+                        method: 'POST',
+                        data: $this.overview,
+                        success(value) {
+                            $this.user_role = value;
+                        }
+                    });
+                },
+                assignRole() {
+                    var $this = this;
+                    $this.overview.role = $this.user_role;
+                    $.ajax({
+                        url: "{{ route('user.assign') }}",
+                        method: 'POST',
+                        data: $this.overview,
+                        success(value) {
+                            Swal.fire('Success!', 'Role has been assigned.', 'success');
+                            $('#roleModal').modal('hide');
                         }
                     });
                 },
@@ -144,7 +201,7 @@
                                 return '<div class="btn-group btn-group-sm shadow-sm" role="group" aria-label="Basic example">' +
                                     '<a href="#" class="btn btn-warning btn-pass" data-toggle="modal" data-target="#passModal"><i class="fa fa-key"></i></a>' +
                                     '<a href="/user/detail/' + value.id + '" class="btn btn-info btn-view"><i class="fa fa-pen"></i></a>' +
-                                    '<button type="button" class="btn btn-primary btn-permission"><i class="fa fa-lock"></i></button>' +
+                                    '<button type="button" class="btn btn-primary btn-permission" data-toggle="modal" data-target="#roleModal"><i class="fa fa-project-diagram"></i></button>' +
                                     '<button type="button" class="btn btn-danger btn-destroy"><i class="fa fa-trash"></i></button>' +
                                     '</div>'
                             },
@@ -162,6 +219,7 @@
                             let hold = $this.dt.row(data).data();
                             $this.overview = hold;
                             console.log(hold);
+                            $this.getUserRole();
                         });
 
                         $('.btn-destroy').on('click', function () {

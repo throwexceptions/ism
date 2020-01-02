@@ -4,14 +4,18 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Silber\Bouncer\BouncerFacade as Bouncer;
 use Yajra\DataTables\DataTables;
 
 class UserController extends Controller
 {
     public function index()
     {
-        return view('users');
+        $roles = DB::table('roles')->get()->pluck('name');
+
+        return view('users', compact('roles'));
     }
 
     public function table()
@@ -39,9 +43,9 @@ class UserController extends Controller
     public function store(Request $request)
     {
         User::query()->insert([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make('password')
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'password' => Hash::make('password'),
         ]);
 
         return ['success' => true];
@@ -73,5 +77,23 @@ class UserController extends Controller
         $request->logo->storeAs('logo', 'logo.jpg');
 
         return redirect('/users');
+    }
+
+    public function getUserRole(Request $request)
+    {
+        $role = User::find($request->id)->getRoles();
+        if (count($role) > 0) {
+            return $role[0];
+        }
+
+        return '';
+    }
+
+    public function assignUserRole(Request $request)
+    {
+        User::find($request->id)->roles()->detach();
+        Bouncer::assign($request->role)->to([$request->id]);
+
+        return ['success' => true];
     }
 }

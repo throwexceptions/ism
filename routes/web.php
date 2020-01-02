@@ -93,6 +93,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/user/destroy', 'UserController@destroy')->name('user.destroy');
     Route::post('/user/change/pass', 'UserController@changePass')->name('user.change.pass');
     Route::post('/users/logo/upload', 'UserController@logoUpload')->name('user.logo.upload');
+    Route::post('/user/role', 'UserController@getUserRole')->name('user.role');
+    Route::post('/user/assign', 'UserController@assignUserRole')->name('user.assign');
 
     Route::get('/role', 'SecurityController@roles')->name('role');
     Route::post('/role/table', 'SecurityController@table')->name('role.table');

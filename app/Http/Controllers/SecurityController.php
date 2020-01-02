@@ -9,7 +9,7 @@ use DB;
 
 class SecurityController extends Controller
 {
-    public $array_role = [
+    public $array_abilities = [
         'batch_process',
         'batch_process_create',
         'batch_process_retrieve',
@@ -34,7 +34,7 @@ class SecurityController extends Controller
 
     public function create()
     {
-        foreach ($this->array_role as $key => $value) {
+        foreach ($this->array_abilities as $key => $value) {
             $abilities[$value] = false;
         }
 
@@ -64,7 +64,7 @@ class SecurityController extends Controller
 
         $ability_list = DB::table('assigned_roles')->where('role_id', $id)->pluck('entity_id')->toArray();
 
-        foreach ($this->array_role as $key => $value) {
+        foreach ($this->array_abilities as $key => $value) {
             if (in_array($value, $ability_list)) {
                 $abilities[$value] = true;
             } else {
