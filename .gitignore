@@ -4,6 +4,7 @@
 /storage/*.key
 /vendor
 /public/app/public/logo
+/public/app/public/images
 .env
 .env.backup
 .phpunit.result.cache
