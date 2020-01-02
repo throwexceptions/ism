@@ -21,7 +21,7 @@ class OrderFormController extends Controller
     public function table()
     {
         $purchase_info = OrderForm::query()
-                                  ->selectRaw('order_forms.*, users.name as username, customers.acc_name as customer_name')
+                                  ->selectRaw('order_forms.*, users.name as username, customers.name as customer_name')
                                   ->leftJoin('customers', 'customers.id', '=', 'order_forms.customer_id')
                                   ->join('users', 'users.id', '=', 'order_forms.prepared_by');
 
@@ -50,7 +50,7 @@ class OrderFormController extends Controller
     public function show($id)
     {
         $orderform = OrderForm::query()
-                              ->selectRaw('order_forms.*, IFNULL(customers.acc_name, \'\') as customer_name')
+                              ->selectRaw('order_forms.*, IFNULL(customers.name, \'\') as customer_name')
                               ->leftJoin('customers', 'customers.id', '=', 'order_forms.customer_id')
                               ->where('order_forms.id', $id)
                               ->get()[0];
