@@ -7,6 +7,7 @@ use App\Product;
 use App\ProductDetail;
 use App\PurchaseInfo;
 use App\SalesOrder;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use DB;
@@ -64,11 +65,11 @@ class OrderFormController extends Controller
     public function store(Request $request)
     {
         $data = $request->input();
-
         if ($data['overview']['po_no'] != '') {
             $id = PurchaseInfo::query()->insertGetId([
                 "assigned_to" => auth()->user()->id,
                 "po_no"       => $data['overview']['po_no'],
+                "created_at"  => Carbon::now()->format('Y-m-d'),
                 "status"      => "Ordered",
             ]);
             DB::table('summaries')->insert([
@@ -84,6 +85,7 @@ class OrderFormController extends Controller
                 "customer_id" => $data['overview']['customer_id'],
                 "status"      => "Quote",
                 "assigned_to" => auth()->user()->id,
+                "created_at"  => Carbon::now()->format('Y-m-d'),
                 "so_no"       => $data['overview']['so_no'],
             ]);
 

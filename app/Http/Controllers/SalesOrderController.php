@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\ProductDetail;
 use App\SalesOrder;
 use App\Summary;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -72,9 +73,11 @@ class SalesOrderController extends Controller
 
     public function show($id)
     {
-        $sales_order     = SalesOrder::query()->selectRaw('sales_orders.*, IFNULL(customers.name, \'\') as customer_name')
+        $sales_order     = SalesOrder::query()
+                                     ->selectRaw('sales_orders.*, IFNULL(customers.name, \'\') as customer_name')
                                      ->leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')
-                                     ->where('sales_orders.id', $id)->get()[0];
+                                     ->where('sales_orders.id', $id)
+                                     ->get()[0];
         $product_details = ProductDetail::query()->where('sales_order_id', $id)->get();
         $summary         = Summary::query()->where('sales_order_id', $id)->get()[0];
 
@@ -86,6 +89,7 @@ class SalesOrderController extends Controller
         $data = $request->input();
 
         $data['overview']['assigned_to'] = auth()->user()->id;
+        $data['overview']['created_at']  = Carbon::now()->format('Y-m-d');
 
         $id = DB::table('sales_orders')->insertGetId($data['overview']);
         if (isset($data['products'])) {

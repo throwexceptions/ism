@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\ProductDetail;
 use App\PurchaseInfo;
 use App\Summary;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
@@ -117,6 +118,7 @@ class PurchaseInfoController extends Controller
             $data['overview']['check_writer'] = '';
         }
 
+        $data['overview']['created_at']  = Carbon::now()->format('Y-m-d');
         $data['overview']['assigned_to'] = auth()->user()->id;
         $id                              = DB::table('purchase_infos')->insertGetId($data['overview']);
 

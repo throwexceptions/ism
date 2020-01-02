@@ -151,6 +151,7 @@
                         {data: 'customer_name', name: 'customers.name', title: 'Customer'},
                         {data: 'subject', name: 'subject', title: 'Subject'},
                         {data: 'created_at', name: 'created_at', title: 'Date Created'},
+                        {data: 'username', name: 'users.name', title: 'Assigned To'},
                     ],
                     drawCallback: function () {
                         $('table .btn').on('click', function () {
