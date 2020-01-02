@@ -33,7 +33,7 @@
                                 <div class="form-group">
                                     <label>Account Executive</label>
                                     <input type="text" class="form-control form-control-sm"
-                                           v-model="overview.acc_exec">
+                                           v-model="overview.acct_exec">
                                 </div>
                             </div>
                             <div class="col-md-4">
