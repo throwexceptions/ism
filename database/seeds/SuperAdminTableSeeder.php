@@ -11,7 +11,7 @@ class SuperAdminTableSeeder extends Seeder
      */
     public function run()
     {
-        \App\User::query()->insert(
+        $id = \App\User::query()->insertGetId(
             [
                 'name'              => 'Super Admin',
                 'email'             => 'admin@management.com',
@@ -20,5 +20,6 @@ class SuperAdminTableSeeder extends Seeder
                 'remember_token'    => Str::random(10),
             ]
         );
+        Bouncer::allow(\App\User::find($id))->everything();
     }
 }

@@ -10,16 +10,50 @@ use DB;
 class SecurityController extends Controller
 {
     public $array_abilities = [
-        'batch_process',
-        'batch_process_create',
-        'batch_process_retrieve',
-        'batch_process_update',
-        'batch_process_delete',
-        'purchase_order',
-        'purchase_order_create',
-        'purchase_order_retrieve',
-        'purchase_order_update',
-        'purchase_order_delete',
+        "order_form",
+        "order_form_create",
+        "order_form_retrieve",
+        "order_form_delete",
+        "purchase_order",
+        "purchase_order_create",
+        "purchase_order_retrieve",
+        "purchase_order_update",
+        "purchase_order_delete",
+        "sales_order",
+        "sales_order_create",
+        "sales_order_retrieve",
+        "sales_order_update",
+        "sales_order_delete",
+        "customer_delete",
+        "customer_update",
+        "customer_retrieve",
+        "customer_create",
+        "customer",
+        "supplies",
+        "vendors",
+        "vendors_create",
+        "supplies_create",
+        "vendors_retrieve",
+        "supplies_retrieve",
+        "vendors_update",
+        "supplies_update",
+        "vendors_delete",
+        "supplies_delete",
+        "products",
+        "security",
+        "user_accounts",
+        "user_accounts_create",
+        "user_accounts_change_pass",
+        "user_accounts_update",
+        "user_accounts_delete",
+        "products_create",
+        "security_create",
+        "products_retrieve",
+        "security_retrieve",
+        "products_update",
+        "security_update",
+        "products_delete",
+        "security_delete",
     ];
 
     public function roles()
@@ -49,9 +83,9 @@ class SecurityController extends Controller
         $data = $request->input();
         foreach ($data['abilities'] as $key => $value) {
             if ($value == "true") {
-                Bouncer::assign($request->role)->to($key);
+                Bouncer::allow($request->role)->to($key);
             } else {
-                Bouncer::retract($request->role)->from($key);
+                Bouncer::disallow($request->role)->to($key);
             }
         }
 
@@ -62,9 +96,11 @@ class SecurityController extends Controller
     {
         $role = DB::table('roles')->where('id', $id)->get()[0]->name;
 
-        $ability_list = DB::table('assigned_roles')->where('role_id', $id)->pluck('entity_id')->toArray();
+        $ability_ids = DB::table('permissions')->where('entity_id', $id)->get()->pluck('ability_id');
 
-        foreach ($this->array_abilities as $key => $value) {
+        $ability_list = DB::table('abilities')->whereIn('id', $ability_ids)->pluck('name')->toArray();
+
+        foreach ($ability_list as $key => $value) {
             if (in_array($value, $ability_list)) {
                 $abilities[$value] = true;
             } else {

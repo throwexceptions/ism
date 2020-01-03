@@ -9,6 +9,7 @@ use App\Summary;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Silber\Bouncer\BouncerFacade as Bouncer;
 use Yajra\DataTables\DataTables;
 
 class PurchaseInfoController extends Controller

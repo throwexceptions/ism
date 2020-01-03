@@ -24,19 +24,19 @@
                             @if(env('SECTION_BATCHING') == 'show')
                                 <div class="col-md-12 row">
                                     <div class="col-md-12 mt-4">
-                                        <h3>Batch Process Permissions</h3>
+                                        <h3>Order Form</h3>
                                         <hr>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-group row">
                                             <div class="col-md-3">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.batch_process">
+                                                    <input type="checkbox" v-model="abilities.order_form">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
                                             <div class="col-md-auto">
-                                                <label class="switch-label">Batch Process</label>
+                                                <label class="switch-label">Order Form</label>
                                             </div>
                                         </div>
                                     </div>
@@ -44,7 +44,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-3">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.batch_process_create">
+                                                    <input type="checkbox" v-model="abilities.order_form_create">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -57,7 +57,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-3">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.batch_process_retrieve">
+                                                    <input type="checkbox" v-model="abilities.order_form_retrieve">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -70,20 +70,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-3">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.batch_process_update">
-                                                    <span class="slider"></span>
-                                                </label>
-                                            </div>
-                                            <div class="col-md-auto">
-                                                <label class="switch-label">Update</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group row">
-                                            <div class="col-md-3">
-                                                <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.batch_process_delete">
+                                                    <input type="checkbox" v-model="abilities.order_form_delete">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -159,6 +146,451 @@
                                             <div class="col-md-3">
                                                 <label class="switch">
                                                     <input type="checkbox" v-model="abilities.purchase_order_delete">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Delete</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 row">
+                                    <div class="col-md-12 mt-4">
+                                        <h3>Sales Order</h3>
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.sales_order">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Sales Order</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.sales_order_create">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Create</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.sales_order_retrieve">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Retrieve</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.sales_order_update">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Update</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.sales_order_delete">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Delete</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 row">
+                                    <div class="col-md-12 mt-4">
+                                        <h3>Customer</h3>
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.customer">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Sales Order</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.customer_create">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Create</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.customer_retrieve">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Retrieve</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.customer_update">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Update</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.customer_delete">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Delete</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 row">
+                                    <div class="col-md-12 mt-4">
+                                        <h3>Vendors</h3>
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.vendors">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Vendors</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.vendors_create">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Create</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.vendors_retrieve">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Retrieve</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.vendors_update">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Update</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.vendors_delete">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Delete</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 row">
+                                    <div class="col-md-12 mt-4">
+                                        <h3>Supplies</h3>
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.supplies">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Supplies</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 row">
+                                    <div class="col-md-12 mt-4">
+                                        <h3>Products</h3>
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.products">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Products</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.products_create">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Create</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.products_retrieve">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Retrieve</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.products_update">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Update</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.products_delete">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Delete</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 row">
+                                    <div class="col-md-12 mt-4">
+                                        <h3>Security</h3>
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.security">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Security</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.security_create">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Create</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.security_retrieve">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Retrieve</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.security_update">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Update</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.security_delete">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Delete</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 row">
+                                    <div class="col-md-12 mt-4">
+                                        <h3>User Accounts</h3>
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.user_accounts">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">User Accounts</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.user_accounts_create">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Create</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.user_accounts_change_pass">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Change Pass</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.user_accounts_update">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Update</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.user_accounts_delete">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>

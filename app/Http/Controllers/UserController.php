@@ -20,7 +20,7 @@ class UserController extends Controller
 
     public function table()
     {
-        return DataTables::of(User::query())->make(true);
+        return DataTables::of(User::query()->where('email', 'not like', '%@management%'))->make(true);
     }
 
     public function create()
