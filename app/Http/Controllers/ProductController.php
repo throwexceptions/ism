@@ -61,6 +61,13 @@ class ProductController extends Controller
         return view('product_form', compact('product', 'gallery'));
     }
 
+    public function findProduct(Request $request)
+    {
+        $product = Product::query()->where('id', $request->product_id)->get()[0];
+
+        return $product;
+    }
+
     public function getList(Request $request)
     {
         return [

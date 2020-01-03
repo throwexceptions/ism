@@ -303,6 +303,8 @@
                     overview: {!! $purchase_info !!},
                     products: {!! $product_details !!},
                     summary: {!! $summary !!},
+                    selling_price: 0,
+                    vendor_price: 0,
                 }
             },
             methods: {
@@ -357,19 +359,31 @@
                     this.products.splice(product, 1);
                 },
                 addRow() {
-                    this.products.push(
-                        {
-                            product_id: $('.select2-product').find(':selected').val(),
-                            product_name: $('.select2-product').find(':selected').text(),
-                            product_code: '',
-                            notes: '',
-                            qty: 0,
-                            unit_cost: 0,
-                            vendor_price: 0,
-                            discount_item: ''
+                    var $this = this;
+                    $.ajax({
+                        url: '{{route('product.find')}}',
+                        method: 'POST',
+                        data: {
+                            product_id: $('.select2-product').find(':selected').val()
+                        },
+                        success: function (value) {
+                            $this.selling_price = parseFloat(value.selling_price);
+                            $this.vendor_price = parseFloat(value.vendor_price);
+                            $this.products.push(
+                                {
+                                    product_id: $('.select2-product').find(':selected').val(),
+                                    product_name: $('.select2-product').find(':selected').text(),
+                                    notes: '',
+                                    qty: 0,
+                                    unit_cost: $this.selling_price,
+                                    labor_cost: 0,
+                                    vendor_price: $this.vendor_price,
+                                    discount_item: 0
+                                }
+                            );
+                            $('.select2-product').val(null).trigger('change');
                         }
-                    );
-                    $('.select2-product').val(null).trigger('change');
+                    });
                 },
                 subTotal() {
                     var $this = this;

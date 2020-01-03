@@ -51,6 +51,18 @@
                                     <input type="text" class="form-control form-control-sm" v-model="overview.unit">
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Selling Price</label>
+                                    <input type="text" class="form-control form-control-sm" v-model="overview.selling_price">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Vendor Price</label>
+                                    <input type="text" class="form-control form-control-sm" v-model="overview.vendor_price">
+                                </div>
+                            </div>
                             @if(env('PRODUCT_BATCH') == 'show')
                                 <div class="col-md-4">
                                     <div class="form-group">

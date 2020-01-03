@@ -34,16 +34,16 @@
                                     <input type="text" class="form-control form-control-sm" v-model="overview.agent">
                                 </div>
                                 {{--<div class="form-group">--}}
-                                    {{--<label>Status</label>--}}
-                                    {{--<select type="text" class="form-control form-control-sm" v-model="overview.status">--}}
-                                        {{--<option value="">-- Select Options --</option>--}}
-                                        {{--<option value="Received">Received</option>--}}
-                                        {{--<option value="Paid">Paid</option>--}}
-                                        {{--<option value="Completed">Completed</option>--}}
-                                        {{--<option value="Ordered">Ordered</option>--}}
-                                        {{--<option value="Invoice">Invoice</option>--}}
-                                        {{--<option value="Shipped">Shipped</option>--}}
-                                    {{--</select>--}}
+                                {{--<label>Status</label>--}}
+                                {{--<select type="text" class="form-control form-control-sm" v-model="overview.status">--}}
+                                {{--<option value="">-- Select Options --</option>--}}
+                                {{--<option value="Received">Received</option>--}}
+                                {{--<option value="Paid">Paid</option>--}}
+                                {{--<option value="Completed">Completed</option>--}}
+                                {{--<option value="Ordered">Ordered</option>--}}
+                                {{--<option value="Invoice">Invoice</option>--}}
+                                {{--<option value="Shipped">Shipped</option>--}}
+                                {{--</select>--}}
                                 {{--</div>--}}
                                 <div class="form-group">
                                     <label>Customer Name</label>
@@ -102,7 +102,8 @@
                                         </thead>
                                         <tbody>
                                         <tr v-for="(product, index) in products">
-                                            <td><input readonly type="text" class="form-control-plaintext form-control-sm"
+                                            <td><input readonly type="text"
+                                                       class="form-control-plaintext form-control-sm"
                                                        style="width: 180px;" v-model="product.product_name"></td>
                                             <td><input type="number" class="form-control form-control-sm"
                                                        style="width: 100px;" v-model="product.qty"></td>
@@ -240,6 +241,8 @@
                     overview: {!! $sales_order !!},
                     products: {!! $product_details !!},
                     summary: {!! $summary !!},
+                    selling_price: 0,
+                    vendor_price: 0,
                 }
             },
             methods: {
@@ -293,19 +296,31 @@
                     this.products.splice(product, 1);
                 },
                 addRow() {
-                    this.products.push(
-                        {
-                            product_id: $('.select2-product').find(':selected').val(),
-                            product_name: $('.select2-product').find(':selected').text(),
-                            notes: '',
-                            qty: 0,
-                            unit_cost: 0,
-                            labor_cost: 0,
-                            vendor_price: '',
-                            discount_item: 0
+                    var $this = this;
+                    $.ajax({
+                        url: '{{route('product.find')}}',
+                        method: 'POST',
+                        data: {
+                            product_id: $('.select2-product').find(':selected').val()
+                        },
+                        success: function (value) {
+                            $this.selling_price = parseFloat(value.selling_price);
+                            $this.vendor_price = parseFloat(value.vendor_price);
+                            $this.products.push(
+                                {
+                                    product_id: $('.select2-product').find(':selected').val(),
+                                    product_name: $('.select2-product').find(':selected').text(),
+                                    notes: '',
+                                    qty: 0,
+                                    unit_cost: $this.selling_price,
+                                    labor_cost: 0,
+                                    vendor_price: $this.vendor_price,
+                                    discount_item: 0
+                                }
+                            );
+                            $('.select2-product').val(null).trigger('change');
                         }
-                    );
-                    $('.select2-product').val(null).trigger('change');
+                    });
                 },
                 subTotal() {
                     var $this = this;
@@ -360,7 +375,7 @@
                     this.viewType = 2;
                     $('label').addClass('font-weight-bold');
                     $('.form-control').addClass('form-control-plaintext').removeClass('form-control');
-                    $('.select2').attr('hidden','hidden');
+                    $('.select2').attr('hidden', 'hidden');
                 }
             }
         });

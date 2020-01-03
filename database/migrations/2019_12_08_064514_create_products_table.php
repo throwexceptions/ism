@@ -19,6 +19,8 @@ class CreateProductsTable extends Migration
             $table->string('code',200)->nullable();
             $table->string('category',200)->nullable();
             $table->string('manufacturer', 200)->nullable();
+            $table->float('selling_price')->nullable();
+            $table->float('vendor_price')->nullable();
             $table->string('unit', 200)->nullable();
             $table->text('description')->nullable();
             $table->string('batch', 200)->nullable();

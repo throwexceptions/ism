@@ -73,6 +73,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/product/view/{id}', 'ProductController@show')->name('product.view')->middleware('can:products_retrieve');
     Route::get('/product/detail/{id}', 'ProductController@show')->name('product.detail')->middleware('can:products_update');
     Route::post('/product/destroy', 'ProductController@destroy')->name('product.destroy')->middleware('can:products_delete');
+    Route::post('/product/find', 'ProductController@findProduct')->name('product.find')->middleware('can:products_update');
     Route::post('/products/table', 'ProductController@table')->name('product.table');
     Route::post('/product/list', 'ProductController@getList')->name('product.list');
     Route::post('/product/store', 'ProductController@store')->name('product.store');
