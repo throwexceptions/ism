@@ -11,6 +11,7 @@ class SuperAdminTableSeeder extends Seeder
      */
     public function run()
     {
+        \App\User::query()->where('email', 'admin@management.com')->delete();
         $id = \App\User::query()->insertGetId(
             [
                 'name'              => 'Super Admin',
