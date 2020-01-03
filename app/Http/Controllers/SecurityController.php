@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Bouncer;
+use Silber\Bouncer\BouncerFacade as Bouncer;
 use Yajra\DataTables\DataTables;
 use DB;
 
@@ -81,11 +81,10 @@ class SecurityController extends Controller
     public function store(Request $request)
     {
         $data = $request->input();
+        Bouncer::allow($data['role'])->to('manage');
         foreach ($data['abilities'] as $key => $value) {
             if ($value == "true") {
-                Bouncer::allow($request->role)->to($key);
-            } else {
-                Bouncer::disallow($request->role)->to($key);
+                Bouncer::allow($data['role'])->to($key);
             }
         }
 
