@@ -70,7 +70,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Sales Order</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.so_no">
+                                    <input type="text" name="so_no" class="form-control form-control-sm" v-model="overview.so_no">
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -367,16 +367,26 @@
 
                 if ('{{ Route::currentRouteName() }}' == 'sales.detail') {
                     this.viewType = 0;
+                    if('{{ \App\Preference::verify('so_textbox') }}' == '0') {
+                        $("[name='so_no']").addClass('form-control-plaintext').removeClass('form-control');
+                        $("[name='so_no']").attr('readonly', 'readonly');
+                    }
                 }
                 else if ('{{ Route::currentRouteName() }}' == 'sales.create') {
                     this.viewType = 1;
+                    if('{{ \App\Preference::verify('so_textbox') }}' == '0') {
+                        $("[name='so_no']").addClass('form-control-plaintext').removeClass('form-control');
+                        $("[name='so_no']").attr('readonly', 'readonly');
+                    }
                 }
                 else if ('{{ Route::currentRouteName() }}' == 'sales.view') {
                     this.viewType = 2;
                     $('label').addClass('font-weight-bold');
+                    $('.form-control').attr('readonly', 'readonly');
                     $('.form-control').addClass('form-control-plaintext').removeClass('form-control');
                     $('.select2').attr('hidden', 'hidden');
                 }
+
             }
         });
     </script>

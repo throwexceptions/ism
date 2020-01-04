@@ -59,14 +59,14 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Selling Price</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.selling_price">
+                                    <label>Vendor Price</label>
+                                    <input type="text" class="form-control form-control-sm" v-model="overview.vendor_price">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Vendor Price</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.vendor_price">
+                                    <label>Selling Price</label>
+                                    <input type="text" class="form-control form-control-sm" v-model="overview.selling_price">
                                 </div>
                             </div>
                             @if(env('PRODUCT_BATCH') == 'show')
@@ -156,6 +156,11 @@
                     viewType: 0,
                     overview: {!! $product !!},
                     images: {!! $gallery !!}
+                }
+            },
+            watch: {
+                'overview.vendor_price': function () {
+                    this.overview.selling_price = Math.round(parseFloat(this.overview.vendor_price) + parseFloat((this.overview.vendor_price * .20)))    
                 }
             },
             methods: {

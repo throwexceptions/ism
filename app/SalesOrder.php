@@ -17,6 +17,10 @@ class SalesOrder extends Model
 
     public function newSONo()
     {
+        if(Preference::verify('so_auto') == 0) {
+            return '';
+        }
+
         $so_no_list = $this->newQuery()
                            ->where('so_no', 'like', '%SO%')
                            ->orderBy('id', 'desc')

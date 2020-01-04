@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Purchase Order</label>
-                                    <input type="text" class="form-control form-control-sm"
+                                    <input type="text" name="po_no" class="form-control form-control-sm"
                                            v-model="overview.po_no">
                                 </div>
                                 <div class="form-group">
@@ -431,9 +431,17 @@
 
                 if ('{{ Route::currentRouteName() }}' == 'purchase.detail') {
                     this.viewType = 0;
+                    if('{{ \App\Preference::verify('po_textbox') }}' == '0') {
+                        $("[name='po_no']").addClass('form-control-plaintext').removeClass('form-control');
+                        $("[name='po_no']").attr('readonly', 'readonly');
+                    }
                 }
                 else if ('{{ Route::currentRouteName() }}' == 'purchase.create') {
                     this.viewType = 1;
+                    if('{{ \App\Preference::verify('po_textbox') }}' == '0') {
+                        $("[name='po_no']").addClass('form-control-plaintext').removeClass('form-control');
+                        $("[name='po_no']").attr('readonly', 'readonly');
+                    }
                 }
                 else if ('{{ Route::currentRouteName() }}' == 'purchase.view') {
                     this.viewType = 2;

@@ -111,4 +111,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/orderform/destroy', 'OrderFormController@destroy')->name('orderform.destroy')->middleware('can:order_form_delete');
     Route::post('/orderform/table', 'OrderFormController@table')->name('orderform.table');
     Route::post('/orderform/store', 'OrderFormController@store')->name('orderform.store');
+
+    Route::get('/preference', 'PreferenceController@index')->name('preference');
+    Route::post('/preference/update', 'PreferenceController@update')->name('preference.update');
 });

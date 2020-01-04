@@ -17,6 +17,9 @@ class PurchaseInfo extends Model
 
     public function newPONo()
     {
+        if(Preference::verify('po_auto') == 0) {
+            return '';
+        }
         $po_no_list = $this->newQuery()
                            ->where('po_no', 'like', '%PO%')
                            ->orderBy('id', 'desc')

@@ -40,7 +40,7 @@
                 <span>Vendors</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
                aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-dolly-flatbed"></i>
                 <span>Inventory</span>
@@ -63,7 +63,7 @@
 <!-- Nav Item - Pages Collapse Menu -->
     @if(env('SECTION_BATCHING') == 'show')
         <li class="nav-item">
-            <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
                aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-pallet"></i>
                 <span>Other Process</span>
@@ -87,10 +87,10 @@
 <!-- Nav Item - Pages Collapse Menu -->
     @if(env('SECTION_SECURITY') == 'show')
         <li class="nav-item">
-            <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseSecurity" aria-expanded="true"
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSecurity" aria-expanded="true"
                aria-controls="collapseTwo">
-                <i class="fas fa-fw fa-shield-alt"></i>
-                <span>Security</span>
+                <i class="fa fa-cogs"></i>
+                <span>Configuration</span>
             </a>
             <div id="collapseSecurity" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
@@ -98,6 +98,10 @@
                     <a class="collapse-item" href="{{ route('role') }}">
                         <i class="fas fa-fw fa-user-lock"></i>
                         <span>Roles</span>
+                    </a>
+                    <a class="collapse-item" href="{{ route('preference') }}">
+                        <i class="fas fa-fw fa-stream"></i>
+                        <span>Preferences</span>
                     </a>
                 </div>
             </div>
