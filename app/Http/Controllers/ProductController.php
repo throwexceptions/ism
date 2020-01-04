@@ -34,7 +34,7 @@ class ProductController extends Controller
     public function create()
     {
         $product = collect([
-            "id"           => "",
+            "manual_id"    => "",
             "name"         => "",
             "code"         => "",
             "category"     => "",

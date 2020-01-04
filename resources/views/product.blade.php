@@ -167,9 +167,10 @@
                             bSortable: false,
                             title: 'Action'
                         },
-                        {data: 'id', name: 'products.id', title: 'ID'},
                         {data: 'name', name: 'products.name', title: 'Name'},
+                        {data: 'manual_id', name: 'products.manual_id', title: 'Product ID'},
                         {data: 'code', name: 'products.code', title: 'Product Code'},
+                        {data: 'selling_price', name: 'products.selling_price', title: 'Selling Price'},
                             @if(env('PRODUCT_BATCH_COL') == 'show')
                         {data: 'batch', name: 'products.batch', title: 'Batch No.'},
                             @endif

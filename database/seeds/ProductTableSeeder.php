@@ -17,6 +17,7 @@ class ProductTableSeeder extends Seeder
         for ($x = 0; $x < 1000; $x++) {
             $faker                  = Factory::create();
             $product                = new Product();
+            $product->manual_id     = $faker->randomNumber();
             $product->name          = $faker->word();
             $product->code          = $faker->creditCardNumber();
             $product->category      = \App\Category::all()->random(2)[0]->name;
