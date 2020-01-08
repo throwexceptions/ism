@@ -119,7 +119,6 @@
                             <div class="col-md-12">
                                 <a href="{{ route('orderform') }}" class="btn btn-warning">Back</a>
                                 <button class="btn btn-info" v-if="viewType == 1" @click="store">Save New</button>
-                                <button class="btn btn-primary" v-if="viewType == 0" @click="update">Update Now</button>
                             </div>
                         </div>
                     </div>
@@ -198,28 +197,6 @@
                         }
                     })
 
-                },
-                update() {
-                    var $this = this;
-                    $.ajax({
-                        url: '{{ route('orderform.update') }}',
-                        method: 'POST',
-                        data: {
-                            overview: $this.overview,
-                            products: $this.products,
-                        },
-                        success: function (value) {
-                            Swal.fire(
-                                'Good job!',
-                                'Operation is successful.',
-                                'success'
-                            ).then((result) => {
-                                if (result.value) {
-                                    window.location = '{{ route('orderform') }}'
-                                }
-                            })
-                        }
-                    })
                 },
                 remove(product) {
                     this.products.splice(product, 1);
