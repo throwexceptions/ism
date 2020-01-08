@@ -45,17 +45,17 @@
                                            v-model="overview.shipping_method">
                                 </div>
                                 {{--<div class="form-group">--}}
-                                    {{--<label>Status</label>--}}
-                                    {{--<select type="text" class="form-control form-control-sm" v-model="overview.status">--}}
-                                        {{--<option value="">-- Select Options --</option>--}}
-                                        {{--<option value="Created">Created</option>--}}
-                                        {{--<option value="Received">Received</option>--}}
-                                        {{--<option value="Paid">Paid</option>--}}
-                                        {{--<option value="Completed">Completed</option>--}}
-                                        {{--<option value="Ordered">Ordered</option>--}}
-                                        {{--<option value="Invoice">Invoice</option>--}}
-                                        {{--<option value="Shipped">Shipped</option>--}}
-                                    {{--</select>--}}
+                                {{--<label>Status</label>--}}
+                                {{--<select type="text" class="form-control form-control-sm" v-model="overview.status">--}}
+                                {{--<option value="">-- Select Options --</option>--}}
+                                {{--<option value="Created">Created</option>--}}
+                                {{--<option value="Received">Received</option>--}}
+                                {{--<option value="Paid">Paid</option>--}}
+                                {{--<option value="Completed">Completed</option>--}}
+                                {{--<option value="Ordered">Ordered</option>--}}
+                                {{--<option value="Invoice">Invoice</option>--}}
+                                {{--<option value="Shipped">Shipped</option>--}}
+                                {{--</select>--}}
                                 {{--</div>--}}
                                 <div class="form-group">
                                     <label>Vendor Name</label>
@@ -154,25 +154,44 @@
                                         <caption v-if="viewType != 2">
                                             <button class="btn btn-sm btn-success" data-toggle="modal"
                                                     data-target="#productModal">Add Product
+                                            </button>
+                                            <button class="btn btn-sm btn-warning" data-toggle="modal"
+                                                    data-target="#categoryModal">Add Category
+                                            </button>
                                         </caption>
                                         <thead>
                                         <th v-for="column in columns">@{{ column }}</th>
                                         </thead>
                                         <tbody>
                                         <tr v-for="(product, index) in products">
-                                            <td><input readonly type="text" class="form-control-plaintext form-control-sm"
-                                                       v-model="product.product_name"></td>
-                                            <td><input type="text" class="form-control form-control-sm"
-                                                       style="width: 230px;" v-model="product.notes"></td>
-                                            <td><input type="text" class="form-control form-control-sm"
-                                                       style="width: 40px;" v-model="product.qty"></td>
-                                            <td><input type="text" class="form-control form-control-sm"
-                                                       style="width: 100px;" v-model="product.unit_cost"></td>
-                                            <td><input type="text" class="form-control form-control-sm"
-                                                       style="width: 120px;" v-model="product.vendor_price"></td>
-                                            <td><input type="text" class="form-control form-control-sm"
-                                                       v-model="product.discount_item"></td>
-                                            <td>@{{ (product.vendor_price * product.qty) - ((product.vendor_price *
+                                            <td v-if="product.product_name"><input readonly type="text"
+                                                                                   class="form-control-plaintext form-control-sm"
+                                                                                   v-model="product.product_name"></td>
+                                            <td v-else colspan="7" style="background-color: bisque;">
+                                                <h5 style="margin-top: 5px;"><strong>@{{ product.category }}</strong>
+                                                </h5>
+                                            </td>
+                                            <td v-if="product.product_name"><input type="text"
+                                                                                   class="form-control form-control-sm"
+                                                                                   style="width: 230px;"
+                                                                                   v-model="product.notes"></td>
+                                            <td v-if="product.product_name"><input type="text"
+                                                                                   class="form-control form-control-sm"
+                                                                                   style="width: 40px;"
+                                                                                   v-model="product.qty"></td>
+                                            <td v-if="product.product_name"><input type="text"
+                                                                                   class="form-control form-control-sm"
+                                                                                   style="width: 100px;"
+                                                                                   v-model="product.selling_price"></td>
+                                            <td v-if="product.product_name"><input type="text"
+                                                                                   class="form-control form-control-sm"
+                                                                                   style="width: 120px;"
+                                                                                   v-model="product.vendor_price"></td>
+                                            <td v-if="product.product_name"><input type="text"
+                                                                                   class="form-control form-control-sm"
+                                                                                   v-model="product.discount_item"></td>
+                                            <td v-if="product.product_name">@{{ (product.vendor_price * product.qty) -
+                                                ((product.vendor_price *
                                                 product.qty)*(product.discount_item/100)) }}
                                             </td>
                                             <td>
@@ -256,7 +275,7 @@
             </div>
         </div>
 
-        <div id="productModal" class="modal" role="dialog">
+        <div id="productModal" class="modal fade" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -268,19 +287,46 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <form>
-                                    <div class="form-group">
-                                        <label class="control-label">Products</label>
-                                        <select class="form-control select2-product">
-                                        </select>
-                                    </div>
-                                </form>
+                                <div class="form-group">
+                                    <label class="control-label">Products</label>
+                                    <select class="form-control select2-product">
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary" data-dismiss="modal" @click="addRow()">Insert
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="categoryModal" class="modal fade" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Find a Category</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Category</label>
+                                    <select id="select2-category" class="form-control">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" @click="addCategory()">Insert
                         </button>
                     </div>
                 </div>
@@ -375,21 +421,43 @@
                                     product_name: $('.select2-product').find(':selected').text(),
                                     notes: '',
                                     qty: 0,
-                                    unit_cost: $this.selling_price,
+                                    selling_price: $this.selling_price,
                                     labor_cost: 0,
                                     vendor_price: $this.vendor_price,
-                                    discount_item: 0
+                                    discount_item: 0,
+                                    category: value.category
                                 }
                             );
                             $('.select2-product').val(null).trigger('change');
                         }
                     });
                 },
+                addCategory() {
+                    var $this = this;
+                    $this.products.push(
+                        {
+                            category: $('#select2-category').find(':selected').text(),
+                        }
+                    );
+                    $('#select2-category').val(null).trigger('change');
+                },
+                getCurrentCategory() {
+                    var category = '';
+                    var $this = this;
+                    $.each($this.products, function (x, y) {
+                        category = y.category;
+                        console.log(y.category);
+                    });
+
+                    return category;
+                },
                 subTotal() {
                     var $this = this;
                     $this.sub_total = 0;
                     $.each($this.products, function (x, product) {
-                        $this.sub_total += (product.vendor_price * product.qty) - ((product.vendor_price * product.qty) * (product.discount_item / 100))
+                        if (product.product_name) {
+                            $this.sub_total += (product.labor_cost * product.qty) + ((product.vendor_price * product.qty) - ((product.vendor_price * product.qty) * (product.discount_item / 100)))
+                        }
                     });
                 },
             },
@@ -405,13 +473,25 @@
                 var $this = this;
                 $this.subTotal();
 
+                $('#select2-category').select2({
+                    width: '100%',
+                    ajax: {
+                        url: '{{ route('category.list') }}',
+                        method: 'POST',
+                        dataType: 'json'
+                    }
+                });
 
                 $('.select2-product').select2({
                     width: '100%',
                     ajax: {
                         url: '{{ route('product.list') }}',
                         method: 'POST',
-                        dataType: 'json'
+                        dataType: 'json',
+                        data: function (params) {
+                            params.category = $this.getCurrentCategory();
+                            return params;
+                        }
                     }
                 });
 
@@ -431,14 +511,14 @@
 
                 if ('{{ Route::currentRouteName() }}' == 'purchase.detail') {
                     this.viewType = 0;
-                    if('{{ \App\Preference::verify('po_textbox') }}' == '0') {
+                    if ('{{ \App\Preference::verify('po_textbox') }}' == '0') {
                         $("[name='po_no']").addClass('form-control-plaintext').removeClass('form-control');
                         $("[name='po_no']").attr('readonly', 'readonly');
                     }
                 }
                 else if ('{{ Route::currentRouteName() }}' == 'purchase.create') {
                     this.viewType = 1;
-                    if('{{ \App\Preference::verify('po_textbox') }}' == '0') {
+                    if ('{{ \App\Preference::verify('po_textbox') }}' == '0') {
                         $("[name='po_no']").addClass('form-control-plaintext').removeClass('form-control');
                         $("[name='po_no']").attr('readonly', 'readonly');
                     }
@@ -447,7 +527,7 @@
                     this.viewType = 2;
                     $('label').addClass('font-weight-bold');
                     $('.form-control').addClass('form-control-plaintext').removeClass('form-control');
-                    $('.select2').attr('hidden','hidden');
+                    $('.select2').attr('hidden', 'hidden');
                 }
             }
         });

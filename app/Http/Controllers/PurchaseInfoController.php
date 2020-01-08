@@ -79,10 +79,68 @@ class PurchaseInfoController extends Controller
                                        ->leftJoin('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
                                        ->where('purchase_infos.id', $id)
                                        ->get()[0];
-        $product_details = ProductDetail::query()->where('purchase_order_id', $id)->get();
-        $summary         = Summary::query()->where('purchase_order_id', $id)->get()[0];
+        $product_details = ProductDetail::query()
+                                        ->selectRaw('products.category, product_details.*')
+                                        ->where('purchase_order_id', $id)
+                                        ->join('products', 'products.id', 'product_details.product_id')
+                                        ->get();
+        $category        = '';
+        $hold            = [];
+        foreach ($product_details->toArray() as $value) {
+            if ($value['category'] != $category) {
+                $hold[]   = ['category' => $value['category']];
+                $category = $value['category'];
+            }
+            unset($value['manual_id']);
+            unset($value['name']);
+            unset($value['code']);
+            unset($value['manufacturer']);
+            unset($value['unit']);
+            unset($value['description']);
+            unset($value['batch']);
+            unset($value['color']);
+            unset($value['size']);
+            unset($value['weight']);
+            unset($value['assigned_to']);
+            unset($value['id']);
+            $hold[] = $value;
+        }
+
+        $product_details = collect($hold);
+
+        $summary = Summary::query()->where('purchase_order_id', $id)->get()[0];
 
         return view('purchase_form', compact('purchase_info', 'product_details', 'summary'));
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->input();
+
+        if ($data['overview']['payment_method'] != 'Check') {
+            $data['overview']['check_number'] = '';
+            $data['overview']['check_writer'] = '';
+        }
+
+        $data['overview']['status']      = 'Ordered';
+        $data['overview']['created_at']  = Carbon::now()->format('Y-m-d');
+        $data['overview']['assigned_to'] = auth()->user()->id;
+        $id                              = DB::table('purchase_infos')->insertGetId($data['overview']);
+
+        if (isset($data['products'])) {
+            foreach ($data['products'] as $item) {
+                unset($item['category']);
+                if (count($item) > 2) {
+                    $item['purchase_order_id'] = $id;
+                    DB::table('product_details')->insert($item);
+                }
+            }
+        }
+
+        $data['summary']['purchase_order_id'] = $id;
+        DB::table('summaries')->insert($data['summary']);
+
+        return ['success' => true];
     }
 
     public function update(Request $request)
@@ -99,38 +157,15 @@ class PurchaseInfoController extends Controller
         if (isset($data['products'])) {
             foreach ($data['products'] as $item) {
                 $item['purchase_order_id'] = $data['overview']['id'];
-                DB::table('product_details')->insert($item);
+                unset($item['category']);
+                if (count($item) > 2) {
+                    DB::table('product_details')->insert($item);
+                }
             }
         }
 
         DB::table('summaries')->where('purchase_order_id', $data['overview']['id'])->delete();
         $data['summary']['purchase_order_id'] = $data['overview']['id'];
-        DB::table('summaries')->insert($data['summary']);
-
-        return ['success' => true];
-    }
-
-    public function store(Request $request)
-    {
-        $data = $request->input();
-
-        if ($data['overview']['payment_method'] != 'Check') {
-            $data['overview']['check_number'] = '';
-            $data['overview']['check_writer'] = '';
-        }
-
-        $data['overview']['created_at']  = Carbon::now()->format('Y-m-d');
-        $data['overview']['assigned_to'] = auth()->user()->id;
-        $id                              = DB::table('purchase_infos')->insertGetId($data['overview']);
-
-        if (isset($data['products'])) {
-            foreach ($data['products'] as $item) {
-                $item['purchase_order_id'] = $id;
-                DB::table('product_details')->insert($item);
-            }
-        }
-
-        $data['summary']['purchase_order_id'] = $id;
         DB::table('summaries')->insert($data['summary']);
 
         return ['success' => true];

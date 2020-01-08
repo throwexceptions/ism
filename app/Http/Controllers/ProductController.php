@@ -70,11 +70,16 @@ class ProductController extends Controller
 
     public function getList(Request $request)
     {
+        $product = Product::query()
+                          ->selectRaw("id as id, id || ' - ' || name as text")
+                          ->whereRaw("name LIKE '%{$request->term}%'");
+
+        if ($request->category != '') {
+            $product->where('category', $request->category);
+        }
+
         return [
-            "results" => DB::table('products')
-                           ->selectRaw("id as id, name || ' - ' || id as text")
-                           ->whereRaw("name LIKE '%{$request->term}%'")
-                           ->get(),
+            "results" => $product->get(),
         ];
     }
 

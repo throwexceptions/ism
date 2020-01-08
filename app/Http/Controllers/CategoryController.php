@@ -25,4 +25,14 @@ class CategoryController extends Controller
 
         return ['success' => true, 'categories' => $category];
     }
+
+    public function getList(Request $request)
+    {
+        $category = Category::query()
+                           ->selectRaw("id as id, name as text")
+                           ->whereRaw("name LIKE '%{$request->term}%'");
+        return [
+            "results" => $category->get(),
+        ];
+    }
 }

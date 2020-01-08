@@ -79,6 +79,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/product/store', 'ProductController@store')->name('product.store');
     Route::post('/product/update', 'ProductController@update')->name('product.update');
     Route::post('/product/image/upload', 'ProductController@imageUpload')->name('product.image.upload');
+
+    Route::post('/category/list', 'CategoryController@getList')->name('category.list');
     Route::post('/category/destroy', 'CategoryController@destroy')->name('category.delete')->middleware('can:products_update');
     Route::post('/category/store', 'CategoryController@store')->name('category.store')->middleware('can:products_update');
 

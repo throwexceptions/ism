@@ -70,7 +70,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Sales Order</label>
-                                    <input type="text" name="so_no" class="form-control form-control-sm" v-model="overview.so_no">
+                                    <input type="text" name="so_no" class="form-control form-control-sm"
+                                           v-model="overview.so_no">
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -96,36 +97,57 @@
                                             <button class="btn btn-sm btn-success" data-toggle="modal"
                                                     data-target="#productModal">Add Product
                                             </button>
+                                            <button class="btn btn-sm btn-warning" data-toggle="modal"
+                                                    data-target="#categoryModal">Add Category
+                                            </button>
                                         </caption>
                                         <thead>
                                         <th v-for="column in columns">@{{ column }}</th>
                                         </thead>
                                         <tbody>
                                         <tr v-for="(product, index) in products">
-                                            <td><input readonly type="text"
+                                            <td v-if="product.product_name">
+                                                <input readonly type="text"
                                                        class="form-control-plaintext form-control-sm"
-                                                       style="width: 180px;" v-model="product.product_name"></td>
-                                            <td><input type="number" class="form-control form-control-sm"
-                                                       style="width: 100px;" v-model="product.qty"></td>
-                                            <td><input type="number" class="form-control form-control-sm"
-                                                       style="width: 100px;" v-model="product.unit_cost"></td>
-                                            <td><input type="number" class="form-control form-control-sm"
-                                                       style="width: 100px;" v-model="product.discount_item"></td>
-                                            <td><input readonly type="text"
-                                                       class="form-control-plaintext form-control-sm"
-                                                       style="width: 100px;"
-                                                       v-bind:value="(product.unit_cost * product.qty) - ((product.unit_cost * product.qty)*(product.discount_item/100))">
+                                                       style="width: 180px;" v-model="product.product_name">
                                             </td>
-                                            <td><input type="number" class="form-control form-control-sm"
-                                                       style="width: 100px;" v-model="product.labor_cost"></td>
-                                            <td><input readonly type="text"
+                                            <td v-else colspan="8" style="background-color: bisque;">
+                                                <h5 style="margin-top: 5px;"><strong>@{{ product.category }}</strong>
+                                                </h5>
+                                            </td>
+                                            <td v-if="product.product_name">
+                                                <input type="number" class="form-control form-control-sm"
+                                                       style="width: 100px;" v-model="product.qty">
+                                            </td>
+                                            <td v-if="product.product_name">
+                                                <input type="number" class="form-control form-control-sm"
+                                                       style="width: 100px;" v-model="product.selling_price">
+                                            </td>
+                                            <td v-if="product.product_name">
+                                                <input type="number" class="form-control form-control-sm"
+                                                       style="width: 100px;" v-model="product.discount_item">
+                                            </td>
+                                            <td v-if="product.product_name">
+                                                <input readonly type="text"
                                                        class="form-control-plaintext form-control-sm"
                                                        style="width: 100px;"
-                                                       v-bind:value="(product.labor_cost * product.qty)"></td>
-                                            <td><input readonly type="text"
+                                                       v-bind:value="(product.selling_price * product.qty) - ((product.selling_price * product.qty)*(product.discount_item/100))">
+                                            </td>
+                                            <td v-if="product.product_name">
+                                                <input type="number" class="form-control form-control-sm"
+                                                       style="width: 100px;" v-model="product.labor_cost">
+                                            </td>
+                                            <td v-if="product.product_name">
+                                                <input readonly type="text"
+                                                       class="form-control-plaintext form-control-sm"
+                                                       style="width: 100px;"
+                                                       v-bind:value="(product.labor_cost * product.qty)">
+                                            </td>
+                                            <td v-if="product.product_name">
+                                                <input readonly type="text"
                                                        class="form-control-plaintext form-control-sm total-grid"
                                                        style="width: 100px;"
-                                                       v-bind:value="(product.labor_cost * product.qty) + ((product.unit_cost * product.qty) - ((product.unit_cost * product.qty)*(product.discount_item/100)))">
+                                                       v-bind:value="(product.labor_cost * product.qty) + ((product.selling_price * product.qty) - ((product.selling_price * product.qty)*(product.discount_item/100)))">
                                             </td>
                                             <td>
                                                 <button class="btn btn-sm btn-block btn-danger" @click="remove(index)">
@@ -224,6 +246,37 @@
                 </div>
             </div>
         </div>
+
+        <div id="categoryModal" class="modal" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Find a Category</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form>
+                                    <div class="form-group">
+                                        <label class="control-label">Category</label>
+                                        <select class="form-control select2-category">
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" @click="addCategory()">Insert
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -312,7 +365,7 @@
                                     product_name: $('.select2-product').find(':selected').text(),
                                     notes: '',
                                     qty: 0,
-                                    unit_cost: $this.selling_price,
+                                    selling_price: $this.selling_price,
                                     labor_cost: 0,
                                     vendor_price: $this.vendor_price,
                                     discount_item: 0
@@ -322,11 +375,31 @@
                         }
                     });
                 },
+                addCategory() {
+                    var $this = this;
+                    $this.products.push(
+                        {
+                            category: $('.select2-category').find(':selected').text(),
+                        }
+                    );
+                    $('.select2-category').val(null).trigger('change');
+                },
+                getCurrentCategory() {
+                    var category = '';
+                    var $this = this;
+                    $.each($this.products, function (x, y) {
+                        category = y.category
+                    });
+
+                    return category;
+                },
                 subTotal() {
                     var $this = this;
                     $this.sub_total = 0;
                     $.each($this.products, function (x, product) {
-                        $this.sub_total += (product.labor_cost * product.qty) + ((product.unit_cost * product.qty) - ((product.unit_cost * product.qty) * (product.discount_item / 100)))
+                        if (product.product_name) {
+                            $this.sub_total += (product.labor_cost * product.qty) + ((product.selling_price * product.qty) - ((product.selling_price * product.qty) * (product.discount_item / 100)))
+                        }
                     });
                 }
             },
@@ -342,12 +415,25 @@
                 var $this = this;
                 $this.subTotal();
 
+                $('.select2-category').select2({
+                    width: '100%',
+                    ajax: {
+                        url: '{{ route('category.list') }}',
+                        method: 'POST',
+                        dataType: 'json'
+                    }
+                });
+
                 $('.select2-product').select2({
                     width: '100%',
                     ajax: {
                         url: '{{ route('product.list') }}',
                         method: 'POST',
-                        dataType: 'json'
+                        dataType: 'json',
+                        data: function (params) {
+                            params.category = $this.getCurrentCategory();
+                            return params;
+                        }
                     }
                 });
 
@@ -367,14 +453,14 @@
 
                 if ('{{ Route::currentRouteName() }}' == 'sales.detail') {
                     this.viewType = 0;
-                    if('{{ \App\Preference::verify('so_textbox') }}' == '0') {
+                    if ('{{ \App\Preference::verify('so_textbox') }}' == '0') {
                         $("[name='so_no']").addClass('form-control-plaintext').removeClass('form-control');
                         $("[name='so_no']").attr('readonly', 'readonly');
                     }
                 }
                 else if ('{{ Route::currentRouteName() }}' == 'sales.create') {
                     this.viewType = 1;
-                    if('{{ \App\Preference::verify('so_textbox') }}' == '0') {
+                    if ('{{ \App\Preference::verify('so_textbox') }}' == '0') {
                         $("[name='so_no']").addClass('form-control-plaintext').removeClass('form-control');
                         $("[name='so_no']").attr('readonly', 'readonly');
                     }
