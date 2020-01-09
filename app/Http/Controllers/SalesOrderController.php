@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\ProductDetail;
 use App\SalesOrder;
 use App\Summary;
+use PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -39,6 +40,7 @@ class SalesOrderController extends Controller
             "so_no"          => SalesOrder::generate()->newSONo(),
             "agent"          => "",
             "assigned_to"    => "",
+            "fax"    => "",
             "status"         => "Quote",
             "address"        => "",
             "due_date"       => "",
@@ -83,7 +85,6 @@ class SalesOrderController extends Controller
                                         ->where('sales_order_id', $id)
                                         ->join('products', 'products.id', 'product_details.product_id')
                                         ->get();
-
         $category = '';
         $hold     = [];
         foreach ($product_details->toArray() as $value) {
@@ -194,5 +195,88 @@ class SalesOrderController extends Controller
         }
 
         return ['success' => false];
+    }
+
+    public function printable($id)
+    {
+        $sales_order     = SalesOrder::query()
+                                     ->selectRaw('sales_orders.*, IFNULL(customers.name, \'\') as customer_name')
+                                     ->leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')
+                                     ->where('sales_orders.id', $id)
+                                     ->get()[0];
+        $product_details = ProductDetail::query()
+                                        ->selectRaw('products.category, product_details.*')
+                                        ->where('sales_order_id', $id)
+                                        ->join('products', 'products.id', 'product_details.product_id')
+                                        ->get();
+        $category = '';
+        $hold     = [];
+        foreach ($product_details->toArray() as $value) {
+            if ($value['category'] != $category) {
+                $hold[]   = ['category' => $value['category']];
+                $category = $value['category'];
+            }
+            unset($value['manual_id']);
+            unset($value['name']);
+            unset($value['code']);
+            unset($value['manufacturer']);
+            unset($value['unit']);
+            unset($value['description']);
+            unset($value['batch']);
+            unset($value['color']);
+            unset($value['size']);
+            unset($value['weight']);
+            unset($value['assigned_to']);
+            unset($value['id']);
+            $hold[] = $value;
+        }
+        $product_details = collect($hold);
+        $summary         = Summary::query()->where('sales_order_id', $id)->get()[0];
+
+        $pdf = PDF::loadView('sales_printable',
+            ['sales_order' => $sales_order, 'product_details' => $product_details, 'summary' => $summary]);
+
+        return $pdf->download('quote.pdf');
+    }
+
+    public function previewSO($id)
+    {
+
+        $sales_order     = SalesOrder::query()
+                                     ->selectRaw('sales_orders.*, IFNULL(customers.name, \'\') as customer_name')
+                                     ->leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')
+                                     ->where('sales_orders.id', $id)
+                                     ->get()[0];
+        $product_details = ProductDetail::query()
+                                        ->selectRaw('products.category, product_details.*')
+                                        ->where('sales_order_id', $id)
+                                        ->join('products', 'products.id', 'product_details.product_id')
+                                        ->get();
+
+        $category = '';
+        $hold     = [];
+        foreach ($product_details->toArray() as $value) {
+            if ($value['category'] != $category) {
+                $hold[]   = ['category' => $value['category']];
+                $category = $value['category'];
+            }
+            unset($value['manual_id']);
+            unset($value['name']);
+            unset($value['code']);
+            unset($value['manufacturer']);
+            unset($value['unit']);
+            unset($value['description']);
+            unset($value['batch']);
+            unset($value['color']);
+            unset($value['size']);
+            unset($value['weight']);
+            unset($value['assigned_to']);
+            unset($value['id']);
+            $hold[] = $value;
+        }
+        $product_details = collect($hold);
+        $summary         = Summary::query()->where('sales_order_id', $id)->get()[0];
+
+        return view('sales_printable', compact('sales_order', 'product_details', 'summary'));
     }
 }

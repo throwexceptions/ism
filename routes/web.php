@@ -43,6 +43,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/sales/update', 'SalesOrderController@update')->name('sales.update');
     Route::post('/sales/store', 'SalesOrderController@store')->name('sales.store');
     Route::post('/sales/status/update', 'SalesOrderController@updateStatus')->name('sales.status.update');
+    Route::get('/sales/print/{id}', 'SalesOrderController@printable')->name('sales.print');
+    Route::get('/sales/preview/{id}', 'SalesOrderController@previewSO')->name('sales.preview');
 
     Route::get('/vendor', 'VendorController@index')->name('vendor')->middleware('can:vendors');
     Route::get('/vendor/create', 'VendorController@create')->name('vendor.create')->middleware('can:vendors_create');

@@ -102,7 +102,7 @@
                                             </button>
                                         </caption>
                                         <thead>
-                                        <th v-for="column in columns">@{{ column }}</th>
+                                        <th v-for="column in columns" v-if="column != 'Action' || viewType != 2" >@{{ column }}</th>
                                         </thead>
                                         <tbody>
                                         <tr v-for="(product, index) in products">
@@ -149,7 +149,7 @@
                                                        style="width: 100px;"
                                                        v-bind:value="(product.labor_cost * product.qty) + ((product.selling_price * product.qty) - ((product.selling_price * product.qty)*(product.discount_item/100)))">
                                             </td>
-                                            <td>
+                                            <td v-if="viewType != 2">
                                                 <button class="btn btn-sm btn-block btn-danger" @click="remove(index)">
                                                     <i class="fa fa-ban"></i></button>
                                             </td>
@@ -159,17 +159,17 @@
                                 </div>
                             </div>
                             <div class="offset-md-9 col-md-4">
-                                <div class="form-group row">
-                                    <label class="col-form-label col-md-4 col-form-label-sm">Discount</label>
-                                    <div class="col-md-4">
-                                        <input type="text" class="form-control form-control-sm"
-                                               v-model="summary.discount">
-                                    </div>
-                                </div>
+                                {{--<div class="form-group row">--}}
+                                    {{--<label class="col-form-label col-md-4 col-form-label-sm">Discount</label>--}}
+                                    {{--<div class="col-md-4">--}}
+                                        {{--<input type="text" class="form-control form-control-sm"--}}
+                                               {{--v-model="summary.discount">--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
                                 <div class="form-group row">
                                     <label class="col-form-label col-md-4 col-form-label-sm">Sub Total</label>
                                     <div class="col-md-4">
-                                        <input type="text" class="form-control form-control-sm" v-model="sub_total">
+                                        <input type="text" class="form-control form-control-sm" v-model="summary.sub_total">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -190,7 +190,7 @@
                                     <label class="col-form-label col-md-4 col-form-label-sm">Grand Total</label>
                                     <div class="col-md-4">
                                         <input type="text" class="form-control-plaintext form-control-sm"
-                                               v-bind:value="sub_total + parseFloat(summary.sales_tax) + parseFloat(summary.shipping)">
+                                               v-bind:value="summary.sub_total + parseFloat(summary.sales_tax) + parseFloat(summary.shipping)">
                                     </div>
                                 </div>
                             </div>
@@ -210,6 +210,8 @@
                                 <a href="{{ route('sales') }}" class="btn btn-warning">Back</a>
                                 <button class="btn btn-info" v-if="viewType == 1" @click="store">Save New</button>
                                 <button class="btn btn-primary" v-if="viewType == 0" @click="update">Update Now</button>
+                                <a href="{{ route('sales.print', isset($sales_order->id)?$sales_order->id: '') }}" class="btn btn-primary" v-if="viewType == 2">Print</a>
+
                             </div>
                         </div>
                     </div>
@@ -395,10 +397,10 @@
                 },
                 subTotal() {
                     var $this = this;
-                    $this.sub_total = 0;
+                    $this.summary.sub_total = 0;
                     $.each($this.products, function (x, product) {
                         if (product.product_name) {
-                            $this.sub_total += (product.labor_cost * product.qty) + ((product.selling_price * product.qty) - ((product.selling_price * product.qty) * (product.discount_item / 100)))
+                            $this.summary.sub_total += (product.labor_cost * product.qty) + ((product.selling_price * product.qty) - ((product.selling_price * product.qty) * (product.discount_item / 100)))
                         }
                     });
                 }
