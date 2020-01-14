@@ -34,7 +34,7 @@ class SalesOrderTableSeeder extends Seeder
             $purchase_info->phone = $faker->firstName();
             $purchase_info->fax = $faker->firstName();
             $purchase_info->email = $faker->firstName();
-            $purchase_info->so_no = $faker->firstName();
+            $purchase_info->so_no = $faker->randomNumber();
             $purchase_info->account_no = $faker->bankAccountNumber;
             $purchase_info->tac = $faker->paragraph();
             $purchase_info->save();

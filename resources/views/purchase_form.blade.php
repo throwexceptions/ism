@@ -204,13 +204,13 @@
                                 </div>
                             </div>
                             <div class="offset-md-9 col-md-4">
-                                {{--<div class="form-group row">--}}
-                                    {{--<label class="col-form-label col-md-4 col-form-label-sm">Discount</label>--}}
-                                    {{--<div class="col-md-4">--}}
-                                        {{--<input type="text" class="form-control form-control-sm"--}}
-                                               {{--v-model="summary.discount">--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
+                                <div class="form-group row">
+                                    <label class="col-form-label col-md-4 col-form-label-sm">Discount</label>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control form-control-sm"
+                                               v-model="summary.discount">
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <label class="col-form-label col-md-4 col-form-label-sm">Sub Total</label>
                                     <div class="col-md-4">
@@ -235,7 +235,7 @@
                                     <label class="col-form-label col-md-4 col-form-label-sm">Grand Total</label>
                                     <div class="col-md-4">
                                         <input type="text" class="form-control-plaintext form-control-sm"
-                                               v-bind:value="summary.sub_total + parseFloat(summary.sales_tax) + parseFloat(summary.shipping)">
+                                               v-bind:value="(summary.sub_total + parseFloat(summary.sales_tax) + parseFloat(summary.shipping)) - (summary.sub_total + parseFloat(summary.sales_tax) + parseFloat(summary.shipping) * (summary.discount/100))">
                                     </div>
                                 </div>
                             </div>

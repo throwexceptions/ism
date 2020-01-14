@@ -50,4 +50,11 @@ class DashboardController extends Controller
 
         return DataTables::of($so)->make(true);
     }
+
+    public function returnedSO()
+    {
+        $so = SalesOrder::query()->where('status', 'Returned');
+
+        return DataTables::of($so)->make(true);
+    }
 }

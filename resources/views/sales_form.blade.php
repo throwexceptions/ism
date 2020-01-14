@@ -74,6 +74,29 @@
                                            v-model="overview.so_no">
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Payment Method</label>
+                                    <select class="form-control" v-model="overview.payment_method">
+                                        <option value="Cash">Cash</option>
+                                        <option value="Credit">Credit</option>
+                                        <option value="Check">Check</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Account Name</label>
+                                    <input type="text" class="form-control form-control-sm" v-model="overview.account_name">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Account No.</label>
+                                    <input type="text" name="so_no" class="form-control form-control-sm"
+                                           v-model="overview.account_no">
+                                </div>
+                            </div>
                             <div class="col-md-12">
                                 <h4>Address Information</h4>
                                 <hr>
@@ -159,13 +182,13 @@
                                 </div>
                             </div>
                             <div class="offset-md-9 col-md-4">
-                                {{--<div class="form-group row">--}}
-                                    {{--<label class="col-form-label col-md-4 col-form-label-sm">Discount</label>--}}
-                                    {{--<div class="col-md-4">--}}
-                                        {{--<input type="text" class="form-control form-control-sm"--}}
-                                               {{--v-model="summary.discount">--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
+                                <div class="form-group row">
+                                    <label class="col-form-label col-md-4 col-form-label-sm">Discount</label>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control form-control-sm"
+                                               v-model="summary.discount">
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <label class="col-form-label col-md-4 col-form-label-sm">Sub Total</label>
                                     <div class="col-md-4">
@@ -190,7 +213,7 @@
                                     <label class="col-form-label col-md-4 col-form-label-sm">Grand Total</label>
                                     <div class="col-md-4">
                                         <input type="text" class="form-control-plaintext form-control-sm"
-                                               v-bind:value="summary.sub_total + parseFloat(summary.sales_tax) + parseFloat(summary.shipping)">
+                                               v-bind:value="(summary.sub_total + parseFloat(summary.sales_tax) + parseFloat(summary.shipping)) - (summary.sub_total + parseFloat(summary.sales_tax) + parseFloat(summary.shipping) * (summary.discount/100))">
                                     </div>
                                 </div>
                             </div>

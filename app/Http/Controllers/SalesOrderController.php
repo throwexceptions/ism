@@ -179,7 +179,7 @@ class SalesOrderController extends Controller
         $pdf = PDF::loadView('sales_printable',
             ['sales_order' => $sales_order, 'product_details' => $product_details, 'summary' => $summary]);
 
-        return $pdf->download('quote.pdf');
+        return $pdf->download('SO_' . $sales_order["status"] . '-' . Carbon::now()->format('Y-m-d') . '.pdf');
     }
 
     public function previewSO($id)
@@ -188,7 +188,7 @@ class SalesOrderController extends Controller
         $sales_order     = $data['sales_order'];
         $product_details = $data['product_details'];
         $summary         = $data['summary'];
-
+        dump($sales_order);
         return view('sales_printable', compact('sales_order', 'product_details', 'summary'));
     }
 
@@ -230,9 +230,9 @@ class SalesOrderController extends Controller
         $summary         = Summary::query()->where('sales_order_id', $id)->get()[0];
 
         return [
-            'sales_order'    => $sales_order,
+            'sales_order'     => $sales_order,
             'product_details' => $product_details,
-            'summary'        => $summary,
+            'summary'         => $summary,
         ];
     }
 }

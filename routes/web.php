@@ -21,6 +21,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'DashboardController@index')->name('home');
     Route::post('/home/instock', 'DashboardController@inStock')->name('home.instock');
     Route::post('/home/outofstock', 'DashboardController@outOfStock')->name('home.outofstock');
+    Route::post('/home/returned', 'DashboardController@returnedSO')->name('home.returned');
     Route::post('/home/po', 'DashboardController@orderedPO')->name('home.po');
     Route::post('/home/so', 'DashboardController@quoteSO')->name('home.so');
 

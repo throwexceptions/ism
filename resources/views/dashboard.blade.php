@@ -74,6 +74,23 @@
                     </div>
                 </div>
             </div>
+            <div class="col-lg-6 mb-4">
+                <!-- Approach -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Returned SO</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                            </div>
+                            <div class="col-md-12 mt-3">
+                                <table id="table-so-returned" class="table table-striped nowrap" style="width:100%"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
@@ -120,10 +137,6 @@ const app = new Vue({
                     $this.overview = hold;
                     console.log(hold);
                 });
-
-                $('.btn-destroy').on('click', function () {
-                    $this.destroy();
-                });
             }
         });
 
@@ -152,10 +165,6 @@ const app = new Vue({
                     $this.overview = hold;
                     console.log(hold);
                 });
-
-                $('.btn-destroy').on('click', function () {
-                    $this.destroy();
-                });
             }
         });
 
@@ -183,14 +192,10 @@ const app = new Vue({
                     $this.overview = hold;
                     console.log(hold);
                 });
-
-                $('.btn-destroy').on('click', function () {
-                    $this.destroy();
-                });
             }
         });
 
-        $this.dt = $('#table-so').DataTable({
+        $this.dt = $('#table-so-returned').DataTable({
             processing: true,
             serverSide: true,
             scrollX: true,
@@ -199,7 +204,7 @@ const app = new Vue({
             order: [[0, 'desc']],
             pageLength: 5,
             ajax: {
-                url: "{{ route('home.po') }}",
+                url: "{{ route('home.returned') }}",
                 method: "POST",
             },
             columns: [
@@ -214,9 +219,31 @@ const app = new Vue({
                     $this.overview = hold;
                     console.log(hold);
                 });
-
-                $('.btn-destroy').on('click', function () {
-                    $this.destroy();
+            }
+        });
+        $this.dt = $('#table-so').DataTable({
+            processing: true,
+            serverSide: true,
+            scrollX: true,
+            responsive: true,
+            lengthChange: false,
+            order: [[0, 'desc']],
+            pageLength: 5,
+            ajax: {
+                url: "{{ route('home.so') }}",
+                method: "POST",
+            },
+            columns: [
+                {data: 'id', name:'id', title: 'ID'},
+                {data: 'subject', name:"subject", title: 'Subject'},
+                {data: 'status', title: 'Status'},
+            ],
+            drawCallback: function () {
+                $('table .btn').on('click', function(){
+                    let data = $(this).parent().parent().parent();
+                    let hold = $this.dt.row(data).data();
+                    $this.overview = hold;
+                    console.log(hold);
                 });
             }
         });
