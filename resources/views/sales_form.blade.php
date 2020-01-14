@@ -213,7 +213,7 @@
                                     <label class="col-form-label col-md-4 col-form-label-sm">Grand Total</label>
                                     <div class="col-md-4">
                                         <input type="text" class="form-control-plaintext form-control-sm"
-                                               v-bind:value="(summary.sub_total + parseFloat(summary.sales_tax) + parseFloat(summary.shipping)) - (summary.sub_total + parseFloat(summary.sales_tax) + parseFloat(summary.shipping) * (summary.discount/100))">
+                                               v-bind:value="((parseFloat(summary.sub_total) + parseFloat(summary.sales_tax) + parseFloat(summary.shipping)) - (parseFloat(summary.sub_total) + parseFloat(summary.sales_tax) + parseFloat(summary.shipping)) * (summary.discount/100))">
                                     </div>
                                 </div>
                             </div>

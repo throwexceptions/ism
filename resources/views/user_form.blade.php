@@ -63,7 +63,7 @@
                                 'success'
                             ).then((result) => {
                                 if (result.value) {
-                                    window.location = '{{ route('customer') }}'
+                                    window.location = '{{ route('users') }}'
                                 }
                             })
                         }
@@ -83,7 +83,7 @@
                                 'success'
                             ).then((result) => {
                                 if (result.value) {
-                                    window.location = '{{ route('customer') }}'
+                                    window.location = '{{ route('users') }}'
                                 }
                             })
                         }

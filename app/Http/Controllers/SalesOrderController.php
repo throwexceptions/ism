@@ -175,9 +175,35 @@ class SalesOrderController extends Controller
         $sales_order     = $data['sales_order'];
         $product_details = $data['product_details'];
         $summary         = $data['summary'];
+        $sections        = [];
+        $cnt             = -1;
+        foreach ($product_details as $key => $value) {
+            if (count($value) == 1) {
+                $sections[] = [
+                    $value['category'] => 0,
+                ];
+                $cnt++;
+            } else {
+                $total_selling                      = $value['qty'] * $value['selling_price'];
+                $total_labor                        = $value['qty'] * $value['labor_cost'];
+                $sections[$cnt][$value['category']] += $total_labor + ($total_selling - ($total_selling * ($value['discount_item'] / 100)));
+            }
+        }
+
+        $hold_section = $sections;
+        foreach ($hold_section as $index => $section) {
+            foreach ($section as $key => $value) {
+                $hold_section[$index] = [$this->converToRoman($index + 1) . '. ' . $key => $value];
+            }
+        }
+        $sections = $hold_section;
 
         $pdf = PDF::loadView('sales_printable',
-            ['sales_order' => $sales_order, 'product_details' => $product_details, 'summary' => $summary]);
+            ['sales_order'     => $sales_order,
+             'product_details' => $product_details,
+             'summary'         => $summary,
+             'sections'        => $sections,
+            ]);
 
         return $pdf->download('SO_' . $sales_order["status"] . '-' . Carbon::now()->format('Y-m-d') . '.pdf');
     }
@@ -188,8 +214,31 @@ class SalesOrderController extends Controller
         $sales_order     = $data['sales_order'];
         $product_details = $data['product_details'];
         $summary         = $data['summary'];
-        dump($sales_order);
-        return view('sales_printable', compact('sales_order', 'product_details', 'summary'));
+
+        $sections = [];
+        $cnt      = -1;
+        foreach ($product_details as $key => $value) {
+            if (count($value) == 1) {
+                $sections[] = [
+                    $value['category'] => 0,
+                ];
+                $cnt++;
+            } else {
+                $total_selling                      = $value['qty'] * $value['selling_price'];
+                $total_labor                        = $value['qty'] * $value['labor_cost'];
+                $sections[$cnt][$value['category']] += $total_labor + ($total_selling - ($total_selling * ($value['discount_item'] / 100)));
+            }
+        }
+
+        $hold_section = $sections;
+        foreach ($hold_section as $index => $section) {
+            foreach ($section as $key => $value) {
+                $hold_section[$index] = [$this->converToRoman($index + 1) . '. ' . $key => $value];
+            }
+        }
+        $sections = $hold_section;
+
+        return view('sales_printable', compact('sales_order', 'product_details', 'summary', 'sections'));
     }
 
     public function getOverview($id)
@@ -234,5 +283,42 @@ class SalesOrderController extends Controller
             'product_details' => $product_details,
             'summary'         => $summary,
         ];
+    }
+
+    public function converToRoman($num)
+    {
+        $n   = intval($num);
+        $res = '';
+
+        //array of roman numbers
+        $romanNumber_Array = [
+            'M'  => 1000,
+            'CM' => 900,
+            'D'  => 500,
+            'CD' => 400,
+            'C'  => 100,
+            'XC' => 90,
+            'L'  => 50,
+            'XL' => 40,
+            'X'  => 10,
+            'IX' => 9,
+            'V'  => 5,
+            'IV' => 4,
+            'I'  => 1,
+        ];
+
+        foreach ($romanNumber_Array as $roman => $number) {
+            //divide to get  matches
+            $matches = intval($n / $number);
+
+            //assign the roman char * $matches
+            $res .= str_repeat($roman, $matches);
+
+            //substract from the number
+            $n = $n % $number;
+        }
+
+        // return the result
+        return $res;
     }
 }
