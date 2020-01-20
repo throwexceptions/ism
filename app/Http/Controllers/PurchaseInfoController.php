@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Silber\Bouncer\BouncerFacade as Bouncer;
 use Yajra\DataTables\DataTables;
+use PDF;
 
 class PurchaseInfoController extends Controller
 {
@@ -72,47 +73,6 @@ class PurchaseInfoController extends Controller
         return view('purchase_form', compact('purchase_info', 'product_details', 'summary'));
     }
 
-    public function show($id)
-    {
-        $purchase_info   = PurchaseInfo::query()
-                                       ->selectRaw('purchase_infos.*, IFNULL(vendors.name, \'\') as vendor_name')
-                                       ->leftJoin('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
-                                       ->where('purchase_infos.id', $id)
-                                       ->get()[0];
-        $product_details = ProductDetail::query()
-                                        ->selectRaw('products.category, product_details.*')
-                                        ->where('purchase_order_id', $id)
-                                        ->join('products', 'products.id', 'product_details.product_id')
-                                        ->get();
-        $category        = '';
-        $hold            = [];
-        foreach ($product_details->toArray() as $value) {
-            if ($value['category'] != $category) {
-                $hold[]   = ['category' => $value['category']];
-                $category = $value['category'];
-            }
-            unset($value['manual_id']);
-            unset($value['name']);
-            unset($value['code']);
-            unset($value['manufacturer']);
-            unset($value['unit']);
-            unset($value['description']);
-            unset($value['batch']);
-            unset($value['color']);
-            unset($value['size']);
-            unset($value['weight']);
-            unset($value['assigned_to']);
-            unset($value['id']);
-            $hold[] = $value;
-        }
-
-        $product_details = collect($hold);
-
-        $summary = Summary::query()->where('purchase_order_id', $id)->get()[0];
-
-        return view('purchase_form', compact('purchase_info', 'product_details', 'summary'));
-    }
-
     public function store(Request $request)
     {
         $data = $request->input();
@@ -152,12 +112,15 @@ class PurchaseInfoController extends Controller
             $data['overview']['check_writer'] = '';
         }
 
+        DB::table('purchase_infos')->where('id', $data['overview']['id'])->update($data['overview']);
+
         DB::table('product_details')->where('purchase_order_id', $data['overview']['id'])->delete();
 
         if (isset($data['products'])) {
             foreach ($data['products'] as $item) {
                 $item['purchase_order_id'] = $data['overview']['id'];
                 unset($item['category']);
+                unset($item['unit']);
                 if (count($item) > 2) {
                     DB::table('product_details')->insert($item);
                 }
@@ -203,5 +166,168 @@ class PurchaseInfoController extends Controller
         }
 
         return ['success' => false];
+    }
+
+    public function show($id)
+    {
+        $data = $this->getOverview($id);
+        $purchase_info = $data['purchase_info'];
+        $product_details = $data['product_details'];
+        $summary = $data['summary'];
+
+        return view('purchase_form', compact('purchase_info', 'product_details', 'summary'));
+    }
+
+    public function printable($id)
+    {
+        $data = $this->getOverview($id);
+        $purchase_info = $data['purchase_info'];
+        $product_details = $data['product_details'];
+        $summary = $data['summary'];
+        $sections        = [];
+        $cnt             = -1;
+        foreach ($product_details as $key => $value) {
+            if (count($value) == 1) {
+                $sections[] = [
+                    $value['category'] => 0,
+                ];
+                $cnt++;
+            } else {
+                $total_selling                      = $value['qty'] * $value['selling_price'];
+                $total_labor                        = $value['qty'] * $value['labor_cost'];
+                $sections[$cnt][$value['category']] += $total_labor + ($total_selling - ($total_selling * ($value['discount_item'] / 100)));
+            }
+        }
+
+        $hold_section = $sections;
+        foreach ($hold_section as $index => $section) {
+            foreach ($section as $key => $value) {
+                $hold_section[$index] = [$this->converToRoman($index + 1) . '. ' . $key => $value];
+            }
+        }
+        $sections = $hold_section;
+
+
+        $pdf = PDF::loadView('purchase_printable',
+        ['purchase_info'     => $purchase_info,
+         'product_details' => $product_details,
+         'summary'         => $summary,
+         'sections'        => $sections,
+        ]);
+    
+        return $pdf->setPaper('a4')->download('PO_' . $purchase_info["status"] . '-' . Carbon::now()->format('Y-m-d') . '.pdf');
+    }
+
+    public function previewPO($id)
+    {
+        $data =  $this->getOverview($id);
+        $purchase_info = $data['purchase_info'];
+        $product_details = $data['product_details'];
+        $summary = $data['summary'];
+        $sections        = [];
+        $cnt             = -1;
+        foreach ($product_details as $key => $value) {
+            if (count($value) == 1) {
+                $sections[] = [
+                    $value['category'] => 0,
+                ];
+                $cnt++;
+            } else {
+                $total_selling                      = $value['qty'] * $value['selling_price'];
+                $total_labor                        = $value['qty'] * $value['labor_cost'];
+                $sections[$cnt][$value['category']] += $total_labor + ($total_selling - ($total_selling * ($value['discount_item'] / 100)));
+            }
+        }
+
+        $hold_section = $sections;
+        foreach ($hold_section as $index => $section) {
+            foreach ($section as $key => $value) {
+                $hold_section[$index] = [$this->converToRoman($index + 1) . '. ' . $key => $value];
+            }
+        }
+        $sections = $hold_section;
+
+        return view('purchase_printable', compact('purchase_info', 'product_details', 'summary', 'sections'));
+    }
+
+    public function getOverview($id)
+    {
+        $purchase_info   = PurchaseInfo::query()
+                                       ->selectRaw('purchase_infos.*, IFNULL(vendors.name, \'\') as vendor_name')
+                                       ->leftJoin('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
+                                       ->where('purchase_infos.id', $id)
+                                       ->get()[0];
+        $product_details = ProductDetail::query()
+                                        ->selectRaw('products.category, products.unit, product_details.*')
+                                        ->where('purchase_order_id', $id)
+                                        ->join('products', 'products.id', 'product_details.product_id')
+                                        ->get();
+        $category        = '';
+        $hold            = [];
+        foreach ($product_details->toArray() as $value) {
+            if ($value['category'] != $category) {
+                $hold[]   = ['category' => $value['category']];
+                $category = $value['category'];
+            }
+            unset($value['manual_id']);
+            unset($value['name']);
+            unset($value['code']);
+            unset($value['manufacturer']);
+            unset($value['description']);
+            unset($value['batch']);
+            unset($value['color']);
+            unset($value['size']);
+            unset($value['weight']);
+            unset($value['assigned_to']);
+            unset($value['id']);
+            $hold[] = $value;
+        }
+
+        $product_details = collect($hold);
+
+        $summary = Summary::query()->where('purchase_order_id', $id)->get()[0];
+
+        return [
+            'purchase_info' => $purchase_info,
+            'product_details' => $product_details,
+            'summary' => $summary
+        ];
+    }
+
+    public function converToRoman($num)
+    {
+        $n   = intval($num);
+        $res = '';
+
+        //array of roman numbers
+        $romanNumber_Array = [
+            'M'  => 1000,
+            'CM' => 900,
+            'D'  => 500,
+            'CD' => 400,
+            'C'  => 100,
+            'XC' => 90,
+            'L'  => 50,
+            'XL' => 40,
+            'X'  => 10,
+            'IX' => 9,
+            'V'  => 5,
+            'IV' => 4,
+            'I'  => 1,
+        ];
+
+        foreach ($romanNumber_Array as $roman => $number) {
+            //divide to get  matches
+            $matches = intval($n / $number);
+
+            //assign the roman char * $matches
+            $res .= str_repeat($roman, $matches);
+
+            //substract from the number
+            $n = $n % $number;
+        }
+
+        // return the result
+        return $res;
     }
 }

@@ -239,7 +239,6 @@ class SalesOrderController extends Controller
             }
         }
         $sections = $hold_section;
-        dump($summary);
         return view('sales_printable', compact('sales_order', 'product_details', 'summary', 'sections'));
     }
 
@@ -285,7 +284,7 @@ class SalesOrderController extends Controller
             'summary'         => $summary,
         ];
     }
-
+    
     public function converToRoman($num)
     {
         $n   = intval($num);
