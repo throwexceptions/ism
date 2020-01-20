@@ -1,210 +1,222 @@
-<p>&nbsp;</p>
-<div>
-    <table>
-        <tbody>
-        <tr>
-            <td><img src="{{ asset('app/public/logo/logo.jpg') }}" width="200"></td>
-            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            <td></td>
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        html * {
+            font-size: 12px!important;
+        }
+        td, th {
+            padding: 0 !important;
+        }
+        .header-content {
+            font-weight: bold;
+        }
+        .bg-aliceblue {
+            background-color: #c4ddf3;
+        }
+        .bg-category {
+             background-color: #f3c927;
+         }
+        body {
+            font-size: 12px !important;
+        }
+        [scope="col"] {
+            text-align: center;
+        }
+        .iden {
+            font-size: 15px !important;
+            font-weight: 900 !important;
+            padding-bottom: 6px !important;
+        }
+    </style>
+</head>
+<body>
+{{--SALES ORDER--}}
+<table style="width: 100%">
+    <tbody>
+    <tr>
+        <td>
+            <table style="width:100%">
+                <tbody>
+                    <tr>
+                        <td class="iden" colspan="2">{{ $sales_order->so_no }}</td>
+                    </tr>
+                    <tr>
+                        <td>Subject:</td>
+                        <td class="header-content">{{ $sales_order->subject }}</td>
+                    </tr>
+                    <tr>
+                        <td>Project:</td>
+                        <td class="header-content">{{ $sales_order->customer_name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Statement Type:</td>
+                        <td class="header-content">{{ $sales_order->status }}</td>
+                    </tr>
+                    <tr>
+                        <td>Location:</td>
+                        <td class="header-content">{{ $sales_order->address }}</td>
+                    </tr>
+                    <tr>
+                        <td>Date:</td>
+                        <td class="header-content">{{ \Carbon\Carbon::now()->format('F j, Y') }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td width="150">
+            <img src="{{ asset('app/public/logo/logo.jpg') }}" width="150" height="150">
+        </td>
+    </tr>
+    </tbody>
+</table>
+{{--PRODUCT DETAILS--}}
+<table class="table table-bordered">
+    <thead class="bg-aliceblue">
+    <tr>
+        <th scope="col">Description</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Unit</th>
+        <th scope="col">(Material)<br> Unit Cost</th>
+        <th scope="col">(Material)<br> Total Cost</th>
+        <th scope="col">(Labor)<br>  Unit Cost</th>
+        <th scope="col">(Labor)<br>  Total Cost</th>
+        <th scope="col">Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach($product_details as $product)
+        @if(isset($product['product_name']))
+            <tr>
+                <td>{{ $product['product_name'] }}</td>
+                <td>{{ $product['qty'] }}</td>
+                <td>{{ $product['unit'] }}</td>
+                <td>{{ number_format($product['selling_price'], 2, '.', '') }}</td>
+                <td>{{ number_format($product['qty'] * $product['selling_price'], 2, '.', '') }}</td>
+                <td>{{ number_format($product['labor_cost'], 2, '.', '') }}</td>
+                <td>{{ number_format($product['qty'] * $product['labor_cost'], 2, '.', '') }}</td>
+                <td>{{ number_format(($product['qty'] * $product['labor_cost']) + ($product['qty'] * $product['selling_price']), 2, '.', '') }}</td>
+            </tr>
+        @else
+            <tr class="bg-category">
+                <td colspan="8"><strong>{{ $product['category'] }}</strong></td>
+            </tr>
+        @endif
+    @endforeach
+        <tr class="bg-aliceblue">
+            <td colspan="6"></td>
+            <td> <strong>Sub-Total</strong> </td>
+            <td> {{ $summary->sub_total }} </td>
         </tr>
-        <tr>
-            <td>Statement Type</td>
-            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            <td><strong>{{ $sales_order->status }}</strong></td>
-        </tr>
-        <tr>
-            <td>Project</td>
-            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            <td><strong>{{ $sales_order->customer_name }}</strong></td>
-        </tr>
-        <tr>
-            <td>Location:</td>
-            <td>&nbsp;</td>
-            <td><strong>{{ $sales_order->address }}</strong></td>
-        </tr>
-        <tr>
-            <td>Contact Person:</td>
-            <td>&nbsp;</td>
-            <td><strong>{{ $sales_order->agent }}</strong></td>
-        </tr>
-        <tr>
-            <td>Date:</td>
-            <td>&nbsp;</td>
-            <td><strong>{{ \Carbon\Carbon::now()->format('F j, Y') }}</strong></td>
-        </tr>
-        <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
-            <td>Subject:</td>
-            <td>&nbsp;</td>
-            <td><strong>{{ $sales_order->subject }}</strong></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<div>
-    <p>&nbsp;</p>
-</div>
-<div>
-    <table style="border: 2px solid black; border-collapse: collapse;" border="1" width="100%">
-        <tbody>
-        <tr style="background-color: #bdd6ee;">
-            <td style="text-align: center;"><strong>Description</strong></td>
-            <td style="text-align: center;"><strong>Quantity</strong></td>
-            <td style="text-align: center;"><strong>Notes</strong></td>
-            <td style="text-align: center;"><strong>Discount</strong></td>
-            <td style="text-align: center;"><strong>(Material) <br> Unit Cost</strong></td>
-            <td style="text-align: center;"><strong>(Material) <br> Total Cost</strong></td>
-            <td style="text-align: center;"><strong>(Labor) <br> Unit cost</strong></td>
-            <td style="text-align: center;"><strong>(Labor) <br> Total Cost</strong></td>
-            <td style="text-align: center;"><strong>TOTAL ITEM COST</strong></td>
-        </tr>
-        @foreach($product_details as $value)
-            @if(count($value) == 1)
-                <tr style="background-color: #fefb04;">
-                    <td style="text-align: left; font-weight: bold;">{{ $value['category'] }}</td>
-                    <td style="text-align: center;">&nbsp;</td>
-                    <td style="text-align: center;">&nbsp;</td>
-                    <td style="text-align: center;">&nbsp;</td>
-                    <td style="text-align: center;">&nbsp;</td>
-                    <td style="text-align: center;">&nbsp;</td>
-                    <td style="text-align: center;">&nbsp;</td>
-                    <td style="text-align: center;">&nbsp;</td>
-                    <td style="text-align: center;">&nbsp;</td>
-                </tr>
-            @else
+    </tbody>
+</table>
+{{--SUMMARY--}}
+
+<table>
+    <tbody>
+    <tr>
+        <td style="width: 50%;">
+            <table>
+                <tbody>
                 <tr>
-                    <td>{{ $value['product_name'] }}</td>
-                    <td style="text-align: center;">{{ (int) $value['qty'] }}</td>
-                    <td style="text-align: center;">{{ $value['notes'] }}</td>
-                    <td style="text-align: center;">{{ $value['discount_item'] }}</td>
-                    <td style="text-align: center;">{{ number_format($value['selling_price'], 2, '.', '') }}</td>
-                    <td style="text-align: center;">{{ $value['qty'] * $value['selling_price'] }}</td>
-                    <td style="text-align: center;">{{ number_format($value['labor_cost'], 2, '.', '') }}</td>
-                    <td style="text-align: center;">{{ $value['qty'] * $value['labor_cost'] }}</td>
-                    <td style="text-align: center;">{{ number_format(($value['qty'] * $value['labor_cost']) + (($value['qty'] * $value['selling_price'])-(($value['qty'] * $value['selling_price'])*($value['discount_item']/100))), 2, '.', '')}}</td>
+                    <td style="padding-bottom: 5px;"><strong>Terms and Conditions</strong></td>
                 </tr>
-            @endif
-        @endforeach
-        <tr style="background-color: #bdd6ee;">
-            <td style="text-align: right;">Sub-total</td>
-            <td style="text-align: center;">&nbsp;</td>
-            <td style="text-align: center;">&nbsp;</td>
-            <td style="text-align: center;">&nbsp;</td>
-            <td style="text-align: center;">&nbsp;</td>
-            <td style="text-align: center;">&nbsp;</td>
-            <td style="text-align: center;">&nbsp;</td>
-            <td style="text-align: center;">&nbsp;</td>
-            <td style="text-align: center;"><strong>{{ number_format($summary->sub_total, 2, '.', '') }}</strong></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<div>
-    <p>&nbsp;</p>
-</div>
-<div>
-    <table>
-        <tbody>
-        <tr>
-            <td><strong>Terms and Conditions:</strong></td>
-        </tr>
-        <tr>
-            <td>{{ $sales_order->tac }}</td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<div>
-    <p>&nbsp; &nbsp;</p>
-</div>
-<div>
-    <table width="100%">
-        <tbody>
-        <tr>
-            <td>
-                <table align="left">
-                    <tbody>
-                    <tr>
-                        <td><strong>Mode of Payment:</strong></td>
-                    </tr>
-                    <tr>
-                        <td>Method:</td>
-                        <td>{{ $sales_order->payment_method }}</td>
-                    </tr>
-                    <tr>
-                        <td>Account Name:</td>
-                        <td>{{ $sales_order->account_name }}</td>
-                    </tr>
-                    <tr>
-                        <td>Account No:</td>
-                        <td>{{ $sales_order->account_no }}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-            <td>
-                <table style="border: 1px solid black;" >
-                    <tbody>
-                    <tr>
-                        <td><strong>SUMMARY:</strong></td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    @foreach($sections as $section)
-                        @foreach($section as $key => $value)
+                <tr>
+                    <td>{{ $sales_order->tac }}</td>
+                </tr>
+                <tr>
+                    <td>
+                        <table>
+                            <tbody>
+                            <tr><td style="padding-bottom: 5px;" colspan="2"><strong>Payment Details</strong></td></tr>
                             <tr>
-                                <td>{{ $key }}</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td><strong>{{ number_format($value, 2 ,'.', '') }}</strong></td>
+                                <td>Payment Method:</td>
+                                <td>{{ $sales_order->payment_method }}</td>
                             </tr>
-                        @endforeach
+                            <tr>
+                                <td>Account Name:</td>
+                                <td>{{ $sales_order->account_name }}</td>
+                            </tr>
+                            <tr>
+                                <td>Account No:</td>
+                                <td>{{ $sales_order->account_no }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+        <td>
+            <table style="border:1px solid black; padding-left: 5%; width: 100%">
+                <tbody>
+                <tr>
+                    <td colspan="2" style="padding-bottom: 8px"><strong>SUMMARY:</strong></td>
+                </tr>
+                @foreach($sections as $section)
+                    @foreach($section as $key => $value)
+                        <tr>
+                            <td>{{ $key }}</td>
+                            <td style="padding-left: 10px !important;">{{ $value }}</td>
+                        </tr>
                     @endforeach
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>DISCOUNT</td>
-                        <td><strong>{{ number_format($summary->discount, 2 ,'.', '') }}</strong></td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>SHIPPING</td>
-                        <td><strong>{{ $summary->shipping }}</strong></td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>SUB-TOTAL</td>
-                        <td><strong>{{ $summary->sub_total }}</strong></td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>SALES TAX</td>
-                        <td><strong>{{ $summary->sales_tax }}</strong></td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>GRAND TOTAL</td>
-                        <td><strong>{{ ($summary->sales_tax + $summary->sub_total + $summary->shipping) - (($summary->sales_tax + $summary->sub_total + $summary->shipping) * $summary->discount / 100) }}</strong></td>
-                    </tr>
-                    </tbody>
-                </table>
+                @endforeach
+                <tr>
+                    <td align="right" style="padding-top: 10px !important;"><strong>DISCOUNT</strong></td>
+                    <td style="padding-left: 10px !important;padding-top: 10px !important;">{{ $summary->discount }}</td>
+                </tr>
+                <tr>
+                    <td align="right"><strong>SUB-TOTAL</strong></td>
+                    <td style="padding-left: 10px !important;">{{ $summary->sub_total }}</td>
+                </tr>
+                <tr>
+                    <td align="right"><strong>SHIPPING</strong></td>
+                    <td style="padding-left: 10px !important">{{ $summary->shipping }}</td>
+                </tr>
+                <tr>
+                    <td align="right"><strong>SALES TAX</strong></td>
+                    <td style="padding-left: 10px !important">{{ $summary->sales_tax }}</td>
+                </tr>
+                <tr>
+                    <td align="right"><strong>GRAND TOTAL</strong></td>
+                    <td style="padding-left: 10px !important">{{ ($summary->sub_total + $summary->shipping)*(1+($summary->sales_tax/100)) }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+{{-- CONFORME--}}
+<table style="margin-top: 50px;">
+    <tbody>
+        <tr>
+            <td>
+                &nbsp;&nbsp;&nbsp;<strong>Prepared By:</strong>
+            </td>
+            <td>
+                    &nbsp;&nbsp;&nbsp;<strong>Date:</strong>
             </td>
         </tr>
-        </tbody>
-    </table>
-</div>
-<div>
-    <p>&nbsp;</p>
-</div>
-<div>
-    <p>&nbsp;</p>
-</div>
+        <tr>
+            <td>
+                    &nbsp;&nbsp;&nbsp;___________________
+            </td>
+            <td pad>
+                    &nbsp;&nbsp;&nbsp;___________________
+            </td>
+        </tr>
+        <tr>
+            <td>
+                    &nbsp;&nbsp;&nbsp;<i>Owner's Signature</i>
+            </td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -87,7 +87,8 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Account Name</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.account_name">
+                                    <input type="text" class="form-control form-control-sm"
+                                           v-model="overview.account_name">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -125,7 +126,9 @@
                                             </button>
                                         </caption>
                                         <thead>
-                                        <th v-for="column in columns" v-if="column != 'Action' || viewType != 2" >@{{ column }}</th>
+                                        <th v-for="column in columns" v-if="column != 'Action' || viewType != 2">@{{
+                                            column }}
+                                        </th>
                                         </thead>
                                         <tbody>
                                         <tr v-for="(product, index) in products">
@@ -192,7 +195,8 @@
                                 <div class="form-group row">
                                     <label class="col-form-label col-md-4 col-form-label-sm">Sub Total</label>
                                     <div class="col-md-4">
-                                        <input type="text" class="form-control form-control-sm" v-model="summary.sub_total">
+                                        <input type="text" class="form-control form-control-sm"
+                                               v-model="summary.sub_total">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -213,7 +217,7 @@
                                     <label class="col-form-label col-md-4 col-form-label-sm">Grand Total</label>
                                     <div class="col-md-4">
                                         <input type="text" class="form-control-plaintext form-control-sm"
-                                               v-bind:value="((parseFloat(summary.sub_total) + parseFloat(summary.sales_tax) + parseFloat(summary.shipping)) - (parseFloat(summary.sub_total) + parseFloat(summary.sales_tax) + parseFloat(summary.shipping)) * (summary.discount/100))">
+                                               v-bind:value="(parseFloat(summary.sub_total) + parseFloat(summary.shipping))*(1+(parseFloat(summary.sales_tax)/100))">
                                     </div>
                                 </div>
                             </div>
@@ -233,7 +237,8 @@
                                 <a href="{{ route('sales') }}" class="btn btn-warning">Back</a>
                                 <button class="btn btn-info" v-if="viewType == 1" @click="store">Save New</button>
                                 <button class="btn btn-primary" v-if="viewType == 0" @click="update">Update Now</button>
-                                <a href="{{ route('sales.print', isset($sales_order->id)?$sales_order->id: '') }}" class="btn btn-primary" v-if="viewType == 2">Print</a>
+                                <a href="{{ route('sales.print', isset($sales_order->id)?$sales_order->id: '') }}"
+                                   class="btn btn-primary" v-if="viewType == 2">Print</a>
 
                             </div>
                         </div>
@@ -426,6 +431,7 @@
                             $this.summary.sub_total += (product.labor_cost * product.qty) + ((product.selling_price * product.qty) - ((product.selling_price * product.qty) * (product.discount_item / 100)))
                         }
                     });
+                    $this.summary.sub_total = $this.summary.sub_total - ($this.summary.sub_total * ($this.summary.discount/100))
                 }
             },
             watch: {
@@ -434,6 +440,9 @@
                     handler() {
                         this.subTotal()
                     }
+                },
+                'summary.discount': function () {
+                    this.subTotal()
                 }
             },
             mounted() {

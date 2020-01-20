@@ -100,6 +100,7 @@ class SalesOrderController extends Controller
     public function update(Request $request)
     {
         $data = $request->input();
+        unset($data['overview']['unit']);
         unset($data['overview']['customer_name']);
         DB::table('sales_orders')->where('id', $data['overview']['id'])
           ->update($data['overview']);
@@ -109,6 +110,7 @@ class SalesOrderController extends Controller
             DB::table('product_details')->where('sales_order_id', $data['overview']['id'])->delete();
             foreach ($data['products'] as $item) {
                 $item['sales_order_id'] = $data['overview']['id'];
+                unset($item['unit']);
                 unset($item['category']);
                 if (count($item) > 2) {
                     DB::table('product_details')->insert($item);
@@ -205,7 +207,7 @@ class SalesOrderController extends Controller
              'sections'        => $sections,
             ]);
 
-        return $pdf->download('SO_' . $sales_order["status"] . '-' . Carbon::now()->format('Y-m-d') . '.pdf');
+        return $pdf->setPaper('a4')->download('SO_' . $sales_order["status"] . '-' . Carbon::now()->format('Y-m-d') . '.pdf');
     }
 
     public function previewSO($id)
@@ -237,7 +239,7 @@ class SalesOrderController extends Controller
             }
         }
         $sections = $hold_section;
-
+        dump($summary);
         return view('sales_printable', compact('sales_order', 'product_details', 'summary', 'sections'));
     }
 
@@ -249,7 +251,7 @@ class SalesOrderController extends Controller
                                      ->where('sales_orders.id', $id)
                                      ->get()[0];
         $product_details = ProductDetail::query()
-                                        ->selectRaw('products.category, product_details.*')
+                                        ->selectRaw('products.category, products.unit, product_details.*')
                                         ->where('sales_order_id', $id)
                                         ->join('products', 'products.id', 'product_details.product_id')
                                         ->get();
@@ -265,7 +267,6 @@ class SalesOrderController extends Controller
             unset($value['name']);
             unset($value['code']);
             unset($value['manufacturer']);
-            unset($value['unit']);
             unset($value['description']);
             unset($value['batch']);
             unset($value['color']);
