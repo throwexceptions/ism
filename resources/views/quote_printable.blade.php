@@ -51,10 +51,10 @@ body {
 	<table style="width: 100%">
 		<tbody>
 			<tr>
-				<td class="title">Sales Order</td>
+				<td class="title">Quotation</td>
 			</tr>
 			<tr>
-				<td class="iden">{{ $sales_order->so_no }}</td>
+				<td class="iden">{{ str_replace('SO', 'QTN', $sales_order->so_no) }}</td>
 			</tr>
 		</tbody>
 	</table>

@@ -177,7 +177,7 @@
                                                                                    v-model="product.notes"></td>
                                             <td v-if="product.product_name"><input type="text"
                                                                                    class="form-control form-control-sm"
-                                                                                   style="width: 40px;"
+                                                                                   style="width: 100px;"
                                                                                    v-model="product.qty"></td>
                                             <td v-if="product.product_name"><input type="text"
                                                                                    class="form-control form-control-sm"
@@ -190,9 +190,7 @@
                                             <td v-if="product.product_name"><input type="text"
                                                                                    class="form-control form-control-sm"
                                                                                    v-model="product.discount_item"></td>
-                                            <td v-if="product.product_name">@{{ (product.vendor_price * product.qty) -
-                                                ((product.vendor_price *
-                                                product.qty)*(product.discount_item/100)) }}
+                                            <td v-if="product.product_name">@{{ (product.vendor_price * product.qty) - ((product.vendor_price * product.qty)*(product.discount_item/100)) }}
                                             </td>
                                             <td>
                                                 <button class="btn btn-sm btn-block btn-danger" @click="remove(index)">
@@ -269,7 +267,7 @@
                                 <button class="btn btn-info" v-if="viewType == 1" @click="store">Save New</button>
                                 <button class="btn btn-primary" v-if="viewType == 0" @click="update">Update Now</button>
                                 <a href="{{ route('purchase.print', isset($purchase_info->id)?$purchase_info->id: '') }}"
-                                   class="btn btn-primary" v-if="viewType == 2">Print</a>
+                                   class="btn btn-primary" v-if="viewType == 2">Purchase Order</a>
                             </div>
                         </div>
                     </div>
@@ -458,20 +456,14 @@
                     $this.summary.sub_total = 0;
                     $.each($this.products, function (x, product) {
                         if (product.product_name) {
-                            $this.summary.sub_total += (product.labor_cost * product.qty) + ((product.vendor_price * product.qty) - ((product.vendor_price * product.qty) * (product.discount_item / 100)))
+                            $this.summary.sub_total += ((product.vendor_price * product.qty) - ((product.vendor_price * product.qty) * (product.discount_item / 100)))
                         }
                     });
-                    $this.summary.sub_total = $this.summary.sub_total * ($this.summary.discount/100)
+                    $this.summary.sub_total = $this.summary.sub_total - ($this.summary.sub_total * ($this.summary.discount/100))
                 },
             },
             watch: {
                 'products': {
-                    deep: true,
-                    handler() {
-                        this.subTotal()
-                    }
-                },
-                'summary': {
                     deep: true,
                     handler() {
                         this.subTotal()

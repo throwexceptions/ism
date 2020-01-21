@@ -210,6 +210,86 @@ class SalesOrderController extends Controller
         return $pdf->setPaper('a4')->download('SO_' . $sales_order["status"] . '-' . Carbon::now()->format('Y-m-d') . '.pdf');
     }
 
+    public function quote($id)
+    {
+
+        $data            = $this->getOverview($id);
+        $sales_order     = $data['sales_order'];
+        $product_details = $data['product_details'];
+        $summary         = $data['summary'];
+        $sections        = [];
+        $cnt             = -1;
+        foreach ($product_details as $key => $value) {
+            if (count($value) == 1) {
+                $sections[] = [
+                    $value['category'] => 0,
+                ];
+                $cnt++;
+            } else {
+                $total_selling                      = $value['qty'] * $value['selling_price'];
+                $total_labor                        = $value['qty'] * $value['labor_cost'];
+                $sections[$cnt][$value['category']] += $total_labor + ($total_selling - ($total_selling * ($value['discount_item'] / 100)));
+            }
+        }
+
+        $hold_section = $sections;
+        foreach ($hold_section as $index => $section) {
+            foreach ($section as $key => $value) {
+                $hold_section[$index] = [$this->converToRoman($index + 1) . '. ' . $key => $value];
+            }
+        }
+        $sections = $hold_section;
+
+        $pdf = PDF::loadView('quote_printable',
+            ['sales_order'     => $sales_order,
+             'product_details' => $product_details,
+             'summary'         => $summary,
+             'sections'        => $sections,
+            ]);
+
+        return $pdf->setPaper('a4')->download('QTN_' . $sales_order["status"] . '-' . Carbon::now()->format('Y-m-d') . '.pdf');
+    }
+
+    public function deliver($id)
+    {
+
+        $data            = $this->getOverview($id);
+        $sales_order     = $data['sales_order'];
+        $product_details = $data['product_details'];
+        $summary         = $data['summary'];
+        $sections        = [];
+        $cnt             = -1;
+        foreach ($product_details as $key => $value) {
+            if (count($value) == 1) {
+                $sections[] = [
+                    $value['category'] => 0,
+                ];
+                $cnt++;
+            } else {
+                $total_selling                      = $value['qty'] * $value['selling_price'];
+                $total_labor                        = $value['qty'] * $value['labor_cost'];
+                $sections[$cnt][$value['category']] += $total_labor + ($total_selling - ($total_selling * ($value['discount_item'] / 100)));
+            }
+        }
+
+        $hold_section = $sections;
+        foreach ($hold_section as $index => $section) {
+            foreach ($section as $key => $value) {
+                $hold_section[$index] = [$this->converToRoman($index + 1) . '. ' . $key => $value];
+            }
+        }
+        $sections = $hold_section;
+
+        $pdf = PDF::loadView('dr_printable',
+            ['sales_order'     => $sales_order,
+             'product_details' => $product_details,
+             'summary'         => $summary,
+             'sections'        => $sections,
+            ]);
+
+        return $pdf->setPaper('a4')->download('DR_' . $sales_order["status"] . '-' . Carbon::now()->format('Y-m-d') . '.pdf');
+    }
+
     public function previewSO($id)
     {
         $data            = $this->getOverview($id);

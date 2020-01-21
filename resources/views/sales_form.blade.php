@@ -238,7 +238,11 @@
                                 <button class="btn btn-info" v-if="viewType == 1" @click="store">Save New</button>
                                 <button class="btn btn-primary" v-if="viewType == 0" @click="update">Update Now</button>
                                 <a href="{{ route('sales.print', isset($sales_order->id)?$sales_order->id: '') }}"
-                                   class="btn btn-primary" v-if="viewType == 2">Print</a>
+                                   class="btn btn-primary" v-if="viewType == 2">Sales Order</a>
+                                <a href="{{ route('sales.quote', isset($sales_order->id)?$sales_order->id: '') }}"
+                                    class="btn btn-info" v-if="viewType == 2">Quote</a>
+                                <a href="{{ route('sales.deliver', isset($sales_order->id)?$sales_order->id: '') }}"
+                                    class="btn btn-success" v-if="viewType == 2">Delivery Receipt</a>
 
                             </div>
                         </div>

@@ -47,6 +47,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/sales/store', 'SalesOrderController@store')->name('sales.store');
     Route::post('/sales/status/update', 'SalesOrderController@updateStatus')->name('sales.status.update');
     Route::get('/sales/print/{id}', 'SalesOrderController@printable')->name('sales.print');
+    Route::get('/purchase/quote/{id}', 'SalesOrderController@quote')->name('sales.quote');
+    Route::get('/purchase/deliver/{id}', 'SalesOrderController@deliver')->name('sales.deliver');
     Route::get('/sales/preview/{id}', 'SalesOrderController@previewSO')->name('sales.preview');
 
     Route::get('/vendor', 'VendorController@index')->name('vendor')->middleware('can:vendors');
