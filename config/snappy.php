@@ -30,12 +30,13 @@ return [
     | Env:
     |
     |    The environment variables to set while running the wkhtmltopdf process.
-    |
+    |    MAC OS: '/usr/local/bin/wkhtmltopdf'
+    |    OTHER: 'vendor/h4cc/wkhtmltopdf-amd64/bin/wkhtmltopdf-amd64'
     */
     
     'pdf' => [
         'enabled' => true,
-        'binary'  => base_path('vendor/h4cc/wkhtmltopdf-amd64/bin/wkhtmltopdf-amd64'),
+        'binary'  => env('PATH_PDF')? base_path(env('PATH_PDF')): '/usr/local/bin/wkhtmltopdf',
         'timeout' => false,
         'options' => [],
         'env'     => [],
@@ -43,7 +44,7 @@ return [
     
     'image' => [
         'enabled' => true,
-        'binary'  => '/usr/local/bin/wkhtmltoimage',
+        'binary'  => env('PATH_PDF')? base_path(env('PATH_PDF')): '/usr/local/bin/wkhtmltopdf',
         'timeout' => false,
         'options' => [],
         'env'     => [],
