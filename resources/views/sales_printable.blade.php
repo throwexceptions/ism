@@ -63,7 +63,7 @@ body {
 		<tbody>
 			<tr>
 				<td>
-					<table style="width: 100%">
+					<table>
 						<tbody>
 							<tr>
 								<td>Subject:</td>
