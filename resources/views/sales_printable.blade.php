@@ -141,8 +141,7 @@ body {
 		</tbody>
 	</table>
 	{{--SUMMARY--}}
-
-	<table>
+	<table style="width: 100%">
 		<tbody>
 			<tr>
 				<td style="width: 50%;">
