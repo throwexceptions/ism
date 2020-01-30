@@ -140,7 +140,7 @@
                             bSortable: false,
                             title: 'Action'
                         },
-                        {data: 'id', name: 'sales_orders.id', title: 'ID'},
+                        {data: 'so_no', name: 'sales_orders.so_no', title: 'SO NO.'},
                         {
                             data: function (value) {
                                 return '<div class="btn-group btn-group-sm shadow-sm" role="group" aria-label="Basic example">' +
@@ -150,7 +150,7 @@
                         },
                         {data: 'customer_name', name: 'customers.name', title: 'Customer'},
                         {data: 'subject', name: 'subject', title: 'Subject'},
-                        {data: 'created_at', name: 'created_at', title: 'Date Created'},
+                        {data: 'sub_total', name: 'sub_total', title: 'Total Amount'},
                         {data: 'username', name: 'users.name', title: 'Assigned To'},
                     ],
                     drawCallback: function () {

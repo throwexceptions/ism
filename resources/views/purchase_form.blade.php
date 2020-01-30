@@ -24,14 +24,14 @@
                                     <input class="form-control form-control-sm" v-model="overview.subject">
                                 </div>
                                 <div class="form-group">
-                                    <label>Requisition No</label>
-                                    <input class="form-control form-control-sm"
-                                           v-model="overview.requisition_no">
-                                </div>
-                                <div class="form-group">
                                     <label>Contact Name</label>
                                     <input class="form-control form-control-sm"
                                            v-model="overview.contact_name">
+                                </div>
+                                <div class="form-group">
+                                    <label>Tracking No.</label>
+                                    <input type="text" class="form-control form-control-sm"
+                                           v-model="overview.tracking_number">
                                 </div>
                                 <div class="form-group">
                                     <label>Due Date</label>
@@ -40,23 +40,26 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
+                                    <label>Purchase Order</label>
+                                    <input type="text" name="po_no" class="form-control form-control-sm"
+                                           v-model="overview.po_no">
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone</label>
+                                    <input type="text" class="form-control form-control-sm" v-model="overview.phone">
+                                </div>
+                                <div class="form-group">
                                     <label>Shipping Method</label>
                                     <input type="text" class="form-control form-control-sm"
                                            v-model="overview.shipping_method">
                                 </div>
-                                {{--<div class="form-group">--}}
-                                {{--<label>Status</label>--}}
-                                {{--<select type="text" class="form-control form-control-sm" v-model="overview.status">--}}
-                                {{--<option value="">-- Select Options --</option>--}}
-                                {{--<option value="Created">Created</option>--}}
-                                {{--<option value="Received">Received</option>--}}
-                                {{--<option value="Paid">Paid</option>--}}
-                                {{--<option value="Completed">Completed</option>--}}
-                                {{--<option value="Ordered">Ordered</option>--}}
-                                {{--<option value="Invoice">Invoice</option>--}}
-                                {{--<option value="Shipped">Shipped</option>--}}
-                                {{--</select>--}}
-                                {{--</div>--}}
+                                <div class="form-group">
+                                    <label>Requisition No.</label>
+                                    <input class="form-control form-control-sm"
+                                           v-model="overview.requisition_no">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Vendor Name</label>
                                     <select class="form-control form-control-sm select2-vendor">
@@ -65,33 +68,8 @@
                                            v-model="overview.vendor_name">
                                 </div>
                                 <div class="form-group">
-                                    <label>Tracking Number</label>
-                                    <input type="text" class="form-control form-control-sm"
-                                           v-model="overview.tracking_number">
-                                </div>
-                                <div class="form-group">
-                                    <label>Phone</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.phone">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
                                     <label>Fax</label>
                                     <input type="text" class="form-control form-control-sm" v-model="overview.fax">
-                                </div>
-                                <div class="form-group">
-                                    <label>Deliver To</label>
-                                    <input type="text" class="form-control form-control-sm"
-                                           v-model="overview.deliver_to">
-                                </div>
-                                <div class="form-group">
-                                    <label>Purchase Order</label>
-                                    <input type="text" name="po_no" class="form-control form-control-sm"
-                                           v-model="overview.po_no">
-                                </div>
-                                <div class="form-group">
-                                    <label>Carrier</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.carrier">
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -107,6 +85,7 @@
                                         <option value="Check">Check</option>
                                         <option value="Cash">Cash</option>
                                         <option value="Credit">Credit</option>
+                                        <option value="Online Banking">Online Banking</option>
                                     </select>
                                 </div>
                             </div>
@@ -506,7 +485,10 @@
                 }).on('select2:select', function (e) {
                     var data = e.params.data;
                     $this.overview.vendor_id = data.id;
+                    $this.overview.shipping_method = data.shipping_method;
+                    $this.overview.contact_name = data.contact_name;
                 });
+
                 var newOption = new Option($this.overview.vendor_name, $this.overview.vendor_id, true, true);
                 $('.select2-vendor').append(newOption).trigger('change');
 

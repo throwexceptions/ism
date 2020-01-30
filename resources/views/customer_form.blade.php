@@ -44,8 +44,8 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Payment Method</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.payment_method">
+                                    <label>E-mail</label>
+                                    <input type="text" class="form-control form-control-sm" v-model="overview.email">
                                 </div>
                             </div>
                             <div class="col-md-12">

@@ -52,6 +52,37 @@
                                     </div>
                                 </div>
                             </div>
+                            {{--Auto Fills--}}
+                            <div class="col-md-12 mt-3 row">
+                                <div class="col-md-12">
+                                    <h3>Auto Fills</h3>
+                                    <hr>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Billing Address</label>
+                                        <textarea class="form-control" v-model="overview.billing_address_fill"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Delivery Address</label>
+                                        <textarea class="form-control" v-model="overview.delivery_address_fill"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Company Details</label>
+                                        <textarea class="form-control" v-model="overview.company_details_fill"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Terms and Conditions</label>
+                                        <textarea class="form-control" v-model="overview.tac_fill"></textarea>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

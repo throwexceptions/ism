@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Preference;
 use App\ProductDetail;
 use App\PurchaseInfo;
 use App\Summary;
@@ -25,7 +26,9 @@ class PurchaseInfoController extends Controller
         $purchase_info = PurchaseInfo::query()
                                      ->selectRaw('purchase_infos.id, purchase_infos.subject,
             vendors.name as vendor_name, purchase_infos.tracking_number, purchase_infos.po_no,
-            purchase_infos.requisition_no, users.name, purchase_infos.status')
+            purchase_infos.requisition_no, users.name, purchase_infos.status, 
+            (summaries.sub_total + (summaries.sub_total * (summaries.sales_tax/100))) as sub_total')
+                                    ->leftJoin('summaries', 'summaries.purchase_order_id', '=', 'purchase_infos.id')
                                      ->leftJoin('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
                                      ->join('users', 'users.id', '=', 'purchase_infos.assigned_to');
 
@@ -52,10 +55,10 @@ class PurchaseInfoController extends Controller
             "date_received"    => "",
             "po_no"            => PurchaseInfo::generate()->newPONo(),
             "payment_method"   => "",
-            "billing_address"  => "",
+            "billing_address"  => Preference::status('billing_address_fill'),
+            "delivery_address" => Preference::status('delivery_address_fill'),
             "check_number"     => "",
             "check_writer"     => "",
-            "delivery_address" => "",
             "tac"              => "",
             "description"      => "",
         ]);

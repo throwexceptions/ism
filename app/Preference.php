@@ -11,4 +11,8 @@ class Preference extends Model
         return self::query()->where('name', $name)->get()->toArray()[0]['status'];
     }
 
+    public static function status($name)
+    {
+        return self::query()->where('name', $name)->get()->toArray()[0]['status'];
+    }
 }

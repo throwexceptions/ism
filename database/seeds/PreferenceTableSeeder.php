@@ -31,5 +31,26 @@ class PreferenceTableSeeder extends Seeder
         $pref->name = 'po_auto';
         $pref->status = 1;
         $pref->save();
+
+
+        $pref = new \App\Preference();
+        $pref->name = 'billing_address_fill';
+        $pref->status = '';
+        $pref->save();
+
+        $pref = new \App\Preference();
+        $pref->name = 'delivery_address_fill';
+        $pref->status = '';
+        $pref->save();
+        
+        $pref = new \App\Preference();
+        $pref->name = 'company_details_fill';
+        $pref->status = '';
+        $pref->save();
+
+        $pref = new \App\Preference();
+        $pref->name = 'tac_fill';
+        $pref->status = '';
+        $pref->save();
     }
 }

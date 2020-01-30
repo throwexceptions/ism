@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Preference;
 use App\ProductDetail;
 use App\SalesOrder;
 use App\Summary;
@@ -15,14 +16,21 @@ use DB;
 
 class SalesOrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
     public function index()
     {
         return view('sales');
+    }
+
+    public function table()
+    {
+        $vendors = SalesOrder::query()
+                             ->selectRaw('sales_orders.*, users.name as username, customers.name as customer_name, 
+                             (summaries.sub_total + (summaries.sub_total * (summaries.sales_tax/100))) as sub_total')
+                             ->leftJoin('summaries', 'summaries.sales_order_id', '=', 'sales_orders.id')
+                             ->leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')
+                             ->join('users', 'users.id', '=', 'sales_orders.assigned_to');
+
+        return DataTables::of($vendors)->make(true);
     }
 
     /**
@@ -38,7 +46,7 @@ class SalesOrderController extends Controller
             "customer_id"    => "",
             "owner"          => "",
             "so_no"          => SalesOrder::generate()->newSONo(),
-            "agent"          => "",
+            "agent"          => auth()->user()->name,
             "assigned_to"    => "",
             "fax"            => "",
             "status"         => "Quote",
@@ -47,7 +55,8 @@ class SalesOrderController extends Controller
             "payment_method" => "",
             "account_name"   => "",
             "account_no"     => "",
-            "tac"            => "",
+            "tac"            => Preference::status('tac_fill'),
+            "phone"          => "",
         ]);
 
         $product_details = collect([]);
@@ -61,16 +70,6 @@ class SalesOrderController extends Controller
         ]);
 
         return view('sales_form', compact('sales_order', 'product_details', 'summary'));
-    }
-
-    public function table()
-    {
-        $vendors = SalesOrder::query()
-                             ->selectRaw('sales_orders.*, users.name as username, customers.name as customer_name')
-                             ->leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')
-                             ->join('users', 'users.id', '=', 'sales_orders.assigned_to');
-
-        return DataTables::of($vendors)->make(true);
     }
 
     public function store(Request $request)
@@ -172,7 +171,6 @@ class SalesOrderController extends Controller
 
     public function printable($id)
     {
-
         $data            = $this->getOverview($id);
         $sales_order     = $data['sales_order'];
         $product_details = $data['product_details'];
@@ -212,7 +210,6 @@ class SalesOrderController extends Controller
 
     public function quote($id)
     {
-
         $data            = $this->getOverview($id);
         $sales_order     = $data['sales_order'];
         $product_details = $data['product_details'];
@@ -252,7 +249,6 @@ class SalesOrderController extends Controller
 
     public function deliver($id)
     {
-
         $data            = $this->getOverview($id);
         $sales_order     = $data['sales_order'];
         $product_details = $data['product_details'];

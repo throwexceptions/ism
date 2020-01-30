@@ -153,13 +153,13 @@ body {
 								<td style="padding-bottom: 5px;"><strong>Terms and Conditions</strong></td>
 							</tr>
 							<tr>
-								<td>{{ $purchase_info->tac }}</td>
+								<td>{!! nl2br(e($purchase_info->tac)) !!}</td>
 							</tr>
 							<tr>
-								<td style="padding-bottom: 5px;"><strong>Description</strong></td>
+								<td style="padding-bottom: 5px;"><strong>Company Details</strong></td>
 							</tr>
 							<tr>
-								<td>{{ $purchase_info->description }}</td>
+								<td style="height:100%">{!! nl2br(e(\App\Preference::status('company_details_fill'))) !!}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -210,7 +210,40 @@ body {
 				</td>
 			</tr>
 		</tbody>
-	</table>
+    </table>
+    
+    {{--ADDRESSES--}}
+</br></br>
+	<table style="width: 100%;">
+            <tbody>
+                <tr>
+                    <td style="width: 50%;">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td style="padding-bottom: 5px;"><strong>Billing Address</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>{!! nl2br(e($purchase_info->billing_address)) !!}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td style="width: 50%;">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td style="padding-bottom: 5px;"><strong>Delivery Address</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>{!! nl2br(e($purchase_info->delivery_address)) !!}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 	{{-- CONFORME--}}
 	<table style="margin-top: 50px;">
 		<tbody>

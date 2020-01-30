@@ -12,7 +12,13 @@ class PreferenceController extends Controller
         $build      = [];
         $preference = Preference::query()->get();
         foreach ($preference as $value) {
-            $build[$value->name] = $value->status == 1 ? true : false;
+            if($value->status == '1') {
+                $build[$value->name] = true;
+            } else if($value->status == '0') {
+                $build[$value->name] = false;
+            } else {
+                $build[$value->name] = $value->status;
+            }
         }
         $build = collect($build);
 
@@ -25,8 +31,10 @@ class PreferenceController extends Controller
         foreach ($data as $key => $value) {
             if($value == 'true'){
                 Preference::query()->where('name', $key)->update(['status' => '1']);
-            } else {
+            } else if ($value == 'false') {
                 Preference::query()->where('name', $key)->update(['status' => '0']);
+            } else {
+                Preference::query()->where('name', $key)->update(['status' => $value]);
             }
         }
     }

@@ -141,7 +141,7 @@
                             bSortable: false,
                             title: 'Action'
                         },
-                        {data: 'id', name: 'purchase_infos.id', title: 'ID'},
+                        {data: 'po_no', name: 'purchase_infos.po_no', title: 'PO NO.'},
                         {
                             data: function (value) {
                                 return '<div class="btn-group btn-group-sm shadow-sm" role="group" aria-label="Basic example">' +
@@ -151,8 +151,7 @@
                         },
                         {data: 'subject', title: 'Subject'},
                         {data: 'vendor_name', name: 'vendors.name', title: 'Vendor Name'},
-                        {data: 'tracking_number', title: 'Tracking Number'},
-                        {data: 'requisition_no', title: 'Requisition No'},
+                        {data: 'sub_total', title: 'Total Amount'},
                         {data: 'name', name: 'users.name', title: 'Assigned To'},
                     ],
                     drawCallback: function () {
