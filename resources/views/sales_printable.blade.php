@@ -197,29 +197,25 @@ body {
 							<tr>
 								<td align="right" style="padding-top: 10px !important;"><strong>DISCOUNT</strong></td>
 								<td
-									style="padding-left: 10px !important; padding-top: 10px !important;">{{
-									$summary->discount }}</td>
+									style="padding-left: 10px !important; padding-top: 10px !important;">{{ $summary->discount }}</td>
 							</tr>
 							<tr>
 								<td align="right"><strong>SUB-TOTAL</strong></td>
-								<td style="padding-left: 10px !important;">{{
-									$summary->sub_total }}</td>
+								<td style="padding-left: 10px !important;">{{ $summary->sub_total }}</td>
 							</tr>
 							<tr>
 								<td align="right"><strong>SHIPPING</strong></td>
-								<td style="padding-left: 10px !important">{{ $summary->shipping
-									}}</td>
+								<td style="padding-left: 10px !important">{{ $summary->shipping }}</td>
 							</tr>
 							<tr>
 								<td align="right"><strong>SALES TAX</strong></td>
-								<td style="padding-left: 10px !important">{{ $summary->sales_tax
-									}}</td>
+								<td style="padding-left: 10px !important">{{ $summary->sales_tax }}</td>
 							</tr>
 							<tr>
-								<td align="right"><strong>GRAND TOTAL</strong></td>
-								<td style="padding-left: 10px !important">{{
-									($summary->sub_total +
-									$summary->shipping)*(1+($summary->sales_tax/100)) }}</td>
+                                <td align="right"><strong>GRAND TOTAL</strong></td>
+                                <td style="padding-left: 10px !important">
+                                    {{ $summary->grand_total }}
+                                </td>
 							</tr>
 						</tbody>
 					</table>

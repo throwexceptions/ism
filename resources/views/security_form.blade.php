@@ -297,6 +297,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                {{-- Vendors --}}
                                 <div class="col-md-12 row">
                                     <div class="col-md-12 mt-4">
                                         <h3>Vendors</h3>
@@ -368,6 +369,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                {{-- Supplies --}}
                                 <div class="col-md-12 row">
                                     <div class="col-md-12 mt-4">
                                         <h3>Supplies</h3>
@@ -387,6 +389,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                {{-- Porducts --}}
                                 <div class="col-md-12 row">
                                     <div class="col-md-12 mt-4">
                                         <h3>Products</h3>
@@ -458,9 +461,10 @@
                                         </div>
                                     </div>
                                 </div>
+                                {{-- Roles --}}
                                 <div class="col-md-12 row">
                                     <div class="col-md-12 mt-4">
-                                        <h3>Security</h3>
+                                        <h3>Roles</h3>
                                         <hr>
                                     </div>
                                     <div class="col-md-3">
@@ -472,7 +476,7 @@
                                                 </label>
                                             </div>
                                             <div class="col-md-auto">
-                                                <label class="switch-label">Security</label>
+                                                <label class="switch-label">Roles</label>
                                             </div>
                                         </div>
                                     </div>
@@ -529,6 +533,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                {{-- User Accounts --}}
                                 <div class="col-md-12 row">
                                     <div class="col-md-12 mt-4">
                                         <h3>User Accounts</h3>
@@ -596,6 +601,26 @@
                                             </div>
                                             <div class="col-md-auto">
                                                 <label class="switch-label">Delete</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- Preference --}}
+                                <div class="col-md-12 row">
+                                    <div class="col-md-12 mt-4">
+                                        <h3>Preference</h3>
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group row">
+                                            <div class="col-md-auto">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.preference">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Preference</label>
                                             </div>
                                         </div>
                                     </div>

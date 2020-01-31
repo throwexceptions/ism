@@ -54,6 +54,7 @@ class SecurityController extends Controller
         "security_update",
         "products_delete",
         "security_delete",
+        "preference",
     ];
 
     public function roles()

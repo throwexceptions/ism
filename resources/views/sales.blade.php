@@ -140,6 +140,8 @@
                             bSortable: false,
                             title: 'Action'
                         },
+                        {data: 'vat_type', name: 'sales_orders.vat_type', title: 'VAT Type'},
+                        {data: 'payment_status', name: 'sales_orders.payment_status', title: 'Payment Status'},
                         {data: 'so_no', name: 'sales_orders.so_no', title: 'SO NO.'},
                         {
                             data: function (value) {
@@ -150,7 +152,7 @@
                         },
                         {data: 'customer_name', name: 'customers.name', title: 'Customer'},
                         {data: 'subject', name: 'subject', title: 'Subject'},
-                        {data: 'sub_total', name: 'sub_total', title: 'Total Amount'},
+                        {data: 'sub_total',  name: 'customers.name', title: 'Total Amount'},
                         {data: 'username', name: 'users.name', title: 'Assigned To'},
                     ],
                     drawCallback: function () {

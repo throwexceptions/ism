@@ -71,6 +71,15 @@
                                     <label>Fax</label>
                                     <input type="text" class="form-control form-control-sm" v-model="overview.fax">
                                 </div>
+                                <div class="form-group">
+                                    <label>VAT Type</label>
+                                    <select type="text" class="form-control form-control-sm"
+                                            v-model="overview.vat_type">
+                                        <option value="">-- Select Options --</option>
+                                        <option value="VAT EX">VAT EX</option>
+                                        <option value="VAT INC">VAT INC</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="col-md-12">
                                 <h4>Payment Information</h4>
@@ -86,6 +95,16 @@
                                         <option value="Cash">Cash</option>
                                         <option value="Credit">Credit</option>
                                         <option value="Online Banking">Online Banking</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Payment Status</label>
+                                    <select type="text" class="form-control form-control-sm"
+                                            v-model="overview.payment_status">
+                                        <option value="">-- Select Options --</option>
+                                        <option value="PAID">PAID</option>
+                                        <option value="UNPAID">UNPAID</option>
+                                        <option value="PAID WITH BALANCE">PAID WITH BALANCE</option>
                                     </select>
                                 </div>
                             </div>
@@ -157,7 +176,7 @@
                                             <td v-if="product.product_name"><input type="text"
                                                                                    class="form-control form-control-sm"
                                                                                    style="width: 100px;"
-                                                                                   v-model="product.qty"></td>
+                                                                                    v-model="product.qty"></td>
                                             <td v-if="product.product_name"><input type="text"
                                                                                    class="form-control form-control-sm"
                                                                                    style="width: 100px;"
@@ -182,16 +201,16 @@
                             </div>
                             <div class="offset-md-9 col-md-4">
                                 <div class="form-group row">
+                                    <label class="col-form-label col-md-4 col-form-label-sm">Sub Total</label>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control form-control-sm" v-model="summary.sub_total">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
                                     <label class="col-form-label col-md-4 col-form-label-sm">Discount</label>
                                     <div class="col-md-4">
                                         <input type="text" class="form-control form-control-sm"
                                                v-model="summary.discount">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-form-label col-md-4 col-form-label-sm">Sub Total</label>
-                                    <div class="col-md-4">
-                                        <input type="text" class="form-control form-control-sm" v-model="summary.sub_total">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -212,7 +231,7 @@
                                     <label class="col-form-label col-md-4 col-form-label-sm">Grand Total</label>
                                     <div class="col-md-4">
                                         <input type="text" class="form-control-plaintext form-control-sm"
-                                               v-bind:value="(parseFloat(summary.sub_total) + parseFloat(summary.shipping))*(1+(parseFloat(summary.sales_tax)/100))">
+                                               v-bind:value="grandTotal(parseFloat(summary.sub_total) - parseFloat(summary.discount))">
                                     </div>
                                 </div>
                             </div>
@@ -333,6 +352,13 @@
                 }
             },
             methods: {
+                grandTotal(value) {
+                    var $this = this;
+                    var sales_tax = parseFloat($this.summary.sales_tax);
+                    $this.summary.grand_total = ((value * (1+(sales_tax/100))) + parseFloat($this.summary.shipping)).toFixed(2)
+
+                    return $this.summary.grand_total;
+                },
                 store() {
                     var $this = this;
                     $.ajax({
@@ -399,6 +425,7 @@
                                     product_id: $('.select2-product').find(':selected').val(),
                                     product_name: $('.select2-product').find(':selected').text(),
                                     notes: '',
+                                    quantity: value.quantity,
                                     qty: 0,
                                     selling_price: $this.selling_price,
                                     labor_cost: 0,
@@ -435,10 +462,9 @@
                     $this.summary.sub_total = 0;
                     $.each($this.products, function (x, product) {
                         if (product.product_name) {
-                            $this.summary.sub_total += ((product.vendor_price * product.qty) - ((product.vendor_price * product.qty) * (product.discount_item / 100)))
+                            $this.summary.sub_total += (product.vendor_price * product.qty)
                         }
                     });
-                    $this.summary.sub_total = $this.summary.sub_total - ($this.summary.sub_total * ($this.summary.discount/100))
                 },
             },
             watch: {

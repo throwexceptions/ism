@@ -217,10 +217,10 @@ body {
 									}}</td>
 							</tr>
 							<tr>
-								<td align="right"><strong>GRAND TOTAL</strong></td>
-								<td style="padding-left: 10px !important">{{
-									($summary->sub_total +
-									$summary->shipping)*(1+($summary->sales_tax/100)) }}</td>
+                                <td align="right"><strong>GRAND TOTAL</strong></td>
+                                <td style="padding-left: 10px !important">
+                                    {{ $summary->grand_total }}
+                                </td>
 							</tr>
 						</tbody>
 					</table>

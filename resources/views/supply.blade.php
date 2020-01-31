@@ -80,8 +80,9 @@ const app = new Vue({
                     method: "POST",
                 },
                 columns: [
-                    {data: 'id', name:'supplies.id', title: 'ID'},
+                    {data: 'code', name:'products.code', title: 'Product ID'},
                     {data: 'product_name', name:'products.name', title: 'Product'},
+                    {data: 'selling_price', name:'products.selling_price', title: 'Unit Price'},
                     {data: 'quantity', name:'supplies.quantity', title: 'Quantity'},
                     {data: 'po_count', bSortable:false,bSearchable:false, title: 'PO'},
                     {data: 'so_count', bSortable:false,bSearchable:false, title: 'SO'},

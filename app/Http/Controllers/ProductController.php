@@ -63,9 +63,12 @@ class ProductController extends Controller
 
     public function findProduct(Request $request)
     {
-        $product = Product::query()->where('id', $request->product_id)->get()[0];
+        $product = DB::table('products')
+            ->selectRaw('products.*, supplies.quantity')
+            ->join('supplies', 'supplies.product_id', '=', 'products.id')
+            ->where('products.id', $request->product_id);
 
-        return $product;
+        return collect($product->get()[0]);
     }
 
     public function getList(Request $request)

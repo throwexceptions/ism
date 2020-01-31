@@ -141,6 +141,8 @@
                             bSortable: false,
                             title: 'Action'
                         },
+                        {data: 'vat_type', name: 'purchase_infos.vat_type', title: 'VAT Type'},
+                        {data: 'payment_status', name: 'purchase_infos.payment_status', title: 'Payment Status'},
                         {data: 'po_no', name: 'purchase_infos.po_no', title: 'PO NO.'},
                         {
                             data: function (value) {
@@ -151,7 +153,7 @@
                         },
                         {data: 'subject', title: 'Subject'},
                         {data: 'vendor_name', name: 'vendors.name', title: 'Vendor Name'},
-                        {data: 'sub_total', title: 'Total Amount'},
+                        {data: 'sub_total',name: 'vendors.name', title: 'Total Amount'},
                         {data: 'name', name: 'users.name', title: 'Assigned To'},
                     ],
                     drawCallback: function () {

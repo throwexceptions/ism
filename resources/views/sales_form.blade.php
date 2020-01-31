@@ -28,12 +28,8 @@
                                     <input type="text" class="form-control form-control-sm" v-model="overview.phone">
                                 </div>
                                 <div class="form-group">
-                                    <label>Payment Method</label>
-                                    <select class="form-control" v-model="overview.payment_method">
-                                        <option value="Cash">Cash</option>
-                                        <option value="Credit">Credit</option>
-                                        <option value="Check">Check</option>
-                                    </select>
+                                    <label>Agent</label>
+                                    <input type="text" class="form-control form-control-sm" v-model="overview.agent">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -46,23 +42,6 @@
                                     <label>Fax</label>
                                     <input type="text" class="form-control form-control-sm" v-model="overview.fax">
                                 </div>
-                                <div class="form-group" v-if="overview.payment_method == 'Check'">
-                                    <label>Account Name</label>
-                                    <input type="text" class="form-control form-control-sm"
-                                           v-model="overview.account_name">
-                                </div>
-                                <div class="form-group" v-if="overview.payment_method == 'Check'">
-                                    <label>Account Number</label>
-                                    <input type="text" class="form-control form-control-sm"
-                                           v-model="overview.account_no">
-                                </div>
-                                <div class="form-group">
-                                    <label>Account Name</label>
-                                    <input type="text" class="form-control form-control-sm"
-                                           v-model="overview.account_name">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Customer Name</label>
                                     <select class="form-control form-control-sm select2-customer">
@@ -70,28 +49,64 @@
                                     <input v-show="viewType == 2" type="text" class="form-control form-control-sm"
                                            v-model="overview.customer_name">
                                 </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label>VAT Type</label>
+                                <select type="text" class="form-control form-control-sm"
+                                        v-model="overview.vat_type">
+                                    <option value="">-- Select Options --</option>
+                                    <option value="VAT EX">VAT EX</option>
+                                    <option value="VAT INC">VAT INC</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <h4>Sales Order Information</h4>
+                                <hr>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Payment Method</label>
+                                    <select class="form-control" v-model="overview.payment_method">
+                                        <option value="Cash">Cash</option>
+                                        <option value="Credit">Credit</option>
+                                        <option value="Check">Check</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" v-if="overview.payment_method == 'Check'">
+                                    <label>Account Name</label>
+                                    <input type="text" class="form-control form-control-sm"
+                                           v-model="overview.account_name">
+                                </div>
                                 <div class="form-group">
                                     <label>Account No.</label>
                                     <input type="text" name="so_no" class="form-control form-control-sm"
                                            v-model="overview.account_no">
                                 </div>
+                            </div>
+                            <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Agent</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.agent">
+                                    <label>Payment Status</label>
+                                    <select type="text" class="form-control form-control-sm"
+                                            v-model="overview.payment_status">
+                                        <option value="">-- Select Options --</option>
+                                        <option value="PAID">PAID</option>
+                                        <option value="UNPAID">UNPAID</option>
+                                        <option value="PAID WITH BALANCE">PAID WITH BALANCE</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            {{-- <div class="col-md-12">
                                 <h4>Address Information</h4>
                                 <hr>
-                            </div>
-                            <div class="col-md-6">
+                            </div> --}}
+                            {{-- <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Location of Service</label>
                                     <textarea type="text" class="form-control form-control-sm" rows="5"
                                               v-model="overview.address" style="height: 80px;">
                                     </textarea>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-md-12">
                                 <h4>Product Details</h4>
                                 <hr>
@@ -119,9 +134,13 @@
                                                        class="form-control-plaintext form-control-sm"
                                                        style="width: 180px;" v-model="product.product_name">
                                             </td>
-                                            <td v-else colspan="6" style="background-color: bisque;">
+                                            <td v-else colspan="7" style="background-color: bisque;">
                                                 <h5 style="margin-top: 5px;"><strong>@{{ product.category }}</strong>
                                                 </h5>
+                                            </td>
+                                            <td v-if="product.product_name">
+                                                <input type="text" class="form-control-plaintext form-control-sm"
+                                                       style="width: 100px;" v-model="product.quantity">
                                             </td>
                                             <td v-if="product.product_name">
                                                 <input type="number" class="form-control form-control-sm"
@@ -145,7 +164,7 @@
                                                 <input readonly type="text"
                                                        class="form-control-plaintext form-control-sm total-grid"
                                                        style="width: 100px;"
-                                                       v-bind:value="(product.labor_cost * product.qty) + ((product.selling_price * product.qty) - ((product.selling_price * product.qty)*(product.discount_item/100)))">
+                                                       v-bind:value="(product.selling_price * product.qty)">
                                             </td>
                                             <td v-if="viewType != 2">
                                                 <button class="btn btn-sm btn-block btn-danger" @click="remove(index)">
@@ -158,17 +177,17 @@
                             </div>
                             <div class="offset-md-9 col-md-4">
                                 <div class="form-group row">
+                                    <label class="col-form-label col-md-4 col-form-label-sm">Sub Total</label>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control form-control-sm"
+                                                v-model="summary.sub_total">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
                                     <label class="col-form-label col-md-4 col-form-label-sm">Discount</label>
                                     <div class="col-md-4">
                                         <input type="text" class="form-control form-control-sm"
                                                v-model="summary.discount">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-form-label col-md-4 col-form-label-sm">Sub Total</label>
-                                    <div class="col-md-4">
-                                        <input type="text" class="form-control form-control-sm"
-                                               v-model="summary.sub_total">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -191,7 +210,7 @@
                                     <label class="col-form-label col-md-4 col-form-label-sm">Grand Total</label>
                                     <div class="col-md-4">
                                         <input type="text" class="form-control-plaintext form-control-sm"
-                                               v-bind:value="(parseFloat(summary.sub_total) + parseFloat(summary.shipping)) + (summary.sub_total*(parseFloat(summary.sales_tax)/100))">
+                                               v-bind:value="grandTotal(parseFloat(summary.sub_total) - parseFloat(summary.discount))">
                                     </div>
                                 </div>
                             </div>
@@ -296,7 +315,7 @@
                 return {
                     viewType: 0,
                     columns: [
-                        'Product', 'Qty', 'Unit Cost', 'Unit Total', 'Serial No.', 'Total Cost', 'Action'
+                        'Product', 'Stock', 'Qty', 'Unit Cost', 'Unit Total', 'Serial No.', 'Total Cost', 'Action'
                     ],
                     sub_total: 0,
                     overview: {!! $sales_order !!},
@@ -307,6 +326,13 @@
                 }
             },
             methods: {
+                grandTotal(value) {
+                    var $this = this;
+                    var sales_tax = parseFloat($this.summary.sales_tax);
+                    $this.summary.grand_total = ((value * (1+(sales_tax/100))) + parseFloat($this.summary.shipping)).toFixed(2)
+
+                    return $this.summary.grand_total;
+                },
                 store() {
                     var $this = this;
                     $.ajax({
@@ -367,12 +393,14 @@
                         success: function (value) {
                             $this.selling_price = parseFloat(value.selling_price);
                             $this.vendor_price = parseFloat(value.vendor_price);
+                            $this.quantity = parseInt(value.quantity);
                             $this.products.push(
                                 {
                                     product_id: $('.select2-product').find(':selected').val(),
                                     product_name: $('.select2-product').find(':selected').text(),
                                     notes: '',
                                     qty: 0,
+                                    quantity: $this.quantity,
                                     selling_price: $this.selling_price,
                                     vendor_price: $this.vendor_price,
                                     discount_item: 0
@@ -405,10 +433,9 @@
                     $this.summary.sub_total = 0;
                     $.each($this.products, function (x, product) {
                         if (product.product_name) {
-                            $this.summary.sub_total += (product.labor_cost * product.qty)
+                            $this.summary.sub_total += (product.selling_price * product.qty)
                         }
                     });
-                    $this.summary.sub_total = $this.summary.sub_total - $this.summary.discount
                 }
             },
             watch: {

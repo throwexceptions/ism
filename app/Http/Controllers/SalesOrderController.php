@@ -67,6 +67,7 @@ class SalesOrderController extends Controller
             "discount"       => "0",
             "shipping"       => "0",
             "sales_tax"      => "0",
+            "grand_total"    => "0",
         ]);
 
         return view('sales_form', compact('sales_order', 'product_details', 'summary'));
@@ -101,6 +102,7 @@ class SalesOrderController extends Controller
         $data = $request->input();
         unset($data['overview']['unit']);
         unset($data['overview']['customer_name']);
+
         DB::table('sales_orders')->where('id', $data['overview']['id'])
           ->update($data['overview']);
 
@@ -111,6 +113,7 @@ class SalesOrderController extends Controller
                 $item['sales_order_id'] = $data['overview']['id'];
                 unset($item['unit']);
                 unset($item['category']);
+                unset($item['quantity']);
                 if (count($item) > 2) {
                     DB::table('product_details')->insert($item);
                 }
@@ -315,6 +318,7 @@ class SalesOrderController extends Controller
             }
         }
         $sections = $hold_section;
+
         return view('sales_printable', compact('sales_order', 'product_details', 'summary', 'sections'));
     }
 
@@ -325,10 +329,12 @@ class SalesOrderController extends Controller
                                      ->leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')
                                      ->where('sales_orders.id', $id)
                                      ->get()[0];
+
         $product_details = ProductDetail::query()
-                                        ->selectRaw('products.category, products.unit, product_details.*')
+                                        ->selectRaw('products.category, products.unit, product_details.*, supplies.quantity')
                                         ->where('sales_order_id', $id)
                                         ->join('products', 'products.id', 'product_details.product_id')
+                                        ->join('supplies', 'supplies.product_id', 'product_details.product_id')
                                         ->get();
 
         $category = '';

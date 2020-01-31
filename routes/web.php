@@ -121,6 +121,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/orderform/table', 'OrderFormController@table')->name('orderform.table');
     Route::post('/orderform/store', 'OrderFormController@store')->name('orderform.store');
 
-    Route::get('/preference', 'PreferenceController@index')->name('preference')->middleware('can:security');
+    Route::get('/preference', 'PreferenceController@index')->name('preference')->middleware('can:preference');
     Route::post('/preference/update', 'PreferenceController@update')->name('preference.update');
 });
