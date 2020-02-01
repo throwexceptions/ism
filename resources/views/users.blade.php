@@ -211,6 +211,7 @@
                         },
                         {data: 'id', name: 'id', title: 'ID'},
                         {data: 'name', title: 'Name'},
+                        {data: 'position', title: 'Position'},
                         {data: 'email', title: 'Email'},
                     ],
                     drawCallback: function () {

@@ -26,6 +26,12 @@
                                     <input type="text" class="form-control form-control-sm" v-model="overview.email">
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Position</label>
+                                    <input type="text" class="form-control form-control-sm" v-model="overview.position">
+                                </div>
+                            </div>
                             <div class="col-md-12">
                                 <a href="{{ route('users') }}" class="btn btn-warning">Back</a>
                                 <button class="btn btn-info" v-if="viewType == 1" @click="store">Save New</button>

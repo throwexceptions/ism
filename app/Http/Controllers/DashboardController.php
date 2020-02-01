@@ -14,7 +14,32 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('dashboard');
+        $supply = Supply::query()
+                        ->selectRaw('(supplies.quantity * products.selling_price) total')
+                        ->join('products', 'products.id', '=', 'supplies.product_id')
+                        ->where('supplies.quantity', '<>', 0);
+
+        $assets = 0;
+        foreach($supply->get()->toArray() as $value) {
+            $assets += $value['total'];
+        }
+
+
+        $supply = Supply::query()
+                        ->selectRaw('supplies.quantity total')
+                        ->join('products', 'products.id', '=', 'supplies.product_id')
+                        ->where('supplies.quantity', '<>', 0);
+
+        $stocks = 0;
+        foreach($supply->get()->toArray() as $value) {
+            $stocks += $value['total'];
+        }
+
+        $po_count = PurchaseInfo::query()->count();
+
+        $so_count = SalesOrder::query()->count();
+
+        return view('dashboard',  compact('assets', 'stocks', 'po_count', 'so_count'));
     }
 
     public function inStock()
