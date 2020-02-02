@@ -240,6 +240,7 @@ const app = new Vue({
             $this.so_range.start = start.format('YYYY-MM-DD');
             $this.so_range.end = end.format('YYYY-MM-DD');
             $this.getSOTotals();
+            $('#so_totals').val(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
         });
 
         $('#po_totals').daterangepicker({
@@ -249,6 +250,7 @@ const app = new Vue({
             $this.po_range.start = start.format('YYYY-MM-DD');
             $this.po_range.end = end.format('YYYY-MM-DD');
             $this.getPOTotals();
+            $('#po_totals').val(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
         });
 
         $this.dt = $('#table-in-stock').DataTable({
