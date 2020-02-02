@@ -97,7 +97,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/supply', 'SupplyController@index')->name('supply')->middleware('can:supplies');
     Route::post('/supply/table', 'SupplyController@table')->name('supply.table');
 
-    Route::get('/users', 'UserController@index')->name('users')->middleware('can:user-accounts');
+    Route::get('/users', 'UserController@index')->name('users')->middleware('can:useraccounts');
     Route::get('/user/detail/{id}', 'UserController@show')->name('user.detail')->middleware('can:useraccountsupdate');
     Route::get('/user/create', 'UserController@create')->name('user.create')->middleware('can:useraccountscreate');
     Route::post('/user/destroy', 'UserController@destroy')->name('user.destroy')->middleware('can:useraccountsdelete');
