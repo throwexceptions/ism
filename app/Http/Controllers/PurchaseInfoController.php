@@ -27,7 +27,7 @@ class PurchaseInfoController extends Controller
                                      ->selectRaw('purchase_infos.id, purchase_infos.subject,
                                      purchase_infos.vat_type,purchase_infos.payment_status,
             vendors.name as vendor_name, purchase_infos.tracking_number, purchase_infos.po_no,
-            purchase_infos.requisition_no, users.name, purchase_infos.status, 
+            purchase_infos.requisition_no, users.name, purchase_infos.status, purchase_infos.created_at,
             (summaries.sub_total + (summaries.sub_total * (summaries.sales_tax/100))) as sub_total')
                                     ->leftJoin('summaries', 'summaries.purchase_order_id', '=', 'purchase_infos.id')
                                      ->leftJoin('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
