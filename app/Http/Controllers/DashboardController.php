@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\PurchaseInfo;
 use App\SalesOrder;
 use App\Supply;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
@@ -45,7 +46,7 @@ class DashboardController extends Controller
     public function inStock()
     {
         $supply = Supply::query()
-                        ->selectRaw('supplies.*, products.name as product_name')
+                        ->selectRaw('supplies.*, products.name as product_name, products.manual_id')
                         ->join('products', 'products.id', '=', 'supplies.product_id')
                         ->where('supplies.quantity', '<>', 0);
 
@@ -55,7 +56,7 @@ class DashboardController extends Controller
     public function outOfStock()
     {
         $supply = Supply::query()
-                        ->selectRaw('supplies.*, products.name as product_name')
+                        ->selectRaw('supplies.*, products.name as product_name, products.manual_id')
                         ->join('products', 'products.id', '=', 'supplies.product_id')
                         ->where('supplies.quantity', '=', 0);
 
@@ -81,5 +82,33 @@ class DashboardController extends Controller
         $so = SalesOrder::query()->where('status', 'Returned');
 
         return DataTables::of($so)->make(true);
+    }
+
+    public function totalPO(Request $request)
+    {
+        $data = $request->input();
+        $result = DB::table('purchase_infos')
+            ->selectRaw('SUM(summaries.grand_total) as total')
+            ->leftJoin('summaries', 'summaries.purchase_order_id', '=', 'purchase_infos.id');
+        
+        if($data['start'] != '') {
+            $result->whereBetween('purchase_infos.created_at', [$data['start'], $data['end']]);
+        }
+
+        return $result->get();
+    }
+
+    public function totalSO(Request $request)
+    {
+        $data = $request->input();
+        $result = DB::table('sales_orders')
+            ->selectRaw('SUM(summaries.grand_total) as total')
+            ->leftJoin('summaries', 'summaries.sales_order_id', '=', 'sales_orders.id');
+        
+        if($data['start'] != '') {
+            $result->whereBetween('sales_orders.created_at', [$data['start'], $data['end']]);
+        }
+
+        return $result->get();
     }
 }

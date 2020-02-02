@@ -95,6 +95,8 @@ class PurchaseInfoController extends Controller
         if (isset($data['products'])) {
             foreach ($data['products'] as $item) {
                 unset($item['category']);
+                unset($item['quantity']);
+                unset($item['unit']);
                 if (count($item) > 2) {
                     $item['purchase_order_id'] = $id;
                     DB::table('product_details')->insert($item);
@@ -125,6 +127,7 @@ class PurchaseInfoController extends Controller
             foreach ($data['products'] as $item) {
                 $item['purchase_order_id'] = $data['overview']['id'];
                 unset($item['category']);
+                unset($item['quantity']);
                 unset($item['unit']);
                 if (count($item) > 2) {
                     DB::table('product_details')->insert($item);
@@ -171,6 +174,16 @@ class PurchaseInfoController extends Controller
         }
 
         return ['success' => false];
+    }
+
+    public function updatePaymentStatus(Request $request)
+    {
+        $data = $request->input();
+
+        DB::table('purchase_infos')->where('id', $data['id'])
+            ->update(['payment_status' => $data['payment_status']]);
+
+        return ['success' => true];
     }
 
     public function show($id)

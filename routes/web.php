@@ -24,6 +24,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/home/returned', 'DashboardController@returnedSO')->name('home.returned');
     Route::post('/home/po', 'DashboardController@orderedPO')->name('home.po');
     Route::post('/home/so', 'DashboardController@quoteSO')->name('home.so');
+    Route::post('/home/total/so', 'DashboardController@totalSO')->name('home.total.so');
+    Route::post('/home/total/po', 'DashboardController@totalPO')->name('home.total.po');
 
     Route::get('/purchase', 'PurchaseInfoController@index')->name('purchase')->middleware('can:purchase_order');
     Route::get('/purchase/create', 'PurchaseInfoController@create')->name('purchase.create')->middleware('can:purchase_order_create');
@@ -36,6 +38,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/purchase/status/update', 'PurchaseInfoController@updateStatus')->name('purchase.status.update');
     Route::get('/purchase/print/{id}', 'PurchaseInfoController@printable')->name('purchase.print');
     Route::get('/purchase/preview/{id}', 'PurchaseInfoController@previewPO')->name('purchase.preview');
+    Route::post('/purchase/payment/status/update', 'PurchaseInfoController@updatePaymentStatus')->name('purchase.payment.status.update');
 
     Route::get('/sales', 'SalesOrderController@index')->name('sales')->middleware('can:sales_order');
     Route::get('/sales/create', 'SalesOrderController@create')->name('sales.create')->middleware('can:sales_order_create');

@@ -83,7 +83,9 @@ class SalesOrderController extends Controller
         $id = DB::table('sales_orders')->insertGetId($data['overview']);
         if (isset($data['products'])) {
             foreach ($data['products'] as $item) {
+                unset($item['unit']);
                 unset($item['category']);
+                unset($item['quantity']);
                 if (count($item) > 2) {
                     $item['sales_order_id'] = $id;
                     DB::table('product_details')->insert($item);

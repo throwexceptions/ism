@@ -23,6 +23,8 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css">
 
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
 </head>
 
 <body id="page-top">
@@ -121,6 +123,9 @@
 <script src="{{ asset('js/demo/chart-pie-demo.js') }}"></script> --}}
 <script src="{{ asset('js/app.js') }}"></script>
 {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> --}}
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 @yield('scripts')
 </body>
 

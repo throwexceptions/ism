@@ -56,6 +56,38 @@
                 </div>
             </div>
         </div>
+
+        <div id="paymentModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Payment Status</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Pick a status</label>
+                                    <select class="form-control" v-model="overview.payment_status">
+                                            <option value="">-- Select Options --</option>
+                                            <option value="PAID">PAID</option>
+                                            <option value="UNPAID">UNPAID</option>
+                                            <option value="PAID WITH BALANCE">PAID WITH BALANCE</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" @click="updatePayment">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -73,6 +105,19 @@
                 }
             },
             methods: {
+                updatePayment() {
+                    var $this = this;
+                    $.ajax({
+                        url: '{{ route('purchase.payment.status.update') }}',
+                        method: 'POST',
+                        data: $this.overview,
+                        success: function (value) {
+                            Swal.fire('Updated!', 'Payment Status has been updated.', 'success');
+                            $this.dt.draw();
+                            $('#paymentModal').modal('hide');
+                        }
+                    })
+                },
                 update() {
                     var $this = this;
                     $.ajax({
@@ -142,7 +187,13 @@
                             title: 'Action'
                         },
                         {data: 'vat_type', name: 'purchase_infos.vat_type', title: 'VAT Type'},
-                        {data: 'payment_status', name: 'purchase_infos.payment_status', title: 'Payment Status'},
+                        {
+                            data: function (value) {
+                                return '<div class="btn-group btn-group-sm shadow-sm" role="group" aria-label="Basic example">' +
+                                    '<a href="#" class="btn btn-info btn-payment">' + value.payment_status + '</a>' +
+                                    '</div>'
+                            }, name: 'payment_status', title: 'Payment Status'
+                        },
                         {data: 'po_no', name: 'purchase_infos.po_no', title: 'PO NO.'},
                         {
                             data: function (value) {
@@ -168,6 +219,10 @@
                         });
                         $('.btn-status').on('click', function () {
                             $('#statusModal').modal('show');
+                        });
+                        
+                        $('.btn-payment').on('click', function () {
+                            $('#paymentModal').modal('show');
                         });
                     }
                 });
