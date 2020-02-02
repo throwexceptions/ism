@@ -97,7 +97,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/supply', 'SupplyController@index')->name('supply')->middleware('can:supplies');
     Route::post('/supply/table', 'SupplyController@table')->name('supply.table');
 
-    Route::get('/users', 'UserController@index')->name('users')->middleware('can:user_accounts');
+    Route::get('/users', 'UserController@index')->name('users')->middleware('can:user-accounts');
     Route::get('/user/detail/{id}', 'UserController@show')->name('user.detail')->middleware('can:user_accounts_update');
     Route::get('/user/create', 'UserController@create')->name('user.create')->middleware('can:user_accounts_create');
     Route::post('/user/destroy', 'UserController@destroy')->name('user.destroy')->middleware('can:user_accounts_delete');
@@ -111,7 +111,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/role', 'SecurityController@roles')->name('role')->middleware('can:security');
     Route::get('/role/create', 'SecurityController@create')->name('role.create')->middleware('can:security_create');
-    Route::get('/role/detail/{id}', 'SecurityController@show')->name('role.detail')->middleware('can:products_update');
+    Route::get('/role/detail/{id}', 'SecurityController@show')->name('role.detail')->middleware('can:security_update');
     Route::post('/role/destroy', 'SecurityController@destroy')->name('role.destroy')->middleware('can:security_delete');
     Route::post('/role/table', 'SecurityController@table')->name('role.table');
     Route::post('/role/store', 'SecurityController@store')->name('role.store');

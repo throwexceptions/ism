@@ -31,7 +31,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.order_form">
+                                                    <input type="checkbox" v-model="abilities.orderform">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -44,7 +44,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.order_form_create">
+                                                    <input type="checkbox" v-model="abilities.orderformcreate">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -57,7 +57,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.order_form_retrieve">
+                                                    <input type="checkbox" v-model="abilities.orderformretrieve">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -70,7 +70,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.order_form_delete">
+                                                    <input type="checkbox" v-model="abilities.orderformdestroy">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -93,7 +93,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.purchase_order">
+                                                    <input type="checkbox" v-model="abilities.purchaseorder">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -106,7 +106,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.purchase_order_create">
+                                                    <input type="checkbox" v-model="abilities.purchaseordercreate">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -119,7 +119,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.purchase_order_retrieve">
+                                                    <input type="checkbox" v-model="abilities.purchaseorderretrieve">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -132,7 +132,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.purchase_order_update">
+                                                    <input type="checkbox" v-model="abilities.purchaseorderupdate">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -145,7 +145,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.purchase_order_delete">
+                                                    <input type="checkbox" v-model="abilities.purchaseorderdestroy">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -155,6 +155,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                {{-- Sales Order --}}
                                 <div class="col-md-12 row">
                                     <div class="col-md-12 mt-4">
                                         <h3>Sales Order</h3>
@@ -164,7 +165,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.sales_order">
+                                                    <input type="checkbox" v-model="abilities.salesorder">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -177,7 +178,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.sales_order_create">
+                                                    <input type="checkbox" v-model="abilities.salesordercreate">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -190,7 +191,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.sales_order_retrieve">
+                                                    <input type="checkbox" v-model="abilities.salesorderretrieve">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -203,7 +204,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.sales_order_update">
+                                                    <input type="checkbox" v-model="abilities.salesorderupdate">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -216,7 +217,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.sales_order_delete">
+                                                    <input type="checkbox" v-model="abilities.salesorderdestroy">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -226,6 +227,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                {{-- Customer --}}
                                 <div class="col-md-12 row">
                                     <div class="col-md-12 mt-4">
                                         <h3>Customer</h3>
@@ -248,7 +250,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.customer_create">
+                                                    <input type="checkbox" v-model="abilities.customercreate">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -261,7 +263,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.customer_retrieve">
+                                                    <input type="checkbox" v-model="abilities.customerretrieve">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -274,7 +276,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.customer_update">
+                                                    <input type="checkbox" v-model="abilities.customerupdate">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -287,7 +289,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.customer_delete">
+                                                    <input type="checkbox" v-model="abilities.customerdestroy">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -320,7 +322,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.vendors_create">
+                                                    <input type="checkbox" v-model="abilities.vendorscreate">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -333,7 +335,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.vendors_retrieve">
+                                                    <input type="checkbox" v-model="abilities.vendorsretrieve">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -346,7 +348,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.vendors_update">
+                                                    <input type="checkbox" v-model="abilities.vendorsupdate">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -359,7 +361,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.vendors_delete">
+                                                    <input type="checkbox" v-model="abilities.vendorsdestroy">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -412,7 +414,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.products_create">
+                                                    <input type="checkbox" v-model="abilities.productscreate">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -425,7 +427,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.products_retrieve">
+                                                    <input type="checkbox" v-model="abilities.productsretrieve">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -438,7 +440,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.products_update">
+                                                    <input type="checkbox" v-model="abilities.productsupdate">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -451,7 +453,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.products_delete">
+                                                    <input type="checkbox" v-model="abilities.productsdestroy">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -484,7 +486,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.security_create">
+                                                    <input type="checkbox" v-model="abilities.securitycreate">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -497,7 +499,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.security_retrieve">
+                                                    <input type="checkbox" v-model="abilities.securityretrieve">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -510,7 +512,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.security_update">
+                                                    <input type="checkbox" v-model="abilities.securityupdate">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -523,7 +525,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.security_delete">
+                                                    <input type="checkbox" v-model="abilities.securitydestroy">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -543,7 +545,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.user_accounts">
+                                                    <input type="checkbox" v-model="abilities.useraccounts">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -556,7 +558,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.user_accounts_create">
+                                                    <input type="checkbox" v-model="abilities.useraccountscreate">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -569,7 +571,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.user_accounts_change_pass">
+                                                    <input type="checkbox" v-model="abilities.useraccountschangepass">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -582,7 +584,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.user_accounts_update">
+                                                    <input type="checkbox" v-model="abilities.useraccountsupdate">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -595,7 +597,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.user_accounts_delete">
+                                                    <input type="checkbox" v-model="abilities.useraccountsdestroy">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
@@ -626,6 +628,7 @@
                                     </div>
                                 </div>
                             @endif
+
                             <div class="col-md-12">
                                 <a href="{{ route('role') }}" class="btn btn-warning">Back</a>
                                 <button class="btn btn-success" v-if="viewType != 2" @click="store">Save</button>

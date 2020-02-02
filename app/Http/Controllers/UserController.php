@@ -14,7 +14,7 @@ class UserController extends Controller
     public function index()
     {
         $roles = DB::table('roles')->get()->pluck('name');
-
+        
         return view('users', compact('roles'));
     }
 
