@@ -87,6 +87,9 @@ class SecurityController extends Controller
             if ($value == "true") {
                 Bouncer::allow($data['role'])->to($key);
             }
+            if ($value == "false") {
+                Bouncer::disallow($data['role'])->to($key);
+            }
         }
 
         return ['success' => true];
