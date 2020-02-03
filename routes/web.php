@@ -109,7 +109,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/users/logo/upload', 'UserController@logoUpload')->name('user.logo.upload');
     Route::post('/user/role', 'UserController@getUserRole')->name('user.role');
 
-    Route::get('/role', 'SecurityController@roles')->name('role')->middleware('can:security');
+    Route::get('/role', 'SecurityController@roles')->name('role')->middleware('can:securityview');
     Route::get('/role/create', 'SecurityController@create')->name('role.create')->middleware('can:securitycreate');
     Route::get('/role/detail/{id}', 'SecurityController@show')->name('role.detail')->middleware('can:securityupdate');
     Route::post('/role/destroy', 'SecurityController@destroy')->name('role.destroy')->middleware('can:securitydelete');

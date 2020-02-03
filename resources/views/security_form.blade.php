@@ -473,7 +473,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.security">
+                                                    <input type="checkbox" v-model="abilities.securityview">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
