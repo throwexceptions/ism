@@ -88,7 +88,7 @@ class DashboardController extends Controller
     {
         $data = $request->input();
         $result = DB::table('purchase_infos')
-            ->selectRaw('SUM(summaries.grand_total) as total')
+            ->selectRaw('COALESCE(SUM(summaries.grand_total),0) as total')
             ->leftJoin('summaries', 'summaries.purchase_order_id', '=', 'purchase_infos.id');
         
         if($data['start'] != '') {
@@ -102,7 +102,7 @@ class DashboardController extends Controller
     {
         $data = $request->input();
         $result = DB::table('sales_orders')
-            ->selectRaw('SUM(summaries.grand_total) as total')
+            ->selectRaw('COALESCE(SUM(summaries.grand_total),0) as total')
             ->leftJoin('summaries', 'summaries.sales_order_id', '=', 'sales_orders.id');
         
         if($data['start'] != '') {
