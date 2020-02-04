@@ -68,7 +68,7 @@ body {
 					<table>
 						<tbody>
 							<tr>
-								<td>Subject:</td>
+								<td>Project Cost Center:</td>
 								<td class="header-content">{{ $purchase_info->subject }}</td>
 							</tr>
 							<tr>

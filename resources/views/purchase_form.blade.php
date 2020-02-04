@@ -20,7 +20,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Subject</label>
+                                    <label>Project Cost Center</label>
                                     <input class="form-control form-control-sm" v-model="overview.subject">
                                 </div>
                                 <div class="form-group">

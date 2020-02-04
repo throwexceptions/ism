@@ -74,10 +74,6 @@ body {
 								<td class="header-content">{{ $sales_order->customer_name }}</td>
 							</tr>
 							<tr>
-								<td>Statement Type:</td>
-								<td class="header-content">{{ $sales_order->status }}</td>
-							</tr>
-							<tr>
 								<td>Location:</td>
 								<td class="header-content">{{ $sales_order->address }}</td>
 							</tr>
@@ -229,24 +225,53 @@ body {
 		</tbody>
 	</table>
 	{{-- CONFORME--}}
-	<table style="margin-top: 50px;">
-		<tbody>
-			<tr>
-				<td>&nbsp;&nbsp;&nbsp;<strong>Prepared By:</strong>
-				</td>
-				<td>&nbsp;&nbsp;&nbsp;<strong>Date:</strong>
-				</td>
-			</tr>
-			<tr>
-				<td>&nbsp;&nbsp;&nbsp;___________________</td>
-				<td pad>&nbsp;&nbsp;&nbsp;___________________</td>
-			</tr>
-			<tr>
-				<td>&nbsp;&nbsp;&nbsp;<i>Owner's Signature</i>
-				</td>
-				<td></td>
-			</tr>
-		</tbody>
-	</table>
+    <table style="margin-top: 50px; width:100%">
+        <tbody>
+            <tr>
+                <td>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>&nbsp;&nbsp;&nbsp;<strong>Prepared By:</strong>
+                                </td>
+                                <td>&nbsp;&nbsp;&nbsp;<strong>Date:</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;&nbsp;&nbsp;___________________</td>
+                                <td pad>&nbsp;&nbsp;&nbsp;___________________</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;&nbsp;&nbsp;<i>Owner's Signature</i>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>&nbsp;&nbsp;&nbsp;<strong>Received By:</strong>
+                                </td>
+                                <td>&nbsp;&nbsp;&nbsp;<strong>Date:</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;&nbsp;&nbsp;___________________</td>
+                                <td pad>&nbsp;&nbsp;&nbsp;___________________</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;&nbsp;&nbsp;<i>Signature Over Printed Name</i>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>

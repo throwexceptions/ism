@@ -202,7 +202,7 @@
                                     '</div>'
                             }, name: 'status', title: 'Status'
                         },
-                        {data: 'subject', title: 'Subject'},
+                        {data: 'subject', title: 'Project Cost Center'},
                         {data: 'vendor_name', name: 'vendors.name', title: 'Vendor Name'},
                         {data: 'sub_total', name: 'vendors.name', title: 'Total Amount'},
                         {data: 'created_at', name: 'purchase_infos.created_at', title: 'Created At'},

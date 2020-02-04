@@ -60,7 +60,7 @@ class PurchaseInfoController extends Controller
             "delivery_address" => Preference::status('delivery_address_fill'),
             "check_number"     => "",
             "check_writer"     => "",
-            "tac"              => "",
+            "tac"              => Preference::status('tac_po_fill'),
             "description"      => "",
         ]);
 

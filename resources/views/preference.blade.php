@@ -78,8 +78,14 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label>Terms and Conditions</label>
-                                        <textarea class="form-control" v-model="overview.tac_fill"></textarea>
+                                        <label>Terms and Conditions SO</label>
+                                        <textarea class="form-control" v-model="overview.tac_so_fill"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Terms and Conditions PO</label>
+                                        <textarea class="form-control" v-model="overview.tac_po_fill"></textarea>
                                     </div>
                                 </div>
                             </div>

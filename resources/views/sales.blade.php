@@ -55,6 +55,69 @@
                 </div>
             </div>
         </div>
+
+        <div id="vatTypeModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Vat Type</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Pick a type</label>
+                                    <select class="form-control" v-model="overview.vat_type">
+                                        <option value="">-- Select Options --</option>
+                                        <option value="VAT EX">VAT EX</option>
+                                        <option value="VAT INC">VAT INC</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" @click="update">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="paymentModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Payment Status</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Pick a Status</label>
+                                    <select class="form-control" v-model="overview.payment_status">
+                                        <option value="">-- Select Options --</option>
+                                        <option value="PAID">PAID</option>
+                                        <option value="UNPAID">UNPAID</option>
+                                        <option value="PAID WITH BALANCE">PAID WITH BALANCE</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" @click="update">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -82,8 +145,10 @@
                             Swal.fire('Updated!', 'Status has been updated.', 'success');
                             $this.dt.draw();
                             $('#statusModal').modal('hide');
+                            $('#vatTypeModal').modal('hide');
+                            $('#paymentModal').modal('hide');
                         }
-                    })
+                    });
                 },
                 destroy() {
                     var $this = this;
@@ -140,8 +205,20 @@
                             bSortable: false,
                             title: 'Action'
                         },
-                        {data: 'vat_type', name: 'sales_orders.vat_type', title: 'VAT Type'},
-                        {data: 'payment_status', name: 'sales_orders.payment_status', title: 'Payment Status'},
+                        {
+                            data: function(value){
+                                return '<div class="btn-group btn-group-sm shadow-sm" role="group" aria-label="Basic example">' +
+                                    '<a href="#" class="btn btn-info btn-vat">' + value.vat_type + '</a>' +
+                                    '</div>'
+                            }, name: 'sales_orders.vat_type', title: 'VAT Type'
+                        },
+                        {
+                            data: function(value){
+                                return '<div class="btn-group btn-group-sm shadow-sm" role="group" aria-label="Basic example">' +
+                                    '<a href="#" class="btn btn-info btn-payment">' + value.payment_status + '</a>' +
+                                    '</div>'
+                            }, name: 'sales_orders.payment_status', title: 'Payment Status'
+                        },
                         {data: 'so_no', name: 'sales_orders.so_no', title: 'SO NO.'},
                         {
                             data: function (value) {
@@ -167,6 +244,12 @@
                         });
                         $('.btn-status').on('click', function () {
                             $('#statusModal').modal('show');
+                        });
+                        $('.btn-vat').on('click', function () {
+                            $('#vatTypeModal').modal('show');
+                        });
+                        $('.btn-payment').on('click', function () {
+                            $('#paymentModal').modal('show');
                         });
                     }
                 });
