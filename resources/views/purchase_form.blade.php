@@ -80,6 +80,14 @@
                                         <option value="VAT INC">VAT INC</option>
                                     </select>
                                 </div>
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select type="text" class="form-control form-control-sm"
+                                            v-model="overview.status">
+                                        <option value="Ordered">Ordered</option>
+                                        <option value="Received">Received</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="col-md-12">
                                 <h4>Payment Information</h4>

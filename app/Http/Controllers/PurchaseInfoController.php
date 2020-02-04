@@ -52,7 +52,7 @@ class PurchaseInfoController extends Controller
             "deliver_to"       => "",
             "shipping_method"  => "",
             "assigned_to"      => "",
-            "status"           => "",
+            "status"           => "Received",
             "date_received"    => "",
             "po_no"            => PurchaseInfo::generate()->newPONo(),
             "payment_method"   => "",
@@ -87,7 +87,6 @@ class PurchaseInfoController extends Controller
             $data['overview']['check_writer'] = '';
         }
 
-        $data['overview']['status']      = 'Ordered';
         $data['overview']['created_at']  = Carbon::now()->format('Y-m-d');
         $data['overview']['assigned_to'] = auth()->user()->id;
         $id                              = DB::table('purchase_infos')->insertGetId($data['overview']);
@@ -100,6 +99,12 @@ class PurchaseInfoController extends Controller
                 if (count($item) > 2) {
                     $item['purchase_order_id'] = $id;
                     DB::table('product_details')->insert($item);
+                }
+            }
+
+            foreach ($data['products'] as $value) {
+                if ('Received' == $data['overview']['status']) {
+                    DB::table('supplies')->where('product_id', $value['product_id'])->increment('quantity', $value['qty']);
                 }
             }
         }
@@ -131,6 +136,9 @@ class PurchaseInfoController extends Controller
                 unset($item['unit']);
                 if (count($item) > 2) {
                     DB::table('product_details')->insert($item);
+                }
+                if ('Received' == $data['overview']['check_writer']) {
+                    DB::table('supplies')->where('product_id', $value->product_id)->increment('quantity', $value->qty);
                 }
             }
         }
