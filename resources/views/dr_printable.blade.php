@@ -208,9 +208,12 @@ body {
 									}}</td>
 							</tr>
 							<tr>
+								<td align="right"><strong>SALES PCT</strong></td>
+								<td style="padding-left: 10px !important">{{ $summary->sales_tax }}</td>
+							</tr>
+							<tr>
 								<td align="right"><strong>SALES TAX</strong></td>
-								<td style="padding-left: 10px !important">{{ $summary->sales_tax
-									}}</td>
+								<td style="padding-left: 10px !important">{{ $summary->sales_actual }}</td>
 							</tr>
 							<tr>
                                 <td align="right"><strong>GRAND TOTAL</strong></td>
