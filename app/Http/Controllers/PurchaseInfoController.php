@@ -72,6 +72,7 @@ class PurchaseInfoController extends Controller
             "discount"          => "0",
             "shipping"          => "0",
             "sales_tax"         => "0",
+            "sales_actual"      => "0",
             "grand_total"       => "0",
         ]);
 

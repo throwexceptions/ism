@@ -53,10 +53,12 @@ class SalesOrderController extends Controller
             "address"        => "",
             "due_date"       => "",
             "payment_method" => "",
+            "payment_status" => "PAID",
             "account_name"   => "",
             "account_no"     => "",
             "tac"            => Preference::status('tac_so_fill'),
             "phone"          => "",
+            "vat_type"       => "VAT EX",
         ]);
 
         $product_details = collect([]);
@@ -66,6 +68,7 @@ class SalesOrderController extends Controller
             "sales_order_id" => "",
             "discount"       => "0",
             "shipping"       => "0",
+            "sales_actual"   => "0",
             "sales_tax"      => "0",
             "grand_total"    => "0",
         ]);
@@ -150,11 +153,11 @@ class SalesOrderController extends Controller
 
             $product_detail = DB::table('product_details')->where('sales_order_id', $data['id'])->get();
             foreach ($product_detail as $value) {
+                if ('Quote' == $data['status']) {
+                    DB::table('supplies')->where('product_id', $value->product_id)->increment('quantity', $value->qty);
+                }
                 if ('Shipped' == $data['status']) {
                     DB::table('supplies')->where('product_id', $value->product_id)->decrement('quantity', $value->qty);
-                }
-                if ('Returned' == $data['status']) {
-                    DB::table('supplies')->where('product_id', $value->product_id)->increment('quantity', $value->qty);
                 }
             }
 

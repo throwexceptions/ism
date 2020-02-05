@@ -222,17 +222,26 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-form-label col-md-4 col-form-label-sm">Shipping</label>
-                                    <div class="col-md-4">
-                                        <input type="text" class="form-control form-control-sm"
-                                               v-model="summary.shipping">
+                                    <label class="col-form-label col-md-4 col-form-label-sm">Sales Tax Pct.</label>
+                                    <div class="input-group col-md-4">
+                                        <input type="text" class="form-control form-control-sm" v-model="summary.sales_tax">
+                                        <div class="input-group-append">
+                                          <span class="input-group-text" id="basic-addon2"><i class="fa fa-percentage"></i></span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-form-label col-md-4 col-form-label-sm">Sales Tax</label>
                                     <div class="col-md-4">
+                                        <input type="text" class="form-control-plaintext form-control-sm"
+                                               v-bind:value="summary.sales_actual">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-form-label col-md-4 col-form-label-sm">Shipping</label>
+                                    <div class="col-md-4">
                                         <input type="text" class="form-control form-control-sm"
-                                               v-model="summary.sales_tax">
+                                               v-model="summary.shipping">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -363,9 +372,13 @@
                 grandTotal(value) {
                     var $this = this;
                     var sales_tax = parseFloat($this.summary.sales_tax);
-                    $this.summary.grand_total = ((value * (1+(sales_tax/100))) + parseFloat($this.summary.shipping)).toFixed(2)
+                    if($this.overview.vat_type == 'VAT INC') {
+                        $this.summary.grand_total = (value * (1+(sales_tax/100)))
+                    }
 
-                    return $this.summary.grand_total;
+                    $this.summary.sales_actual = $this.summary.grand_total - value;
+
+                    return (parseFloat($this.summary.grand_total) + parseFloat($this.summary.shipping)).toFixed(2);
                 },
                 store() {
                     var $this = this;
