@@ -181,6 +181,13 @@ class PurchaseInfoController extends Controller
             return ['success' => true];
         }
 
+        if ($purchase_info->vat_type != $data['vat_type']) {
+            DB::table('purchase_infos')->where('id', $data['id'])
+              ->update(['vat_type' => $data['vat_type']]);
+            
+            return ['success' => true];
+        }
+
         return ['success' => false];
     }
 
