@@ -374,7 +374,7 @@
                     var sales_tax = parseFloat($this.summary.sales_tax);
                     if($this.overview.vat_type == 'VAT INC') {
                         $this.summary.grand_total = (value * (1+(sales_tax/100)))
-                        $this.summary.sales_actual = $this.summary.grand_total - value;
+                        $this.summary.sales_actual = (parseFloat($this.summary.grand_total) - parseFloat(value)).toFixed(2);
                     } else {
                         $this.summary.sales_actual = 0;
                     }
