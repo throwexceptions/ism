@@ -21,6 +21,7 @@ class SecurityController extends Controller
         "purchaseorderdestroy",
         "salesorder",
         "salesordercreate",
+        "salesstatusupdate",
         "salesorderretrieve",
         "salesorderupdate",
         "salesorderdestroy",
