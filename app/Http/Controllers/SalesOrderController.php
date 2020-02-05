@@ -117,6 +117,7 @@ class SalesOrderController extends Controller
             foreach ($data['products'] as $item) {
                 $item['sales_order_id'] = $data['overview']['id'];
                 unset($item['unit']);
+                unset($item['manual_id']);
                 unset($item['category']);
                 unset($item['quantity']);
                 if (count($item) > 2) {
@@ -348,7 +349,7 @@ class SalesOrderController extends Controller
                                      ->get()[0];
 
         $product_details = ProductDetail::query()
-                                        ->selectRaw('products.category, products.unit, product_details.*, supplies.quantity')
+                                        ->selectRaw('products.category, products.unit, products.manual_id, product_details.*, supplies.quantity')
                                         ->where('sales_order_id', $id)
                                         ->join('products', 'products.id', 'product_details.product_id')
                                         ->join('supplies', 'supplies.product_id', 'product_details.product_id')
@@ -361,7 +362,6 @@ class SalesOrderController extends Controller
                 $hold[]   = ['category' => $value['category']];
                 $category = $value['category'];
             }
-            unset($value['manual_id']);
             unset($value['name']);
             unset($value['code']);
             unset($value['manufacturer']);

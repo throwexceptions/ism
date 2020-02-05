@@ -53,7 +53,7 @@
                             <div class="col-md-4">
                                 <label>VAT Type</label>
                                 <select type="text" class="form-control form-control-sm"
-                                        v-model="overview.vat_type">
+                                    v-model="overview.vat_type" v-on:change="grandTotal(parseFloat(summary.sub_total) - parseFloat(summary.discount))">
                                     <option value="">-- Select Options --</option>
                                     <option value="VAT EX">VAT EX</option>
                                     <option value="VAT INC">VAT INC</option>
@@ -189,7 +189,7 @@
                                                v-model="summary.discount">
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                <div class="form-group row" v-show="overview.vat_type == 'VAT INC'">
                                     <label class="col-form-label col-md-4 col-form-label-sm">Sales Tax Pct.</label>
                                     <div class="input-group col-md-4">
                                         <input type="text" class="form-control form-control-sm" v-model="summary.sales_tax">
@@ -198,7 +198,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                <div class="form-group row" v-show="overview.vat_type == 'VAT INC'">
                                     <label class="col-form-label col-md-4 col-form-label-sm">Sales Tax</label>
                                     <div class="col-md-4">
                                         <input type="text" class="form-control-plaintext form-control-sm"
@@ -337,9 +337,10 @@
                     var sales_tax = parseFloat($this.summary.sales_tax);
                     if($this.overview.vat_type == 'VAT INC') {
                         $this.summary.grand_total = (value * (1+(sales_tax/100)))
+                        $this.summary.sales_actual = $this.summary.grand_total - value;
+                    } else {
+                        $this.summary.sales_actual = 0;
                     }
-
-                    $this.summary.sales_actual = $this.summary.grand_total - value;
 
                     return (parseFloat($this.summary.grand_total) + parseFloat($this.summary.shipping)).toFixed(2);
                 },
