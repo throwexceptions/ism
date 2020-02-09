@@ -156,7 +156,7 @@
                                                        v-bind:value="(product.selling_price * product.qty)">
                                             </td>
                                             <td v-if="product.product_name">
-                                                <input type="number" class="form-control form-control-sm"
+                                                <input type="text" class="form-control form-control-sm"
                                                        style="width: 100px;" v-model="product.notes">
                                             </td>
                                             <td v-if="product.product_name">
