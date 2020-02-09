@@ -178,7 +178,7 @@
                                 <div class="form-group row">
                                     <label class="col-form-label col-md-4 col-form-label-sm">Sub Total</label>
                                     <div class="col-md-4">
-                                        <input type="text" class="form-control form-control-sm"
+                                        <input type="text" class="form-control-plaintext form-control-sm"
                                                 v-model="summary.sub_total">
                                     </div>
                                 </div>
@@ -216,7 +216,7 @@
                                     <label class="col-form-label col-md-4 col-form-label-sm">Grand Total</label>
                                     <div class="col-md-4">
                                         <input type="text" class="form-control-plaintext form-control-sm"
-                                               v-bind:value="grandTotal(parseFloat(summary.sub_total) - parseFloat(summary.discount))">
+                                               v-model="summary.grand_total">
                                     </div>
                                 </div>
                             </div>
@@ -331,18 +331,46 @@
                     vendor_price: 0,
                 }
             },
+            watch: {
+                'products': {
+                    deep: true,
+                    handler(products) {
+                        console.log(products);
+                        var $this = this;
+                        var hold = 0;
+                        $.each(products, function (x, product) {
+                            if (product.product_name) {
+                                hold += (product.selling_price * product.qty)
+                            }
+                        });
+
+                        $this.summary.sub_total = hold;
+                        this.grandTotal()
+                    }
+                },
+                'summary.discount': function(value){
+                    this.grandTotal()
+                },
+                'summary.sales_tax': function(value){
+                    this.grandTotal()
+                }, 
+                'summary.shipping': function(value){
+                    this.grandTotal()
+                }, 
+            },
             methods: {
-                grandTotal(value) {
+                grandTotal() {
                     var $this = this;
                     var sales_tax = parseFloat($this.summary.sales_tax);
+                    $this.summary.sales_actual = 0;
+                    $this.summary.grand_total = $this.summary.sub_total - $this.summary.discount
                     if($this.overview.vat_type == 'VAT INC') {
-                        $this.summary.grand_total = (value * (1+(sales_tax/100)))
-                        $this.summary.sales_actual = (parseFloat($this.summary.grand_total) - parseFloat(value)).toFixed(2);
-                    } else {
-                        $this.summary.sales_actual = 0;
+                        var hold = 0
+                        hold = ($this.summary.grand_total * (1+(sales_tax/100)))
+                        $this.summary.sales_actual = (hold - $this.summary.grand_total).toFixed(2)
+                        $this.summary.grand_total = (hold).toFixed(2)
                     }
-
-                    return (parseFloat($this.summary.grand_total) + parseFloat($this.summary.shipping)).toFixed(2);
+                    $this.summary.grand_total = parseFloat($this.summary.grand_total) + parseFloat($this.summary.shipping)
                 },
                 store() {
                     var $this = this;
@@ -447,23 +475,13 @@
                             $this.summary.sub_total += (product.selling_price * product.qty)
                         }
                     });
-                }
-            },
-            watch: {
-                'products': {
-                    deep: true,
-                    handler() {
-                        this.subTotal()
-                    }
-                },
-                'summary.discount': function () {
-                    this.subTotal()
+                    $this.summary.grand_total = $this.summary.sub_total - $this.summary.discount;
                 }
             },
             mounted() {
                 var $this = this;
-                $this.subTotal();
 
+                //$this.grandTotal();
                 $('.select2-category').select2({
                     width: '100%',
                     ajax: {
