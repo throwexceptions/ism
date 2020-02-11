@@ -229,7 +229,7 @@
                         },
                         {data: 'customer_name', name: 'customers.name', title: 'Customer'},
                         {data: 'subject', name: 'subject', title: 'Subject'},
-                        {data: 'sub_total',  name: 'customers.name', title: 'Total Amount'},
+                        {data: 'grand_total',  name: 'summaries.grand_total', title: 'Grand Total'},
                         {data: 'username', name: 'users.name', title: 'Assigned To'},
                         {data: 'created_at', name: 'purchase_infos.created_at', title: 'Date Created'},
                     ],

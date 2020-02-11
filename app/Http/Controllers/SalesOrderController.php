@@ -25,7 +25,7 @@ class SalesOrderController extends Controller
     {
         $vendors = SalesOrder::query()
                              ->selectRaw('sales_orders.*, users.name as username, customers.name as customer_name, 
-                             (summaries.sub_total + (summaries.sub_total * (summaries.sales_tax/100))) as sub_total')
+                             summaries.grand_total')
                              ->leftJoin('summaries', 'summaries.sales_order_id', '=', 'sales_orders.id')
                              ->leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')
                              ->join('users', 'users.id', '=', 'sales_orders.assigned_to');

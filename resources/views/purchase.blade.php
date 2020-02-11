@@ -243,7 +243,7 @@
                         },
                         {data: 'subject', title: 'Project Cost Center'},
                         {data: 'vendor_name', name: 'vendors.name', title: 'Vendor Name'},
-                        {data: 'sub_total', name: 'vendors.name', title: 'Total Amount'},
+                        {data: 'grand_total', name: 'summaries.grand_total', title: 'Total Amount'},
                         {data: 'name', name: 'users.name', title: 'Assigned To'},
                         {data: 'created_at', name: 'purchase_infos.created_at', title: 'Date Created'},
                     ],
