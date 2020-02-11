@@ -57,5 +57,20 @@ class PreferenceTableSeeder extends Seeder
         $pref->name = 'tac_po_fill';
         $pref->status = '';
         $pref->save();
+
+        $pref = new \App\Preference();
+        $pref->name = 'account_no';
+        $pref->status = '';
+        $pref->save();
+
+        $pref = new \App\Preference();
+        $pref->name = 'account_name';
+        $pref->status = '';
+        $pref->save();
+
+        $pref = new \App\Preference();
+        $pref->name = 'tin_no';
+        $pref->status = '';
+        $pref->save();
     }
 }

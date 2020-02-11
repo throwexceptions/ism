@@ -88,6 +88,24 @@
                                         <textarea class="form-control" v-model="overview.tac_po_fill"></textarea>
                                     </div>
                                 </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Account Name</label>
+                                        <textarea class="form-control" v-model="overview.account_name"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Account No</label>
+                                        <textarea class="form-control" v-model="overview.account_no"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>TIN No.</label>
+                                        <textarea class="form-control" v-model="overview.tin_no"></textarea>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

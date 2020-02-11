@@ -54,8 +54,8 @@ class SalesOrderController extends Controller
             "due_date"       => "",
             "payment_method" => "",
             "payment_status" => "PAID",
-            "account_name"   => "",
-            "account_no"     => "",
+            "account_name"   => Preference::status('account_name'),
+            "account_no"     => Preference::status('account_no'),
             "tac"            => Preference::status('tac_so_fill'),
             "phone"          => "",
             "vat_type"       => "VAT EX",
@@ -313,7 +313,7 @@ class SalesOrderController extends Controller
         $sales_order     = $data['sales_order'];
         $product_details = $data['product_details'];
         $summary         = $data['summary'];
-
+        
         $sections = [];
         $cnt      = -1;
         foreach ($product_details as $key => $value) {
@@ -349,12 +349,12 @@ class SalesOrderController extends Controller
                                      ->get()[0];
 
         $product_details = ProductDetail::query()
-                                        ->selectRaw('products.category, products.unit, products.manual_id, product_details.*, supplies.quantity')
+                                        ->selectRaw('products.code, products.category, products.unit, products.manual_id, product_details.*, supplies.quantity')
                                         ->where('sales_order_id', $id)
                                         ->join('products', 'products.id', 'product_details.product_id')
                                         ->join('supplies', 'supplies.product_id', 'product_details.product_id')
                                         ->get();
-
+        
         $category = '';
         $hold     = [];
         foreach ($product_details->toArray() as $value) {
@@ -363,7 +363,6 @@ class SalesOrderController extends Controller
                 $category = $value['category'];
             }
             unset($value['name']);
-            unset($value['code']);
             unset($value['manufacturer']);
             unset($value['description']);
             unset($value['batch']);

@@ -65,14 +65,6 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Payment Method</label>
-                                    <select class="form-control" v-model="overview.payment_method">
-                                        <option value="Cash">Cash</option>
-                                        <option value="Credit">Credit</option>
-                                        <option value="Check">Check</option>
-                                    </select>
-                                </div>
-                                <div class="form-group" v-if="overview.payment_method == 'Check'">
                                     <label>Account Name</label>
                                     <input type="text" class="form-control form-control-sm"
                                            v-model="overview.account_name">
@@ -84,6 +76,14 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Payment Method</label>
+                                    <select class="form-control" v-model="overview.payment_method">
+                                        <option value="Cash">Cash</option>
+                                        <option value="Credit">Credit</option>
+                                        <option value="Check">Check</option>
+                                    </select>
+                                </div>
                                 <div class="form-group">
                                     <label>Payment Status</label>
                                     <select type="text" class="form-control form-control-sm"

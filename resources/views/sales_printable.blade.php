@@ -96,6 +96,7 @@ body {
 			<tr>
 				<th scope="col">Description</th>
 				<th scope="col">Product Code</th>
+				<th scope="col">Serial No.</th>
 				<th scope="col">Quantity</th>
 				<th scope="col">Unit</th>
 				<th scope="col">(Material)<br> Unit Cost
@@ -110,7 +111,8 @@ body {
 			@if(isset($product['product_name']))
 			<tr>
 				<td>{{ $product['product_name'] }}</td>
-				<td>{{ $product['manual_id'] }}</td>
+				<td>{{ $product['code'] }}</td>
+				<td>{{ $product['notes'] }}</td>
 				<td>{{ $product['qty'] }}</td>
 				<td>{{ $product['unit'] }}</td>
 				<td>{{ number_format($product['selling_price'], 2, '.', '') }}</td>
@@ -121,11 +123,11 @@ body {
 			</tr>
 			@else
 			<tr class="bg-category">
-				<td colspan="8"><strong>{{ $product['category'] }}</strong></td>
+				<td colspan="9"><strong>{{ $product['category'] }}</strong></td>
 			</tr>
 			@endif @endforeach
 			<tr class="bg-aliceblue">
-				<td colspan="5"></td>
+				<td colspan="6"></td>
 				<td><strong>Sub-Total</strong></td>
 				<td>{{ $summary->sub_total }}</td>
 			</tr>
@@ -142,7 +144,7 @@ body {
 								<td style="padding-bottom: 5px;"><strong>Terms and Conditions</strong></td>
 							</tr>
 							<tr>
-								<td>{{ $sales_order->tac }}</td>
+								<td>{!! nl2br(e($sales_order->tac)) !!}</td>
 							</tr>
 							<tr>
 								<td>
@@ -163,6 +165,10 @@ body {
 											<tr>
 												<td>Account No:</td>
 												<td>{{ $sales_order->account_no }}</td>
+											</tr>
+											<tr>
+												<td>TIN No:</td>
+												<td>{{ \App\Preference::status('tin_no') }}</td>
 											</tr>
 										</tbody>
 									</table>
@@ -192,14 +198,16 @@ body {
 							</tr>
 							<tr>
 								<td align="right"><strong>SUB-TOTAL</strong></td>
-								<td style="padding-left: 10px !important;">{{ $summary->sub_total }}</td>
+                                <td style="padding-left: 10px !important;">
+                                    {{ number_format($summary->sub_total, 2, '.', '') }}
+                                </td>
 							</tr>
 							<tr>
 								<td align="right"><strong>SHIPPING</strong></td>
 								<td style="padding-left: 10px !important">{{ $summary->shipping }}</td>
 							</tr>
 							<tr>
-								<td align="right"><strong>SALES PCT</strong></td>
+								<td align="right"><strong>SALES %</strong></td>
 								<td style="padding-left: 10px !important">{{ $summary->sales_tax }}</td>
 							</tr>
 							<tr>
@@ -209,7 +217,7 @@ body {
 							<tr>
                                 <td align="right"><strong>GRAND TOTAL</strong></td>
                                 <td style="padding-left: 10px !important">
-                                    {{ $summary->grand_total }}
+                                    {{ number_format($summary->grand_total, 2, '.', '') }}
                                 </td>
 							</tr>
 						</tbody>
