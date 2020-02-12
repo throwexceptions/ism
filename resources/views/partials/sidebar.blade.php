@@ -30,6 +30,11 @@
                 <span>Sales Order</span></a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="{{ route('return') }}">
+                <i class="fas fa-fw fa-backward"></i>
+                <span>Product Return</span></a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="{{ route('customer') }}">
                 <i class="fas fa-fw fa-users"></i>
                 <span>Customer</span></a>

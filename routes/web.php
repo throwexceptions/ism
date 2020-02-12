@@ -53,6 +53,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/sales/quote/{id}', 'SalesOrderController@quote')->name('sales.quote');
     Route::get('/sales/deliver/{id}', 'SalesOrderController@deliver')->name('sales.deliver');
     Route::get('/sales/preview/{id}', 'SalesOrderController@previewSO')->name('sales.preview');
+    Route::post('/sales/shipped/list', 'SalesOrderController@getListShipped')->name('sales.shipped.list');
 
     Route::get('/vendor', 'VendorController@index')->name('vendor')->middleware('can:vendors');
     Route::get('/vendor/create', 'VendorController@create')->name('vendor.create')->middleware('can:vendorscreate');
@@ -126,4 +127,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/preference', 'PreferenceController@index')->name('preference')->middleware('can:preference');
     Route::post('/preference/update', 'PreferenceController@update')->name('preference.update');
+
+    Route::get('/return', 'ProductReturnController@index')->name('return')->middleware('can:sales_order');
+    Route::post('/return/table', 'ProductReturnController@table')->name('return.table');
+    Route::get('/return/create', 'ProductReturnController@create')->name('return.create');
 });
