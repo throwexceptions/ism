@@ -291,6 +291,7 @@ class PurchaseInfoController extends Controller
                                        ->leftJoin('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
                                        ->where('purchase_infos.id', $id)
                                        ->get()[0];
+        
         $product_details = ProductDetail::query()
                                         ->selectRaw('products.category, products.unit, product_details.*')
                                         ->where('purchase_order_id', $id)

@@ -86,6 +86,23 @@ class ProductController extends Controller
         ];
     }
 
+    public function getSOList(Request $request)
+    {
+        $product = Product::query()
+                          ->selectRaw("products.id, products.name as text")
+                          ->join("product_details", "product_details.product_id", "products.id")
+                          ->where("product_details.sales_order_id", $request->so_no)
+                          ->whereRaw("products.name LIKE '%{$request->term}%'");
+
+        if ($request->category != '') {
+            $product->where('category', $request->category);
+        }
+
+        return [
+            "results" => $product->get(),
+        ];
+    }
+
     public function store(Request $request)
     {
         $data                = $request->input();

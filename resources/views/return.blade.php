@@ -85,7 +85,7 @@
                     }).then((result) => {
                         if (result.value) {
                             $.ajax({
-                                url: "{{ route('purchase.destroy') }}",
+                                url: "{{ route('return.destroy') }}",
                                 method: 'POST',
                                 data: $this.overview,
                                 success(value) {
@@ -112,14 +112,8 @@
                     columns: [
                         {
                             data: function (value) {
-                                if(value.status == 'Ordered') {
-                                    edit = '<a href="/purchase/detail/' + value.id + '" class="btn btn-info btn-view"><i class="fa fa-pen"></i></a>';
-                                } else {
-                                    edit = '';
-                                }
                                 return '<div class="btn-group btn-group-sm shadow-sm" role="group" aria-label="Basic example">' +
-                                    '<a href="/purchase/view/' + value.id + '" class="btn btn-primary btn-view"><i class="fa fa-eye"></i></a>' +
-                                    edit +
+                                    '<a href="/return/view/' + value.id + '" class="btn btn-primary btn-view"><i class="fa fa-eye"></i></a>' +
                                     '<button type="button" class="btn btn-danger btn-destroy"><i class="fa fa-trash"></i></button>' +
                                     '</div>'
                             },
@@ -127,7 +121,9 @@
                             bSortable: false,
                             title: 'Action'
                         },
-                        {data: 'name', name: 'users.name', title: 'Assigned To'},
+                        {data: 'pr_no', name: 'pr_no', title: 'PR NO.'},
+                        {data: 'so_no', name: 'so_no', title: 'Reference SO NO.'},
+                        {data: 'username', name: 'users.name', title: 'Assigned To'},
                         {data: 'created_at', name: 'purchase_infos.created_at', title: 'Date Created'},
                     ],
                     drawCallback: function () {

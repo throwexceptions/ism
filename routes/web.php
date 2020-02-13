@@ -90,6 +90,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/product/store', 'ProductController@store')->name('product.store');
     Route::post('/product/update', 'ProductController@update')->name('product.update');
     Route::post('/product/image/upload', 'ProductController@imageUpload')->name('product.image.upload');
+    Route::post('/product/so/list', 'ProductController@getSOList')->name('product.so.list');
 
     Route::post('/category/list', 'CategoryController@getList')->name('category.list');
     Route::post('/category/destroy', 'CategoryController@destroy')->name('category.delete')->middleware('can:productsupdate');
@@ -128,7 +129,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/preference', 'PreferenceController@index')->name('preference')->middleware('can:preference');
     Route::post('/preference/update', 'PreferenceController@update')->name('preference.update');
 
-    Route::get('/return', 'ProductReturnController@index')->name('return')->middleware('can:sales_order');
+    Route::get('/return', 'ProductReturnController@index')->name('return')->middleware('can:productreturn');
     Route::post('/return/table', 'ProductReturnController@table')->name('return.table');
-    Route::get('/return/create', 'ProductReturnController@create')->name('return.create');
+    Route::get('/return/create', 'ProductReturnController@create')->name('return.create')->middleware('can:productreturncreate');
+    Route::post('/return/destroy', 'ProductReturnController@destroy')->name('return.destroy')->middleware('can:productreturndelete');
+    Route::post('/return/store', 'ProductReturnController@store')->name('return.store');
+    Route::get('/return/view/{id}', 'ProductReturnController@show')->name('return.view');
 });

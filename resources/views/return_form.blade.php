@@ -78,83 +78,29 @@
                                             <td v-if="product.product_name"><input readonly type="text"
                                                                                    class="form-control-plaintext form-control-sm"
                                                                                    v-model="product.product_name"></td>
-                                            <td v-else colspan="7" style="background-color: bisque;">
+                                            <td v-else colspan="3" style="background-color: bisque;">
                                                 <h5 style="margin-top: 5px;"><strong>@{{ product.category }}</strong>
                                                 </h5>
                                             </td>
-                                            <td v-if="product.product_name"><input type="text"
-                                                                                   class="form-control form-control-sm"
-                                                                                   style="width: 230px;"
-                                                                                   v-model="product.notes"></td>
-                                            <td v-if="product.product_name"><input type="text"
-                                                                                   class="form-control form-control-sm"
-                                                                                   style="width: 100px;"
-                                                                                    v-model="product.qty"></td>
-                                            <td v-if="product.product_name"><input type="text"
-                                                                                   class="form-control form-control-sm"
-                                                                                   style="width: 100px;"
-                                                                                   v-model="product.selling_price"></td>
-                                            <td v-if="product.product_name"><input type="text"
-                                                                                   class="form-control form-control-sm"
-                                                                                   style="width: 120px;"
-                                                                                   v-model="product.vendor_price"></td>
-                                            <td v-if="product.product_name"><input type="text"
-                                                                                   class="form-control form-control-sm"
-                                                                                   v-model="product.discount_item"></td>
-                                            <td v-if="product.product_name">@{{ (product.vendor_price * product.qty) - ((product.vendor_price * product.qty)*(product.discount_item/100)) }}
+                                            <td v-if="product.product_name">
+                                                <input type="text"
+                                                    class="form-control form-control-sm"
+                                                    style="width: 100px;"
+                                                    v-model="product.qty">
                                             </td>
-                                            <td>
+                                            <td v-if="product.product_name">
+                                                <input type="text"
+                                                        class="form-control form-control-sm"
+                                                        style="width: 100px;"
+                                                        v-model="product.selling_price">
+                                            </td>
+                                            <td v-if="viewType != 2">
                                                 <button class="btn btn-sm btn-block btn-danger" @click="remove(index)">
                                                     <i class="fa fa-ban"></i></button>
                                             </td>
                                         </tr>
                                         </tbody>
                                     </table>
-                                </div>
-                            </div>
-                            <div class="offset-md-9 col-md-4">
-                                <div class="form-group row">
-                                    <label class="col-form-label col-md-4 col-form-label-sm">Sub Total</label>
-                                    <div class="col-md-4">
-                                        <input type="text" class="form-control form-control-sm" v-model="summary.sub_total">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-form-label col-md-4 col-form-label-sm">Discount</label>
-                                    <div class="col-md-4">
-                                        <input type="text" class="form-control form-control-sm"
-                                               v-model="summary.discount">
-                                    </div>
-                                </div>
-                                <div class="form-group row" v-show="overview.vat_type == 'VAT INC'">
-                                    <label class="col-form-label col-md-4 col-form-label-sm">Sales Tax Pct.</label>
-                                    <div class="input-group col-md-4">
-                                        <input type="text" class="form-control form-control-sm" v-model="summary.sales_tax">
-                                        <div class="input-group-append">
-                                          <span class="input-group-text" id="basic-addon2"><i class="fa fa-percentage"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group row" v-show="overview.vat_type == 'VAT INC'">
-                                    <label class="col-form-label col-md-4 col-form-label-sm">Sales Tax</label>
-                                    <div class="col-md-4">
-                                        <input type="text" class="form-control-plaintext form-control-sm"
-                                               v-bind:value="summary.sales_actual">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-form-label col-md-4 col-form-label-sm">Shipping</label>
-                                    <div class="col-md-4">
-                                        <input type="text" class="form-control form-control-sm"
-                                               v-model="summary.shipping">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-form-label col-md-4 col-form-label-sm">Grand Total</label>
-                                    <div class="col-md-4">
-                                        <input type="text" class="form-control-plaintext form-control-sm"
-                                            v-model="summary.grand_total">
-                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -183,11 +129,11 @@
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <a href="{{ route('purchase') }}" class="btn btn-warning">Back</a>
+                                <a href="{{ route('return') }}" class="btn btn-warning">Back</a>
                                 <button class="btn btn-info" v-if="viewType == 1" @click="store">Save New</button>
                                 <button class="btn btn-primary" v-if="viewType == 0" @click="update">Update Now</button>
-                                <a href="{{ route('purchase.print', isset($purchase_info->id)?$purchase_info->id: '') }}"
-                                   class="btn btn-primary" v-if="viewType == 2">Purchase Order</a>
+                                <a href="{{ route('purchase.print', isset($product_return->id)?$product_return->id: '') }}"
+                                   class="btn btn-primary" v-if="viewType == 2">Product Return</a>
                             </div>
                         </div>
                     </div>
@@ -263,66 +209,26 @@
                 return {
                     viewType: 0,
                     columns: [
-                        'Product', 'Notes', 'Qty', 'Unit Cost', 'Vendor Price', 'Discount', 'Total', 'Action'
+                        'Product', 'Qty', 'Unit Cost'
                     ],
                     sub_total: 0,
                     overview: {!! $product_return !!},
                     products: {!! $product_details !!},
-                    summary: {!! $summary !!},
                     selling_price: 0,
                     vendor_price: 0,
                 }
             },
             watch: {
-                'products': {
-                    deep: true,
-                    handler(products) {
-                        console.log(products);
-                        var $this = this;
-                        var hold = 0;
-                        $.each(products, function (x, product) {
-                            if (product.product_name) {
-                                hold += (product.vendor_price * product.qty)
-                            }
-                        });
-
-                        $this.summary.sub_total = hold;
-                        this.grandTotal()
-                    }
-                },
-                'summary.discount': function(value){
-                    this.grandTotal()
-                },
-                'summary.sales_tax': function(value){
-                    this.grandTotal()
-                }, 
-                'summary.shipping': function(value){
-                    this.grandTotal()
-                }, 
             },
             methods: {
-                grandTotal() {
-                    var $this = this;
-                    var sales_tax = parseFloat($this.summary.sales_tax);
-                    $this.summary.sales_actual = 0;
-                    $this.summary.grand_total = $this.summary.sub_total - $this.summary.discount
-                    if($this.overview.vat_type == 'VAT INC') {
-                        var hold = 0
-                        hold = ($this.summary.grand_total * (1+(sales_tax/100)))
-                        $this.summary.sales_actual = (hold - $this.summary.grand_total).toFixed(2)
-                        $this.summary.grand_total = (hold).toFixed(2)
-                    }
-                    $this.summary.grand_total = parseFloat($this.summary.grand_total) + parseFloat($this.summary.shipping)
-                },
                 store() {
                     var $this = this;
                     $.ajax({
-                        url: '{{ route('purchase.store') }}',
+                        url: '{{ route('return.store') }}',
                         method: 'POST',
                         data: {
                             overview: $this.overview,
                             products: $this.products,
-                            summary: $this.summary,
                         },
                         success: function (value) {
                             Swal.fire(
@@ -331,7 +237,7 @@
                                 'success'
                             ).then((result) => {
                                 if (result.value) {
-                                    window.location = '{{ route('purchase') }}'
+                                    window.location = '{{ route('return') }}'
                                 }
                             })
                         }
@@ -412,19 +318,9 @@
 
                     return category;
                 },
-                subTotal() {
-                    var $this = this;
-                    $this.summary.sub_total = 0;
-                    $.each($this.products, function (x, product) {
-                        if (product.product_name) {
-                            $this.summary.sub_total += (product.vendor_price * product.qty)
-                        }
-                    });
-                },
             },
             mounted() {
                 var $this = this;
-                $this.subTotal();
 
                 $('.select2-sales-order').select2({
                     width: '100%',
@@ -433,16 +329,21 @@
                         method: 'POST',
                         dataType: 'json'
                     }
+                }).on('select2:select', function (e) {
+                    var data = e.params.data;
+                    $this.overview.sales_order_id = data.id;
                 });
-
+                
                 $('.select2-product').select2({
                     width: '100%',
                     ajax: {
-                        url: '{{ route('product.list') }}',
+                        url: '{{ route('product.so.list') }}',
                         method: 'POST',
                         dataType: 'json',
                         data: function (params) {
                             params.category = $this.getCurrentCategory();
+                            params.so_no = $this.overview.sales_order_id;
+
                             return params;
                         }
                     }
@@ -458,20 +359,21 @@
                 }).on('select2:select', function (e) {
                     var data = e.params.data;
                     $this.overview.customer_id = data.id;
-                    $this.overview.phone = data.phone;
-                    $this.overview.address = data.address;
                 });
 
-                var newOption = new Option($this.overview.vendor_name, $this.overview.vendor_id, true, true);
-                $('.select2-vendor').append(newOption).trigger('change');
+                var newOption = new Option($this.overview.customer_name, $this.overview.customer_id, true, true);
+                $('.select2-customer').append(newOption).trigger('change');
 
-                if ('{{ Route::currentRouteName() }}' == 'purchase.detail') {
+                var newOption = new Option($this.overview.so_no, $this.overview.sales_order_id, true, true);
+                $('.select2-sales-order').append(newOption).trigger('change');
+
+                if ('{{ Route::currentRouteName() }}' == 'return.detail') {
                     this.viewType = 0;
                 }
                 else if ('{{ Route::currentRouteName() }}' == 'return.create') {
                     this.viewType = 1;
                 }
-                else if ('{{ Route::currentRouteName() }}' == 'purchase.view') {
+                else if ('{{ Route::currentRouteName() }}' == 'return.view') {
                     this.viewType = 2;
                     $('label').addClass('font-weight-bold');
                     $('.form-control').addClass('form-control-plaintext').removeClass('form-control');

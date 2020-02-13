@@ -198,7 +198,7 @@
                                                                                    v-model="product.discount_item"></td>
                                             <td v-if="product.product_name">@{{ (product.vendor_price * product.qty) - ((product.vendor_price * product.qty)*(product.discount_item/100)) }}
                                             </td>
-                                            <td>
+                                            <td v-if="viewType != 2">
                                                 <button class="btn btn-sm btn-block btn-danger" @click="remove(index)">
                                                     <i class="fa fa-ban"></i></button>
                                             </td>

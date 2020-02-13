@@ -423,7 +423,7 @@ class SalesOrderController extends Controller
     public function getListShipped(Request $request)
     {
         $sales_order = SalesOrder::query()
-                           ->selectRaw("id as id, so_no as text, so_no as sales_order_id")
+                           ->selectRaw("id as id, so_no as text")
                            ->where('status', 'Shipped')
                            ->whereRaw("so_no LIKE '%{$request->term}%'");
         return [
