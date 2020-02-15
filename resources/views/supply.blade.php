@@ -35,16 +35,15 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-4" v-for="link in links">
                                 <div class="form-group">
-                                    <label class="control-label">Pick a status</label>
+                                    <a v-bind:href="link.link" target="_blank" class="btn btn-link">@{{ link.number }}</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" @click="update">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -66,7 +65,8 @@ const app = new Vue({
                 recipient_email: "",
                 recipient_name: "",
                 message: "",
-            }
+            },
+            links: []
         }
     },
     methods: {
@@ -93,55 +93,85 @@ const app = new Vue({
                     });
                 }
             });
+        },
+        getPOlinks()
+        {
+            var $this = this;
+            $.ajax({
+                url: "{{ route('supply.po.links') }}",
+                method: 'POST',
+                data: $this.overview,
+                success: function(value){
+                    $this.links = value;
+                }
+            })
+        },
+        getSOlinks()
+        {
+            var $this = this;
+            $.ajax({
+                url: "{{ route('supply.so.links') }}",
+                method: 'POST',
+                data: $this.overview,
+                success: function(value){
+                    $this.links = value;
+                }
+            })
         }
     },
     mounted() {
         var $this = this;
-            $this.dt = $('#table-supplies').DataTable({
-                processing: true,
-                serverSide: true,
-                scrollX: true,
-                responsive: true,
-                order: [[0, 'desc']],
-                ajax: {
-                    url: "{{ route('supply.table') }}",
-                    method: "POST",
+        $this.dt = $('#table-supplies').DataTable({
+            processing: true,
+            serverSide: true,
+            scrollX: true,
+            responsive: true,
+            order: [[0, 'desc']],
+            ajax: {
+                url: "{{ route('supply.table') }}",
+                method: "POST",
+            },
+            columns: [
+                {data: 'manual_id', name:'products.manual_id', title: 'Product ID'},
+                {data: 'product_name', name:'products.name', title: 'Product'},
+                {data: 'selling_price', name:'products.selling_price', title: 'Unit Price'},
+                {data: 'quantity', name:'supplies.quantity', title: 'Quantity'},
+                {
+                    data: function(value){
+                        return '<a href="#" class="links-btn-po btn btn-sm btn-primary">' + value.po_count + '</a>';
+                    },
+                    bSortable:false,bSearchable:false, title: 'PO'
                 },
-                columns: [
-                    {data: 'manual_id', name:'products.manual_id', title: 'Product ID'},
-                    {data: 'product_name', name:'products.name', title: 'Product'},
-                    {data: 'selling_price', name:'products.selling_price', title: 'Unit Price'},
-                    {data: 'quantity', name:'supplies.quantity', title: 'Quantity'},
-                    {
-                        data: function(value){
-                            return '<a href="#" class="links-btn btn btn-sm btn-primary">' + value.po_count + '</a>';
-                        },
-                        bSortable:false,bSearchable:false, title: 'PO'
+                {
+                    data: function(value){
+                        return '<a href="#" class="links-btn-so btn btn-sm btn-primary">' + value.so_count + '</a>';
                     },
-                    {
-                        data: function(value){
-                            return '<a href="#" class="links-btn btn btn-sm btn-primary">' + value.so_count + '</a>';
-                        },
-                        bSortable:false,bSearchable:false, title: 'SO'
-                    },
-                ],
-                drawCallback: function () {
-                    $('table .btn').on('click', function(){
-                        let data = $(this).parent().parent().parent();
-                        let hold = $this.dt.row(data).data();
-                        $this.overview = hold;
-                        console.log(hold);
-                    });
+                    bSortable:false,bSearchable:false, title: 'SO'
+                },
+            ],
+            drawCallback: function () {
+                $('table .btn').on('click', function(){
+                    let data = $(this).parent().parent();
+                    let hold = $this.dt.row(data).data();
+                    $this.overview = hold;
+                    console.log(hold);
+                });
 
-                    $('.btn-destroy').on('click', function () {
-                        $this.destroy();
-                    });
+                $('.btn-destroy').on('click', function () {
+                    $this.destroy();
+                });
 
-                    $('.links-btn').on('click', function() {
-                        $('#linksModal').modal('show');
-                    });
-                }
-            });
+                $('.links-btn-po').on('click', function() {
+                    $('#linksModal').modal('show');
+                    $this.getPOlinks();
+                });
+
+                $('.links-btn-so').on('click', function() {
+                    $('#linksModal').modal('show');
+                    $this.getSOlinks();
+                });
+            }
+        });
     }
 });
 </script>

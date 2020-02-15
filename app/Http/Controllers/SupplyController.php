@@ -6,6 +6,7 @@ use App\Supply;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 
 class SupplyController extends Controller
@@ -72,24 +73,29 @@ class SupplyController extends Controller
         return view('edit');
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
+    public function getPOLinks(Request $request)
     {
-        //
+        $links = DB::table('product_details')
+            ->selectRaw('DISTINCT \'/purchase/view/\'||purchase_order_id as link, 
+            purchase_infos.po_no  as number')
+            ->join('purchase_infos', 'purchase_infos.id', 'purchase_order_id')
+            ->where('product_id', $request->product_id)
+            ->where('purchase_order_id','<>', null )
+            ->get();
+
+        return $links;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Response
-     */
-    public function destroy($id)
+    public function getSOLinks(Request $request)
     {
-        //
+        $links = DB::table('product_details')
+            ->selectRaw('DISTINCT \'/sales/view/\'||sales_order_id as link, 
+            sales_orders.so_no as number')
+            ->join('sales_orders', 'sales_orders.id', 'sales_order_id')
+            ->where('product_id', $request->product_id)
+            ->where('sales_order_id','<>', null )
+            ->get();
+
+        return $links;
     }
 }
