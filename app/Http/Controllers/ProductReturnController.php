@@ -132,8 +132,8 @@ class ProductReturnController extends Controller
         foreach($product_details as $item) {
             DB::table('supplies')->where('product_id', $item['product_id'])->decrement('quantity', $item['qty']);
         }
-        ProductReturn::truncate('id', $data);
-        ProductDetail::truncate('product_return_id', $data);
+        ProductReturn::truncate('id', $data['id']);
+        ProductDetail::truncate('product_return_id', $data['id']);
 
         return ['success' => true];
     }

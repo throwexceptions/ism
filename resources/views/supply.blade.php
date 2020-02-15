@@ -22,6 +22,34 @@
                 </div>
             </div>
         </div>
+
+
+        <div id="linksModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Links</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Pick a status</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" @click="update">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 @endsection
 
@@ -84,9 +112,18 @@ const app = new Vue({
                     {data: 'product_name', name:'products.name', title: 'Product'},
                     {data: 'selling_price', name:'products.selling_price', title: 'Unit Price'},
                     {data: 'quantity', name:'supplies.quantity', title: 'Quantity'},
-                    {data: 'po_count', bSortable:false,bSearchable:false, title: 'PO'},
-                    {data: 'so_count', bSortable:false,bSearchable:false, title: 'SO'},
-                    
+                    {
+                        data: function(value){
+                            return '<a href="#" class="links-btn btn btn-sm btn-primary">' + value.po_count + '</a>';
+                        },
+                        bSortable:false,bSearchable:false, title: 'PO'
+                    },
+                    {
+                        data: function(value){
+                            return '<a href="#" class="links-btn btn btn-sm btn-primary">' + value.so_count + '</a>';
+                        },
+                        bSortable:false,bSearchable:false, title: 'SO'
+                    },
                 ],
                 drawCallback: function () {
                     $('table .btn').on('click', function(){
@@ -98,6 +135,10 @@ const app = new Vue({
 
                     $('.btn-destroy').on('click', function () {
                         $this.destroy();
+                    });
+
+                    $('.links-btn').on('click', function() {
+                        $('#linksModal').modal('show');
                     });
                 }
             });
