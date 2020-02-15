@@ -196,6 +196,7 @@
                     serverSide: true,
                     scrollX: true,
                     responsive: true,
+                    pageLength: 100,
                     order: [[1, 'desc']],
                     ajax: {
                         url: "{{ route('purchase.table') }}",
