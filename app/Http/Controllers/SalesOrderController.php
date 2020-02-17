@@ -205,6 +205,9 @@ class SalesOrderController extends Controller
                 ];
                 $cnt++;
             } else {
+                if($cnt == -1) {
+                    $cnt = 0;
+                }
                 $total_selling                      = $value['qty'] * $value['selling_price'];
                 $total_labor                        = $value['qty'] * $value['labor_cost'];
                 $sections[$cnt][$value['category']] += $total_labor + ($total_selling - ($total_selling * ($value['discount_item'] / 100)));
