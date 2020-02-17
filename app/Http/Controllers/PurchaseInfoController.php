@@ -96,6 +96,7 @@ class PurchaseInfoController extends Controller
             foreach ($data['products'] as $item) {
                 unset($item['category']);
                 unset($item['quantity']);
+                unset($item['code']);
                 unset($item['unit']);
                 if (count($item) > 2) {
                     $item['purchase_order_id'] = $id;
@@ -135,6 +136,7 @@ class PurchaseInfoController extends Controller
                 unset($item['category']);
                 unset($item['quantity']);
                 unset($item['unit']);
+                unset($item['code']);
                 if (count($item) > 2) {
                     DB::table('product_details')->insert($item);
                 }

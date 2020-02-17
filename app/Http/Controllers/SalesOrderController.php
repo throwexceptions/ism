@@ -88,6 +88,7 @@ class SalesOrderController extends Controller
             foreach ($data['products'] as $item) {
                 unset($item['unit']);
                 unset($item['category']);
+                unset($item['code']);
                 unset($item['quantity']);
                 if (count($item) > 2) {
                     $item['sales_order_id'] = $id;
@@ -120,6 +121,7 @@ class SalesOrderController extends Controller
                 unset($item['manual_id']);
                 unset($item['category']);
                 unset($item['quantity']);
+                unset($item['code']);
                 if (count($item) > 2) {
                     DB::table('product_details')->insert($item);
                 }
