@@ -3,7 +3,7 @@
     <thead>
         <th>SO No</th>
         <th>Subject</th>
-        <th>Status</th>
+        <th>Customer</th>
         <th>grand_total</th>
     </thead>
     <tbody>
@@ -12,7 +12,7 @@
            <tr>
            <td>{{ $item->so_no }}</td>
            <td>{{ $item->subject }}</td>
-           <td>{{ $item->status }}</td>
+           <td>{{ $item->customer_name }}</td>
            <td>{{ $item->grand_total }}</td>
            </tr>
        @endif

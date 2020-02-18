@@ -149,7 +149,8 @@ class DashboardController extends Controller
     public function soTotalPrintable($start, $end)
     {
         $result = DB::table('sales_orders')
-            ->selectRaw('sales_orders.*, summaries.* ')
+            ->selectRaw('sales_orders.*, summaries.*, customers.name as customer_name')
+            ->leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')
             ->leftJoin('summaries', 'summaries.sales_order_id', '=', 'sales_orders.id')
             ->orderBy('sales_orders.so_no', 'desc');
         
