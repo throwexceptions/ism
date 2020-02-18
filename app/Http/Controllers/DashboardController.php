@@ -112,4 +112,53 @@ class DashboardController extends Controller
 
         return $result->get();
     }
+
+    public function assetsPrintable()
+    {
+        $supply = Supply::query()
+                        ->selectRaw(
+                            'products.name, 
+                            supplies.quantity,
+                            products.selling_price
+                            '
+                        )
+                        ->join('products', 'products.id', '=', 'supplies.product_id')
+                        ->where('supplies.quantity', '<>', 0)
+                        ->orderBy('supplies.quantity', 'desc')
+                        ->get();
+
+        return view('dashboard_assets_printable', compact('supply'));
+    }
+
+    public function poTotalPrintable($start, $end)
+    {
+        $result = DB::table('purchase_infos')
+            ->selectRaw('purchase_infos.*, summaries.* ')
+            ->leftJoin('summaries', 'summaries.purchase_order_id', '=', 'purchase_infos.id')
+            ->orderBy('purchase_infos.po_no', 'desc');
+        
+        if($start != '') {
+            $result->whereBetween('purchase_infos.created_at', [$start, $end]);
+        }
+
+        $data = $result->get();
+
+        return view('dashboard_po_printable', compact('data'));
+    }
+
+    public function soTotalPrintable($start, $end)
+    {
+        $result = DB::table('sales_orders')
+            ->selectRaw('sales_orders.*, summaries.* ')
+            ->leftJoin('summaries', 'summaries.sales_order_id', '=', 'sales_orders.id')
+            ->orderBy('sales_orders.so_no', 'desc');
+        
+        if($start != '') {
+            $result->whereBetween('sales_orders.created_at', [$start, $end]);
+        }
+
+        $data = $result->get();
+        
+        return view('dashboard_so_printable', compact('data'));
+    }
 }

@@ -26,6 +26,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/home/so', 'DashboardController@quoteSO')->name('home.so');
     Route::post('/home/total/so', 'DashboardController@totalSO')->name('home.total.so');
     Route::post('/home/total/po', 'DashboardController@totalPO')->name('home.total.po');
+    Route::get('/home/assets/printable', 'DashboardController@assetsPrintable')->name('home.assets.printable');
+    Route::get('/home/po/printable/{start}/{end}', 'DashboardController@poTotalPrintable')->name('home.po.printable');
+    Route::get('/home/so/printable/{start}/{end}', 'DashboardController@soTotalPrintable')->name('home.so.printable');
 
     Route::get('/purchase', 'PurchaseInfoController@index')->name('purchase')->middleware('can:purchaseorder');
     Route::get('/purchase/create', 'PurchaseInfoController@create')->name('purchase.create')->middleware('can:purchaseordercreate');

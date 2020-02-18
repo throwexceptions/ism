@@ -9,7 +9,12 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Assets</div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                <a href="{{ route('home.assets.printable') }}" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-file-download"></i>
+                                </a>
+                                Assets
+                            </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ number_format($assets,2,'.','') }}</div>
                         </div>
                         <div class="col-auto">
@@ -26,7 +31,9 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Product Stocks</div>
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Product Stocks
+                            </div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800"> {{ $stocks }}</div>
                         </div>
                         <div class="col-auto">
@@ -43,10 +50,15 @@
                         <div class="card-body" style="padding-bottom: .1rem;">
                             <div class="row no-gutters align-items-center">
                                 <div class="col">
-                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total PO</div>
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                    <a v-bind:href="'/home/po/printable/' + po_range.start + '/' + po_range.end" class="btn btn-sm btn-primary">
+                                            <i class="fas fa-file-download"></i>
+                                        </a>
+                                        Total PO
+                                    </div>
                                     <div class="row no-gutters align-items-center">
                                         <div class="col-auto">
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">  @{{ po_totals }}</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">  @{{ parseFloat(po_totals).toFixed(2) }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -69,8 +81,13 @@
                         <div class="card-body" style="padding-bottom: .1rem;">
                             <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total SO</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800"> @{{ so_totals }}</div>
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                    <a v-bind:href="'/home/so/printable/' + so_range.start + '/' + so_range.end" class="btn btn-sm btn-primary">
+                                        <i class="fas fa-file-download"></i>
+                                    </a>
+                                    Total SO
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"> @{{ parseFloat(so_totals).toFixed(2) }}</div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
