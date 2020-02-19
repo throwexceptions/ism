@@ -385,7 +385,7 @@
                             summary: $this.summary,
                         },
                         success: function (value) {
-                            $this.loading = false;
+                            //$this.loading = false;
                             Swal.fire(
                                 'Good job!',
                                 'Operation is successful.',
