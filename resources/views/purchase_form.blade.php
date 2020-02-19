@@ -356,7 +356,7 @@
             el: '#app',
             data() {
                 return {
-                    loading: false;
+                    loading: false,
                     viewType: 0,
                     columns: [
                         'Product', 'Notes', 'Qty', 'Unit Cost', 'Vendor Price', 'Discount', 'Total', 'Action'
