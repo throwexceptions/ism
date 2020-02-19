@@ -319,7 +319,7 @@
             el: '#app',
             data() {
                 return {
-                    loading_dis: false,
+                    loading: false,
                     viewType: 0,
                     columns: [
                         'Product', 'Stock', 'Qty', 'Unit Cost', 'Unit Total', 'Serial No.', 'Total Cost', 'Action'
