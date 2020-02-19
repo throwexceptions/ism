@@ -28,10 +28,8 @@
 </head>
 
 <body id="page-top">
-
 <!-- Page Wrapper -->
 <div id="wrapper">
-
     <!-- Sidebar -->
     @include('partials.sidebar')
     <!-- End of Sidebar -->

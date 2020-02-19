@@ -2,7 +2,7 @@
 
 @section('content')
     <div id='app' class="container-fluid">
-
+        @include('partials.loading')
         <!-- Content Row -->
         <div class="row">
 
@@ -356,6 +356,7 @@
             el: '#app',
             data() {
                 return {
+                    loading: false;
                     viewType: 0,
                     columns: [
                         'Product', 'Notes', 'Qty', 'Unit Cost', 'Vendor Price', 'Discount', 'Total', 'Action'
@@ -411,6 +412,7 @@
                 },
                 store() {
                     var $this = this;
+                    $this.loading = true;
                     $.ajax({
                         url: '{{ route('purchase.store') }}',
                         method: 'POST',
@@ -420,6 +422,7 @@
                             summary: $this.summary,
                         },
                         success: function (value) {
+                            $this.loading = false;
                             Swal.fire(
                                 'Good job!',
                                 'Operation is successful.',
@@ -435,6 +438,7 @@
                 },
                 update() {
                     var $this = this;
+                    $this.loading = true;
                     $.ajax({
                         url: '{{ route('purchase.update') }}',
                         method: 'POST',
@@ -444,6 +448,7 @@
                             summary: $this.summary,
                         },
                         success: function (value) {
+                            $this.loading = false;
                             Swal.fire(
                                 'Good job!',
                                 'Operation is successful.',
