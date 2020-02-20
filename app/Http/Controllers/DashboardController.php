@@ -146,7 +146,11 @@ class DashboardController extends Controller
 
         $data = $result->get();
 
-        return view('dashboard_po_printable', compact('data'));
+        //return view('dashboard_po_printable', compact('data'));
+
+        $pdf = PDF::loadView('dashboard_po_printable', ['data' => $data]);
+
+        return $pdf->setPaper('a4')->download('PO_AUDIT - ' . Carbon::now()->format('Y-m-d') . '.pdf');
     }
 
     public function soTotalPrintable($start, $end)
@@ -166,9 +170,9 @@ class DashboardController extends Controller
         //return view('dashboard_so_printable', compact('data'));
 
 
-        $pdf1 = PDF::loadView('dashboard_so_printable', ['data' => $data]);
+        $pdf = PDF::loadView('dashboard_so_printable', ['data' => $data]);
 
-        return $pdf1->setPaper('a4')->download('SO_AUDIT - ' . Carbon::now()->format('Y-m-d') . '.pdf');
+        return $pdf->setPaper('a4')->download('SO_AUDIT - ' . Carbon::now()->format('Y-m-d') . '.pdf');
     }
 
 
@@ -188,9 +192,8 @@ class DashboardController extends Controller
         
         //return view('dashboard_so_printable', compact('data'));
 
+        $pdf = PDF::loadView('dashboard_qtn_printable', ['data' => $data]);
 
-        $pdf1 = PDF::loadView('dashboard_qtn_printable', ['data' => $data]);
-
-        return $pdf1->setPaper('a4')->download('QTN_AUDIT - ' . Carbon::now()->format('Y-m-d') . '.pdf');
+        return $pdf->setPaper('a4')->download('QTN_AUDIT - ' . Carbon::now()->format('Y-m-d') . '.pdf');
     }
 }
