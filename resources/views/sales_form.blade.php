@@ -190,7 +190,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row" v-show="overview.vat_type == 'VAT INC'">
-                                    <label class="col-form-label col-md-4 col-form-label-sm">Sales Tax Pct.</label>
+                                    <label class="col-form-label col-md-4 col-form-label-sm">Sales Tax %</label>
                                     <div class="input-group col-md-4">
                                         <input type="text" class="form-control form-control-sm" v-model="summary.sales_tax">
                                         <div class="input-group-append">
