@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/home/assets/printable', 'DashboardController@assetsPrintable')->name('home.assets.printable');
     Route::get('/home/po/printable/{start}/{end}', 'DashboardController@poTotalPrintable')->name('home.po.printable');
     Route::get('/home/so/printable/{start}/{end}', 'DashboardController@soTotalPrintable')->name('home.so.printable');
+    Route::get('/home/qtn/printable/{start}/{end}', 'DashboardController@qtnTotalPrintable')->name('home.qtn.printable');
 
     Route::get('/purchase', 'PurchaseInfoController@index')->name('purchase')->middleware('can:purchaseorder');
     Route::get('/purchase/create', 'PurchaseInfoController@create')->name('purchase.create')->middleware('can:purchaseordercreate');

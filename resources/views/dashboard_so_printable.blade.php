@@ -1,42 +1,24 @@
-<h2>SHIPPED</h2>
+<h2>{{ \Carbon\Carbon::now()->format('F j, Y') }}</h2>
+
+<h3>Shipped</h3>
 <table border="1">
     <thead>
-        <th>SO No</th>
-        <th>Subject</th>
+        <th>SO #</th>
         <th>Customer</th>
-        <th>grand_total</th>
+        <th>Date Created</th>
+        <th>Grand Total</th>
     </thead>
     <tbody>
         @foreach ($data as $item)
         @if($item->status == 'Shipped')
-           <tr>
-           <td>{{ $item->so_no }}</td>
-           <td>{{ $item->subject }}</td>
-           <td>{{ $item->customer_name }}</td>
-           <td>{{ $item->grand_total }}</td>
+        <tr>
+            <td>{{ $item->so_no }}</td>
+            <td>{{ $item->customer_name }}</td>
+            <td>{{ \Carbon\Carbon::parse($item->date_created)->format('F j, Y') }}</td>
+            <td>{{ $item->grand_total }}</td>
            </tr>
        @endif
         @endforeach
     </tbody>
 </table>
-<h2>Quote</h2>
-<table border="1">
-    <thead>
-        <th>SO No</th>
-        <th>Subject</th>
-        <th>Status</th>
-        <th>grand_total</th>
-    </thead>
-    <tbody>
-        @foreach ($data as $item)
-         @if($item->status == 'Quote')
-            <tr>
-            <td>{{ $item->so_no }}</td>
-            <td>{{ $item->subject }}</td>
-            <td>{{ $item->status }}</td>
-            <td>{{ $item->grand_total }}</td>
-            </tr>
-        @endif
-        @endforeach
-    </tbody>
-</table>
+

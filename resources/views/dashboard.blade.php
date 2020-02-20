@@ -51,7 +51,7 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col">
                                     <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                    <a v-bind:href="'/home/po/printable/' + po_range.start + '/' + po_range.end" class="btn btn-sm btn-primary">
+                                    <a target="_blank" v-bind:href="'/home/po/printable/' + po_range.start + '/' + po_range.end" class="btn btn-sm btn-primary">
                                             <i class="fas fa-file-download"></i>
                                         </a>
                                         Total PO
@@ -69,7 +69,7 @@
                         </div>
                         <div class="row">
                             <div class="col ml-3 mr-3">
-                                <input type="text" id="po_totals" class="form-control" name="daterange" />
+                                <input type="text" id="po_totals" class="form-control" name="daterange"/>
                             </div>
                         </div>
                     </div>
@@ -82,8 +82,8 @@
                             <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                    <a v-bind:href="'/home/so/printable/' + so_range.start + '/' + so_range.end" class="btn btn-sm btn-primary">
-                                        <i class="fas fa-file-download"></i>
+                                    <a href="#" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#downloadTypeMdl" >
+                                        <i class="fas fa-eye"></i>
                                     </a>
                                     Total SO
                                 </div>
@@ -191,6 +191,31 @@
                 </div>
             </div>
         </div>
+
+
+        <div id="downloadTypeMdl" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">SO Download Type</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {{-- <div class="modal-body">
+                    </div> --}}
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <a target="_blank"
+                        v-bind:href="'/home/so/printable/' + so_range.start + '/' + so_range.end" 
+                        class="btn btn-primary">Sales Order</a>
+                        <a target="_blank"
+                        v-bind:href="'/home/qtn/printable/' + so_range.start + '/' + so_range.end" 
+                        class="btn btn-info">Quotation</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -269,7 +294,7 @@ const app = new Vue({
             $this.getPOTotals();
             $('#po_totals').val(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
         });
-
+        
         $this.dt = $('#table-in-stock').DataTable({
             processing: true,
             serverSide: true,
