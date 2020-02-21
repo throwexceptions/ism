@@ -128,7 +128,11 @@ class DashboardController extends Controller
                         ->orderBy('supplies.quantity', 'desc')
                         ->get();
 
-        return view('dashboard_assets_printable', compact('supply'));
+        //return view('dashboard_assets_printable', compact('supply'));
+
+        $pdf = PDF::loadView('dashboard_assets_printable', ['supply' => $supply]);
+
+        return $pdf->setPaper('a4')->download('ASSETS_AUDIT - ' . Carbon::now()->format('Y-m-d') . '.pdf');
     }
 
     public function poTotalPrintable($start, $end)

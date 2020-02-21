@@ -10,7 +10,7 @@
                         <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                <a href="{{ route('home.assets.printable') }}" class="btn btn-sm btn-primary">
+                                <a href="{{ route('home.assets.printable') }}" target="_blank" class="btn btn-sm btn-primary">
                                     <i class="fas fa-file-download"></i>
                                 </a>
                                 Assets

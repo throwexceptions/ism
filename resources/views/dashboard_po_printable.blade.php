@@ -1,3 +1,8 @@
+<style>
+    thead { display: table-header-group }
+    tfoot { display: table-row-group }
+    tr { page-break-inside: avoid }
+</style>
 <h2>{{ \Carbon\Carbon::now()->format('F j, Y') }}</h2>
 
 <h3>Purchase Order</h3>
