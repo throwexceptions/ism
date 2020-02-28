@@ -104,6 +104,8 @@ body {
 				<th scope="col">(Material)<br> Total Cost
 				</th>
 				<th scope="col">Total</th>
+				<th scope="col">Agent</th>
+				<th scope="col">Payment Status</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -120,6 +122,8 @@ body {
 					'.', '') }}</td>
 				<td>{{ number_format(($product['qty'] * $product['labor_cost']) +
 					($product['qty'] * $product['selling_price']), 2, '.', '') }}</td>
+				<td>{{ $product['agent'] }}</td>
+				<td>{{ $product['payment_status'] }}</td>
 			</tr>
 			@else
 			<tr class="bg-category">
