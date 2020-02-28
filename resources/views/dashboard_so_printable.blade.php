@@ -23,8 +23,8 @@
             <td>{{ $item->customer_name }}</td>
             <td>{{ \Carbon\Carbon::parse($item->date_created)->format('F j, Y') }}</td>
             <td>{{ $item->grand_total }}</td>
-            <td>{{ $product->agent }}</td>
-            <td>{{ $product->payment_status }}</td>
+            <td>{{ $item->agent }}</td>
+            <td>{{ $item->payment_status }}</td>
            </tr>
        @endif
         @endforeach
