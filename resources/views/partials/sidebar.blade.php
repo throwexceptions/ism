@@ -61,6 +61,10 @@
                         <i class="fas fa-fw fa-receipt"></i>
                         <span>Products</span>
                     </a>
+                    <a class="collapse-item" href="{{ route('pricelist') }}">
+                        <i class="fas fa-fw fa-receipt"></i>
+                        <span>Price List</span>
+                    </a>
                 </div>
             </div>
         </li>

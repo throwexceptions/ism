@@ -51,13 +51,23 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <label>VAT Type</label>
-                                <select type="text" class="form-control form-control-sm"
-                                    v-model="overview.vat_type" v-on:change="grandTotal(parseFloat(summary.sub_total) - parseFloat(summary.discount))">
-                                    <option value="">-- Select Options --</option>
-                                    <option value="VAT EX">VAT EX</option>
-                                    <option value="VAT INC">VAT INC</option>
-                                </select>
+                                <div class="form-group">
+                                    <label>VAT Type</label>
+                                    <select type="text" class="form-control form-control-sm"
+                                        v-model="overview.vat_type" v-on:change="grandTotal(parseFloat(summary.sub_total) - parseFloat(summary.discount))">
+                                        <option value="">-- Select Options --</option>
+                                        <option value="VAT EX">VAT EX</option>
+                                        <option value="VAT INC">VAT INC</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select type="text" class="form-control form-control-sm" v-model="overview.status">
+                                        <option value="Quote">QUOTE</option>
+                                        <option value="Shipped">SHIPPED</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="col-md-12">
                                 <h4>Sales Order Information</h4>

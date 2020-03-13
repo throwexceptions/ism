@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Preference;
+use App\Product;
 use App\ProductDetail;
 use App\PurchaseInfo;
 use App\Summary;
+use App\Supply;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -106,7 +108,9 @@ class PurchaseInfoController extends Controller
 
             foreach ($data['products'] as $value) {
                 if ('Received' == $data['overview']['status']) {
-                    DB::table('supplies')->where('product_id', $value['product_id'])->increment('quantity', $value['qty']);
+                    if(Product::isLimited($value['product_id'])) {
+                        DB::table('supplies')->where('product_id', $value['product_id'])->increment('quantity', $value['qty']);
+                    }
                 }
             }
         }
@@ -120,34 +124,53 @@ class PurchaseInfoController extends Controller
     public function update(Request $request)
     {
         $data = $request->input();
+
         unset($data['overview']['vendor_name']);
+
         if ($data['overview']['payment_method'] != 'Check') {
             $data['overview']['check_number'] = '';
             $data['overview']['check_writer'] = '';
         }
 
-        DB::table('purchase_infos')->where('id', $data['overview']['id'])->update($data['overview']);
+        // Update Purchase Order Info
+        PurchaseInfo::updateInfo($data['overview']);
 
+        // Reset supply count based on current product details
+        $product_details = ProductDetail::fetchDataPO($data['overview']['id']);
+        foreach($product_details as $item)
+        {
+            if(Product::isLimited($item['product_id'])) {
+                Supply::decreCount($item['product_id'], $item['qty']);
+            }
+        }
+
+        // Delete products that have been reset
         DB::table('product_details')->where('purchase_order_id', $data['overview']['id'])->delete();
 
+        // Insert new Product Details
         if (isset($data['products'])) {
             foreach ($data['products'] as $item) {
                 $item['purchase_order_id'] = $data['overview']['id'];
+                unset($item['unit']);
+                unset($item['manual_id']);
                 unset($item['category']);
                 unset($item['quantity']);
-                unset($item['unit']);
                 unset($item['code']);
                 if (count($item) > 2) {
                     DB::table('product_details')->insert($item);
-                }
-                if ('Received' == $data['overview']['check_writer']) {
-                    DB::table('supplies')->where('product_id', $value->product_id)->increment('quantity', $value->qty);
+                    if ('Received' == $data['overview']['status']) {
+                        if(Product::isLimited($item['product_id'])) {
+                            Supply::increCount($item['product_id'], $item['qty']);
+                        }
+                    }
                 }
             }
         }
 
-        DB::table('summaries')->where('purchase_order_id', $data['overview']['id'])->delete();
+        // Insert new summary
         $data['summary']['purchase_order_id'] = $data['overview']['id'];
+
+        DB::table('summaries')->where('purchase_order_id', $data['overview']['id'])->delete();
         DB::table('summaries')->insert($data['summary']);
 
         return ['success' => true];
@@ -155,6 +178,14 @@ class PurchaseInfoController extends Controller
 
     public function destroy(Request $request)
     {
+        // Reset supply count based on current product details
+        $product_details = ProductDetail::fetchDataPO($request->id);
+        foreach($product_details as $item)
+        {
+            if(Product::isLimited($item['product_id'])) {
+                Supply::decreCount($item['product_id'], $item['qty']);
+            }
+        }
         ProductDetail::query()->where('purchase_info_id', $request->id)->delete();
         DB::table('purchase_infos')->where('id', $request->id)->delete();
         DB::table('summaries')->where('purchase_order_id', $request->id)->delete();

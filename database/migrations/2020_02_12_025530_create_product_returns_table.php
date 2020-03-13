@@ -23,6 +23,7 @@ class CreateProductReturnsTable extends Migration
             $table->text('reason')->nullable();
             $table->text('remarks')->nullable();
             $table->string('assigned_to')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
 

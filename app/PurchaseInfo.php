@@ -10,6 +10,8 @@ class PurchaseInfo extends Model
 {
     use SoftDeletes;
 
+    protected $guarded = ['id'];
+
     public static function generate()
     {
         return new static;
@@ -44,5 +46,10 @@ class PurchaseInfo extends Model
 
             return 'PO' . $year . '-' . $str;
         }
+    }
+
+    public static function updateInfo($overview)
+    {
+        self::query()->where('id', $overview['id'])->update($overview);
     }
 }

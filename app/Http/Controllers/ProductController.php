@@ -46,6 +46,7 @@ class ProductController extends Controller
             "color"        => "",
             "size"         => "",
             "weight"       => "",
+            "type"         => "limited",
         ]);
 
         $gallery = collect([]);
@@ -75,7 +76,7 @@ class ProductController extends Controller
     {
         $product = Product::query()
                           ->selectRaw("id as id, name as text")
-                          ->whereRaw("name LIKE '%{$request->term}%'");
+                          ->whereRaw("upper(name) like '%".strtoupper($request->term)."%'");
 
         if ($request->category != '') {
             $product->where('category', $request->category);
@@ -108,6 +109,7 @@ class ProductController extends Controller
         $data                = $request->input();
         $data['assigned_to'] = auth()->user()->id;
         $id                  = Product::query()->insertGetId($data);
+
         Supply::query()->insert([
             "product_id"  => $id,
             "quantity"    => 0,

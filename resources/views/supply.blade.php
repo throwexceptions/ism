@@ -49,6 +49,32 @@
             </div>
         </div>
 
+        <div id="quantityModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Quantity Override</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Quantity</label>
+                                    <input class="form-control" v-model="overview.quantity">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" @click="updateQuantity">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -65,6 +91,7 @@ const app = new Vue({
                 recipient_email: "",
                 recipient_name: "",
                 message: "",
+                quantity: 0,
             },
             links: []
         }
@@ -116,7 +143,19 @@ const app = new Vue({
                 success: function(value){
                     $this.links = value;
                 }
-            })
+            });
+        },
+        updateQuantity()
+        {
+            var $this = this;
+            $.ajax({
+                url: "{{ route('supply.update.quantity') }}",
+                method: 'POST',
+                data: $this.overview,
+                success: function(value){
+                    $this.dt.draw();
+                }
+            });
         }
     },
     mounted() {
@@ -135,7 +174,16 @@ const app = new Vue({
                 {data: 'manual_id', name:'products.manual_id', title: 'Product ID'},
                 {data: 'product_name', name:'products.name', title: 'Product'},
                 {data: 'selling_price', name:'products.selling_price', title: 'Unit Price'},
-                {data: 'quantity', name:'supplies.quantity', title: 'Quantity'},
+                {
+                    data: function(value){
+                        @can ('suppliesoverride')
+                            return '<a href="#" class="links-btn-quantity btn btn-sm btn-primary">' + value.quantity + '</a>';
+                        @else
+                            return value.quantity;
+                        @endcan
+                    },
+                    title: 'Quantity'
+                },
                 {
                     data: function(value){
                         return '<a href="#" class="links-btn-po btn btn-sm btn-primary">' + value.po_count + '</a>';
@@ -169,6 +217,10 @@ const app = new Vue({
                 $('.links-btn-so').on('click', function() {
                     $('#linksModal').modal('show');
                     $this.getSOlinks();
+                });
+
+                $('.links-btn-quantity').on('click', function() {
+                    $('#quantityModal').modal('show');
                 });
             }
         });

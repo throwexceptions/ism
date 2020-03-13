@@ -64,6 +64,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/vendor/view/{id}', 'VendorController@show')->name('vendor.view')->middleware('can:vendorsretrieve');
     Route::get('/vendor/detail/{id}', 'VendorController@show')->name('vendor.detail')->middleware('can:vendorsupdate');
     Route::post('/vendor/destroy', 'VendorController@destroy')->name('vendor.destroy')->middleware('can:vendorsdelete');
+    Route::get('/vendor/printable', 'VendorController@printable')->name('vendor.printable');
     Route::post('/vendor/table', 'VendorController@table')->name('vendor.table');
     Route::post('/vendor/list', 'VendorController@getList')->name('vendor.list');
     Route::post('/vendor/update', 'VendorController@update')->name('vendor.update');
@@ -78,6 +79,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/customer/view/{id}', 'CustomerController@show')->name('customer.view')->middleware('can:customerretrieve');
     Route::get('/customer/detail/{id}', 'CustomerController@show')->name('customer.detail')->middleware('can:customerupdate');
     Route::post('/customer/destroy', 'CustomerController@destroy')->name('customer.destroy')->middleware('can:customerdelete');
+    Route::get('/customer/printable', 'CustomerController@printable')->name('customer.printable');
     Route::post('/customer/table', 'CustomerController@table')->name('customer.table');
     Route::post('/customer/list', 'CustomerController@getList')->name('customer.list');
     Route::post('/customer/update', 'CustomerController@update')->name('customer.update');
@@ -104,6 +106,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/supply/table', 'SupplyController@table')->name('supply.table');
     Route::post('/supply/po', 'SupplyController@getPOLinks')->name('supply.po.links');
     Route::post('/supply/so', 'SupplyController@getSOLinks')->name('supply.so.links');
+    Route::post('/supply/update/quantity', 'SupplyController@updateQuantity')->name('supply.update.quantity');    
 
     Route::get('/users', 'UserController@index')->name('users')->middleware('can:useraccounts');
     Route::get('/user/detail/{id}', 'UserController@show')->name('user.detail')->middleware('can:useraccountsupdate');
@@ -141,4 +144,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/return/destroy', 'ProductReturnController@destroy')->name('return.destroy')->middleware('can:productreturndelete');
     Route::post('/return/store', 'ProductReturnController@store')->name('return.store');
     Route::get('/return/view/{id}', 'ProductReturnController@show')->name('return.view');
+
+    Route::get('/pricelist', 'PriceListController@index')->name('pricelist')->middleware('can:pricelist');
+    Route::post('/pricelist/upload', 'PriceListController@upload')->name('pricelist.upload')->middleware('can:pricelist');
 });

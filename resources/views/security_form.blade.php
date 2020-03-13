@@ -403,8 +403,22 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group row">
+                                            <div class="col-md-auto">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.suppliesoverride">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Override</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
-                                {{-- Porducts --}}
+                                {{-- Products --}}
                                 <div class="col-md-12 row">
                                     <div class="col-md-12 mt-4">
                                         <h3>Products</h3>

@@ -24,6 +24,7 @@ class CreateVendorsTable extends Migration
             $table->string('shipping_method',200)->nullable();
             $table->text('address')->nullable();
             $table->string('assigned_to',200)->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

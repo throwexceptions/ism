@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePreferencesTable extends Migration
+class CreatePriceListsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreatePreferencesTable extends Migration
      */
     public function up()
     {
-        Schema::create('preferences', function (Blueprint $table) {
+        Schema::create('price_lists', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name', 200)->nullable();
-            $table->string('status', 200)->nullable();
-            $table->softDeletes();
+            $table->string('subject')->nullable();
+            $table->string('filename')->nullable();
+            $table->string('path')->nullable();
+            $table->string('assigned_to')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreatePreferencesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('preferences');
+        Schema::dropIfExists('price_lists');
     }
 }

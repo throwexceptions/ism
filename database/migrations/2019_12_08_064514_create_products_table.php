@@ -28,6 +28,7 @@ class CreateProductsTable extends Migration
             $table->string('color',200)->nullable();
             $table->float('size')->nullable();
             $table->float('weight')->nullable();
+            $table->string('type')->nullable();
             $table->string('assigned_to', 200)->nullable();
             $table->softDeletes();
             $table->timestamps();

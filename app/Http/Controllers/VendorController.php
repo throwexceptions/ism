@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Vendor;
 use Yajra\DataTables\DataTables;
-use Illuminate\Support\Facades\DB;
+use DB;
+use PDF;
+use Carbon\Carbon;
 
 class VendorController extends Controller
 {
@@ -81,5 +83,14 @@ class VendorController extends Controller
                            ->whereRaw("name LIKE '%{$request->term}%'")
                            ->get(),
         ];
+    }
+
+    public function printable()
+    {
+        $vendors = Vendor::all()->sortByDesc('id');
+
+        $pdf = PDF::loadView('vendor_printable', ['vendors' => $vendors]);
+
+        return $pdf->setPaper('a4')->download('VENDOR_LIST - ' . Carbon::now()->format('Y-m-d') . '.pdf');
     }
 }

@@ -16,6 +16,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <a href="{{ route('customer.create') }}" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> New Customer</a>
+                                <a href="{{ route('customer.printable') }}" target="_blank" class="btn btn-sm btn-info"><i class="fa fa-download"></i> Customer List</a>
                             </div>
                             <div class="col-md-12 mt-3">
                                 <table id="table-customer" class="table table-striped nowrap" style="width:100%"></table>

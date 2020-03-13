@@ -31,6 +31,7 @@ class SecurityController extends Controller
         "customerdestroy",
         "customer",
         "supplies",
+        "suppliesoverride",
         "vendors",
         "vendorscreate",
         "suppliescreate",

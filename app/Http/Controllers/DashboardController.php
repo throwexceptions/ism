@@ -18,14 +18,12 @@ class DashboardController extends Controller
     {
         $supply = Supply::query()
                         ->selectRaw('(supplies.quantity * products.selling_price) total')
-                        ->join('products', 'products.id', '=', 'supplies.product_id')
-                        ->where('supplies.quantity', '<>', 0);
+                        ->join('products', 'products.id', '=', 'supplies.product_id');
 
         $assets = 0;
-        foreach($supply->get()->toArray() as $value) {
+        foreach ($supply->get()->toArray() as $value) {
             $assets += $value['total'];
         }
-
 
         $supply = Supply::query()
                         ->selectRaw('supplies.quantity total')
@@ -33,7 +31,7 @@ class DashboardController extends Controller
                         ->where('supplies.quantity', '<>', 0);
 
         $stocks = 0;
-        foreach($supply->get()->toArray() as $value) {
+        foreach ($supply->get()->toArray() as $value) {
             $stocks += $value['total'];
         }
 
@@ -41,7 +39,7 @@ class DashboardController extends Controller
 
         $so_count = SalesOrder::query()->count();
 
-        return view('dashboard',  compact('assets', 'stocks', 'po_count', 'so_count'));
+        return view('dashboard', compact('assets', 'stocks', 'po_count', 'so_count'));
     }
 
     public function inStock()
@@ -87,12 +85,12 @@ class DashboardController extends Controller
 
     public function totalPO(Request $request)
     {
-        $data = $request->input();
+        $data   = $request->input();
         $result = DB::table('purchase_infos')
-            ->selectRaw('COALESCE(SUM(summaries.grand_total),0) as total')
-            ->leftJoin('summaries', 'summaries.purchase_order_id', '=', 'purchase_infos.id');
-        
-        if($data['start'] != '') {
+                    ->selectRaw('COALESCE(SUM(summaries.grand_total),0) as total')
+                    ->leftJoin('summaries', 'summaries.purchase_order_id', '=', 'purchase_infos.id');
+
+        if ($data['start'] != '') {
             $result->whereBetween('purchase_infos.created_at', [$data['start'], $data['end']]);
         }
 
@@ -101,13 +99,13 @@ class DashboardController extends Controller
 
     public function totalSO(Request $request)
     {
-        $data = $request->input();
+        $data   = $request->input();
         $result = DB::table('sales_orders')
-            ->selectRaw('COALESCE(SUM(summaries.grand_total),0) as total')
-            ->leftJoin('summaries', 'summaries.sales_order_id', '=', 'sales_orders.id')
-            ->where('status', 'Shipped');
-        
-        if($data['start'] != '') {
+                    ->selectRaw('COALESCE(SUM(summaries.grand_total),0) as total')
+                    ->leftJoin('summaries', 'summaries.sales_order_id', '=', 'sales_orders.id')
+                    ->where('status', 'Shipped');
+
+        if ($data['start'] != '') {
             $result->whereBetween('sales_orders.created_at', [$data['start'], $data['end']]);
         }
 
@@ -119,12 +117,13 @@ class DashboardController extends Controller
         $supply = Supply::query()
                         ->selectRaw(
                             'products.name, 
+                            products.category, 
+                            products.manual_id,
                             supplies.quantity,
                             products.selling_price
                             '
                         )
                         ->join('products', 'products.id', '=', 'supplies.product_id')
-                        ->where('supplies.quantity', '<>', 0)
                         ->orderBy('supplies.quantity', 'desc')
                         ->get();
 
@@ -138,13 +137,13 @@ class DashboardController extends Controller
     public function poTotalPrintable($start, $end)
     {
         $result = DB::table('purchase_infos')
-            ->selectRaw('purchase_infos.*, summaries.*, 
+                    ->selectRaw('purchase_infos.*, summaries.*, 
             purchase_infos.created_at as date_created, vendors.name as vendor_name')
-            ->leftJoin('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
-            ->leftJoin('summaries', 'summaries.purchase_order_id', '=', 'purchase_infos.id')
-            ->orderBy('purchase_infos.po_no', 'desc');
-        
-        if($start != '') {
+                    ->leftJoin('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
+                    ->leftJoin('summaries', 'summaries.purchase_order_id', '=', 'purchase_infos.id')
+                    ->orderBy('purchase_infos.po_no', 'desc');
+
+        if ($start != '') {
             $result->whereBetween('purchase_infos.created_at', [$start, $end]);
         }
 
@@ -160,40 +159,38 @@ class DashboardController extends Controller
     public function soTotalPrintable($start, $end)
     {
         $result = DB::table('sales_orders')
-            ->selectRaw('sales_orders.*, summaries.*, customers.name as customer_name, sales_orders.created_at as date_created')
-            ->leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')
-            ->leftJoin('summaries', 'summaries.sales_order_id', '=', 'sales_orders.id')
-            ->orderBy('sales_orders.so_no', 'desc');
-        
-        if($start != '') {
+                    ->selectRaw('sales_orders.*, summaries.*, customers.name as customer_name, sales_orders.created_at as date_created')
+                    ->leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')
+                    ->leftJoin('summaries', 'summaries.sales_order_id', '=', 'sales_orders.id')
+                    ->orderBy('sales_orders.so_no', 'desc');
+
+        if ($start != '') {
             $result->whereBetween('sales_orders.created_at', [$start, $end]);
         }
 
         $data = $result->get();
-        
-        //return view('dashboard_so_printable', compact('data'));
 
+        //return view('dashboard_so_printable', compact('data'));
 
         $pdf = PDF::loadView('dashboard_so_printable', ['data' => $data]);
 
         return $pdf->setPaper('a4')->download('SO_AUDIT - ' . Carbon::now()->format('Y-m-d') . '.pdf');
     }
 
-
     public function qtnTotalPrintable($start, $end)
     {
         $result = DB::table('sales_orders')
-            ->selectRaw('sales_orders.*, summaries.*, customers.name as customer_name, sales_orders.created_at as date_created')
-            ->leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')
-            ->leftJoin('summaries', 'summaries.sales_order_id', '=', 'sales_orders.id')
-            ->orderBy('sales_orders.so_no', 'desc');
-        
-        if($start != '') {
+                    ->selectRaw('sales_orders.*, summaries.*, customers.name as customer_name, sales_orders.created_at as date_created')
+                    ->leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')
+                    ->leftJoin('summaries', 'summaries.sales_order_id', '=', 'sales_orders.id')
+                    ->orderBy('sales_orders.so_no', 'desc');
+
+        if ($start != '') {
             $result->whereBetween('sales_orders.created_at', [$start, $end]);
         }
 
         $data = $result->get();
-        
+
         //return view('dashboard_so_printable', compact('data'));
 
         $pdf = PDF::loadView('dashboard_qtn_printable', ['data' => $data]);

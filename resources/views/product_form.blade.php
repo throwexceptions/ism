@@ -69,6 +69,15 @@
                                     <input type="text" class="form-control form-control-sm" v-model="overview.selling_price">
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Product Type</label>
+                                    <select class="form-control form-control-sm" v-model="overview.type">
+                                        <option value="limited">Limited</option>
+                                        <option value="unlimited">unlimited</option>
+                                    </select>
+                                </div>
+                            </div>
                             @if(env('PRODUCT_BATCH') == 'show')
                                 <div class="col-md-4">
                                     <div class="form-group">

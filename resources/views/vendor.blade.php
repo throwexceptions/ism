@@ -17,6 +17,7 @@
                             <div class="col-md-12">
                                 <a href="{{ route('vendor.create') }}" class="btn btn-sm btn-success"><i
                                             class="fa fa-plus"></i> New Vendor</a>
+                                <a href="{{ route('vendor.printable') }}" target="_blank" class="btn btn-sm btn-info"><i class="fa fa-download"></i> Vendor List</a>
                             </div>
                             <div class="col-md-12 mt-3">
                                 <table id="table-vendor" class="table table-striped nowrap" style="width:100%"></table>

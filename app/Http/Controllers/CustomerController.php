@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Yajra\DataTables\DataTables;
 use DB;
+use PDF;
+use Carbon\Carbon;
 
 class CustomerController extends Controller
 {
@@ -44,7 +46,7 @@ class CustomerController extends Controller
     {
         $data                = $request->input();
         $data['assigned_to'] = auth()->user()->id;
-        Customer::query()->insert($data);
+        Customer::create($data);
 
         return ['success' => true];
     }
@@ -78,5 +80,14 @@ class CustomerController extends Controller
                            ->whereRaw("name LIKE '%{$request->term}%'")
                            ->get(),
         ];
+    }
+
+    public function printable()
+    {
+        $customers = Customer::all()->sortByDesc('id');
+
+        $pdf = PDF::loadView('customer_printable', ['customers' => $customers]);
+
+        return $pdf->setPaper('a4')->download('CUSTOMER_LIST - ' . Carbon::now()->format('Y-m-d') . '.pdf');
     }
 }

@@ -24,6 +24,7 @@ class CreateOrderFormsTable extends Migration
             $table->string('stock_card_in', 200)->nullable();
             $table->string('plate_no', 200)->nullable();
             $table->string('driver', 200)->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

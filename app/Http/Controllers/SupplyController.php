@@ -98,4 +98,11 @@ class SupplyController extends Controller
 
         return $links;
     }
+
+    public function updateQuantity(Request $request)
+    {
+        Supply::query()
+            ->where('id', $request->id)
+            ->update(['quantity' => $request->quantity]);
+    }
 }

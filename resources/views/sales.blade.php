@@ -232,7 +232,7 @@
                         {data: 'subject', name: 'subject', title: 'Subject'},
                         {data: 'grand_total',  name: 'summaries.grand_total', title: 'Grand Total'},
                         {data: 'username', name: 'users.name', title: 'Assigned To'},
-                        {data: 'created_at', name: 'purchase_infos.created_at', title: 'Date Created'},
+                        {data: 'created_at', name: 'sales_orders.created_at', title: 'Date Created'},
                     ],
                     drawCallback: function () {
                         $('table .btn').on('click', function () {

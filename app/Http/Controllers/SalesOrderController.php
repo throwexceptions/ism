@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Preference;
+use App\Product;
 use App\ProductDetail;
 use App\SalesOrder;
 use App\Summary;
+use App\Supply;
 use PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -112,9 +114,22 @@ class SalesOrderController extends Controller
         DB::table('sales_orders')->where('id', $data['overview']['id'])
           ->update($data['overview']);
 
-        // Insert To Product
+        // Update Purchase Order Info
+        SalesOrder::updateInfo($data['overview']);
+
+        // Reset supply count based on current product details
+        $product_details = ProductDetail::fetchDataSO($data['overview']['id']);
+        foreach ($product_details as $item) {
+            if (Product::isLimited($item['product_id'])) {
+                Supply::increCount($item['product_id'], $item['qty']);
+            }
+        }
+
+        // Delete products that have been reset
+        DB::table('product_details')->where('sales_order_id', $data['overview']['id'])->delete();
+
+        // Insert To Product Detail
         if (isset($data['products'])) {
-            DB::table('product_details')->where('sales_order_id', $data['overview']['id'])->delete();
             foreach ($data['products'] as $item) {
                 $item['sales_order_id'] = $data['overview']['id'];
                 unset($item['unit']);
@@ -124,6 +139,11 @@ class SalesOrderController extends Controller
                 unset($item['code']);
                 if (count($item) > 2) {
                     DB::table('product_details')->insert($item);
+                    if ('Received' == $data['overview']['status']) {
+                        if (Product::isLimited($item['product_id'])) {
+                            Supply::decreCount($item['product_id'], $item['qty']);
+                        }
+                    }
                 }
             }
         }
@@ -138,6 +158,14 @@ class SalesOrderController extends Controller
 
     public function destroy(Request $request)
     {
+        // Reset supply count based on current product details
+        $product_details = ProductDetail::fetchDataSO($request->id);
+        foreach ($product_details as $item) {
+            if (Product::isLimited($item['product_id'])) {
+                Supply::increCount($item['product_id'], $item['qty']);
+            }
+        }
+
         ProductDetail::query()->where('sales_order_id', $request->id)->delete();
         DB::table('sales_orders')->where('id', $request->id)->delete();
         DB::table('summaries')->where('sales_order_id', $request->id)->delete();
@@ -170,13 +198,13 @@ class SalesOrderController extends Controller
             DB::table('sales_orders')->where('id', $data['id'])
               ->update(['vat_type' => $data['vat_type']]);
 
-              return ['success' => true];
+            return ['success' => true];
         }
         if ($purchase_info->payment_status != $data['payment_status']) {
             DB::table('sales_orders')->where('id', $data['id'])
               ->update(['payment_status' => $data['payment_status']]);
 
-              return ['success' => true];
+            return ['success' => true];
         }
 
         return ['success' => false];
@@ -207,7 +235,7 @@ class SalesOrderController extends Controller
                 ];
                 $cnt++;
             } else {
-                if($cnt == -1) {
+                if ($cnt == -1) {
                     $cnt = 0;
                 }
                 $total_selling                      = $value['qty'] * $value['selling_price'];
@@ -225,13 +253,15 @@ class SalesOrderController extends Controller
         $sections = $hold_section;
 
         $pdf = PDF::loadView('sales_printable',
-            ['sales_order'     => $sales_order,
-             'product_details' => $product_details,
-             'summary'         => $summary,
-             'sections'        => $sections,
+            [
+                'sales_order'     => $sales_order,
+                'product_details' => $product_details,
+                'summary'         => $summary,
+                'sections'        => $sections,
             ]);
 
-        return $pdf->setPaper('a4')->download('SO_' . $sales_order["status"] . '-' . Carbon::now()->format('Y-m-d') . '.pdf');
+        return $pdf->setPaper('a4')->download('SO_' . $sales_order["status"] . '-' . Carbon::now()
+                                                                                           ->format('Y-m-d') . '.pdf');
     }
 
     public function quote($id)
@@ -264,13 +294,15 @@ class SalesOrderController extends Controller
         $sections = $hold_section;
 
         $pdf = PDF::loadView('quote_printable',
-            ['sales_order'     => $sales_order,
-             'product_details' => $product_details,
-             'summary'         => $summary,
-             'sections'        => $sections,
+            [
+                'sales_order'     => $sales_order,
+                'product_details' => $product_details,
+                'summary'         => $summary,
+                'sections'        => $sections,
             ]);
 
-        return $pdf->setPaper('a4')->download('QTN_' . $sales_order["status"] . '-' . Carbon::now()->format('Y-m-d') . '.pdf');
+        return $pdf->setPaper('a4')->download('QTN_' . $sales_order["status"] . '-' . Carbon::now()
+                                                                                            ->format('Y-m-d') . '.pdf');
     }
 
     public function deliver($id)
@@ -303,13 +335,15 @@ class SalesOrderController extends Controller
         $sections = $hold_section;
 
         $pdf = PDF::loadView('dr_printable',
-            ['sales_order'     => $sales_order,
-             'product_details' => $product_details,
-             'summary'         => $summary,
-             'sections'        => $sections,
+            [
+                'sales_order'     => $sales_order,
+                'product_details' => $product_details,
+                'summary'         => $summary,
+                'sections'        => $sections,
             ]);
 
-        return $pdf->setPaper('a4')->download('DR_' . $sales_order["status"] . '-' . Carbon::now()->format('Y-m-d') . '.pdf');
+        return $pdf->setPaper('a4')->download('DR_' . $sales_order["status"] . '-' . Carbon::now()
+                                                                                           ->format('Y-m-d') . '.pdf');
     }
 
     public function previewSO($id)
@@ -318,7 +352,7 @@ class SalesOrderController extends Controller
         $sales_order     = $data['sales_order'];
         $product_details = $data['product_details'];
         $summary         = $data['summary'];
-        
+
         $sections = [];
         $cnt      = -1;
         foreach ($product_details as $key => $value) {
@@ -347,11 +381,11 @@ class SalesOrderController extends Controller
 
     public function getOverview($id)
     {
-        $sales_order     = SalesOrder::query()
-                                     ->selectRaw('sales_orders.*, IFNULL(customers.name, \'\') as customer_name')
-                                     ->leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')
-                                     ->where('sales_orders.id', $id)
-                                     ->get()[0];
+        $sales_order = SalesOrder::query()
+                                 ->selectRaw('sales_orders.*, IFNULL(customers.name, \'\') as customer_name')
+                                 ->leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')
+                                 ->where('sales_orders.id', $id)
+                                 ->get()[0];
 
         $product_details = ProductDetail::query()
                                         ->selectRaw('products.code, products.category, products.unit, products.manual_id, product_details.*, supplies.quantity')
@@ -359,7 +393,7 @@ class SalesOrderController extends Controller
                                         ->join('products', 'products.id', 'product_details.product_id')
                                         ->join('supplies', 'supplies.product_id', 'product_details.product_id')
                                         ->get();
-        
+
         $category = '';
         $hold     = [];
         foreach ($product_details->toArray() as $value) {
@@ -387,7 +421,7 @@ class SalesOrderController extends Controller
             'summary'         => $summary,
         ];
     }
-    
+
     public function converToRoman($num)
     {
         $n   = intval($num);
@@ -428,9 +462,10 @@ class SalesOrderController extends Controller
     public function getListShipped(Request $request)
     {
         $sales_order = SalesOrder::query()
-                           ->selectRaw("id as id, so_no as text")
-                           ->where('status', 'Shipped')
-                           ->whereRaw("so_no LIKE '%{$request->term}%'");
+                                 ->selectRaw("id as id, so_no as text")
+                                 ->where('status', 'Shipped')
+                                 ->whereRaw("so_no LIKE '%{$request->term}%'");
+
         return [
             "results" => $sales_order->get(),
         ];

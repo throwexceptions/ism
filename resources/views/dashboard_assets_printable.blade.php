@@ -9,6 +9,8 @@ tr { page-break-inside: avoid }
 <h3>Inventory Assets</h3>
 <table border="1">
 <thead>
+    <th>Product ID</th>
+    <th>Category</th>
     <th>Product Name</th>
     <th>Quantity</th>
     <th>Price</th>
@@ -19,6 +21,8 @@ tr { page-break-inside: avoid }
     @foreach ($supply as $item)
     <?php $grand_total += $item->quantity  * $item->selling_price ?>
         <tr>
+            <td>{{ $item->manual_id }}</td>
+            <td>{{ $item->category }}</td>
             <td>{{ $item->name }}</td>
             <td>{{ $item->quantity }}</td>
             <td>{{ number_format($item->selling_price, 2, '.', '') }}</td>
@@ -28,7 +32,7 @@ tr { page-break-inside: avoid }
 </tbody>
 <tfoot>
   <tr>
-    <td colspan="2"></td>
+    <td colspan="4"></td>
     <td><strong>Grand Total</strong></td>
     <td>{{ $grand_total }}</td>
   </tr>

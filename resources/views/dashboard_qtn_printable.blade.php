@@ -11,6 +11,7 @@
         <th>QTN #</th>
         <th>Customer</th>
         <th>Date Created</th>
+        <th>Agent</th>
         <th>Grand Total</th>
     </thead>
     <tbody>
@@ -20,6 +21,7 @@
                 <td>{{ str_replace('SO', 'QTN', $item->so_no) }}</td>
                 <td>{{ $item->customer_name }}</td>
                 <td>{{ \Carbon\Carbon::parse($item->date_created)->format('F j, Y') }}</td>
+                <td>{{ $item->agent }}</td>
                 <td>{{ $item->grand_total }}</td>
             </tr>
         @endif
