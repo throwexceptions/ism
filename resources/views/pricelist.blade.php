@@ -14,19 +14,31 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-auto">
-                                <form action="{{ route('pricelist.upload') }}" method="POST"
-                                      enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="form-group row">
-                                        <div class="col-md-6">
-                                            <input type="file" name="excel_file" class="form-control-file">
+                            <div class="col-md-12 row">
+                                <div class="col-md-4 mt-4">
+                                    <form action="{{ route('pricelist.upload') }}" method="POST"
+                                          enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="form-group row">
+                                            <div class="col-md-12 mb-2">
+                                                <input type="text" name="subject" class="form-control" placeholder="Insert Subject Here...">
+                                            </div>
+                                            <div class="col-md-12 mb-2">
+                                                <input type="file" name="excel_file" class="form-control-file">
+                                            </div>
+                                            <div class="col-md-12 mb-2">
+                                                <button class="btn btn-sm btn-primary">
+                                                    <i class="fa fa-upload"></i>
+                                                    Upload Now
+                                                </button>
+                                            </div>
                                         </div>
-                                        <div class="col-md-auto">
-                                            <button class="btn btn-sm btn-primary">Upload Now</button>
-                                        </div>
-                                    </div>
-                                </form>
+                                    </form>
+                                </div>
+                                <div class="col-md-8">
+                                    <table id="table-pricelist" class="table table-striped nowrap"
+                                           style="width:100%"></table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -41,11 +53,79 @@
         const app = new Vue({
             el: '#app',
             data() {
-                return {}
+                return {
+                    dt: null,
+                    overview: {},
+                }
             },
-            methods: {},
+            methods: {
+                destroy() {
+                    var $this = this;
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.value) {
+                            $.ajax({
+                                url: "{{ route('pricelist.destroy') }}",
+                                method: 'POST',
+                                data: $this.overview,
+                                success(value) {
+                                    Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+                                    $this.dt.draw();
+                                }
+                            });
+                        }
+                    });
+                },
+            },
             mounted() {
                 var $this = this;
+                $this.dt = $('#table-pricelist').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    scrollX: true,
+                    responsive: true,
+                    order: [[1, 'desc']],
+                    ajax: {
+                        url: "{{ route('pricelist.table') }}",
+                        method: "POST",
+                    },
+                    columns: [
+                        {
+                            data: function (value) {
+                                return '<div class="btn-group btn-group-sm shadow-sm" role="group" aria-label="Basic example">' +
+                                    '<a href="/download/pricelist/' + value.id + '" target="_blank" class="btn btn-primary"><i class="fa fa-download"></i></a>' +
+                                    '<button type="button" class="btn btn-danger btn-destroy"><i class="fa fa-trash"></i></button>' +
+                                    '</div>'
+                            },
+                            searchable: false,
+                            bSortable: false,
+                            title: 'Action'
+                        },
+                        {data: 'id', name: 'price_lists.id', title: 'ID'},
+                        {data: 'subject', name: 'price_lists.subject', title: 'Subject'},
+                        {data: 'filename', name: 'price_lists.filename', title: 'Filename'},
+                        {data: 'assigned_to', name: 'price_lists.assigned_to', title: 'Uploaded By'},
+                    ],
+                    drawCallback: function () {
+                        $('table .btn').on('click', function () {
+                            let data = $(this).parent().parent().parent();
+                            let hold = $this.dt.row(data).data();
+                            $this.overview = hold;
+                            console.log(hold);
+                        });
+
+                        $('.btn-destroy').on('click', function () {
+                            $this.destroy();
+                        });
+                    }
+                });
 
             }
         });

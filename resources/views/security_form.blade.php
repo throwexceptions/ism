@@ -84,6 +84,7 @@
 
                             {{--Process Order--}}
                             @if(env('SECTION_INVENTORY') == 'show')
+                                {{--Purchase Order--}}
                                 <div class="col-md-12 row">
                                     <div class="col-md-12 mt-4">
                                         <h3>Purchase Order</h3>
@@ -650,6 +651,52 @@
                                             </div>
                                             <div class="col-md-auto">
                                                 <label class="switch-label">Preference</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- Proce List --}}
+                                <div class="col-md-12 row">
+                                    <div class="col-md-12 mt-4">
+                                        <h3>Price List</h3>
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group row">
+                                            <div class="col-md-auto">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.pricelist">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Price List</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group row">
+                                            <div class="col-md-auto">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.pricelistupload">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Upload</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group row">
+                                            <div class="col-md-auto">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.pricelistdestroy">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Delete</label>
                                             </div>
                                         </div>
                                     </div>

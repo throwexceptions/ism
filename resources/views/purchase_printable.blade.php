@@ -121,14 +121,14 @@ body {
 				<td>{{ $product['product_name'] }}</td>
 				<td>{{ $product['qty'] }}</td>
 				<td>{{ $product['unit'] }}</td>
-				<td>{{ number_format($product['selling_price'], 2, '.', '') }}</td>
-				<td>{{ number_format($product['qty'] * $product['selling_price'], 2,
+				<td>{{ number_format($product['vendor_price'], 2, '.', '') }}</td>
+				<td>{{ number_format($product['qty'] * $product['vendor_price'], 2,
 					'.', '') }}</td>
 				<td>{{ number_format($product['labor_cost'], 2, '.', '') }}</td>
 				<td>{{ number_format($product['qty'] * $product['labor_cost'], 2,
 					'.', '') }}</td>
 				<td>{{ number_format(($product['qty'] * $product['labor_cost']) +
-					($product['qty'] * $product['selling_price']), 2, '.', '') }}</td>
+					($product['qty'] * $product['vendor_price']), 2, '.', '') }}</td>
 			</tr>
 			@else
 			<tr class="bg-category">

@@ -146,5 +146,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/return/view/{id}', 'ProductReturnController@show')->name('return.view');
 
     Route::get('/pricelist', 'PriceListController@index')->name('pricelist')->middleware('can:pricelist');
-    Route::post('/pricelist/upload', 'PriceListController@upload')->name('pricelist.upload')->middleware('can:pricelist');
+    Route::post('/pricelist/upload', 'PriceListController@upload')->name('pricelist.upload')->middleware('can:pricelistupload');
+    Route::post('/pricelist/destroy', 'PriceListController@destroy')->name('pricelist.destroy')->middleware('can:pricelistdestroy');
+    Route::get('/download/pricelist/{id}', 'PriceListController@download')->name('pricelist.download');
+    Route::post('/pricelist/table', 'PriceListController@table')->name('pricelist.table');
+    Route::post('/pricelist/destroy', 'PriceListController@destroy')->name('pricelist.destroy')->middleware('can:orderformdelete');
+
 });
