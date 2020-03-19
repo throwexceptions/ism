@@ -60,6 +60,7 @@ class SecurityController extends Controller
         "pricelist",
         "pricelistupload",
         "pricelistdestroy",
+        "userassign"
     ];
 
     public function roles()

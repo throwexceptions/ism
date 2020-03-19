@@ -113,7 +113,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/user/create', 'UserController@create')->name('user.create')->middleware('can:useraccountscreate');
     Route::post('/user/destroy', 'UserController@destroy')->name('user.destroy')->middleware('can:useraccountsdelete');
     Route::post('/user/change/pass', 'UserController@changePass')->name('user.change.pass')->middleware('can:useraccountschangepass');
-    Route::post('/user/assign', 'UserController@assignUserRole')->name('user.assign')->middleware('can:security');
+    Route::post('/user/assign', 'UserController@assignUserRole')->name('user.assign')->middleware('can:userassign');
     Route::post('/users/table', 'UserController@table')->name('user.table');
     Route::post('/user/store', 'UserController@store')->name('user.store');
     Route::post('/user/update', 'UserController@update')->name('user.update');
