@@ -59,16 +59,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/sales/preview/{id}', 'SalesOrderController@previewSO')->name('sales.preview');
     Route::post('/sales/shipped/list', 'SalesOrderController@getListShipped')->name('sales.shipped.list');
 
-    Route::get('/vendor', 'VendorController@index')->name('vendor')->middleware('can:vendors');
-    Route::get('/vendor/create', 'VendorController@create')->name('vendor.create')->middleware('can:vendorscreate');
-    Route::get('/vendor/view/{id}', 'VendorController@show')->name('vendor.view')->middleware('can:vendorsretrieve');
-    Route::get('/vendor/detail/{id}', 'VendorController@show')->name('vendor.detail')->middleware('can:vendorsupdate');
-    Route::post('/vendor/destroy', 'VendorController@destroy')->name('vendor.destroy')->middleware('can:vendorsdelete');
-    Route::get('/vendor/printable', 'VendorController@printable')->name('vendor.printable');
-    Route::post('/vendor/table', 'VendorController@table')->name('vendor.table');
-    Route::post('/vendor/list', 'VendorController@getList')->name('vendor.list');
-    Route::post('/vendor/update', 'VendorController@update')->name('vendor.update');
-    Route::post('/vendor/store', 'VendorController@store')->name('vendor.store');
+    Route::get('/vendors', 'VendorController@index')->name('vendor')->middleware('can:vendors');
+    Route::get('/vendors/create', 'VendorController@create')->name('vendor.create')->middleware('can:vendorscreate');
+    Route::get('/vendors/view/{id}', 'VendorController@show')->name('vendor.view')->middleware('can:vendorsretrieve');
+    Route::get('/vendors/detail/{id}', 'VendorController@show')->name('vendor.detail')->middleware('can:vendorsupdate');
+    Route::post('/vendors/destroy', 'VendorController@destroy')->name('vendor.destroy')->middleware('can:vendorsdelete');
+    Route::get('/vendors/printable', 'VendorController@printable')->name('vendor.printable');
+    Route::post('/vendors/table', 'VendorController@table')->name('vendor.table');
+    Route::post('/vendors/list', 'VendorController@getList')->name('vendor.list');
+    Route::post('/vendors/update', 'VendorController@update')->name('vendor.update');
+    Route::post('/vendors/store', 'VendorController@store')->name('vendor.store');
 
 //    Route::get('/inquiry', 'InquiryController@index')->name('inquiry');
 //    Route::post('/inquiry/table', 'InquiryController@table')->name('inquiry.table');
