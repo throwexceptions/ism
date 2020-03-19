@@ -70,9 +70,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/vendor/update', 'VendorController@update')->name('vendor.update');
     Route::post('/vendor/store', 'VendorController@store')->name('vendor.store');
 
-    Route::get('/inquiry', 'InquiryController@index')->name('inquiry');
-    Route::post('/inquiry/table', 'InquiryController@table')->name('inquiry.table');
-    Route::post('/inquiry/destroy', 'InquiryController@destroy')->name('inquiry.destroy');
+//    Route::get('/inquiry', 'InquiryController@index')->name('inquiry');
+//    Route::post('/inquiry/table', 'InquiryController@table')->name('inquiry.table');
+//    Route::post('/inquiry/destroy', 'InquiryController@destroy')->name('inquiry.destroy');
 
     Route::get('/customer', 'CustomerController@index')->name('customer')->middleware('can:customer');
     Route::get('/customer/create', 'CustomerController@create')->name('customer.create')->middleware('can:customercreate');
@@ -106,7 +106,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/supply/table', 'SupplyController@table')->name('supply.table');
     Route::post('/supply/po', 'SupplyController@getPOLinks')->name('supply.po.links');
     Route::post('/supply/so', 'SupplyController@getSOLinks')->name('supply.so.links');
-    Route::post('/supply/update/quantity', 'SupplyController@updateQuantity')->name('supply.update.quantity');    
+    Route::post('/supply/update/quantity', 'SupplyController@updateQuantity')->name('supply.update.quantity');
 
     Route::get('/users', 'UserController@index')->name('users')->middleware('can:useraccounts');
     Route::get('/user/detail/{id}', 'UserController@show')->name('user.detail')->middleware('can:useraccountsupdate');
@@ -151,5 +151,4 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/download/pricelist/{id}', 'PriceListController@download')->name('pricelist.download');
     Route::post('/pricelist/table', 'PriceListController@table')->name('pricelist.table');
     Route::post('/pricelist/destroy', 'PriceListController@destroy')->name('pricelist.destroy')->middleware('can:orderformdelete');
-
 });
