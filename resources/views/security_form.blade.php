@@ -251,12 +251,12 @@
                                         <div class="form-group row">
                                             <div class="col-md-auto">
                                                 <label class="switch">
-                                                    <input type="checkbox" v-model="abilities.customer">
+                                                    <input type="checkbox" v-model="abilities.customers">
                                                     <span class="slider"></span>
                                                 </label>
                                             </div>
                                             <div class="col-md-auto">
-                                                <label class="switch-label">Sales Order</label>
+                                                <label class="switch-label">Customer</label>
                                             </div>
                                         </div>
                                     </div>
