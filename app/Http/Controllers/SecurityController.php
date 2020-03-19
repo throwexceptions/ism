@@ -60,7 +60,10 @@ class SecurityController extends Controller
         "pricelist",
         "pricelistupload",
         "pricelistdestroy",
-        "userassign"
+        "userassign",
+        "productreturn",
+        "productreturncreate",
+        "productreturndelete"
     ];
 
     public function roles()
@@ -88,7 +91,12 @@ class SecurityController extends Controller
     public function store(Request $request)
     {
         $data = $request->input();
+
         Bouncer::allow($data['role'])->to('manage');
+        $role_id = DB::table('roles')->where('name', $data['role'])->get('id')[0]->id;
+        DB::table('permissions')->where('entity_id', $role_id)->delete();
+        Bouncer::allow($data['role'])->to('manage');
+
         foreach ($data['abilities'] as $key => $value) {
             if ($value == "true") {
                 Bouncer::allow($data['role'])->to($key);
