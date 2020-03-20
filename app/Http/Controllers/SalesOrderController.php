@@ -86,6 +86,7 @@ class SalesOrderController extends Controller
         $data['overview']['created_at']  = Carbon::now()->format('Y-m-d');
 
         $id = DB::table('sales_orders')->insertGetId($data['overview']);
+
         if (isset($data['products'])) {
             foreach ($data['products'] as $item) {
                 unset($item['unit']);
@@ -94,7 +95,14 @@ class SalesOrderController extends Controller
                 unset($item['quantity']);
                 if (count($item) > 2) {
                     $item['sales_order_id'] = $id;
-                    DB::table('product_details')->insert($item);
+                }
+            }
+
+            foreach ($data['products'] as $item) {
+                if ('Shipped' == $data['overview']['status']) {
+                    if(Product::isLimited($item['product_id'])) {
+                        Supply::decreCount($item['product_id'], $item['qty']);
+                    }
                 }
             }
         }
@@ -139,7 +147,7 @@ class SalesOrderController extends Controller
                 unset($item['code']);
                 if (count($item) > 2) {
                     DB::table('product_details')->insert($item);
-                    if ('Received' == $data['overview']['status']) {
+                    if ('Shipped' == $data['overview']['status']) {
                         if (Product::isLimited($item['product_id'])) {
                             Supply::decreCount($item['product_id'], $item['qty']);
                         }
