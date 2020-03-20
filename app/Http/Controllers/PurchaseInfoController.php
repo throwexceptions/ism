@@ -189,8 +189,7 @@ class PurchaseInfoController extends Controller
             }
         }
 
-        ProductDetail::query()->where('purchase_info_id', $request->id)->delete();
-
+        ProductDetail::query()->where('purchase_order_id', $request->id)->delete();
         DB::table('purchase_infos')->where('id', $request->id)->delete();
         DB::table('summaries')->where('purchase_order_id', $request->id)->delete();
 
