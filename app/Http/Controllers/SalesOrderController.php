@@ -302,7 +302,7 @@ class SalesOrderController extends Controller
             ]);
 
         return $pdf->setPaper('a4')
-                   ->download('QTN ' . $sales_order["so_no"] . '-' . $sales_order["customer_name"] . '.pdf');
+                   ->download('QTN ' . $sales_order["so_no"] . ' ' . $sales_order["customer_name"] . '.pdf');
     }
 
     public function deliver($id)
