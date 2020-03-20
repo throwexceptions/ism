@@ -182,7 +182,7 @@ const app = new Vue({
                             return value.quantity;
                         @endcan
                     },
-                    title: 'Quantity'
+                    bSortable:false,bSearchable:false, title: 'Quantity'
                 },
                 {
                     data: function(value){

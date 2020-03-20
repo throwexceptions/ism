@@ -24,7 +24,7 @@ class Product extends Model
     public static function isUnLimited($product_id)
     {
         $count = self::query()
-            ->where('type','limited')
+            ->where('type','unlimited')
             ->where('id', $product_id)
             ->get()
             ->count();

@@ -95,11 +95,13 @@ class SalesOrderController extends Controller
                 unset($item['quantity']);
                 if (count($item) > 2) {
                     $item['sales_order_id'] = $id;
+                    DB::table('product_details')->insert($item);
                 }
             }
 
             foreach ($data['products'] as $item) {
                 if ('Shipped' == $data['overview']['status']) {
+                    DB::table('product_details')->insert($item);
                     if(Product::isLimited($item['product_id'])) {
                         Supply::decreCount($item['product_id'], $item['qty']);
                     }
@@ -193,10 +195,10 @@ class SalesOrderController extends Controller
             $product_detail = DB::table('product_details')->where('sales_order_id', $data['id'])->get();
             foreach ($product_detail as $value) {
                 if ('Quote' == $data['status']) {
-                    DB::table('supplies')->where('product_id', $value->product_id)->increment('quantity', $value->qty);
+                    Supply::increCount($value->product_id, $value->qty);
                 }
                 if ('Shipped' == $data['status']) {
-                    DB::table('supplies')->where('product_id', $value->product_id)->decrement('quantity', $value->qty);
+                    Supply::decreCount($value->product_id, $value->qty);
                 }
             }
 
