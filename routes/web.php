@@ -48,7 +48,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/sales/create', 'SalesOrderController@create')->name('sales.create')->middleware('can:salesordercreate');
     Route::get('/sales/view/{id}', 'SalesOrderController@show')->name('sales.view')->middleware('can:salesorderretrieve');
     Route::get('/sales/detail/{id}', 'SalesOrderController@show')->name('sales.detail')->middleware('can:salesorderupdate');
-    Route::post('/sales/destroy', 'SalesOrderController@destroy')->name('sales.destroy')->middleware('can:salesorderdelete');
+    Route::post('/sales/destroy', 'SalesOrderController@destroy')->name('sales.destroy')->middleware('can:salesorderdestroy');
     Route::post('/sales/table', 'SalesOrderController@table')->name('sales.table');
     Route::post('/sales/update', 'SalesOrderController@update')->name('sales.update');
     Route::post('/sales/store', 'SalesOrderController@store')->name('sales.store');
