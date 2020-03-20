@@ -182,8 +182,10 @@ class PurchaseInfoController extends Controller
         $product_details = ProductDetail::fetchDataPO($request->id);
         foreach($product_details as $item)
         {
-            if(Product::isLimited($item['product_id'])) {
-                Supply::decreCount($item['product_id'], $item['qty']);
+            if('Received' == $request->status) {
+                if (Product::isLimited($item['product_id'])) {
+                    Supply::decreCount($item['product_id'], $item['qty']);
+                }
             }
         }
 
@@ -207,10 +209,10 @@ class PurchaseInfoController extends Controller
             $product_detail = DB::table('product_details')->where('purchase_order_id', $data['id'])->get();
             foreach ($product_detail as $value) {
                 if ('Ordered' == $data['status']) {
-                    DB::table('supplies')->where('product_id', $value->product_id)->decrement('quantity', $value->qty);
+                    Supply::decreCount($value->product_id, $value->qty);
                 }
                 if ('Received' == $data['status']) {
-                    DB::table('supplies')->where('product_id', $value->product_id)->increment('quantity', $value->qty);
+                    Supply::increCount($value->product_id, $value->qty);
                 }
             }
 

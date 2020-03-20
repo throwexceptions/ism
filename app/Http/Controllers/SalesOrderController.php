@@ -171,8 +171,10 @@ class SalesOrderController extends Controller
         // Reset supply count based on current product details
         $product_details = ProductDetail::fetchDataSO($request->id);
         foreach ($product_details as $item) {
-            if (Product::isLimited($item['product_id'])) {
-                Supply::increCount($item['product_id'], $item['qty']);
+            if('Shipped' == $request->status) {
+                if (Product::isLimited($item['product_id'])) {
+                    Supply::increCount($item['product_id'], $item['qty']);
+                }
             }
         }
 
