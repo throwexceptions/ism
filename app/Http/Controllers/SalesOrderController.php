@@ -301,8 +301,8 @@ class SalesOrderController extends Controller
                 'sections'        => $sections,
             ]);
 
-        return $pdf->setPaper('a4')->download('QTN_' . $sales_order["status"] . '-' . Carbon::now()
-                                                                                            ->format('Y-m-d') . '.pdf');
+        return $pdf->setPaper('a4')
+                   ->download('QTN ' . $sales_order["so_no"] . '-' . $sales_order["customer_name"] . '.pdf');
     }
 
     public function deliver($id)
