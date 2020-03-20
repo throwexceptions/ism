@@ -74,7 +74,7 @@ Route::group(['middleware' => 'auth'], function () {
 //    Route::post('/inquiry/table', 'InquiryController@table')->name('inquiry.table');
 //    Route::post('/inquiry/destroy', 'InquiryController@destroy')->name('inquiry.destroy');
 
-    Route::get('/customer', 'CustomerController@index')->name('customer')->middleware('can:customer');
+    Route::get('/customer', 'CustomerController@index')->name('customer')->middleware('can:customers');
     Route::get('/customer/create', 'CustomerController@create')->name('customer.create')->middleware('can:customercreate');
     Route::get('/customer/view/{id}', 'CustomerController@show')->name('customer.view')->middleware('can:customerretrieve');
     Route::get('/customer/detail/{id}', 'CustomerController@show')->name('customer.detail')->middleware('can:customerupdate');
