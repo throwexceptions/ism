@@ -31,7 +31,7 @@ class PurchaseInfoController extends Controller
             vendors.name as vendor_name, purchase_infos.tracking_number, purchase_infos.po_no,
             purchase_infos.requisition_no, users.name, purchase_infos.status, purchase_infos.created_at,
             grand_total')
-                                    ->leftJoin('summaries', 'summaries.purchase_order_id', '=', 'purchase_infos.id')
+                                     ->leftJoin('summaries', 'summaries.purchase_order_id', '=', 'purchase_infos.id')
                                      ->leftJoin('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
                                      ->join('users', 'users.id', '=', 'purchase_infos.assigned_to');
 
@@ -108,7 +108,7 @@ class PurchaseInfoController extends Controller
 
             foreach ($data['products'] as $item) {
                 if ('Received' == $data['overview']['status']) {
-                    if(Product::isLimited($item['product_id'])) {
+                    if (Product::isLimited($item['product_id'])) {
                         Supply::increCount($item['product_id'], $item['qty']);
                     }
                 }
@@ -137,10 +137,11 @@ class PurchaseInfoController extends Controller
 
         // Reset supply count based on current product details
         $product_details = ProductDetail::fetchDataPO($data['overview']['id']);
-        foreach($product_details as $item)
-        {
-            if(Product::isLimited($item['product_id'])) {
-                Supply::decreCount($item['product_id'], $item['qty']);
+        foreach ($product_details as $item) {
+            if ('Received' == $data['overview']['status']) {
+                if (Product::isLimited($item['product_id'])) {
+                    Supply::decreCount($item['product_id'], $item['qty']);
+                }
             }
         }
 
@@ -159,7 +160,7 @@ class PurchaseInfoController extends Controller
                 if (count($item) > 2) {
                     DB::table('product_details')->insert($item);
                     if ('Received' == $data['overview']['status']) {
-                        if(Product::isLimited($item['product_id'])) {
+                        if (Product::isLimited($item['product_id'])) {
                             Supply::increCount($item['product_id'], $item['qty']);
                         }
                     }
@@ -180,9 +181,8 @@ class PurchaseInfoController extends Controller
     {
         // Reset supply count based on current product details
         $product_details = ProductDetail::fetchDataPO($request->id);
-        foreach($product_details as $item)
-        {
-            if('Received' == $request->status) {
+        foreach ($product_details as $item) {
+            if ('Received' == $request->status) {
                 if (Product::isLimited($item['product_id'])) {
                     Supply::decreCount($item['product_id'], $item['qty']);
                 }
@@ -221,7 +221,7 @@ class PurchaseInfoController extends Controller
         if ($purchase_info->vat_type != $data['vat_type']) {
             DB::table('purchase_infos')->where('id', $data['id'])
               ->update(['vat_type' => $data['vat_type']]);
-            
+
             return ['success' => true];
         }
 
@@ -233,27 +233,27 @@ class PurchaseInfoController extends Controller
         $data = $request->input();
 
         DB::table('purchase_infos')->where('id', $data['id'])
-            ->update(['payment_status' => $data['payment_status']]);
+          ->update(['payment_status' => $data['payment_status']]);
 
         return ['success' => true];
     }
 
     public function show($id)
     {
-        $data = $this->getOverview($id);
-        $purchase_info = $data['purchase_info'];
+        $data            = $this->getOverview($id);
+        $purchase_info   = $data['purchase_info'];
         $product_details = $data['product_details'];
-        $summary = $data['summary'];
+        $summary         = $data['summary'];
 
         return view('purchase_form', compact('purchase_info', 'product_details', 'summary'));
     }
 
     public function printable($id)
     {
-        $data = $this->getOverview($id);
-        $purchase_info = $data['purchase_info'];
+        $data            = $this->getOverview($id);
+        $purchase_info   = $data['purchase_info'];
         $product_details = $data['product_details'];
-        $summary = $data['summary'];
+        $summary         = $data['summary'];
         $sections        = [];
         $cnt             = -1;
         foreach ($product_details as $key => $value) {
@@ -277,23 +277,24 @@ class PurchaseInfoController extends Controller
         }
         $sections = $hold_section;
 
-
         $pdf = PDF::loadView('purchase_printable',
-        ['purchase_info'     => $purchase_info,
-         'product_details' => $product_details,
-         'summary'         => $summary,
-         'sections'        => $sections,
-        ]);
-    
-        return $pdf->setPaper('a4')->download('PO_' . $purchase_info["status"] . '-' . Carbon::now()->format('Y-m-d') . '.pdf');
+            [
+                'purchase_info'   => $purchase_info,
+                'product_details' => $product_details,
+                'summary'         => $summary,
+                'sections'        => $sections,
+            ]);
+
+        return $pdf->setPaper('a4')->download('PO_' . $purchase_info["status"] . '-' . Carbon::now()
+                                                                                             ->format('Y-m-d') . '.pdf');
     }
 
     public function previewPO($id)
     {
-        $data =  $this->getOverview($id);
-        $purchase_info = $data['purchase_info'];
+        $data            = $this->getOverview($id);
+        $purchase_info   = $data['purchase_info'];
         $product_details = $data['product_details'];
-        $summary = $data['summary'];
+        $summary         = $data['summary'];
         $sections        = [];
         $cnt             = -1;
         foreach ($product_details as $key => $value) {
@@ -322,12 +323,12 @@ class PurchaseInfoController extends Controller
 
     public function getOverview($id)
     {
-        $purchase_info   = PurchaseInfo::query()
-                                       ->selectRaw('purchase_infos.*, IFNULL(vendors.name, \'\') as vendor_name')
-                                       ->leftJoin('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
-                                       ->where('purchase_infos.id', $id)
-                                       ->get()[0];
-        
+        $purchase_info = PurchaseInfo::query()
+                                     ->selectRaw('purchase_infos.*, IFNULL(vendors.name, \'\') as vendor_name')
+                                     ->leftJoin('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
+                                     ->where('purchase_infos.id', $id)
+                                     ->get()[0];
+
         $product_details = ProductDetail::query()
                                         ->selectRaw('products.category, products.unit, product_details.*')
                                         ->where('purchase_order_id', $id)
@@ -359,9 +360,9 @@ class PurchaseInfoController extends Controller
         $summary = Summary::query()->where('purchase_order_id', $id)->get()[0];
 
         return [
-            'purchase_info' => $purchase_info,
+            'purchase_info'   => $purchase_info,
             'product_details' => $product_details,
-            'summary' => $summary
+            'summary'         => $summary,
         ];
     }
 
