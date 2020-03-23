@@ -165,6 +165,7 @@ const app = new Vue({
             serverSide: true,
             scrollX: true,
             responsive: true,
+            pageLength: 100,
             order: [[0, 'desc']],
             ajax: {
                 url: "{{ route('supply.table') }}",
