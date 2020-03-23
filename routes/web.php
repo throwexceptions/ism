@@ -35,7 +35,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/purchase/create', 'PurchaseInfoController@create')->name('purchase.create')->middleware('can:purchaseordercreate');
     Route::get('/purchase/view/{id}', 'PurchaseInfoController@show')->name('purchase.view')->middleware('can:purchaseorderretrieve');
     Route::get('/purchase/detail/{id}', 'PurchaseInfoController@show')->name('purchase.detail')->middleware('can:purchaseorderupdate');
-    Route::post('/purchase/destroy', 'PurchaseInfoController@destroy')->name('purchase.destroy')->middleware('can:purchaseorderdelete');
+    Route::post('/purchase/destroy', 'PurchaseInfoController@destroy')->name('purchase.destroy')->middleware('can:purchaseorderdestroy');
     Route::post('/purchase/table', 'PurchaseInfoController@table')->name('purchase.table');
     Route::post('/purchase/update', 'PurchaseInfoController@update')->name('purchase.update');
     Route::post('/purchase/store', 'PurchaseInfoController@store')->name('purchase.store');
@@ -63,7 +63,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/vendors/create', 'VendorController@create')->name('vendor.create')->middleware('can:vendorscreate');
     Route::get('/vendors/view/{id}', 'VendorController@show')->name('vendor.view')->middleware('can:vendorsretrieve');
     Route::get('/vendors/detail/{id}', 'VendorController@show')->name('vendor.detail')->middleware('can:vendorsupdate');
-    Route::post('/vendors/destroy', 'VendorController@destroy')->name('vendor.destroy')->middleware('can:vendorsdelete');
+    Route::post('/vendors/destroy', 'VendorController@destroy')->name('vendor.destroy')->middleware('can:vendorsdestroy');
     Route::get('/vendors/printable', 'VendorController@printable')->name('vendor.printable');
     Route::post('/vendors/table', 'VendorController@table')->name('vendor.table');
     Route::post('/vendors/list', 'VendorController@getList')->name('vendor.list');
@@ -78,7 +78,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/customer/create', 'CustomerController@create')->name('customer.create')->middleware('can:customercreate');
     Route::get('/customer/view/{id}', 'CustomerController@show')->name('customer.view')->middleware('can:customerretrieve');
     Route::get('/customer/detail/{id}', 'CustomerController@show')->name('customer.detail')->middleware('can:customerupdate');
-    Route::post('/customer/destroy', 'CustomerController@destroy')->name('customer.destroy')->middleware('can:customerdelete');
+    Route::post('/customer/destroy', 'CustomerController@destroy')->name('customer.destroy')->middleware('can:customerdestroy');
     Route::get('/customer/printable', 'CustomerController@printable')->name('customer.printable');
     Route::post('/customer/table', 'CustomerController@table')->name('customer.table');
     Route::post('/customer/list', 'CustomerController@getList')->name('customer.list');
@@ -89,7 +89,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/products/create', 'ProductController@create')->name('product.create')->middleware('can:productscreate');
     Route::get('/product/view/{id}', 'ProductController@show')->name('product.view')->middleware('can:productsretrieve');
     Route::get('/product/detail/{id}', 'ProductController@show')->name('product.detail')->middleware('can:productsupdate');
-    Route::post('/product/destroy', 'ProductController@destroy')->name('product.destroy')->middleware('can:productsdelete');
+    Route::post('/product/destroy', 'ProductController@destroy')->name('product.destroy')->middleware('can:productsdestroy');
     Route::post('/product/find', 'ProductController@findProduct')->name('product.find')->middleware('can:productsupdate');
     Route::post('/products/table', 'ProductController@table')->name('product.table');
     Route::post('/product/list', 'ProductController@getList')->name('product.list');
@@ -111,7 +111,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/users', 'UserController@index')->name('users')->middleware('can:useraccounts');
     Route::get('/user/detail/{id}', 'UserController@show')->name('user.detail')->middleware('can:useraccountsupdate');
     Route::get('/user/create', 'UserController@create')->name('user.create')->middleware('can:useraccountscreate');
-    Route::post('/user/destroy', 'UserController@destroy')->name('user.destroy')->middleware('can:useraccountsdelete');
+    Route::post('/user/destroy', 'UserController@destroy')->name('user.destroy')->middleware('can:useraccountsdestroy');
     Route::post('/user/change/pass', 'UserController@changePass')->name('user.change.pass')->middleware('can:useraccountschangepass');
     Route::post('/user/assign', 'UserController@assignUserRole')->name('user.assign')->middleware('can:userassign');
     Route::post('/users/table', 'UserController@table')->name('user.table');
@@ -123,7 +123,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/role', 'SecurityController@roles')->name('role')->middleware('can:securityview');
     Route::get('/role/create', 'SecurityController@create')->name('role.create')->middleware('can:securitycreate');
     Route::get('/role/detail/{id}', 'SecurityController@show')->name('role.detail')->middleware('can:securityupdate');
-    Route::post('/role/destroy', 'SecurityController@destroy')->name('role.destroy')->middleware('can:securitydelete');
+    Route::post('/role/destroy', 'SecurityController@destroy')->name('role.destroy')->middleware('can:securitydestroy');
     Route::post('/role/table', 'SecurityController@table')->name('role.table');
     Route::post('/role/store', 'SecurityController@store')->name('role.store');
     Route::post('/role/abilities', 'SecurityController@update')->name('role.abilities');
@@ -131,7 +131,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/orderform', 'OrderFormController@index')->name('orderform')->middleware('can:orderform');
     Route::get('/orderform/view/{id}', 'OrderFormController@show')->name('orderform.view')->middleware('can:orderformretrieve');
     Route::get('/orderform/create', 'OrderFormController@create')->name('orderform.create')->middleware('can:orderformcreate');
-    Route::post('/orderform/destroy', 'OrderFormController@destroy')->name('orderform.destroy')->middleware('can:orderformdelete');
+    Route::post('/orderform/destroy', 'OrderFormController@destroy')->name('orderform.destroy')->middleware('can:orderformdestroy');
     Route::post('/orderform/table', 'OrderFormController@table')->name('orderform.table');
     Route::post('/orderform/store', 'OrderFormController@store')->name('orderform.store');
 
@@ -150,5 +150,4 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/pricelist/destroy', 'PriceListController@destroy')->name('pricelist.destroy')->middleware('can:pricelistdestroy');
     Route::get('/download/pricelist/{id}', 'PriceListController@download')->name('pricelist.download');
     Route::post('/pricelist/table', 'PriceListController@table')->name('pricelist.table');
-    Route::post('/pricelist/destroy', 'PriceListController@destroy')->name('pricelist.destroy')->middleware('can:orderformdelete');
 });
