@@ -37,7 +37,7 @@ class SupplyController extends Controller
                                  product_id
                                  FROM product_details 
                                  WHERE sales_order_id IS NULL  
-                                 and deleted_at IS NULL) as po_sum'),
+                                 and deleted_at IS NULL group by product_id) as po_sum'),
                              'po_sum.product_id', '=', 'supplies.product_id'
                          )
                          ->leftJoin(
@@ -46,7 +46,7 @@ class SupplyController extends Controller
                                  product_id
                                  FROM product_details 
                                  WHERE purchase_order_id IS NULL 
-                                 and deleted_at IS NULL) as so_sum'),
+                                 and deleted_at IS NULL group by product_id) as so_sum'),
                              'so_sum.product_id', '=', 'supplies.product_id'
                          );
 
