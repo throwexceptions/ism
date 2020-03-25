@@ -7071,3 +7071,7 @@ body {
   }
 }
 
+.sidebar .sidebar-brand {
+  height: 7.375rem;
+}
+
