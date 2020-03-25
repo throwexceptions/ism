@@ -189,13 +189,13 @@ const app = new Vue({
                     data: function(value){
                         return '<a href="#" class="links-btn-po btn btn-sm btn-primary">' + value.po_count + '</a>';
                     },
-                    bSortable:false,bSearchable:false, title: 'PO'
+                    name: 'po_sum.total', title: 'PO'
                 },
                 {
                     data: function(value){
                         return '<a href="#" class="links-btn-so btn btn-sm btn-primary">' + value.so_count + '</a>';
                     },
-                    bSortable:false,bSearchable:false, title: 'SO'
+                    name: 'so_sum.total', title: 'SO'
                 },
             ],
             drawCallback: function () {
