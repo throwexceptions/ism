@@ -72,10 +72,10 @@
                                 <div class="form-group">
                                     <label class="control-label">Pick a status</label>
                                     <select class="form-control" v-model="overview.payment_status">
-                                            <option value="">-- Select Options --</option>
-                                            <option value="PAID">PAID</option>
-                                            <option value="UNPAID">UNPAID</option>
-                                            <option value="PAID WITH BALANCE">PAID WITH BALANCE</option>
+                                        <option value="">-- Select Options --</option>
+                                        <option value="PAID">PAID</option>
+                                        <option value="UNPAID">UNPAID</option>
+                                        <option value="PAID WITH BALANCE">PAID WITH BALANCE</option>
                                     </select>
                                 </div>
                             </div>
@@ -205,7 +205,7 @@
                     columns: [
                         {
                             data: function (value) {
-                                if(value.status == 'Ordered') {
+                                if (value.status == 'Ordered') {
                                     edit = '<a href="/purchase/detail/' + value.id + '" class="btn btn-info btn-view"><i class="fa fa-pen"></i></a>';
                                 } else {
                                     edit = '';
@@ -221,7 +221,7 @@
                             title: 'Action'
                         },
                         {
-                            data: function(value){
+                            data: function (value) {
                                 return '<div class="btn-group btn-group-sm shadow-sm" role="group" aria-label="Basic example">' +
                                     '<a href="#" class="btn btn-info btn-vat">' + value.vat_type + '</a>' +
                                     '</div>'
@@ -246,6 +246,14 @@
                         {data: 'vendor_name', name: 'vendors.name', title: 'Vendor Name'},
                         {data: 'grand_total', name: 'summaries.grand_total', title: 'Total Amount'},
                         {data: 'name', name: 'users.name', title: 'Assigned To'},
+                        {
+                            data: function (value) {
+                                if(value.status == 'Received') {
+                                    return value.updated_at
+                                }
+                                return 'No Date'
+                            }, name: 'purchase_infos.updated_at', title: 'Received Date'
+                        },
                         {data: 'created_at', name: 'purchase_infos.created_at', title: 'Date Created'},
                     ],
                     drawCallback: function () {

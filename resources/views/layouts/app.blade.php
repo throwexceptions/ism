@@ -20,7 +20,8 @@
 
 </head>
 
-<body class="bg-gradient-warning" >
+{{--<body class="bg-gradient-warning" >--}}
+<body>
 
 <div id="app" class="container">
     @yield('content')
