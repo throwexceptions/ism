@@ -425,7 +425,18 @@ class SalesOrderController extends Controller
             $hold[] = $value;
         }
         $product_details = collect($hold);
-        $summary         = Summary::query()->where('sales_order_id', $id)->get()[0];
+        $summary = collect([
+            'purchase_order_id' => '',
+            'sales_order_id' => '',
+            'discount' => '0',
+            'sub_total' => '0',
+            'shipping' => '0',
+            'sales_tax' => '0',
+            'grand_total' => '0',
+        ]);
+        if(Summary::query()->where('sales_order_id', $id)->count() > 0) {
+            $summary = Summary::query()->where('sales_order_id', $id)->get()[0];
+        }
 
         return [
             'sales_order'     => $sales_order,
