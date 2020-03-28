@@ -101,7 +101,6 @@ class SalesOrderController extends Controller
 
             foreach ($data['products'] as $item) {
                 if ('Shipped' == $data['overview']['status']) {
-                    DB::table('product_details')->insert($item);
                     if(Product::isLimited($item['product_id'])) {
                         Supply::decreCount($item['product_id'], $item['qty']);
                     }
