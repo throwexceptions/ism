@@ -183,7 +183,7 @@
                     scrollX: true,
                     responsive: true,
                     pageLength: 100,
-                    order: [[1, 'desc']],
+                    order: [[3, 'desc']],
                     ajax: {
                         url: "{{ route('sales.table') }}",
                         method: "POST",
