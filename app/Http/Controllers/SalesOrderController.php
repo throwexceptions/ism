@@ -83,7 +83,7 @@ class SalesOrderController extends Controller
         $data = $request->input();
 
         $data['overview']['assigned_to'] = auth()->user()->id;
-        $data['overview']['created_at']  = Carbon::now()->format('Y-m-d');
+        $data['overview']['created_at']  = Carbon::now()->format('Y-m-d H:i:s');
 
         $id = DB::table('sales_orders')->insertGetId($data['overview']);
 
@@ -120,10 +120,7 @@ class SalesOrderController extends Controller
         unset($data['overview']['unit']);
         unset($data['overview']['customer_name']);
 
-        DB::table('sales_orders')->where('id', $data['overview']['id'])
-          ->update($data['overview']);
-
-        // Update Purchase Order Info
+        // Update Sales Order Info
         SalesOrder::updateInfo($data['overview']);
 
         // Reset supply count based on current product details
