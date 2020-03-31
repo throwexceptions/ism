@@ -34,19 +34,21 @@ class ProductController extends Controller
     public function create()
     {
         $product = collect([
-            "manual_id"    => "",
-            "name"         => "",
-            "code"         => "",
-            "category"     => "",
-            "manufacturer" => "",
-            "unit"         => "",
-            "description"  => "",
-            "assigned_to"  => "",
-            "batch"        => "",
-            "color"        => "",
-            "size"         => "",
-            "weight"       => "",
-            "type"         => "limited",
+            "manual_id"     => "",
+            "name"          => "",
+            "code"          => "",
+            "category"      => "",
+            "manufacturer"  => "",
+            "unit"          => "",
+            "description"   => "",
+            "assigned_to"   => "",
+            "batch"         => "",
+            "color"         => "",
+            "size"          => "",
+            "weight"        => "",
+            "type"          => "limited",
+            "selling_price" => "0",
+            "vendor_price"  => "0",
         ]);
 
         $gallery = collect([]);
@@ -65,9 +67,9 @@ class ProductController extends Controller
     public function findProduct(Request $request)
     {
         $product = DB::table('products')
-            ->selectRaw('products.*, supplies.quantity')
-            ->join('supplies', 'supplies.product_id', '=', 'products.id')
-            ->where('products.id', $request->product_id);
+                     ->selectRaw('products.*, supplies.quantity')
+                     ->join('supplies', 'supplies.product_id', '=', 'products.id')
+                     ->where('products.id', $request->product_id);
 
         return collect($product->get()[0]);
     }
@@ -76,7 +78,7 @@ class ProductController extends Controller
     {
         $product = Product::query()
                           ->selectRaw("id as id, name as text")
-                          ->whereRaw("upper(name) like '%".strtoupper($request->term)."%'");
+                          ->whereRaw("upper(name) like '%" . strtoupper($request->term) . "%'");
 
         if ($request->category != '') {
             $product->where('category', $request->category);
