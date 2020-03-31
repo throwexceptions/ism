@@ -37,7 +37,7 @@
                         <div class="row">
                             <div class="col-md-4" v-for="link in links">
                                 <div class="form-group">
-                                    <a v-bind:href="link.link" target="_blank" class="btn btn-link">@{{ link.number }}</a>
+                                    <a v-bind:href="url + link.link" target="_blank" class="btn btn-link">@{{ link.number }}</a>
                                 </div>
                             </div>
                         </div>
@@ -93,7 +93,8 @@ const app = new Vue({
                 message: "",
                 quantity: 0,
             },
-            links: []
+            links: [],
+            url: ''
         }
     },
     methods: {
@@ -130,6 +131,7 @@ const app = new Vue({
                 data: $this.overview,
                 success: function(value){
                     $this.links = value;
+                    $this.url = '/purchase/view/'
                 }
             })
         },
@@ -142,6 +144,7 @@ const app = new Vue({
                 data: $this.overview,
                 success: function(value){
                     $this.links = value;
+                    $this.url = '/sales/view/'
                 }
             });
         },

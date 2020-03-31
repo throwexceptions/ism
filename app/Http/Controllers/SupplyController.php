@@ -102,7 +102,7 @@ class SupplyController extends Controller
     public function getPOLinks(Request $request)
     {
         $links = DB::table('product_details')
-                   ->selectRaw('DISTINCT \'/purchase/view/\'||purchase_order_id as link, 
+                   ->selectRaw('DISTINCT purchase_order_id as link, 
             purchase_infos.po_no  as number')
                    ->join('purchase_infos', 'purchase_infos.id', 'purchase_order_id')
                    ->where('product_id', $request->product_id)
@@ -115,7 +115,7 @@ class SupplyController extends Controller
     public function getSOLinks(Request $request)
     {
         $links = DB::table('product_details')
-                   ->selectRaw('DISTINCT \'/sales/view/\'||sales_order_id as link, 
+                   ->selectRaw('DISTINCT sales_order_id as link, 
             sales_orders.so_no as number')
                    ->join('sales_orders', 'sales_orders.id', 'sales_order_id')
                    ->where('product_id', $request->product_id)
