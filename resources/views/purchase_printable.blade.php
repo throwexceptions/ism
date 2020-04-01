@@ -195,7 +195,7 @@ body {
 									}}</td>
 							</tr>
 							<tr>
-								<td align="right"><strong>SALES PCT</strong></td>
+								<td align="right"><strong>SALES %</strong></td>
 								<td style="padding-left: 10px !important">{{ $summary->sales_tax }}</td>
 							</tr>
 							<tr>
