@@ -421,6 +421,7 @@ class SalesOrderController extends Controller
             $hold[] = $value;
         }
         $product_details = collect($hold);
+
         $summary = collect([
             'purchase_order_id' => '',
             'sales_order_id' => '',

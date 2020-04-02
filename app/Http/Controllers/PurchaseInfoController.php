@@ -361,6 +361,16 @@ class PurchaseInfoController extends Controller
 
         $product_details = collect($hold);
 
+        $summary = collect([
+            'purchase_order_id' => '',
+            'sales_order_id' => '',
+            'discount' => '0',
+            'sub_total' => '0',
+            'shipping' => '0',
+            'sales_tax' => '0',
+            'grand_total' => '0',
+        ]);
+
         if(Summary::query()->where('purchase_order_id', $id)->count() > 0) {
             $summary = Summary::query()->where('purchase_order_id', $id)->get()[0];
         }
