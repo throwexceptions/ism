@@ -430,6 +430,7 @@ class SalesOrderController extends Controller
             'sales_tax' => '0',
             'grand_total' => '0',
         ]);
+
         if(Summary::query()->where('sales_order_id', $id)->count() > 0) {
             $summary = Summary::query()->where('sales_order_id', $id)->get()[0];
         }
