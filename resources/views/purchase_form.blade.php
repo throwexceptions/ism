@@ -391,10 +391,10 @@
                 },
                 'summary.sales_tax': function(value){
                     this.grandTotal()
-                }, 
+                },
                 'summary.shipping': function(value){
                     this.grandTotal()
-                }, 
+                },
             },
             methods: {
                 grandTotal() {
@@ -489,7 +489,6 @@
                                     category: value.category
                                 }
                             );
-                            $('.select2-product').val(null).trigger('change');
                         }
                     });
                 },
