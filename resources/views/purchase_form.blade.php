@@ -466,19 +466,21 @@
                 },
                 addRow() {
                     var $this = this;
+                    var prod_id = $('.select2-product').find(':selected').val();
+                    var prod_name = $('.select2-product').find(':selected').text();
                     $.ajax({
                         url: '{{route('product.find')}}',
                         method: 'POST',
                         data: {
-                            product_id: $('.select2-product').find(':selected').val()
+                            product_id: prod_id
                         },
                         success: function (value) {
                             $this.selling_price = parseFloat(value.selling_price);
                             $this.vendor_price = parseFloat(value.vendor_price);
                             $this.products.push(
                                 {
-                                    product_id: $('.select2-product').find(':selected').val(),
-                                    product_name: $('.select2-product').find(':selected').text(),
+                                    product_id: prod_id,
+                                    product_name: prod_name,
                                     notes: '',
                                     quantity: value.quantity,
                                     qty: 0,
@@ -489,6 +491,7 @@
                                     category: value.category
                                 }
                             );
+                            $('.select2-product').val(null).trigger('change');
                         }
                     });
                 },
