@@ -67,7 +67,7 @@ class ProductController extends Controller
     public function findProduct(Request $request)
     {
         $product = DB::table('products')
-                     ->selectRaw('products.*, supplies.quantity')
+                     ->selectRaw('products.*, supplies.quantity, supplies.product_id')
                      ->join('supplies', 'supplies.product_id', '=', 'products.id')
                      ->where('products.id', $request->product_id);
 

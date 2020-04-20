@@ -467,7 +467,6 @@
                 addRow() {
                     var $this = this;
                     var prod_id = $('.select2-product').find(':selected').val();
-                    var prod_name = $('.select2-product').find(':selected').text();
                     $.ajax({
                         url: '{{route('product.find')}}',
                         method: 'POST',
@@ -475,18 +474,16 @@
                             product_id: prod_id
                         },
                         success: function (value) {
-                            $this.selling_price = parseFloat(value.selling_price);
-                            $this.vendor_price = parseFloat(value.vendor_price);
                             $this.products.push(
                                 {
-                                    product_id: prod_id,
-                                    product_name: prod_name,
+                                    product_id: value.product_id,
+                                    product_name: value.name,
                                     notes: '',
                                     quantity: value.quantity,
                                     qty: 0,
-                                    selling_price: $this.selling_price,
+                                    selling_price: value.selling_price,
                                     labor_cost: 0,
-                                    vendor_price: $this.vendor_price,
+                                    vendor_price: value.vendor_price,
                                     discount_item: 0,
                                     category: value.category
                                 }
