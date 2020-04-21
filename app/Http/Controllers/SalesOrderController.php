@@ -26,7 +26,7 @@ class SalesOrderController extends Controller
     public function table()
     {
         $vendors = SalesOrder::query()
-                             ->selectRaw('sales_orders.*, users.name as username, customers.name as customer_name, 
+                             ->selectRaw('sales_orders.*, users.name as username, customers.name as customer_name,
                              summaries.grand_total')
                              ->leftJoin('summaries', 'summaries.sales_order_id', '=', 'sales_orders.id')
                              ->leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')
@@ -100,9 +100,11 @@ class SalesOrderController extends Controller
             }
 
             foreach ($data['products'] as $item) {
-                if ('Shipped' == $data['overview']['status']) {
-                    if(Product::isLimited($item['product_id'])) {
-                        Supply::decreCount($item['product_id'], $item['qty']);
+                if (count($item) > 2) {
+                    if ('Shipped' == $data['overview']['status']) {
+                        if (Product::isLimited($item['product_id'])) {
+                            Supply::decreCount($item['product_id'], $item['qty']);
+                        }
                     }
                 }
             }
