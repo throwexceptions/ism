@@ -107,6 +107,7 @@ class PurchaseInfoController extends Controller
                 }
             }
 
+
             foreach ($data['products'] as $item) {
                 if (count($item) > 2) {
                     if ('Received' == $data['overview']['status']) {
@@ -214,10 +215,14 @@ class PurchaseInfoController extends Controller
             $product_detail = DB::table('product_details')->where('purchase_order_id', $data['id'])->get();
             foreach ($product_detail as $value) {
                 if ('Ordered' == $data['status']) {
-                    Supply::decreCount($value->product_id, $value->qty);
+                    if (Product::isLimited($value['product_id'])) {
+                        Supply::decreCount($value->product_id, $value->qty);
+                    }
                 }
                 if ('Received' == $data['status']) {
-                    Supply::increCount($value->product_id, $value->qty);
+                    if (Product::isLimited($value['product_id'])) {
+                        Supply::increCount($value->product_id, $value->qty);
+                    }
                 }
             }
 
