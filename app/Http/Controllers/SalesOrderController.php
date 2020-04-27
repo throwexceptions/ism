@@ -26,11 +26,11 @@ class SalesOrderController extends Controller
     public function table()
     {
         $vendors = SalesOrder::query()
-                             ->selectRaw('sales_orders.*, users.name as username, customers.name as customer_name,
+            ->selectRaw('sales_orders.*, users.name as username, customers.name as customer_name,
                              summaries.grand_total')
-                             ->leftJoin('summaries', 'summaries.sales_order_id', '=', 'sales_orders.id')
-                             ->leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')
-                             ->join('users', 'users.id', '=', 'sales_orders.assigned_to');
+            ->leftJoin('summaries', 'summaries.sales_order_id', '=', 'sales_orders.id')
+            ->leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')
+            ->join('users', 'users.id', '=', 'sales_orders.assigned_to');
 
         return DataTables::of($vendors)->make(true);
     }
@@ -43,36 +43,36 @@ class SalesOrderController extends Controller
     public function create()
     {
         $sales_order = collect([
-            "id"             => "",
-            "subject"        => "",
-            "customer_id"    => "",
-            "owner"          => "",
-            "so_no"          => SalesOrder::generate()->newSONo(),
-            "agent"          => auth()->user()->name,
-            "assigned_to"    => "",
-            "fax"            => "",
-            "status"         => "Quote",
-            "address"        => "",
-            "due_date"       => "",
+            "id" => "",
+            "subject" => "",
+            "customer_id" => "",
+            "owner" => "",
+            "so_no" => SalesOrder::generate()->newSONo(),
+            "agent" => auth()->user()->name,
+            "assigned_to" => "",
+            "fax" => "",
+            "status" => "Quote",
+            "address" => "",
+            "due_date" => "",
             "payment_method" => "",
             "payment_status" => "PAID",
-            "account_name"   => Preference::status('account_name'),
-            "account_no"     => Preference::status('account_no'),
-            "tac"            => Preference::status('tac_so_fill'),
-            "phone"          => "",
-            "vat_type"       => "VAT EX",
+            "account_name" => Preference::status('account_name'),
+            "account_no" => Preference::status('account_no'),
+            "tac" => Preference::status('tac_so_fill'),
+            "phone" => "",
+            "vat_type" => "VAT EX",
         ]);
 
         $product_details = collect([]);
 
         $summary = collect([
-            "id"             => "",
+            "id" => "",
             "sales_order_id" => "",
-            "discount"       => "0",
-            "shipping"       => "0",
-            "sales_actual"   => "0",
-            "sales_tax"      => "0",
-            "grand_total"    => "0",
+            "discount" => "0",
+            "shipping" => "0",
+            "sales_actual" => "0",
+            "sales_tax" => "0",
+            "grand_total" => "0",
         ]);
 
         return view('sales_form', compact('sales_order', 'product_details', 'summary'));
@@ -83,7 +83,7 @@ class SalesOrderController extends Controller
         $data = $request->input();
 
         $data['overview']['assigned_to'] = auth()->user()->id;
-        $data['overview']['created_at']  = Carbon::now()->format('Y-m-d H:i:s');
+        $data['overview']['created_at'] = Carbon::now()->format('Y-m-d H:i:s');
 
         $id = DB::table('sales_orders')->insertGetId($data['overview']);
 
@@ -171,7 +171,7 @@ class SalesOrderController extends Controller
         // Reset supply count based on current product details
         $product_details = ProductDetail::fetchDataSO($request->id);
         foreach ($product_details as $item) {
-            if('Shipped' == $request->status) {
+            if ('Shipped' == $request->status) {
                 if (Product::isLimited($item['product_id'])) {
                     Supply::increCount($item['product_id'], $item['qty']);
                 }
@@ -187,12 +187,12 @@ class SalesOrderController extends Controller
 
     public function updateStatus(Request $request)
     {
-        $data          = $request->input();
+        $data = $request->input();
         $purchase_info = DB::table('sales_orders')->where('id', $data['id'])->get()[0];
 
         if ($purchase_info->status != $data['status']) {
             DB::table('sales_orders')->where('id', $data['id'])
-              ->update(['status' => $data['status']]);
+                ->update(['status' => $data['status']]);
 
             $product_detail = DB::table('product_details')->where('sales_order_id', $data['id'])->get();
             foreach ($product_detail as $value) {
@@ -208,13 +208,13 @@ class SalesOrderController extends Controller
         }
         if ($purchase_info->vat_type != $data['vat_type']) {
             DB::table('sales_orders')->where('id', $data['id'])
-              ->update(['vat_type' => $data['vat_type']]);
+                ->update(['vat_type' => $data['vat_type']]);
 
             return ['success' => true];
         }
         if ($purchase_info->payment_status != $data['payment_status']) {
             DB::table('sales_orders')->where('id', $data['id'])
-              ->update(['payment_status' => $data['payment_status']]);
+                ->update(['payment_status' => $data['payment_status']]);
 
             return ['success' => true];
         }
@@ -224,22 +224,22 @@ class SalesOrderController extends Controller
 
     public function show($id)
     {
-        $data            = $this->getOverview($id);
-        $sales_order     = $data['sales_order'];
+        $data = $this->getOverview($id);
+        $sales_order = $data['sales_order'];
         $product_details = $data['product_details'];
-        $summary         = $data['summary'];
+        $summary = $data['summary'];
 
         return view('sales_form', compact('sales_order', 'product_details', 'summary'));
     }
 
     public function printable($id)
     {
-        $data            = $this->getOverview($id);
-        $sales_order     = $data['sales_order'];
+        $data = $this->getOverview($id);
+        $sales_order = $data['sales_order'];
         $product_details = $data['product_details'];
-        $summary         = $data['summary'];
-        $sections        = [];
-        $cnt             = -1;
+        $summary = $data['summary'];
+        $sections = [];
+        $cnt = -1;
         foreach ($product_details as $key => $value) {
             if (count($value) == 1) {
                 $sections[] = [
@@ -250,8 +250,8 @@ class SalesOrderController extends Controller
                 if ($cnt == -1) {
                     $cnt = 0;
                 }
-                $total_selling                      = $value['qty'] * $value['selling_price'];
-                $total_labor                        = $value['qty'] * $value['labor_cost'];
+                $total_selling = $value['qty'] * $value['selling_price'];
+                $total_labor = $value['qty'] * $value['labor_cost'];
                 $sections[$cnt][$value['category']] += $total_labor + ($total_selling - ($total_selling * ($value['discount_item'] / 100)));
             }
         }
@@ -266,10 +266,10 @@ class SalesOrderController extends Controller
 
         $pdf = PDF::loadView('sales_printable',
             [
-                'sales_order'     => $sales_order,
+                'sales_order' => $sales_order,
                 'product_details' => $product_details,
-                'summary'         => $summary,
-                'sections'        => $sections,
+                'summary' => $summary,
+                'sections' => $sections,
             ]);
 
         return $pdf->setPaper('a4')->download('SO ' . $sales_order["so_no"] . ' ' . $sales_order["customer_name"] . '.pdf');
@@ -277,12 +277,12 @@ class SalesOrderController extends Controller
 
     public function quote($id)
     {
-        $data            = $this->getOverview($id);
-        $sales_order     = $data['sales_order'];
+        $data = $this->getOverview($id);
+        $sales_order = $data['sales_order'];
         $product_details = $data['product_details'];
-        $summary         = $data['summary'];
-        $sections        = [];
-        $cnt             = -1;
+        $summary = $data['summary'];
+        $sections = [];
+        $cnt = -1;
         foreach ($product_details as $key => $value) {
             if (count($value) == 1) {
                 $sections[] = [
@@ -290,8 +290,8 @@ class SalesOrderController extends Controller
                 ];
                 $cnt++;
             } else {
-                $total_selling                      = $value['qty'] * $value['selling_price'];
-                $total_labor                        = $value['qty'] * $value['labor_cost'];
+                $total_selling = $value['qty'] * $value['selling_price'];
+                $total_labor = $value['qty'] * $value['labor_cost'];
                 $sections[$cnt][$value['category']] += $total_labor + ($total_selling - ($total_selling * ($value['discount_item'] / 100)));
             }
         }
@@ -306,24 +306,24 @@ class SalesOrderController extends Controller
 
         $pdf = PDF::loadView('quote_printable',
             [
-                'sales_order'     => $sales_order,
+                'sales_order' => $sales_order,
                 'product_details' => $product_details,
-                'summary'         => $summary,
-                'sections'        => $sections,
+                'summary' => $summary,
+                'sections' => $sections,
             ]);
 
         return $pdf->setPaper('a4')
-                   ->download('QTN ' . $sales_order["so_no"] . ' ' . $sales_order["customer_name"] . '.pdf');
+            ->download('QTN ' . $sales_order["so_no"] . ' ' . $sales_order["customer_name"] . '.pdf');
     }
 
     public function deliver($id)
     {
-        $data            = $this->getOverview($id);
-        $sales_order     = $data['sales_order'];
+        $data = $this->getOverview($id);
+        $sales_order = $data['sales_order'];
         $product_details = $data['product_details'];
-        $summary         = $data['summary'];
-        $sections        = [];
-        $cnt             = -1;
+        $summary = $data['summary'];
+        $sections = [];
+        $cnt = -1;
         foreach ($product_details as $key => $value) {
             if (count($value) == 1) {
                 $sections[] = [
@@ -331,8 +331,8 @@ class SalesOrderController extends Controller
                 ];
                 $cnt++;
             } else {
-                $total_selling                      = $value['qty'] * $value['selling_price'];
-                $total_labor                        = $value['qty'] * $value['labor_cost'];
+                $total_selling = $value['qty'] * $value['selling_price'];
+                $total_labor = $value['qty'] * $value['labor_cost'];
                 $sections[$cnt][$value['category']] += $total_labor + ($total_selling - ($total_selling * ($value['discount_item'] / 100)));
             }
         }
@@ -347,10 +347,10 @@ class SalesOrderController extends Controller
 
         $pdf = PDF::loadView('dr_printable',
             [
-                'sales_order'     => $sales_order,
+                'sales_order' => $sales_order,
                 'product_details' => $product_details,
-                'summary'         => $summary,
-                'sections'        => $sections,
+                'summary' => $summary,
+                'sections' => $sections,
             ]);
 
         return $pdf->setPaper('a4')->download('DR ' . $sales_order["so_no"] . ' ' . $sales_order["customer_name"] . '.pdf');
@@ -358,13 +358,13 @@ class SalesOrderController extends Controller
 
     public function previewSO($id)
     {
-        $data            = $this->getOverview($id);
-        $sales_order     = $data['sales_order'];
+        $data = $this->getOverview($id);
+        $sales_order = $data['sales_order'];
         $product_details = $data['product_details'];
-        $summary         = $data['summary'];
+        $summary = $data['summary'];
 
         $sections = [];
-        $cnt      = -1;
+        $cnt = -1;
         foreach ($product_details as $key => $value) {
             if (count($value) == 1) {
                 $sections[] = [
@@ -372,8 +372,8 @@ class SalesOrderController extends Controller
                 ];
                 $cnt++;
             } else {
-                $total_selling                      = $value['qty'] * $value['selling_price'];
-                $total_labor                        = $value['qty'] * $value['labor_cost'];
+                $total_selling = $value['qty'] * $value['selling_price'];
+                $total_labor = $value['qty'] * $value['labor_cost'];
                 $sections[$cnt][$value['category']] += $total_labor + ($total_selling - ($total_selling * ($value['discount_item'] / 100)));
             }
         }
@@ -392,23 +392,23 @@ class SalesOrderController extends Controller
     public function getOverview($id)
     {
         $sales_order = SalesOrder::query()
-                                 ->selectRaw('sales_orders.*, IFNULL(customers.name, \'\') as customer_name')
-                                 ->leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')
-                                 ->where('sales_orders.id', $id)
-                                 ->get()[0];
+            ->selectRaw('sales_orders.*, IFNULL(customers.name, \'\') as customer_name')
+            ->leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')
+            ->where('sales_orders.id', $id)
+            ->get()[0];
 
         $product_details = ProductDetail::query()
-                                        ->selectRaw('products.code, products.category, products.unit, products.manual_id, product_details.*, supplies.quantity')
-                                        ->where('sales_order_id', $id)
-                                        ->join('products', 'products.id', 'product_details.product_id')
-                                        ->join('supplies', 'supplies.product_id', 'product_details.product_id')
-                                        ->get();
+            ->selectRaw('products.code, products.category, products.unit, products.manual_id, product_details.*, supplies.quantity')
+            ->where('sales_order_id', $id)
+            ->join('products', 'products.id', 'product_details.product_id')
+            ->join('supplies', 'supplies.product_id', 'product_details.product_id')
+            ->get();
 
         $category = '';
-        $hold     = [];
+        $hold = [];
         foreach ($product_details->toArray() as $value) {
             if ($value['category'] != $category) {
-                $hold[]   = ['category' => $value['category']];
+                $hold[] = ['category' => $value['category']];
                 $category = $value['category'];
             }
             unset($value['name']);
@@ -434,37 +434,37 @@ class SalesOrderController extends Controller
             'grand_total' => '0',
         ]);
 
-        if(Summary::query()->where('sales_order_id', $id)->count() > 0) {
+        if (Summary::query()->where('sales_order_id', $id)->count() > 0) {
             $summary = Summary::query()->where('sales_order_id', $id)->get()[0];
         }
 
         return [
-            'sales_order'     => $sales_order,
+            'sales_order' => $sales_order,
             'product_details' => $product_details,
-            'summary'         => $summary,
+            'summary' => $summary,
         ];
     }
 
     public function converToRoman($num)
     {
-        $n   = intval($num);
+        $n = intval($num);
         $res = '';
 
         //array of roman numbers
         $romanNumber_Array = [
-            'M'  => 1000,
+            'M' => 1000,
             'CM' => 900,
-            'D'  => 500,
+            'D' => 500,
             'CD' => 400,
-            'C'  => 100,
+            'C' => 100,
             'XC' => 90,
-            'L'  => 50,
+            'L' => 50,
             'XL' => 40,
-            'X'  => 10,
+            'X' => 10,
             'IX' => 9,
-            'V'  => 5,
+            'V' => 5,
             'IV' => 4,
-            'I'  => 1,
+            'I' => 1,
         ];
 
         foreach ($romanNumber_Array as $roman => $number) {
@@ -485,9 +485,9 @@ class SalesOrderController extends Controller
     public function getListShipped(Request $request)
     {
         $sales_order = SalesOrder::query()
-                                 ->selectRaw("id as id, so_no as text")
-                                 ->where('status', 'Shipped')
-                                 ->whereRaw("so_no LIKE '%{$request->term}%'");
+            ->selectRaw("id as id, so_no as text")
+            ->where('status', 'Shipped')
+            ->whereRaw("so_no LIKE '%{$request->term}%'");
 
         return [
             "results" => $sales_order->get(),

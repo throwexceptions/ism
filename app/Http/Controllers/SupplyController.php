@@ -23,11 +23,12 @@ class SupplyController extends Controller
 
     public function table()
     {
-        $vendors = Supply::query()
-                         ->selectRaw('supplies.*, users.name as username, 
-                         products.name as product_name, products.manual_id, 
+        Supply::recalibrate();
+        $supplies = Supply::query()
+                         ->selectRaw('supplies.*, users.name as username,
+                         products.name as product_name, products.manual_id,
                          products.selling_price,
-                         ifnull(po_sum.total, 0) as po_count, 
+                         ifnull(po_sum.total, 0) as po_count,
                          ifnull(so_sum.total, 0) as so_count')
                          ->join('products', 'products.id', '=', 'supplies.product_id')
                          ->join('users', 'users.id', '=', 'supplies.assigned_to')
@@ -35,8 +36,8 @@ class SupplyController extends Controller
                              DB::raw(
                                  '(SELECT COUNT(id) as total,
                                  product_id
-                                 FROM product_details 
-                                 WHERE sales_order_id IS NULL  
+                                 FROM product_details
+                                 WHERE sales_order_id IS NULL
                                  and deleted_at IS NULL group by product_id) as po_sum'),
                              'po_sum.product_id', '=', 'supplies.product_id'
                          )
@@ -44,13 +45,13 @@ class SupplyController extends Controller
                              DB::raw(
                                  '(SELECT COUNT(id) as total,
                                  product_id
-                                 FROM product_details 
-                                 WHERE purchase_order_id IS NULL 
+                                 FROM product_details
+                                 WHERE purchase_order_id IS NULL
                                  and deleted_at IS NULL group by product_id) as so_sum'),
                              'so_sum.product_id', '=', 'supplies.product_id'
                          );
 
-        return DataTables::of($vendors)->make(true);
+        return DataTables::of($supplies)->make(true);
     }
 
     /**
@@ -102,7 +103,7 @@ class SupplyController extends Controller
     public function getPOLinks(Request $request)
     {
         $links = DB::table('product_details')
-                   ->selectRaw('DISTINCT purchase_order_id as link, 
+                   ->selectRaw('DISTINCT purchase_order_id as link,
             purchase_infos.po_no  as number')
                    ->join('purchase_infos', 'purchase_infos.id', 'purchase_order_id')
                    ->where('product_id', $request->product_id)
@@ -115,7 +116,7 @@ class SupplyController extends Controller
     public function getSOLinks(Request $request)
     {
         $links = DB::table('product_details')
-                   ->selectRaw('DISTINCT sales_order_id as link, 
+                   ->selectRaw('DISTINCT sales_order_id as link,
             sales_orders.so_no as number')
                    ->join('sales_orders', 'sales_orders.id', 'sales_order_id')
                    ->where('product_id', $request->product_id)
