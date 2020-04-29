@@ -30,7 +30,7 @@ class Supply extends Model
 
         foreach ($data as $value) {
             $real_val = 0 ;
-            if($value['type']) {
+            if($value['type'] == 'limited') {
                 $so = DB::table('sales_orders')
                     ->join('product_details', 'product_details.sales_order_id', '=', 'sales_orders.id')
                     ->where('sales_orders.status', 'Shipped')
