@@ -68,10 +68,6 @@ class ProductReturnController extends Controller
                     DB::table('product_details')->insert($item);
                 }
             }
-
-            foreach ($data['products'] as $value) {
-                DB::table('supplies')->where('product_id', $value['product_id'])->increment('quantity', $value['qty']);
-            }
         }
 
         return ['success' => true];
@@ -86,7 +82,7 @@ class ProductReturnController extends Controller
                              ->leftJoin('sales_orders', 'sales_orders.id', '=', 'product_returns.sales_order_id')
                              ->join('users', 'users.id', '=', 'product_returns.assigned_to')
                              ->get()[0];
-        
+
         $product_details = ProductDetail::query()
                             ->selectRaw('products.category, products.unit, product_details.*')
                             ->where('product_return_id', $id)

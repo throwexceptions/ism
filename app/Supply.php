@@ -29,7 +29,7 @@ class Supply extends Model
             ->toArray();
 
         foreach ($data as $value) {
-            $real_val = 0 ;
+            $final_qty = 0 ;
             if($value['type'] == 'limited') {
                 $so = DB::table('sales_orders')
                     ->join('product_details', 'product_details.sales_order_id', '=', 'sales_orders.id')
@@ -43,9 +43,15 @@ class Supply extends Model
                     ->where('product_id', $value['product_id'])
                     ->sum('product_details.qty');
 
-                $real_val = $po - $so;
+                $return = DB::table('product_returns')
+                    ->join('product_details', 'product_details.product_return_id', '=', 'product_returns.id')
+                    ->where('product_details.product_id', $value['product_id'])
+                    ->sum('product_details.qty');
+
+                $final_qty = ($po - $so) + $return;
             }
-            self::query()->where('product_id', $value['product_id'])->update(['quantity' => $real_val]);
+
+            self::query()->where('product_id', $value['product_id'])->update(['quantity' => $final_qty]);
         }
     }
 }

@@ -322,6 +322,15 @@
             mounted() {
                 var $this = this;
 
+                $('#select2-category').select2({
+                    width: '100%',
+                    ajax: {
+                        url: '{{ route('category.list') }}',
+                        method: 'POST',
+                        dataType: 'json'
+                    }
+                });
+
                 $('.select2-sales-order').select2({
                     width: '100%',
                     ajax: {
@@ -333,7 +342,7 @@
                     var data = e.params.data;
                     $this.overview.sales_order_id = data.id;
                 });
-                
+
                 $('.select2-product').select2({
                     width: '100%',
                     ajax: {
