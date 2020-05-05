@@ -211,20 +211,20 @@
                                 <div class="form-group row">
                                     <label class="col-form-label col-md-4 col-form-label-sm">Sub Total</label>
                                     <div class="col-md-4">
-                                        <input type="text" class="form-control form-control-sm" v-model="summary.sub_total">
+                                        <input type="number" class="form-control-plaintext form-control-sm" v-model="summary.sub_total">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-form-label col-md-4 col-form-label-sm">Discount</label>
                                     <div class="col-md-4">
-                                        <input type="text" class="form-control form-control-sm"
-                                               v-model="summary.discount">
+                                        <input type="number" class="form-control form-control-sm"
+                                               v-model="summary.discount" v-bind:class="{'is-invalid': summary.discount == '' }">
                                     </div>
                                 </div>
                                 <div class="form-group row" v-show="overview.vat_type == 'VAT INC'">
                                     <label class="col-form-label col-md-4 col-form-label-sm">Sales Tax %</label>
                                     <div class="input-group col-md-4">
-                                        <input type="text" class="form-control form-control-sm" v-model="summary.sales_tax">
+                                        <input type="number" class="form-control form-control-sm" v-model="summary.sales_tax" v-bind:class="{'is-invalid': summary.sales_tax == '' }">
                                         <div class="input-group-append">
                                           <span class="input-group-text" id="basic-addon2"><i class="fa fa-percentage"></i></span>
                                         </div>
@@ -240,8 +240,8 @@
                                 <div class="form-group row">
                                     <label class="col-form-label col-md-4 col-form-label-sm">Shipping</label>
                                     <div class="col-md-4">
-                                        <input type="text" class="form-control form-control-sm"
-                                               v-model="summary.shipping">
+                                        <input type="number" class="form-control form-control-sm"
+                                               v-model="summary.shipping" v-bind:class="{'is-invalid': summary.shipping == '' }">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -361,7 +361,6 @@
                     columns: [
                         'Product', 'Notes', 'Qty', 'Unit Cost', 'Vendor Price', 'Discount', 'Total', 'Action'
                     ],
-                    sub_total: 0,
                     overview: {!! $purchase_info !!},
                     products: {!! $product_details !!},
                     summary: {!! $summary !!},
@@ -513,12 +512,14 @@
                 },
                 subTotal() {
                     var $this = this;
-                    $this.summary.sub_total = 0;
+                    $this.summary.sub_total = '0';
+                    var hold = 0;
                     $.each($this.products, function (x, product) {
                         if (product.product_name) {
-                            $this.summary.sub_total += (product.vendor_price * product.qty)
+                            hold += (product.vendor_price * product.qty)
                         }
                     });
+                    $this.summary.sub_total = hold.toString();
                 },
             },
             mounted() {
@@ -563,6 +564,14 @@
 
                 var newOption = new Option($this.overview.vendor_name, $this.overview.vendor_id, true, true);
                 $('.select2-vendor').append(newOption).trigger('change');
+
+
+                $(document.body).keyup(function () {
+                    $('button').removeAttr('disabled');
+                    if($('input').hasClass('is-invalid')) {
+                        $('button').attr('disabled','disabled');
+                    }
+                });
 
                 if ('{{ Route::currentRouteName() }}' == 'purchase.detail') {
                     this.viewType = 0;

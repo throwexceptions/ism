@@ -64,6 +64,7 @@ class PurchaseInfoController extends Controller
             "check_writer" => "",
             "tac" => Preference::status('tac_po_fill'),
             "description" => "",
+            "vat_type" => "VAT EX",
         ]);
 
         $product_details = collect([]);
@@ -75,6 +76,7 @@ class PurchaseInfoController extends Controller
             "shipping" => "0",
             "sales_tax" => "0",
             "sales_actual" => "0",
+            "sub_total" => "0",
             "grand_total" => "0",
         ]);
 

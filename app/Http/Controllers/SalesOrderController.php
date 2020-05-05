@@ -73,6 +73,7 @@ class SalesOrderController extends Controller
             "sales_actual" => "0",
             "sales_tax" => "0",
             "grand_total" => "0",
+            "sub_total" => "0",
         ]);
 
         return view('sales_form', compact('sales_order', 'product_details', 'summary'));

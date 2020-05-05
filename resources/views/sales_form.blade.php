@@ -195,14 +195,14 @@
                                 <div class="form-group row">
                                     <label class="col-form-label col-md-4 col-form-label-sm">Discount</label>
                                     <div class="col-md-4">
-                                        <input type="text" class="form-control form-control-sm"
-                                               v-model="summary.discount">
+                                        <input type="number" class="form-control form-control-sm"
+                                               v-model="summary.discount" v-bind:class="{'is-invalid': summary.discount ==''}">
                                     </div>
                                 </div>
                                 <div class="form-group row" v-show="overview.vat_type == 'VAT INC'">
                                     <label class="col-form-label col-md-4 col-form-label-sm">Sales Tax %</label>
                                     <div class="input-group col-md-4">
-                                        <input type="text" class="form-control form-control-sm" v-model="summary.sales_tax">
+                                        <input type="number" class="form-control form-control-sm" v-model="summary.sales_tax" v-bind:class="{'is-invalid': summary.sales_tax ==''}">
                                         <div class="input-group-append">
                                           <span class="input-group-text" id="basic-addon2"><i class="fa fa-percentage"></i></span>
                                         </div>
@@ -218,8 +218,8 @@
                                 <div class="form-group row">
                                     <label class="col-form-label col-md-4 col-form-label-sm">Shipping</label>
                                     <div class="col-md-4">
-                                        <input type="text" class="form-control form-control-sm"
-                                               v-model="summary.shipping">
+                                        <input type="number" class="form-control form-control-sm"
+                                               v-model="summary.shipping" v-bind:class="{'is-invalid': summary.shipping ==''}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -364,13 +364,14 @@
                 },
                 'summary.sales_tax': function(value){
                     this.grandTotal()
-                }, 
+                },
                 'summary.shipping': function(value){
                     this.grandTotal()
-                }, 
+                },
             },
             methods: {
                 grandTotal() {
+
                     var $this = this;
                     var sales_tax = parseFloat($this.summary.sales_tax);
                     $this.summary.sales_actual = 0;
@@ -533,6 +534,12 @@
                     $this.overview.address = data.address;
                 });
 
+                $(document.body).keyup(function () {
+                    $('button').removeAttr('disabled');
+                    if($('input').hasClass('is-invalid')) {
+                        $('button').attr('disabled','disabled');
+                    }
+                });
 
                 var newOption = new Option($this.overview.customer_name, $this.overview.customer_id, true, true);
                 $('.select2-customer').append(newOption).trigger('change');
