@@ -20,7 +20,7 @@
                                 <a href="{{ route('vendor.printable') }}" target="_blank" class="btn btn-sm btn-info"><i class="fa fa-download"></i> Vendor List</a>
                             </div>
                             <div class="col-md-12 mt-3">
-                                <table id="table-vendor" class="table table-striped nowrap" style="width:100%"></table>
+                                <table id="table-vendor" class="table table-striped nowrap table-general" style="width:100%"></table>
                             </div>
                         </div>
                     </div>

@@ -68,6 +68,11 @@
                                         <option value="Shipped">SHIPPED</option>
                                     </select>
                                 </div>
+                                <div class="form-group" v-if="overview.status == 'Shipped'">
+                                    <label>Shipped Date</label>
+                                    <input type="date" class="ui-datepicker form-control form-control-sm"
+                                           v-model="overview.updated_at">
+                                </div>
                             </div>
                             <div class="col-md-12">
                                 <h4>Sales Order Information</h4>

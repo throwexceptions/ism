@@ -32,7 +32,12 @@ class SalesOrderController extends Controller
             ->leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')
             ->join('users', 'users.id', '=', 'sales_orders.assigned_to');
 
-        return DataTables::of($vendors)->make(true);
+        return DataTables::of($vendors)->setTransformer(function ($data) {
+            $data = $data->toArray();
+            $data['created_at'] = Carbon::parse($data['created_at'])->format('F j, Y');
+            $data['updated_at'] = Carbon::parse($data['updated_at'])->format('F j, Y');
+            return $data;
+        })->make(true);
     }
 
     /**
@@ -60,6 +65,7 @@ class SalesOrderController extends Controller
             "account_no" => Preference::status('account_no'),
             "tac" => Preference::status('tac_so_fill'),
             "phone" => "",
+            "updated_at" => Carbon::now()->format('Y-m-d'),
             "vat_type" => "VAT EX",
         ]);
 
@@ -84,7 +90,7 @@ class SalesOrderController extends Controller
         $data = $request->input();
 
         $data['overview']['assigned_to'] = auth()->user()->id;
-        $data['overview']['created_at'] = Carbon::now()->format('Y-m-d H:i:s');
+        $data['overview']['created_at'] = Carbon::now()->format('Y-m-d');
 
         $id = DB::table('sales_orders')->insertGetId($data['overview']);
 
@@ -193,17 +199,10 @@ class SalesOrderController extends Controller
 
         if ($purchase_info->status != $data['status']) {
             DB::table('sales_orders')->where('id', $data['id'])
-                ->update(['status' => $data['status']]);
-
-            $product_detail = DB::table('product_details')->where('sales_order_id', $data['id'])->get();
-            foreach ($product_detail as $value) {
-                if ('Quote' == $data['status']) {
-                    Supply::increCount($value->product_id, $value->qty);
-                }
-                if ('Shipped' == $data['status']) {
-                    Supply::decreCount($value->product_id, $value->qty);
-                }
-            }
+                ->update([
+                        'status' => $data['status'],
+                        'updated_at' => Carbon::now()->format('Y-m-d')
+                    ]);
 
             return ['success' => true];
         }

@@ -24,7 +24,7 @@
                                 </div>
                             </div>
                             <div class="col-md-12 mt-3">
-                                <table id="table-product" class="table table-striped nowrap" style="width:100%"></table>
+                                <table id="table-product" class="table table-striped  table-general nowrap" style="width:100%"></table>
                             </div>
                         </div>
                     </div>

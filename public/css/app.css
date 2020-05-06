@@ -1,5 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);/*!
- * Font Awesome Free 5.11.2 by @fontawesome - https://fontawesome.com
+ * Font Awesome Free 5.13.0 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
 .fa,
@@ -110,49 +110,39 @@
 
 @-webkit-keyframes fa-spin {
   0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg); }
+    transform: rotate(0deg); }
   100% {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg); } }
+    transform: rotate(360deg); } }
 
 @keyframes fa-spin {
   0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg); }
+    transform: rotate(0deg); }
   100% {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg); } }
+    transform: rotate(360deg); } }
 
 .fa-rotate-90 {
   -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
-  -webkit-transform: rotate(90deg);
-          transform: rotate(90deg); }
+  transform: rotate(90deg); }
 
 .fa-rotate-180 {
   -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
-  -webkit-transform: rotate(180deg);
-          transform: rotate(180deg); }
+  transform: rotate(180deg); }
 
 .fa-rotate-270 {
   -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
-  -webkit-transform: rotate(270deg);
-          transform: rotate(270deg); }
+  transform: rotate(270deg); }
 
 .fa-flip-horizontal {
   -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)";
-  -webkit-transform: scale(-1, 1);
-          transform: scale(-1, 1); }
+  transform: scale(-1, 1); }
 
 .fa-flip-vertical {
   -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)";
-  -webkit-transform: scale(1, -1);
-          transform: scale(1, -1); }
+  transform: scale(1, -1); }
 
 .fa-flip-both, .fa-flip-horizontal.fa-flip-vertical {
   -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)";
-  -webkit-transform: scale(-1, -1);
-          transform: scale(-1, -1); }
+  transform: scale(-1, -1); }
 
 :root .fa-rotate-90,
 :root .fa-rotate-180,
@@ -441,6 +431,9 @@ readers do not read off random characters that represent icons */
 .fa-bacon:before {
   content: "\F7E5"; }
 
+.fa-bahai:before {
+  content: "\F666"; }
+
 .fa-balance-scale:before {
   content: "\F24E"; }
 
@@ -627,6 +620,9 @@ readers do not read off random characters that represent icons */
 .fa-box-open:before {
   content: "\F49E"; }
 
+.fa-box-tissue:before {
+  content: "\F95B"; }
+
 .fa-boxes:before {
   content: "\F468"; }
 
@@ -755,6 +751,9 @@ readers do not read off random characters that represent icons */
 
 .fa-car-side:before {
   content: "\F5E4"; }
+
+.fa-caravan:before {
+  content: "\F8FF"; }
 
 .fa-caret-down:before {
   content: "\F0D7"; }
@@ -1065,6 +1064,9 @@ readers do not read off random characters that represent icons */
 .fa-compress:before {
   content: "\F066"; }
 
+.fa-compress-alt:before {
+  content: "\F422"; }
+
 .fa-compress-arrows-alt:before {
   content: "\F78C"; }
 
@@ -1194,6 +1196,9 @@ readers do not read off random characters that represent icons */
 .fa-d-and-d-beyond:before {
   content: "\F6CA"; }
 
+.fa-dailymotion:before {
+  content: "\F952"; }
+
 .fa-dashcube:before {
   content: "\F210"; }
 
@@ -1280,6 +1285,9 @@ readers do not read off random characters that represent icons */
 
 .fa-discourse:before {
   content: "\F393"; }
+
+.fa-disease:before {
+  content: "\F7FA"; }
 
 .fa-divide:before {
   content: "\F529"; }
@@ -1464,6 +1472,9 @@ readers do not read off random characters that represent icons */
 .fa-expand:before {
   content: "\F065"; }
 
+.fa-expand-alt:before {
+  content: "\F424"; }
+
 .fa-expand-arrows-alt:before {
   content: "\F31E"; }
 
@@ -1508,6 +1519,9 @@ readers do not read off random characters that represent icons */
 
 .fa-fast-forward:before {
   content: "\F050"; }
+
+.fa-faucet:before {
+  content: "\F905"; }
 
 .fa-fax:before {
   content: "\F1AC"; }
@@ -1628,6 +1642,9 @@ readers do not read off random characters that represent icons */
 
 .fa-firefox:before {
   content: "\F269"; }
+
+.fa-firefox-browser:before {
+  content: "\F907"; }
 
 .fa-first-aid:before {
   content: "\F479"; }
@@ -1992,8 +2009,14 @@ readers do not read off random characters that represent icons */
 .fa-hand-holding-heart:before {
   content: "\F4BE"; }
 
+.fa-hand-holding-medical:before {
+  content: "\F95C"; }
+
 .fa-hand-holding-usd:before {
   content: "\F4C0"; }
+
+.fa-hand-holding-water:before {
+  content: "\F4C1"; }
 
 .fa-hand-lizard:before {
   content: "\F258"; }
@@ -2028,6 +2051,9 @@ readers do not read off random characters that represent icons */
 .fa-hand-scissors:before {
   content: "\F257"; }
 
+.fa-hand-sparkles:before {
+  content: "\F95D"; }
+
 .fa-hand-spock:before {
   content: "\F259"; }
 
@@ -2037,8 +2063,17 @@ readers do not read off random characters that represent icons */
 .fa-hands-helping:before {
   content: "\F4C4"; }
 
+.fa-hands-wash:before {
+  content: "\F95E"; }
+
 .fa-handshake:before {
   content: "\F2B5"; }
+
+.fa-handshake-alt-slash:before {
+  content: "\F95F"; }
+
+.fa-handshake-slash:before {
+  content: "\F960"; }
 
 .fa-hanukiah:before {
   content: "\F6E6"; }
@@ -2058,11 +2093,20 @@ readers do not read off random characters that represent icons */
 .fa-hat-wizard:before {
   content: "\F6E8"; }
 
-.fa-haykal:before {
-  content: "\F666"; }
-
 .fa-hdd:before {
   content: "\F0A0"; }
+
+.fa-head-side-cough:before {
+  content: "\F961"; }
+
+.fa-head-side-cough-slash:before {
+  content: "\F962"; }
+
+.fa-head-side-mask:before {
+  content: "\F963"; }
+
+.fa-head-side-virus:before {
+  content: "\F964"; }
 
 .fa-heading:before {
   content: "\F1DC"; }
@@ -2136,6 +2180,9 @@ readers do not read off random characters that represent icons */
 .fa-hospital-symbol:before {
   content: "\F47E"; }
 
+.fa-hospital-user:before {
+  content: "\F80D"; }
+
 .fa-hot-tub:before {
   content: "\F593"; }
 
@@ -2162,6 +2209,9 @@ readers do not read off random characters that represent icons */
 
 .fa-house-damage:before {
   content: "\F6F1"; }
+
+.fa-house-user:before {
+  content: "\F965"; }
 
 .fa-houzz:before {
   content: "\F27C"; }
@@ -2196,6 +2246,9 @@ readers do not read off random characters that represent icons */
 .fa-id-card-alt:before {
   content: "\F47F"; }
 
+.fa-ideal:before {
+  content: "\F913"; }
+
 .fa-igloo:before {
   content: "\F7AE"; }
 
@@ -2228,6 +2281,9 @@ readers do not read off random characters that represent icons */
 
 .fa-instagram:before {
   content: "\F16D"; }
+
+.fa-instagram-square:before {
+  content: "\F955"; }
 
 .fa-intercom:before {
   content: "\F7AF"; }
@@ -2342,6 +2398,9 @@ readers do not read off random characters that represent icons */
 
 .fa-laptop-code:before {
   content: "\F5FC"; }
+
+.fa-laptop-house:before {
+  content: "\F966"; }
 
 .fa-laptop-medical:before {
   content: "\F812"; }
@@ -2459,6 +2518,12 @@ readers do not read off random characters that represent icons */
 
 .fa-luggage-cart:before {
   content: "\F59D"; }
+
+.fa-lungs:before {
+  content: "\F604"; }
+
+.fa-lungs-virus:before {
+  content: "\F967"; }
 
 .fa-lyft:before {
   content: "\F3C3"; }
@@ -2586,6 +2651,9 @@ readers do not read off random characters that represent icons */
 .fa-meteor:before {
   content: "\F753"; }
 
+.fa-microblog:before {
+  content: "\F91A"; }
+
 .fa-microchip:before {
   content: "\F2DB"; }
 
@@ -2624,6 +2692,9 @@ readers do not read off random characters that represent icons */
 
 .fa-mixcloud:before {
   content: "\F289"; }
+
+.fa-mixer:before {
+  content: "\F956"; }
 
 .fa-mizuni:before {
   content: "\F3CC"; }
@@ -2862,6 +2933,9 @@ readers do not read off random characters that represent icons */
 .fa-penny-arcade:before {
   content: "\F704"; }
 
+.fa-people-arrows:before {
+  content: "\F968"; }
+
 .fa-people-carry:before {
   content: "\F4CE"; }
 
@@ -2925,6 +2999,9 @@ readers do not read off random characters that represent icons */
 .fa-pied-piper-pp:before {
   content: "\F1A7"; }
 
+.fa-pied-piper-square:before {
+  content: "\F91E"; }
+
 .fa-piggy-bank:before {
   content: "\F4D3"; }
 
@@ -2954,6 +3031,9 @@ readers do not read off random characters that represent icons */
 
 .fa-plane-departure:before {
   content: "\F5B0"; }
+
+.fa-plane-slash:before {
+  content: "\F969"; }
 
 .fa-play:before {
   content: "\F04B"; }
@@ -3029,6 +3109,12 @@ readers do not read off random characters that represent icons */
 
 .fa-project-diagram:before {
   content: "\F542"; }
+
+.fa-pump-medical:before {
+  content: "\F96A"; }
+
+.fa-pump-soap:before {
+  content: "\F96B"; }
 
 .fa-pushed:before {
   content: "\F3E1"; }
@@ -3315,6 +3401,9 @@ readers do not read off random characters that represent icons */
 .fa-shield-alt:before {
   content: "\F3ED"; }
 
+.fa-shield-virus:before {
+  content: "\F96C"; }
+
 .fa-ship:before {
   content: "\F21A"; }
 
@@ -3326,6 +3415,9 @@ readers do not read off random characters that represent icons */
 
 .fa-shoe-prints:before {
   content: "\F54B"; }
+
+.fa-shopify:before {
+  content: "\F957"; }
 
 .fa-shopping-bag:before {
   content: "\F290"; }
@@ -3461,6 +3553,9 @@ readers do not read off random characters that represent icons */
 
 .fa-snowplow:before {
   content: "\F7D2"; }
+
+.fa-soap:before {
+  content: "\F96E"; }
 
 .fa-socks:before {
   content: "\F696"; }
@@ -3627,11 +3722,20 @@ readers do not read off random characters that represent icons */
 .fa-stopwatch:before {
   content: "\F2F2"; }
 
+.fa-stopwatch-20:before {
+  content: "\F96F"; }
+
 .fa-store:before {
   content: "\F54E"; }
 
 .fa-store-alt:before {
   content: "\F54F"; }
+
+.fa-store-alt-slash:before {
+  content: "\F970"; }
+
+.fa-store-slash:before {
+  content: "\F971"; }
 
 .fa-strava:before {
   content: "\F428"; }
@@ -3870,6 +3974,9 @@ readers do not read off random characters that represent icons */
 .fa-toilet-paper:before {
   content: "\F71E"; }
 
+.fa-toilet-paper-slash:before {
+  content: "\F972"; }
+
 .fa-toolbox:before {
   content: "\F552"; }
 
@@ -3896,6 +4003,9 @@ readers do not read off random characters that represent icons */
 
 .fa-traffic-light:before {
   content: "\F637"; }
+
+.fa-trailer:before {
+  content: "\F941"; }
 
 .fa-train:before {
   content: "\F238"; }
@@ -4004,6 +4114,9 @@ readers do not read off random characters that represent icons */
 
 .fa-uniregistry:before {
   content: "\F404"; }
+
+.fa-unity:before {
+  content: "\F949"; }
 
 .fa-universal-access:before {
   content: "\F29A"; }
@@ -4175,6 +4288,15 @@ readers do not read off random characters that represent icons */
 
 .fa-vine:before {
   content: "\F1CA"; }
+
+.fa-virus:before {
+  content: "\F974"; }
+
+.fa-virus-slash:before {
+  content: "\F975"; }
+
+.fa-viruses:before {
+  content: "\F976"; }
 
 .fa-vk:before {
   content: "\F189"; }
@@ -4391,20 +4513,21 @@ readers do not read off random characters that represent icons */
 @font-face {
   font-family: 'Font Awesome 5 Brands';
   font-style: normal;
-  font-weight: normal;
-  font-display: auto;
-  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.eot?5063b105c7646c8043d58c5289f02cca);
-  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.eot?5063b105c7646c8043d58c5289f02cca?#iefix) format("embedded-opentype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.woff2?cccc9d29470e879e40eb70249d9a2705) format("woff2"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.woff?c5e0f14f88a828261ba01558ce2bf26f) format("woff"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.ttf?06147b6cd88c7346cecd1edd060cd5de) format("truetype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.svg?a9c4bb7348f42626454c988dbde1d0a0#fontawesome) format("svg"); }
+  font-weight: 400;
+  font-display: block;
+  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.eot?c1868c9545d2de1cf8488f1dadd8c9d0);
+  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.eot?c1868c9545d2de1cf8488f1dadd8c9d0?#iefix) format("embedded-opentype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.woff2?a06da7f0950f9dd366fc9db9d56d618a) format("woff2"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.woff?ec3cfddedb8bebd2d7a3fdf511f7c1cc) format("woff"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.ttf?13685372945d816a2b474fc082fd9aaa) format("truetype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.svg?0cb5a5c0d251c109458c85c6afeffbaa#fontawesome) format("svg"); }
 
 .fab {
-  font-family: 'Font Awesome 5 Brands'; }
+  font-family: 'Font Awesome 5 Brands';
+  font-weight: 400; }
 @font-face {
   font-family: 'Font Awesome 5 Free';
   font-style: normal;
   font-weight: 400;
-  font-display: auto;
-  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.eot?c1a866ec0e04a5e1915b41fcf261457c);
-  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.eot?c1a866ec0e04a5e1915b41fcf261457c?#iefix) format("embedded-opentype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.woff2?f5f2566b93e89391da4db79462b8078b) format("woff2"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.woff?c4f508e7c4f01a9eeba7f08155cde04e) format("woff"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.ttf?65b286af947c0d982ca01b40e1fcab38) format("truetype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.svg?7b9568e6389b1f8ae0902cd39665fc1e#fontawesome) format("svg"); }
+  font-display: block;
+  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.eot?261d666b0147c6c5cda07265f98b8f8c);
+  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.eot?261d666b0147c6c5cda07265f98b8f8c?#iefix) format("embedded-opentype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.woff2?c20b5b7362d8d7bb7eddf94344ace33e) format("woff2"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.woff?f89ea91ecd1ca2db7e09baa2c4b156d1) format("woff"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.ttf?db78b9359171f24936b16d84f63af378) format("truetype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.svg?89ffa3aba80d30ee0a9371b25c968bbb#fontawesome) format("svg"); }
 
 .far {
   font-family: 'Font Awesome 5 Free';
@@ -4413,9 +4536,9 @@ readers do not read off random characters that represent icons */
   font-family: 'Font Awesome 5 Free';
   font-style: normal;
   font-weight: 900;
-  font-display: auto;
-  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.eot?8e4a6dcc692b3887f9f542cd6894d6d4);
-  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.eot?8e4a6dcc692b3887f9f542cd6894d6d4?#iefix) format("embedded-opentype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.woff2?44d537ab79f921fde5a28b2c1636f397) format("woff2"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.woff?333bae208dc363746961b234ff6c2500) format("woff"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.ttf?0bff33a5fd7ec390235476b4859747a0) format("truetype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.svg?c2801fb415f03c7b170934769d7b5397#fontawesome) format("svg"); }
+  font-display: block;
+  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.eot?a0369ea57eb6d3843d6474c035111f29);
+  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.eot?a0369ea57eb6d3843d6474c035111f29?#iefix) format("embedded-opentype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.woff2?b15db15f746f29ffa02638cb455b8ec0) format("woff2"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.woff?bea989e82b07e9687c26fc58a4805021) format("woff"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.ttf?1ab236ed440ee51810c56bd16628aef0) format("truetype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.svg?ec763292e583294612f124c0b0def500#fontawesome) format("svg"); }
 
 .fa,
 .fas {
@@ -4476,8 +4599,7 @@ div.dataTables_wrapper div.dataTables_paginate {
 div.dataTables_wrapper div.dataTables_paginate ul.pagination {
   margin: 2px 0;
   white-space: nowrap;
-  -webkit-box-pack: end;
-          justify-content: flex-end;
+  justify-content: flex-end;
 }
 div.dataTables_wrapper div.dataTables_processing {
   position: absolute;
@@ -4812,8 +4934,6 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
 
 .select2-container--bootstrap.select2-container--focus .select2-selection, .select2-container--bootstrap.select2-container--open .select2-selection {
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
-  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
   border-color: #66afe9;
 }
@@ -5335,11 +5455,8 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
   }
 }
 .swal2-popup.swal2-toast {
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-          flex-direction: row;
-  -webkit-box-align: center;
-          align-items: center;
+  flex-direction: row;
+  align-items: center;
   width: auto;
   padding: 0.625em;
   overflow-y: hidden;
@@ -5347,15 +5464,11 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
   box-shadow: 0 0 0.625em #d9d9d9;
 }
 .swal2-popup.swal2-toast .swal2-header {
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-          flex-direction: row;
+  flex-direction: row;
 }
 .swal2-popup.swal2-toast .swal2-title {
-  -webkit-box-flex: 1;
-          flex-grow: 1;
-  -webkit-box-pack: start;
-          justify-content: flex-start;
+  flex-grow: 1;
+  justify-content: flex-start;
   margin: 0 0.6em;
   font-size: 1em;
 }
@@ -5371,8 +5484,7 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
   line-height: 0.8;
 }
 .swal2-popup.swal2-toast .swal2-content {
-  -webkit-box-pack: start;
-          justify-content: flex-start;
+  justify-content: flex-start;
   font-size: 1em;
 }
 .swal2-popup.swal2-toast .swal2-icon {
@@ -5382,10 +5494,8 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
   margin: 0;
 }
 .swal2-popup.swal2-toast .swal2-icon .swal2-icon-content {
-  display: -webkit-box;
   display: flex;
-  -webkit-box-align: center;
-          align-items: center;
+  align-items: center;
   font-size: 1.8em;
   font-weight: bold;
 }
@@ -5429,24 +5539,20 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
   position: absolute;
   width: 1.6em;
   height: 3em;
-  -webkit-transform: rotate(45deg);
-          transform: rotate(45deg);
+  transform: rotate(45deg);
   border-radius: 50%;
 }
 .swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=left] {
   top: -0.8em;
   left: -0.5em;
-  -webkit-transform: rotate(-45deg);
-          transform: rotate(-45deg);
-  -webkit-transform-origin: 2em 2em;
-          transform-origin: 2em 2em;
+  transform: rotate(-45deg);
+  transform-origin: 2em 2em;
   border-radius: 4em 0 0 4em;
 }
 .swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=right] {
   top: -0.25em;
   left: 0.9375em;
-  -webkit-transform-origin: 0 1.5em;
-          transform-origin: 0 1.5em;
+  transform-origin: 0 1.5em;
   border-radius: 0 4em 4em 0;
 }
 .swal2-popup.swal2-toast .swal2-success .swal2-success-ring {
@@ -5490,7 +5596,6 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
 }
 
 .swal2-container {
-  display: -webkit-box;
   display: flex;
   position: fixed;
   z-index: 1060;
@@ -5498,121 +5603,89 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
   right: 0;
   bottom: 0;
   left: 0;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-          flex-direction: row;
-  -webkit-box-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-          justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   padding: 0.625em;
   overflow-x: hidden;
-  -webkit-transition: background-color 0.1s;
   transition: background-color 0.1s;
   -webkit-overflow-scrolling: touch;
 }
-.swal2-container.swal2-backdrop-show {
+.swal2-container.swal2-backdrop-show, .swal2-container.swal2-noanimation {
   background: rgba(0, 0, 0, 0.4);
 }
 .swal2-container.swal2-backdrop-hide {
   background: transparent !important;
 }
 .swal2-container.swal2-top {
-  -webkit-box-align: start;
-          align-items: flex-start;
+  align-items: flex-start;
 }
 .swal2-container.swal2-top-start, .swal2-container.swal2-top-left {
-  -webkit-box-align: start;
-          align-items: flex-start;
-  -webkit-box-pack: start;
-          justify-content: flex-start;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 .swal2-container.swal2-top-end, .swal2-container.swal2-top-right {
-  -webkit-box-align: start;
-          align-items: flex-start;
-  -webkit-box-pack: end;
-          justify-content: flex-end;
+  align-items: flex-start;
+  justify-content: flex-end;
 }
 .swal2-container.swal2-center {
-  -webkit-box-align: center;
-          align-items: center;
+  align-items: center;
 }
 .swal2-container.swal2-center-start, .swal2-container.swal2-center-left {
-  -webkit-box-align: center;
-          align-items: center;
-  -webkit-box-pack: start;
-          justify-content: flex-start;
+  align-items: center;
+  justify-content: flex-start;
 }
 .swal2-container.swal2-center-end, .swal2-container.swal2-center-right {
-  -webkit-box-align: center;
-          align-items: center;
-  -webkit-box-pack: end;
-          justify-content: flex-end;
+  align-items: center;
+  justify-content: flex-end;
 }
 .swal2-container.swal2-bottom {
-  -webkit-box-align: end;
-          align-items: flex-end;
+  align-items: flex-end;
 }
 .swal2-container.swal2-bottom-start, .swal2-container.swal2-bottom-left {
-  -webkit-box-align: end;
-          align-items: flex-end;
-  -webkit-box-pack: start;
-          justify-content: flex-start;
+  align-items: flex-end;
+  justify-content: flex-start;
 }
 .swal2-container.swal2-bottom-end, .swal2-container.swal2-bottom-right {
-  -webkit-box-align: end;
-          align-items: flex-end;
-  -webkit-box-pack: end;
-          justify-content: flex-end;
+  align-items: flex-end;
+  justify-content: flex-end;
 }
 .swal2-container.swal2-bottom > :first-child, .swal2-container.swal2-bottom-start > :first-child, .swal2-container.swal2-bottom-left > :first-child, .swal2-container.swal2-bottom-end > :first-child, .swal2-container.swal2-bottom-right > :first-child {
   margin-top: auto;
 }
 .swal2-container.swal2-grow-fullscreen > .swal2-modal {
-  display: -webkit-box !important;
   display: flex !important;
-  -webkit-box-flex: 1;
-          flex: 1;
+  flex: 1;
   align-self: stretch;
-  -webkit-box-pack: center;
-          justify-content: center;
+  justify-content: center;
 }
 .swal2-container.swal2-grow-row > .swal2-modal {
-  display: -webkit-box !important;
   display: flex !important;
-  -webkit-box-flex: 1;
-          flex: 1;
+  flex: 1;
   align-content: center;
-  -webkit-box-pack: center;
-          justify-content: center;
+  justify-content: center;
 }
 .swal2-container.swal2-grow-column {
-  -webkit-box-flex: 1;
-          flex: 1;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
+  flex: 1;
+  flex-direction: column;
 }
 .swal2-container.swal2-grow-column.swal2-top, .swal2-container.swal2-grow-column.swal2-center, .swal2-container.swal2-grow-column.swal2-bottom {
-  -webkit-box-align: center;
-          align-items: center;
+  align-items: center;
 }
 .swal2-container.swal2-grow-column.swal2-top-start, .swal2-container.swal2-grow-column.swal2-center-start, .swal2-container.swal2-grow-column.swal2-bottom-start, .swal2-container.swal2-grow-column.swal2-top-left, .swal2-container.swal2-grow-column.swal2-center-left, .swal2-container.swal2-grow-column.swal2-bottom-left {
-  -webkit-box-align: start;
-          align-items: flex-start;
+  align-items: flex-start;
 }
 .swal2-container.swal2-grow-column.swal2-top-end, .swal2-container.swal2-grow-column.swal2-center-end, .swal2-container.swal2-grow-column.swal2-bottom-end, .swal2-container.swal2-grow-column.swal2-top-right, .swal2-container.swal2-grow-column.swal2-center-right, .swal2-container.swal2-grow-column.swal2-bottom-right {
-  -webkit-box-align: end;
-          align-items: flex-end;
+  align-items: flex-end;
 }
 .swal2-container.swal2-grow-column > .swal2-modal {
-  display: -webkit-box !important;
   display: flex !important;
-  -webkit-box-flex: 1;
-          flex: 1;
+  flex: 1;
   align-content: center;
-  -webkit-box-pack: center;
-          justify-content: center;
+  justify-content: center;
+}
+.swal2-container.swal2-no-transition {
+  transition: none !important;
 }
 .swal2-container:not(.swal2-top):not(.swal2-top-start):not(.swal2-top-end):not(.swal2-top-left):not(.swal2-top-right):not(.swal2-center-start):not(.swal2-center-end):not(.swal2-center-left):not(.swal2-center-right):not(.swal2-bottom):not(.swal2-bottom-start):not(.swal2-bottom-end):not(.swal2-bottom-left):not(.swal2-bottom-right):not(.swal2-grow-fullscreen) > .swal2-modal {
   margin: auto;
@@ -5627,11 +5700,8 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
   display: none;
   position: relative;
   box-sizing: border-box;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
-  -webkit-box-pack: center;
-          justify-content: center;
+  flex-direction: column;
+  justify-content: center;
   width: 32em;
   max-width: 100%;
   padding: 1.25em;
@@ -5649,13 +5719,9 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
 }
 
 .swal2-header {
-  display: -webkit-box;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
-  -webkit-box-align: center;
-          align-items: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .swal2-title {
@@ -5672,14 +5738,11 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
 }
 
 .swal2-actions {
-  display: -webkit-box;
   display: flex;
   z-index: 1;
   flex-wrap: wrap;
-  -webkit-box-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-          justify-content: center;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   margin: 1.25em auto 0;
 }
@@ -5687,11 +5750,9 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
   opacity: 0.4;
 }
 .swal2-actions:not(.swal2-loading) .swal2-styled:hover {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0.1)));
   background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
 }
 .swal2-actions:not(.swal2-loading) .swal2-styled:active {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.2)), to(rgba(0, 0, 0, 0.2)));
   background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
 }
 .swal2-actions.swal2-loading .swal2-styled.swal2-confirm {
@@ -5765,8 +5826,7 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
 }
 
 .swal2-footer {
-  -webkit-box-pack: center;
-          justify-content: center;
+  justify-content: center;
   margin: 1.25em 0 0;
   padding: 1em 0 0;
   border-top: 1px solid #eee;
@@ -5774,10 +5834,18 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
   font-size: 1em;
 }
 
-.swal2-timer-progress-bar {
+.swal2-timer-progress-bar-container {
   position: absolute;
+  right: 0;
   bottom: 0;
   left: 0;
+  height: 0.25em;
+  overflow: hidden;
+  border-bottom-right-radius: 0.3125em;
+  border-bottom-left-radius: 0.3125em;
+}
+
+.swal2-timer-progress-bar {
   width: 100%;
   height: 0.25em;
   background: rgba(0, 0, 0, 0.2);
@@ -5791,20 +5859,17 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
 .swal2-close {
   position: absolute;
   z-index: 2;
-  /* 1617 */
   top: 0;
   right: 0;
-  -webkit-box-pack: center;
-          justify-content: center;
+  align-items: center;
+  justify-content: center;
   width: 1.2em;
   height: 1.2em;
   padding: 0;
   overflow: hidden;
-  -webkit-transition: color 0.1s ease-out;
   transition: color 0.1s ease-out;
   border: none;
   border-radius: 0;
-  outline: initial;
   background: transparent;
   color: #cccccc;
   font-family: serif;
@@ -5813,8 +5878,7 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
   cursor: pointer;
 }
 .swal2-close:hover {
-  -webkit-transform: none;
-          transform: none;
+  transform: none;
   background: transparent;
   color: #f27474;
 }
@@ -5824,8 +5888,7 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
 
 .swal2-content {
   z-index: 1;
-  -webkit-box-pack: center;
-          justify-content: center;
+  justify-content: center;
   margin: 0;
   padding: 0;
   color: #545454;
@@ -5850,7 +5913,6 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
 .swal2-textarea {
   box-sizing: border-box;
   width: 100%;
-  -webkit-transition: border-color 0.3s, box-shadow 0.3s;
   transition: border-color 0.3s, box-shadow 0.3s;
   border: 1px solid #d9d9d9;
   border-radius: 0.1875em;
@@ -5940,10 +6002,8 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
 
 .swal2-radio,
 .swal2-checkbox {
-  -webkit-box-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-          justify-content: center;
+  align-items: center;
+  justify-content: center;
   background: #fff;
   color: inherit;
 }
@@ -5959,10 +6019,8 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
 
 .swal2-validation-message {
   display: none;
-  -webkit-box-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-          justify-content: center;
+  align-items: center;
+  justify-content: center;
   padding: 0.625em;
   overflow: hidden;
   background: #f0f0f0;
@@ -5988,8 +6046,7 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
 .swal2-icon {
   position: relative;
   box-sizing: content-box;
-  -webkit-box-pack: center;
-          justify-content: center;
+  justify-content: center;
   width: 5em;
   height: 5em;
   margin: 1.25em auto 1.875em;
@@ -6004,10 +6061,8 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
           user-select: none;
 }
 .swal2-icon .swal2-icon-content {
-  display: -webkit-box;
   display: flex;
-  -webkit-box-align: center;
-          align-items: center;
+  align-items: center;
   font-size: 3.75em;
 }
 .swal2-icon.swal2-error {
@@ -6016,8 +6071,7 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
 }
 .swal2-icon.swal2-error .swal2-x-mark {
   position: relative;
-  -webkit-box-flex: 1;
-          flex-grow: 1;
+  flex-grow: 1;
 }
 .swal2-icon.swal2-error [class^=swal2-x-mark-line] {
   display: block;
@@ -6030,13 +6084,11 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
 }
 .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left] {
   left: 1.0625em;
-  -webkit-transform: rotate(45deg);
-          transform: rotate(45deg);
+  transform: rotate(45deg);
 }
 .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right] {
   right: 1em;
-  -webkit-transform: rotate(-45deg);
-          transform: rotate(-45deg);
+  transform: rotate(-45deg);
 }
 .swal2-icon.swal2-error.swal2-icon-show {
   -webkit-animation: swal2-animate-error-icon 0.5s;
@@ -6066,26 +6118,21 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
   position: absolute;
   width: 3.75em;
   height: 7.5em;
-  -webkit-transform: rotate(45deg);
-          transform: rotate(45deg);
+  transform: rotate(45deg);
   border-radius: 50%;
 }
 .swal2-icon.swal2-success [class^=swal2-success-circular-line][class$=left] {
   top: -0.4375em;
   left: -2.0635em;
-  -webkit-transform: rotate(-45deg);
-          transform: rotate(-45deg);
-  -webkit-transform-origin: 3.75em 3.75em;
-          transform-origin: 3.75em 3.75em;
+  transform: rotate(-45deg);
+  transform-origin: 3.75em 3.75em;
   border-radius: 7.5em 0 0 7.5em;
 }
 .swal2-icon.swal2-success [class^=swal2-success-circular-line][class$=right] {
   top: -0.6875em;
   left: 1.875em;
-  -webkit-transform: rotate(-45deg);
-          transform: rotate(-45deg);
-  -webkit-transform-origin: 0 3.75em;
-          transform-origin: 0 3.75em;
+  transform: rotate(-45deg);
+  transform-origin: 0 3.75em;
   border-radius: 0 7.5em 7.5em 0;
 }
 .swal2-icon.swal2-success .swal2-success-ring {
@@ -6106,8 +6153,7 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
   left: 1.625em;
   width: 0.4375em;
   height: 5.625em;
-  -webkit-transform: rotate(-45deg);
-          transform: rotate(-45deg);
+  transform: rotate(-45deg);
 }
 .swal2-icon.swal2-success [class^=swal2-success-line] {
   display: block;
@@ -6119,17 +6165,15 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
 }
 .swal2-icon.swal2-success [class^=swal2-success-line][class$=tip] {
   top: 2.875em;
-  left: 0.875em;
+  left: 0.8125em;
   width: 1.5625em;
-  -webkit-transform: rotate(45deg);
-          transform: rotate(45deg);
+  transform: rotate(45deg);
 }
 .swal2-icon.swal2-success [class^=swal2-success-line][class$=long] {
   top: 2.375em;
   right: 0.5em;
   width: 2.9375em;
-  -webkit-transform: rotate(-45deg);
-          transform: rotate(-45deg);
+  transform: rotate(-45deg);
 }
 .swal2-icon.swal2-success.swal2-icon-show .swal2-success-line-tip {
   -webkit-animation: swal2-animate-success-line-tip 0.75s;
@@ -6145,8 +6189,7 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
 }
 
 .swal2-progress-steps {
-  -webkit-box-align: center;
-          align-items: center;
+  align-items: center;
   margin: 0 0 1.25em;
   padding: 0;
   background: inherit;
@@ -6199,7 +6242,6 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
 }
 
 .swal2-noanimation {
-  -webkit-transition: none;
   transition: none;
 }
 
@@ -6243,51 +6285,41 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
 }
 @-webkit-keyframes swal2-toast-show {
   0% {
-    -webkit-transform: translateY(-0.625em) rotateZ(2deg);
-            transform: translateY(-0.625em) rotateZ(2deg);
+    transform: translateY(-0.625em) rotateZ(2deg);
   }
   33% {
-    -webkit-transform: translateY(0) rotateZ(-2deg);
-            transform: translateY(0) rotateZ(-2deg);
+    transform: translateY(0) rotateZ(-2deg);
   }
   66% {
-    -webkit-transform: translateY(0.3125em) rotateZ(2deg);
-            transform: translateY(0.3125em) rotateZ(2deg);
+    transform: translateY(0.3125em) rotateZ(2deg);
   }
   100% {
-    -webkit-transform: translateY(0) rotateZ(0deg);
-            transform: translateY(0) rotateZ(0deg);
+    transform: translateY(0) rotateZ(0deg);
   }
 }
 @keyframes swal2-toast-show {
   0% {
-    -webkit-transform: translateY(-0.625em) rotateZ(2deg);
-            transform: translateY(-0.625em) rotateZ(2deg);
+    transform: translateY(-0.625em) rotateZ(2deg);
   }
   33% {
-    -webkit-transform: translateY(0) rotateZ(-2deg);
-            transform: translateY(0) rotateZ(-2deg);
+    transform: translateY(0) rotateZ(-2deg);
   }
   66% {
-    -webkit-transform: translateY(0.3125em) rotateZ(2deg);
-            transform: translateY(0.3125em) rotateZ(2deg);
+    transform: translateY(0.3125em) rotateZ(2deg);
   }
   100% {
-    -webkit-transform: translateY(0) rotateZ(0deg);
-            transform: translateY(0) rotateZ(0deg);
+    transform: translateY(0) rotateZ(0deg);
   }
 }
 @-webkit-keyframes swal2-toast-hide {
   100% {
-    -webkit-transform: rotateZ(1deg);
-            transform: rotateZ(1deg);
+    transform: rotateZ(1deg);
     opacity: 0;
   }
 }
 @keyframes swal2-toast-hide {
   100% {
-    -webkit-transform: rotateZ(1deg);
-            transform: rotateZ(1deg);
+    transform: rotateZ(1deg);
     opacity: 0;
   }
 }
@@ -6391,61 +6423,49 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
 }
 @-webkit-keyframes swal2-show {
   0% {
-    -webkit-transform: scale(0.7);
-            transform: scale(0.7);
+    transform: scale(0.7);
   }
   45% {
-    -webkit-transform: scale(1.05);
-            transform: scale(1.05);
+    transform: scale(1.05);
   }
   80% {
-    -webkit-transform: scale(0.95);
-            transform: scale(0.95);
+    transform: scale(0.95);
   }
   100% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
   }
 }
 @keyframes swal2-show {
   0% {
-    -webkit-transform: scale(0.7);
-            transform: scale(0.7);
+    transform: scale(0.7);
   }
   45% {
-    -webkit-transform: scale(1.05);
-            transform: scale(1.05);
+    transform: scale(1.05);
   }
   80% {
-    -webkit-transform: scale(0.95);
-            transform: scale(0.95);
+    transform: scale(0.95);
   }
   100% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
   }
 }
 @-webkit-keyframes swal2-hide {
   0% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
     opacity: 1;
   }
   100% {
-    -webkit-transform: scale(0.5);
-            transform: scale(0.5);
+    transform: scale(0.5);
     opacity: 0;
   }
 }
 @keyframes swal2-hide {
   0% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
     opacity: 1;
   }
   100% {
-    -webkit-transform: scale(0.5);
-            transform: scale(0.5);
+    transform: scale(0.5);
     opacity: 0;
   }
 }
@@ -6472,7 +6492,7 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
   }
   100% {
     top: 2.8125em;
-    left: 0.875em;
+    left: 0.8125em;
     width: 1.5625em;
   }
 }
@@ -6499,7 +6519,7 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
   }
   100% {
     top: 2.8125em;
-    left: 0.875em;
+    left: 0.8125em;
     width: 1.5625em;
   }
 }
@@ -6549,132 +6569,108 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
 }
 @-webkit-keyframes swal2-rotate-success-circular-line {
   0% {
-    -webkit-transform: rotate(-45deg);
-            transform: rotate(-45deg);
+    transform: rotate(-45deg);
   }
   5% {
-    -webkit-transform: rotate(-45deg);
-            transform: rotate(-45deg);
+    transform: rotate(-45deg);
   }
   12% {
-    -webkit-transform: rotate(-405deg);
-            transform: rotate(-405deg);
+    transform: rotate(-405deg);
   }
   100% {
-    -webkit-transform: rotate(-405deg);
-            transform: rotate(-405deg);
+    transform: rotate(-405deg);
   }
 }
 @keyframes swal2-rotate-success-circular-line {
   0% {
-    -webkit-transform: rotate(-45deg);
-            transform: rotate(-45deg);
+    transform: rotate(-45deg);
   }
   5% {
-    -webkit-transform: rotate(-45deg);
-            transform: rotate(-45deg);
+    transform: rotate(-45deg);
   }
   12% {
-    -webkit-transform: rotate(-405deg);
-            transform: rotate(-405deg);
+    transform: rotate(-405deg);
   }
   100% {
-    -webkit-transform: rotate(-405deg);
-            transform: rotate(-405deg);
+    transform: rotate(-405deg);
   }
 }
 @-webkit-keyframes swal2-animate-error-x-mark {
   0% {
     margin-top: 1.625em;
-    -webkit-transform: scale(0.4);
-            transform: scale(0.4);
+    transform: scale(0.4);
     opacity: 0;
   }
   50% {
     margin-top: 1.625em;
-    -webkit-transform: scale(0.4);
-            transform: scale(0.4);
+    transform: scale(0.4);
     opacity: 0;
   }
   80% {
     margin-top: -0.375em;
-    -webkit-transform: scale(1.15);
-            transform: scale(1.15);
+    transform: scale(1.15);
   }
   100% {
     margin-top: 0;
-    -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
     opacity: 1;
   }
 }
 @keyframes swal2-animate-error-x-mark {
   0% {
     margin-top: 1.625em;
-    -webkit-transform: scale(0.4);
-            transform: scale(0.4);
+    transform: scale(0.4);
     opacity: 0;
   }
   50% {
     margin-top: 1.625em;
-    -webkit-transform: scale(0.4);
-            transform: scale(0.4);
+    transform: scale(0.4);
     opacity: 0;
   }
   80% {
     margin-top: -0.375em;
-    -webkit-transform: scale(1.15);
-            transform: scale(1.15);
+    transform: scale(1.15);
   }
   100% {
     margin-top: 0;
-    -webkit-transform: scale(1);
-            transform: scale(1);
+    transform: scale(1);
     opacity: 1;
   }
 }
 @-webkit-keyframes swal2-animate-error-icon {
   0% {
-    -webkit-transform: rotateX(100deg);
-            transform: rotateX(100deg);
+    transform: rotateX(100deg);
     opacity: 0;
   }
   100% {
-    -webkit-transform: rotateX(0deg);
-            transform: rotateX(0deg);
+    transform: rotateX(0deg);
     opacity: 1;
   }
 }
 @keyframes swal2-animate-error-icon {
   0% {
-    -webkit-transform: rotateX(100deg);
-            transform: rotateX(100deg);
+    transform: rotateX(100deg);
     opacity: 0;
   }
   100% {
-    -webkit-transform: rotateX(0deg);
-            transform: rotateX(0deg);
+    transform: rotateX(0deg);
     opacity: 1;
   }
 }
 @-webkit-keyframes swal2-rotate-loading {
   0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   100% {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 @keyframes swal2-rotate-loading {
   0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   100% {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
@@ -6697,8 +6693,7 @@ body.swal2-no-backdrop .swal2-container > .swal2-modal {
 body.swal2-no-backdrop .swal2-container.swal2-top {
   top: 0;
   left: 50%;
-  -webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
+  transform: translateX(-50%);
 }
 body.swal2-no-backdrop .swal2-container.swal2-top-start, body.swal2-no-backdrop .swal2-container.swal2-top-left {
   top: 0;
@@ -6711,26 +6706,22 @@ body.swal2-no-backdrop .swal2-container.swal2-top-end, body.swal2-no-backdrop .s
 body.swal2-no-backdrop .swal2-container.swal2-center {
   top: 50%;
   left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 body.swal2-no-backdrop .swal2-container.swal2-center-start, body.swal2-no-backdrop .swal2-container.swal2-center-left {
   top: 50%;
   left: 0;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 body.swal2-no-backdrop .swal2-container.swal2-center-end, body.swal2-no-backdrop .swal2-container.swal2-center-right {
   top: 50%;
   right: 0;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 body.swal2-no-backdrop .swal2-container.swal2-bottom {
   bottom: 0;
   left: 50%;
-  -webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
+  transform: translateX(-50%);
 }
 body.swal2-no-backdrop .swal2-container.swal2-bottom-start, body.swal2-no-backdrop .swal2-container.swal2-bottom-left {
   bottom: 0;
@@ -6759,8 +6750,7 @@ body.swal2-toast-shown .swal2-container.swal2-top {
   right: auto;
   bottom: auto;
   left: 50%;
-  -webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
+  transform: translateX(-50%);
 }
 body.swal2-toast-shown .swal2-container.swal2-top-end, body.swal2-toast-shown .swal2-container.swal2-top-right {
   top: 0;
@@ -6779,24 +6769,21 @@ body.swal2-toast-shown .swal2-container.swal2-center-start, body.swal2-toast-sho
   right: auto;
   bottom: auto;
   left: 0;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 body.swal2-toast-shown .swal2-container.swal2-center {
   top: 50%;
   right: auto;
   bottom: auto;
   left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 body.swal2-toast-shown .swal2-container.swal2-center-end, body.swal2-toast-shown .swal2-container.swal2-center-right {
   top: 50%;
   right: 0;
   bottom: auto;
   left: auto;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 body.swal2-toast-shown .swal2-container.swal2-bottom-start, body.swal2-toast-shown .swal2-container.swal2-bottom-left {
   top: auto;
@@ -6809,8 +6796,7 @@ body.swal2-toast-shown .swal2-container.swal2-bottom {
   right: auto;
   bottom: 0;
   left: 50%;
-  -webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
+  transform: translateX(-50%);
 }
 body.swal2-toast-shown .swal2-container.swal2-bottom-end, body.swal2-toast-shown .swal2-container.swal2-bottom-right {
   top: auto;
@@ -6819,22 +6805,17 @@ body.swal2-toast-shown .swal2-container.swal2-bottom-end, body.swal2-toast-shown
   left: auto;
 }
 body.swal2-toast-column .swal2-toast {
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
-  -webkit-box-align: stretch;
-          align-items: stretch;
+  flex-direction: column;
+  align-items: stretch;
 }
 body.swal2-toast-column .swal2-toast .swal2-actions {
-  -webkit-box-flex: 1;
-          flex: 1;
+  flex: 1;
   align-self: stretch;
   height: 2.2em;
   margin-top: 0.3125em;
 }
 body.swal2-toast-column .swal2-toast .swal2-loading {
-  -webkit-box-pack: center;
-          justify-content: center;
+  justify-content: center;
 }
 body.swal2-toast-column .swal2-toast .swal2-input {
   height: 2em;
@@ -6925,7 +6906,6 @@ body.swal2-toast-column .swal2-toast .swal2-validation-message {
   right: 0;
   bottom: 0;
   background-color: #ccc;
-  -webkit-transition: 0.4s;
   transition: 0.4s;
 }
 
@@ -6937,7 +6917,6 @@ body.swal2-toast-column .swal2-toast .swal2-validation-message {
   left: 4px;
   bottom: 4px;
   background-color: white;
-  -webkit-transition: 0.4s;
   transition: 0.4s;
 }
 
@@ -6950,7 +6929,6 @@ input:focus + .slider {
 }
 
 input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
   transform: translateX(26px);
 }
 
@@ -6984,8 +6962,7 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   width: 100%;
   height: 100%;
   background: #0000004d;
@@ -7023,8 +7000,7 @@ body {
   height: 15px;
   border-radius: 50%;
   background-color: #fbae17;
-  -webkit-transform-origin: 50%;
-          transform-origin: 50%;
+  transform-origin: 50%;
   -webkit-animation: bounce 500ms alternate infinite ease;
           animation: bounce 500ms alternate infinite ease;
 }
@@ -7034,15 +7010,13 @@ body {
     top: 30px;
     height: 5px;
     border-radius: 60px 60px 20px 20px;
-    -webkit-transform: scaleX(2);
-            transform: scaleX(2);
+    transform: scaleX(2);
   }
 
   35% {
     height: 15px;
     border-radius: 50%;
-    -webkit-transform: scaleX(1);
-            transform: scaleX(1);
+    transform: scaleX(1);
   }
 
   100% {
@@ -7055,15 +7029,13 @@ body {
     top: 30px;
     height: 5px;
     border-radius: 60px 60px 20px 20px;
-    -webkit-transform: scaleX(2);
-            transform: scaleX(2);
+    transform: scaleX(2);
   }
 
   35% {
     height: 15px;
     border-radius: 50%;
-    -webkit-transform: scaleX(1);
-            transform: scaleX(1);
+    transform: scaleX(1);
   }
 
   100% {
@@ -7073,5 +7045,15 @@ body {
 
 .sidebar .sidebar-brand {
   height: 7.375rem;
+}
+
+.table-general th,
+.table-general td {
+  max-width: 150px;
+  min-width: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
 }
 

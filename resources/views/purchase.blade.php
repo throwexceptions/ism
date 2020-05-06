@@ -19,7 +19,7 @@
                                             class="fa fa-plus"></i> New Purchase Order</a>
                             </div>
                             <div class="col-md-12 mt-3">
-                                <table id="table-inquiry" class="table table-striped nowrap" style="width:100%"></table>
+                                <table id="table-inquiry" class="table table-striped nowrap table-general" style="width:100%"></table>
                             </div>
                         </div>
                     </div>
@@ -197,7 +197,7 @@
                     scrollX: true,
                     responsive: true,
                     pageLength: 100,
-                    order: [[3, 'desc']],
+                    order: [[1, 'desc']],
                     ajax: {
                         url: "{{ route('purchase.table') }}",
                         method: "POST",
@@ -220,32 +220,25 @@
                             bSortable: false,
                             title: 'Action'
                         },
-                        {
-                            data: function (value) {
-                                return '<div class="btn-group btn-group-sm shadow-sm" role="group" aria-label="Basic example">' +
-                                    '<a href="#" class="btn btn-info btn-vat">' + value.vat_type + '</a>' +
-                                    '</div>'
-                            }, name: 'purchase_infos.vat_type', title: 'VAT Type'
-                        },
-                        {
-                            data: function (value) {
-                                return '<div class="btn-group btn-group-sm shadow-sm" role="group" aria-label="Basic example">' +
-                                    '<a href="#" class="btn btn-info btn-payment">' + value.payment_status + '</a>' +
-                                    '</div>'
-                            }, name: 'payment_status', title: 'Payment Status'
-                        },
                         {data: 'po_no', name: 'purchase_infos.po_no', title: 'PO NO.'},
                         {
                             data: function (value) {
-                                return '<div class="btn-group btn-group-sm shadow-sm" role="group" aria-label="Basic example">' +
+                                return '<div class="btn-group btn-group-sm shadow-sm btn-block" role="group" aria-label="Basic example">' +
+                                    '<a href="#" class="btn btn-info btn-payment">' + value.payment_status + '</a>' +
+                                    '</div>'
+                            }, name: 'payment_status', title: 'Payment'
+                        },
+                        {
+                            data: function (value) {
+                                return '<div class="btn-group btn-group-sm shadow-sm btn-block" role="group" aria-label="Basic example">' +
                                     '<a href="#" class="btn btn-info btn-status">' + value.status + '</a>' +
                                     '</div>'
                             }, name: 'status', title: 'Status'
                         },
                         {data: 'subject', title: 'Project Cost Center'},
-                        {data: 'vendor_name', name: 'vendors.name', title: 'Vendor Name'},
-                        {data: 'grand_total', name: 'summaries.grand_total', title: 'Total Amount'},
-                        {data: 'name', name: 'users.name', title: 'Assigned To'},
+                        {data: 'vendor_name', name: 'vendors.name', title: 'Vendor'},
+                        {data: 'grand_total', name: 'summaries.grand_total', title: 'Total'},
+                        {data: 'name', name: 'users.name', title: 'Assigned'},
                         {
                             data: function (value) {
                                 if(value.status == 'Received') {

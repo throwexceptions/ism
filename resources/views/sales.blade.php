@@ -19,7 +19,7 @@
                                             class="fa fa-plus"></i> New Sales Order</a>
                             </div>
                             <div class="col-md-12 mt-3">
-                                <table id="table-sales" class="table table-striped nowrap" style="width:100%"></table>
+                                <table id="table-sales" class="table table-striped nowrap table-general" style="width:100%"></table>
                             </div>
                         </div>
                     </div>
@@ -183,7 +183,7 @@
                     scrollX: true,
                     responsive: true,
                     pageLength: 100,
-                    order: [[3, 'desc']],
+                    order: [[1, 'desc']],
                     ajax: {
                         url: "{{ route('sales.table') }}",
                         method: "POST",
@@ -197,7 +197,8 @@
                                     edit = '';
                                 }
                                 return '<div class="btn-group btn-group-sm shadow-sm" role="group" aria-label="Basic example">' +
-                                    '<a href="/sales/view/' + value.id + '" class="btn btn-primary btn-view"><i class="fa fa-eye"></i></a>' +
+                                    '<a href="/sales/view/' + value.id + '" class="btn btn-primary btn-view">' +
+                                    '<i class="fa fa-eye"></i></a>' +
                                     edit +
                                     '<button type="button" class="btn btn-danger btn-destroy"><i class="fa fa-trash"></i></button>' +
                                     '</div>'
@@ -206,21 +207,14 @@
                             bSortable: false,
                             title: 'Action'
                         },
+                        {data: 'so_no', name: 'sales_orders.so_no', title: 'SO NO.'},
                         {
                             data: function(value){
-                                return '<div class="btn-group btn-group-sm shadow-sm" role="group" aria-label="Basic example">' +
-                                    '<a href="#" class="btn btn-info btn-vat">' + value.vat_type + '</a>' +
-                                    '</div>'
-                            }, name: 'sales_orders.vat_type', title: 'VAT Type'
-                        },
-                        {
-                            data: function(value){
-                                return '<div class="btn-group btn-group-sm shadow-sm" role="group" aria-label="Basic example">' +
+                                return '<div class="btn-group btn-group-sm shadow-sm btn-block" role="group" aria-label="Basic example">' +
                                     '<a href="#" class="btn btn-info btn-payment">' + value.payment_status + '</a>' +
                                     '</div>'
-                            }, name: 'sales_orders.payment_status', title: 'Payment Status'
+                            }, name: 'sales_orders.payment_status', title: 'Payment'
                         },
-                        {data: 'so_no', name: 'sales_orders.so_no', title: 'SO NO.'},
                         {
                             data: function (value) {
                                 return '<div class="btn-group btn-group-sm shadow-sm" role="group" aria-label="Basic example">' +
@@ -230,8 +224,16 @@
                         },
                         {data: 'customer_name', name: 'customers.name', title: 'Customer'},
                         {data: 'subject', name: 'subject', title: 'Subject'},
-                        {data: 'grand_total',  name: 'summaries.grand_total', title: 'Grand Total'},
-                        {data: 'username', name: 'users.name', title: 'Assigned To'},
+                        {data: 'grand_total',  name: 'summaries.grand_total', title: 'Total'},
+                        {data: 'username', name: 'users.name', title: 'Assigned'},
+                        {
+                            data: function (value) {
+                                if(value.status == 'Shipped') {
+                                    return value.updated_at
+                                }
+                                return 'No Date'
+                            }, name: 'purchase_infos.updated_at', title: 'Shipped Date'
+                        },
                         {data: 'created_at', name: 'sales_orders.created_at', title: 'Date Created'},
                     ],
                     drawCallback: function () {

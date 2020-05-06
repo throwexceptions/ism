@@ -21,7 +21,7 @@
                                             class="fa fa-download"></i> Customer List</a>
                             </div>
                             <div class="col-md-12 mt-3">
-                                <table id="table-customer" class="table table-striped nowrap"
+                                <table id="table-customer" class="table table-striped nowrap table-general"
                                        style="width:100%"></table>
                             </div>
                         </div>

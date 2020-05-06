@@ -35,7 +35,12 @@ class PurchaseInfoController extends Controller
             ->leftJoin('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
             ->join('users', 'users.id', '=', 'purchase_infos.assigned_to');
 
-        return DataTables::of($purchase_info)->make(true);
+        return DataTables::of($purchase_info)->setTransformer(function ($data) {
+            $data = $data->toArray();
+            $data['created_at'] = Carbon::parse($data['created_at'])->format('F j, Y');
+            $data['updated_at'] = Carbon::parse($data['updated_at'])->format('F j, Y');
+            return $data;
+        })->make(true);
     }
 
     public function create()
@@ -64,6 +69,7 @@ class PurchaseInfoController extends Controller
             "check_writer" => "",
             "tac" => Preference::status('tac_po_fill'),
             "description" => "",
+            "updated_at" => Carbon::now()->format('Y-m-d'),
             "vat_type" => "VAT EX",
         ]);
 
@@ -92,8 +98,7 @@ class PurchaseInfoController extends Controller
             $data['overview']['check_writer'] = '';
         }
 
-        $data['overview']['created_at'] = Carbon::now()->format('Y-m-d H:i:s');
-        $data['overview']['updated_at'] = Carbon::now()->format('Y-m-d H:i:s');
+        $data['overview']['created_at'] = Carbon::now()->format('Y-m-d');
         $data['overview']['assigned_to'] = auth()->user()->id;
         $id = DB::table('purchase_infos')->insertGetId($data['overview']);
 
@@ -132,7 +137,7 @@ class PurchaseInfoController extends Controller
         $data = $request->input();
 
         unset($data['overview']['vendor_name']);
-        $data['overview']['updated_at'] = Carbon::now()->format('Y-m-d H:i:s');
+
         if ($data['overview']['payment_method'] != 'Check') {
             $data['overview']['check_number'] = '';
             $data['overview']['check_writer'] = '';
@@ -211,7 +216,7 @@ class PurchaseInfoController extends Controller
             DB::table('purchase_infos')->where('id', $data['id'])
                 ->update([
                     'status' => $data['status'],
-                    'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+                    'updated_at' => Carbon::now()->format('Y-m-d')
                 ]);
 
             $product_detail = DB::table('product_details')->where('purchase_order_id', $data['id'])->get();

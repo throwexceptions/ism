@@ -37,6 +37,10 @@
                                     <label>Due Date</label>
                                     <input type="date" class="form-control form-control-sm" v-model="overview.due_date">
                                 </div>
+                                <div class="form-group"  v-if="overview.status == 'Received'">
+                                    <label>Received Date</label>
+                                    <input type="date" class="form-control form-control-sm" v-model="overview.updated_at">
+                                </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">

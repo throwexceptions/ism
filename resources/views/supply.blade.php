@@ -15,7 +15,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12 mt-3">
-                                <table id="table-supplies" class="table table-striped nowrap" style="width:100%"></table>
+                                <table id="table-supplies" class="table table-striped nowrap table-general" style="width:100%"></table>
                             </div>
                         </div>
                     </div>
