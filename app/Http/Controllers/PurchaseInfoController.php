@@ -219,20 +219,6 @@ class PurchaseInfoController extends Controller
                     'updated_at' => Carbon::now()->format('Y-m-d')
                 ]);
 
-            $product_detail = DB::table('product_details')->where('purchase_order_id', $data['id'])->get();
-            foreach ($product_detail as $value) {
-                if ('Ordered' == $data['status']) {
-                    if (Product::isLimited($value['product_id'])) {
-                        Supply::decreCount($value->product_id, $value->qty);
-                    }
-                }
-                if ('Received' == $data['status']) {
-                    if (Product::isLimited($value['product_id'])) {
-                        Supply::increCount($value->product_id, $value->qty);
-                    }
-                }
-            }
-
             return ['success' => true];
         }
 

@@ -222,13 +222,13 @@
                                     <label class="col-form-label col-md-4 col-form-label-sm">Discount</label>
                                     <div class="col-md-4">
                                         <input type="number" class="form-control form-control-sm"
-                                               v-model="summary.discount" v-bind:class="{'is-invalid': summary.discount == '' }">
+                                               v-model="summary.discount">
                                     </div>
                                 </div>
                                 <div class="form-group row" v-show="overview.vat_type == 'VAT INC'">
                                     <label class="col-form-label col-md-4 col-form-label-sm">Sales Tax %</label>
                                     <div class="input-group col-md-4">
-                                        <input type="number" class="form-control form-control-sm" v-model="summary.sales_tax" v-bind:class="{'is-invalid': summary.sales_tax == '' }">
+                                        <input type="number" class="form-control form-control-sm" v-model="summary.sales_tax">
                                         <div class="input-group-append">
                                           <span class="input-group-text" id="basic-addon2"><i class="fa fa-percentage"></i></span>
                                         </div>
@@ -245,7 +245,7 @@
                                     <label class="col-form-label col-md-4 col-form-label-sm">Shipping</label>
                                     <div class="col-md-4">
                                         <input type="number" class="form-control form-control-sm"
-                                               v-model="summary.shipping" v-bind:class="{'is-invalid': summary.shipping == '' }">
+                                               v-model="summary.shipping">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -568,14 +568,6 @@
 
                 var newOption = new Option($this.overview.vendor_name, $this.overview.vendor_id, true, true);
                 $('.select2-vendor').append(newOption).trigger('change');
-
-
-                $(document.body).keyup(function () {
-                    $('button').removeAttr('disabled');
-                    if($('input').hasClass('is-invalid')) {
-                        $('button').attr('disabled','disabled');
-                    }
-                });
 
                 if ('{{ Route::currentRouteName() }}' == 'purchase.detail') {
                     this.viewType = 0;

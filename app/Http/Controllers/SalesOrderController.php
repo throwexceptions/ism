@@ -206,12 +206,14 @@ class SalesOrderController extends Controller
 
             return ['success' => true];
         }
+
         if ($purchase_info->vat_type != $data['vat_type']) {
             DB::table('sales_orders')->where('id', $data['id'])
                 ->update(['vat_type' => $data['vat_type']]);
 
             return ['success' => true];
         }
+
         if ($purchase_info->payment_status != $data['payment_status']) {
             DB::table('sales_orders')->where('id', $data['id'])
                 ->update(['payment_status' => $data['payment_status']]);
