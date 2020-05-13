@@ -28,6 +28,7 @@ class SupplyController extends Controller
                          ->selectRaw('supplies.*, users.name as username,
                          products.name as product_name, products.manual_id,
                          products.selling_price,
+                         products.unit,
                          ifnull(po_sum.total, 0) as po_count,
                          ifnull(so_sum.total, 0) as so_count')
                          ->join('products', 'products.id', '=', 'supplies.product_id')

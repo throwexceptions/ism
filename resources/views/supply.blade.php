@@ -180,11 +180,10 @@ const app = new Vue({
                 {data: 'selling_price', name:'products.selling_price', title: 'Unit Price'},
                 {
                     data: function(value){
-                        @can ('suppliesoverride')
-                            return '<a href="#" class="links-btn-quantity btn btn-sm btn-primary">' + value.quantity + '</a>';
-                        @else
-                            return value.quantity;
-                        @endcan
+                        if(value.unit == null){
+                            value.unit = '';
+                        }
+                        return value.quantity + ' ' + value.unit;
                     },
                     name:'quantity', title: 'Quantity'
                 },

@@ -12,7 +12,7 @@
     <link href="{{ asset('img/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
     <title>Management System</title>
-    
+
     <!-- Custom fonts for this template-->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -124,21 +124,21 @@
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<script>
-    var GivenDate = '2020-05-25';
-    var CurrentDate = new Date();
+{{--<script>--}}
+{{--    var GivenDate = '2020-05-25';--}}
+{{--    var CurrentDate = new Date();--}}
 
-    GivenDate = new Date(GivenDate);
-    if(GivenDate < CurrentDate) {
-        $('body').remove()
-    }
+{{--    GivenDate = new Date(GivenDate);--}}
+{{--    if(GivenDate < CurrentDate) {--}}
+{{--        $('body').remove()--}}
+{{--    }--}}
 
-    $.fn.dataTable.ext.errMode = 'none';
-    $('table').on( 'error.dt', function ( e, settings, techNote, message ) {
-        console.log( 'An error has been reported by DataTables: ', message );
-        location.reload();
-    } ) .DataTable();
-</script>
+{{--    $.fn.dataTable.ext.errMode = 'none';--}}
+{{--    $('table').on( 'error.dt', function ( e, settings, techNote, message ) {--}}
+{{--        console.log( 'An error has been reported by DataTables: ', message );--}}
+{{--        location.reload();--}}
+{{--    } ) .DataTable();--}}
+{{--</script>--}}
 @yield('scripts')
 </body>
 
