@@ -232,7 +232,7 @@
                                     return value.updated_at
                                 }
                                 return 'No Date'
-                            }, name: 'purchase_infos.updated_at', title: 'Shipped Date'
+                            }, name: 'sales_orders.updated_at', title: 'Shipped Date'
                         },
                         {data: 'created_at', name: 'sales_orders.created_at', title: 'Date Created'},
                     ],

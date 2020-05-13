@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LogoUploadRequest;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,7 +15,7 @@ class UserController extends Controller
     public function index()
     {
         $roles = DB::table('roles')->get()->pluck('name');
-        
+
         return view('users', compact('roles'));
     }
 
@@ -72,7 +73,7 @@ class UserController extends Controller
         return ['success' => true];
     }
 
-    public function logoUpload(Request $request)
+    public function logoUpload(LogoUploadRequest $request)
     {
         $request->logo->storeAs('logo', 'logo.jpg');
 
