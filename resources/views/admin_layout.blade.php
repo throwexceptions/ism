@@ -124,21 +124,21 @@
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-{{--<script>--}}
-{{--    var GivenDate = '2020-05-25';--}}
-{{--    var CurrentDate = new Date();--}}
+<script>
+    // var GivenDate = '2020-05-25';
+    // var CurrentDate = new Date();
+    //
+    // GivenDate = new Date(GivenDate);
+    // if(GivenDate < CurrentDate) {
+    //     $('body').remove()
+    // }
 
-{{--    GivenDate = new Date(GivenDate);--}}
-{{--    if(GivenDate < CurrentDate) {--}}
-{{--        $('body').remove()--}}
-{{--    }--}}
-
-{{--    $.fn.dataTable.ext.errMode = 'none';--}}
-{{--    $('table').on( 'error.dt', function ( e, settings, techNote, message ) {--}}
-{{--        console.log( 'An error has been reported by DataTables: ', message );--}}
-{{--        location.reload();--}}
-{{--    } ) .DataTable();--}}
-{{--</script>--}}
+    $.fn.dataTable.ext.errMode = 'none';
+    $('table').on( 'error.dt', function ( e, settings, techNote, message ) {
+        console.log( 'An error has been reported by DataTables: ', message );
+        location.reload();
+    } ) .DataTable();
+</script>
 @yield('scripts')
 </body>
 
