@@ -18,6 +18,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('/logout', 'Auth\LoginController@logout');
+
     Route::get('/home', 'DashboardController@index')->name('home');
     Route::post('/home/instock', 'DashboardController@inStock')->name('home.instock');
     Route::post('/home/outofstock', 'DashboardController@outOfStock')->name('home.outofstock');
