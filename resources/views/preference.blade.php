@@ -107,6 +107,27 @@
                                     </div>
                                 </div>
                             </div>
+                            {{--General--}}
+                            <div class="col-md-12 mt-3 row">
+                                <div class="col-md-12">
+                                    <h3>General Information</h3>
+                                    <hr>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Company Name</label>
+                                        <input type="text" class="form-control" v-model="overview.company_name"/>
+                                    </div>
+                                </div>
+                                @can('subscription')
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Expiration</label>
+                                        <input type="date" class="form-control" v-model="overview.expiration"/>
+                                    </div>
+                                </div>
+                                @endcan
+                            </div>
                         </div>
                     </div>
                 </div>

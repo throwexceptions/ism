@@ -42,7 +42,7 @@ class PreferenceTableSeeder extends Seeder
         $pref->name = 'delivery_address_fill';
         $pref->status = '';
         $pref->save();
-        
+
         $pref = new \App\Preference();
         $pref->name = 'company_details_fill';
         $pref->status = '';
@@ -71,6 +71,16 @@ class PreferenceTableSeeder extends Seeder
         $pref = new \App\Preference();
         $pref->name = 'tin_no';
         $pref->status = '';
+        $pref->save();
+
+        $pref = new \App\Preference();
+        $pref->name = 'expiration';
+        $pref->status = '';
+        $pref->save();
+
+        $pref = new \App\Preference();
+        $pref->name = 'company_name';
+        $pref->status = 'Sample Name';
         $pref->save();
     }
 }

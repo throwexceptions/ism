@@ -7,7 +7,7 @@
 
     <!-- Topbar Search -->
     <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-        <h5>{{ env('APP_NAME') }}</h5>
+        <h5>{{ \App\Preference::status('company_name') }}</h5>
     </form>
 
     <!-- Topbar Navbar -->
