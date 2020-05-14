@@ -19,7 +19,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.name">
+                                    <input type="text" class="form-control form-control-sm name" v-model="overview.name">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -169,7 +169,7 @@
             },
             watch: {
                 'overview.vendor_price': function () {
-                    this.overview.selling_price = Math.round(parseFloat(this.overview.vendor_price) + parseFloat((this.overview.vendor_price * .20)))    
+                    this.overview.selling_price = Math.round(parseFloat(this.overview.vendor_price) + parseFloat((this.overview.vendor_price * .20)))
                 }
             },
             methods: {
@@ -234,6 +234,7 @@
 
                 if ('{{ Route::currentRouteName() }}' == 'product.detail') {
                     this.viewType = 0;
+                    $('.name').addClass('form-control-plaintext').removeClass('form-control');
                 }
                 else if ('{{ Route::currentRouteName() }}' == 'product.create') {
                     this.viewType = 1;

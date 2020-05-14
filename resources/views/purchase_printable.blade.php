@@ -194,14 +194,16 @@ body {
 								<td style="padding-left: 10px !important">{{ $summary->shipping
 									}}</td>
 							</tr>
-							<tr>
-								<td align="right"><strong>SALES %</strong></td>
-								<td style="padding-left: 10px !important">{{ $summary->sales_tax }}</td>
-							</tr>
-							<tr>
-								<td align="right"><strong>SALES TAX</strong></td>
-								<td style="padding-left: 10px !important">{{ $summary->sales_actual }}</td>
-							</tr>
+                            @if($sales_order->vat_type == 'VAT INC')
+                                <tr>
+                                    <td align="right"><strong>SALES %</strong></td>
+                                    <td style="padding-left: 10px !important">{{ $summary->sales_tax }}</td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><strong>SALES TAX</strong></td>
+                                    <td style="padding-left: 10px !important">{{ $summary->sales_actual }}</td>
+                                </tr>
+                            @endif
 							<tr>
                                 <td align="right"><strong>GRAND TOTAL</strong></td>
                                 <td style="padding-left: 10px !important">
@@ -214,7 +216,7 @@ body {
 			</tr>
 		</tbody>
     </table>
-    
+
     {{--ADDRESSES--}}
 </br></br>
 	<table style="width: 100%;">
