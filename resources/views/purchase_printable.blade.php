@@ -194,7 +194,7 @@ body {
 								<td style="padding-left: 10px !important">{{ $summary->shipping
 									}}</td>
 							</tr>
-                            @if($sales_order->vat_type == 'VAT INC')
+                            @if($purchase_info->vat_type == 'VAT INC')
                                 <tr>
                                     <td align="right"><strong>SALES %</strong></td>
                                     <td style="padding-left: 10px !important">{{ $summary->sales_tax }}</td>
