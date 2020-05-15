@@ -30,7 +30,7 @@ class CreateSalesOrdersTable extends Migration
             $table->string('payment_method', 200)->nullable();
             $table->string('account_name', 200)->nullable();
             $table->string('account_no', 200)->nullable();
-            $table->string('tac', 200)->nullable();
+            $table->text('tac')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

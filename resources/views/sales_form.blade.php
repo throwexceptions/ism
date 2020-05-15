@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Account No.</label>
-                                    <input type="text" name="so_no" class="form-control form-control-sm"
+                                    <input type="text" class="form-control form-control-sm"
                                            v-model="overview.account_no">
                                 </div>
                             </div>
