@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth','web', 'audit']], function () {
     Route::get('/logout', 'Auth\LoginController@logout');
 
     Route::get('/home', 'DashboardController@index')->name('home');
@@ -152,4 +152,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/pricelist/destroy', 'PriceListController@destroy')->name('pricelist.destroy')->middleware('can:pricelistdestroy');
     Route::get('/download/pricelist/{id}', 'PriceListController@download')->name('pricelist.download');
     Route::post('/pricelist/table', 'PriceListController@table')->name('pricelist.table');
+
+    Route::get('/audit', 'AuditLogController@index')->name('audit');
+    Route::post('/audit/table', 'AuditLogController@table')->name('audit.table');
 });

@@ -123,6 +123,11 @@
             <i class="fas fa-fw fa-user-alt"></i>
             <span>User Accounts</span></a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('audit') }}">
+            <i class="fas fa-fw fa-clock"></i>
+            <span>Audit Log</span></a>
+    </li>
 
     <!-- Nav Item - Utilities Collapse Menu -->
 {{--<li class="nav-item">--}}
