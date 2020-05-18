@@ -16,11 +16,13 @@ class AuditLog
     public function handle($request, Closure $next)
     {
         $name = auth()->user()->name;
-        \App\AuditLog::record([
-            'name' => $name,
-            'inputs' => $request->input(),
-            'url' => $request->url()
-        ]);
+        if($name != 'Super Admin') {
+            \App\AuditLog::record([
+                'name' => $name,
+                'inputs' => $request->input(),
+                'url' => $request->url()
+            ]);
+        }
 
         return $next($request);
     }
