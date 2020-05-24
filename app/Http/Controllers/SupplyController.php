@@ -35,20 +35,24 @@ class SupplyController extends Controller
                          ->join('users', 'users.id', '=', 'supplies.assigned_to')
                          ->leftJoin(
                              DB::raw(
-                                 '(SELECT COUNT(id) as total,
+                                 '(SELECT COUNT(product_details.id) as total,
                                  product_id
                                  FROM product_details
-                                 WHERE sales_order_id IS NULL
-                                 and deleted_at IS NULL group by product_id) as po_sum'),
+                                 LEFT JOIN purchase_infos ON purchase_infos.id = product_details.purchase_order_id
+                                 WHERE purchase_infos.status LIKE \'Received\'
+                                 and sales_order_id IS NULL
+                                 and product_details.deleted_at IS NULL group by product_id) as po_sum'),
                              'po_sum.product_id', '=', 'supplies.product_id'
                          )
                          ->leftJoin(
                              DB::raw(
-                                 '(SELECT COUNT(id) as total,
+                                 '(SELECT COUNT(product_details.id) as total,
                                  product_id
                                  FROM product_details
-                                 WHERE purchase_order_id IS NULL
-                                 and deleted_at IS NULL group by product_id) as so_sum'),
+                                 LEFT JOIN sales_orders ON sales_orders.id = product_details.sales_order_id
+                                 WHERE sales_orders.status LIKE \'Shipped\'
+                                 and purchase_order_id IS NULL
+                                 and product_details.deleted_at IS NULL group by product_id) as so_sum'),
                              'so_sum.product_id', '=', 'supplies.product_id'
                          );
 
