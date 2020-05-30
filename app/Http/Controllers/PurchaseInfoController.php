@@ -289,8 +289,7 @@ class PurchaseInfoController extends Controller
                 'sections' => $sections,
             ]);
 
-        return $pdf->setPaper('a4')->download('PO_' . $purchase_info["status"] . '-' . Carbon::now()
-                ->format('Y-m-d') . '.pdf');
+        return $pdf->setPaper('a4')->download($purchase_info["po_no"] . '_' . $purchase_info["vendor_name"] . '.pdf');
     }
 
     public function previewPO($id)
