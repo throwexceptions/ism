@@ -146,6 +146,7 @@ Route::group(['middleware' => ['auth','web', 'audit']], function () {
     Route::post('/return/destroy', 'ProductReturnController@destroy')->name('return.destroy')->middleware('can:productreturndelete');
     Route::post('/return/store', 'ProductReturnController@store')->name('return.store');
     Route::get('/return/view/{id}', 'ProductReturnController@show')->name('return.view');
+    Route::get('/return/print/{id}', 'ProductReturnController@printable')->name('return.print');
 
     Route::get('/pricelist', 'PriceListController@index')->name('pricelist')->middleware('can:pricelist');
     Route::post('/pricelist/upload', 'PriceListController@upload')->name('pricelist.upload')->middleware('can:pricelistupload');

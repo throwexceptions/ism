@@ -132,7 +132,7 @@
                                 <a href="{{ route('return') }}" class="btn btn-warning">Back</a>
                                 <button class="btn btn-info" v-if="viewType == 1" @click="store">Save New</button>
                                 <button class="btn btn-primary" v-if="viewType == 0" @click="update">Update Now</button>
-                                <a href="{{ route('purchase.print', isset($product_return->id)?$product_return->id: '') }}"
+                                <a href="{{ route('return.print', isset($product_return->id)?$product_return->id: '') }}"
                                    class="btn btn-primary" v-if="viewType == 2">Product Return</a>
                             </div>
                         </div>

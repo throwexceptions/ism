@@ -17,6 +17,7 @@ class CreateSummariesTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('purchase_order_id')->nullable();
             $table->bigInteger('sales_order_id')->nullable();
+            $table->bigInteger('product_return_id')->nullable();
             $table->float('discount')->nullable();
             $table->float('sub_total')->nullable();
             $table->float('shipping')->nullable();

@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use App\ProductDetail;
 use App\ProductReturn;
+use App\PurchaseInfo;
+use App\SalesOrder;
+use App\Summary;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
+use PDF;
 
 class ProductReturnController extends Controller
 {
@@ -133,4 +137,91 @@ class ProductReturnController extends Controller
 
         return ['success' => true];
     }
+
+
+    public function printable($id)
+    {
+        $data = $this->getOverview($id);
+        $sales_order = $data['sales_order'];
+        $product_details = $data['product_details'];
+        $sections = [];
+        $cnt = -1;
+
+        foreach ($product_details as $key => $value) {
+            if (count($value) == 1) {
+                $sections[] = [
+                    $value['category'] => 0,
+                ];
+                $cnt++;
+            } else {
+                if ($cnt == -1) {
+                    $cnt = 0;
+                }
+                $total_selling = $value['qty'] * $value['selling_price'];
+                $total_labor = $value['qty'] * $value['labor_cost'];
+                $sections[$cnt][$value['category']] += $total_labor + ($total_selling - ($total_selling * ($value['discount_item'] / 100)));
+            }
+        }
+
+        $pdf = PDF::loadView('return_printable',
+            [
+                'sales_order' => $sales_order,
+                'product_details' => $product_details,
+            ]);
+
+        return $pdf->setPaper('a4')->download('RETURNS ' . $sales_order["pr_no"] . ' ' . $sales_order["customer_name"] . '.pdf');
+    }
+
+    public function getOverview($id)
+    {
+        $sales_order = ProductReturn::query()
+            ->selectRaw('sales_orders.so_no, product_returns.*, IFNULL(customers.name, \'\') as customer_name')
+            ->leftJoin('customers', 'customers.id', '=', 'product_returns.customer_id')
+            ->leftJoin('sales_orders', 'sales_orders.id', '=', 'product_returns.sales_order_id')
+            ->where('product_returns.id', $id)
+            ->get()[0];
+
+        $product_details = ProductDetail::query()
+            ->selectRaw('products.code, products.category, products.unit, products.manual_id, product_details.*, supplies.quantity')
+            ->where('product_return_id', $id)
+            ->join('products', 'products.id', 'product_details.product_id')
+            ->join('supplies', 'supplies.product_id', 'product_details.product_id')
+            ->get();
+
+        $category = '';
+        $hold = [];
+        foreach ($product_details->toArray() as $value) {
+            if ($value['category'] != $category) {
+                $hold[] = ['category' => $value['category']];
+                $category = $value['category'];
+            }
+            unset($value['name']);
+            unset($value['manufacturer']);
+            unset($value['description']);
+            unset($value['batch']);
+            unset($value['color']);
+            unset($value['size']);
+            unset($value['weight']);
+            unset($value['assigned_to']);
+            unset($value['id']);
+            $hold[] = $value;
+        }
+        $product_details = collect($hold);
+
+        $summary = collect([
+            'purchase_order_id' => '',
+            'sales_order_id' => '',
+            'discount' => '0',
+            'sub_total' => '0',
+            'shipping' => '0',
+            'sales_tax' => '0',
+            'grand_total' => '0',
+        ]);
+
+        return [
+            'sales_order' => $sales_order,
+            'product_details' => $product_details,
+        ];
+    }
+
 }
