@@ -43,6 +43,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
+                        <a v-bind:href="url_view + overview.product_id" target="_blank" class="btn btn-primary">View Grid</a>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -94,7 +95,8 @@ const app = new Vue({
                 quantity: 0,
             },
             links: [],
-            url: ''
+            url: '',
+            url_view: ''
         }
     },
     methods: {
@@ -131,7 +133,8 @@ const app = new Vue({
                 data: $this.overview,
                 success: function(value){
                     $this.links = value;
-                    $this.url = '/purchase/view/'
+                    $this.url = '/purchase/view/';
+                    $this.url_view = '/supply/po/';
                 }
             })
         },
@@ -144,7 +147,8 @@ const app = new Vue({
                 data: $this.overview,
                 success: function(value){
                     $this.links = value;
-                    $this.url = '/sales/view/'
+                    $this.url = '/sales/view/';
+                    $this.url_view = '/supply/so/';
                 }
             });
         },

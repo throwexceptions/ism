@@ -109,6 +109,8 @@ Route::group(['middleware' => ['auth','web', 'audit']], function () {
     Route::post('/supply/po', 'SupplyController@getPOLinks')->name('supply.po.links');
     Route::post('/supply/so', 'SupplyController@getSOLinks')->name('supply.so.links');
     Route::post('/supply/update/quantity', 'SupplyController@updateQuantity')->name('supply.update.quantity');
+    Route::get('/supply/po/{id}', 'SupplyController@previewPO')->name('supply.po.preview');
+    Route::get('/supply/so/{id}', 'SupplyController@previewSO')->name('supply.so.preview');
 
     Route::get('/users', 'UserController@index')->name('users')->middleware('can:useraccounts');
     Route::get('/user/detail/{id}', 'UserController@show')->name('user.detail')->middleware('can:useraccountsupdate');

@@ -137,4 +137,36 @@ class SupplyController extends Controller
               ->where('id', $request->id)
               ->update(['quantity' => $request->quantity]);
     }
+
+    public function previewPO($id)
+    {
+        $results = DB::table('product_details')
+            ->selectRaw('DISTINCT purchase_order_id as link,
+            purchase_infos.po_no  as number, purchase_infos.*, vendors.name as vendor_name')
+            ->leftjoin('purchase_infos', 'purchase_infos.id', 'purchase_order_id')
+            ->leftjoin('vendors', 'vendors.id', 'purchase_infos.vendor_id')
+            ->where('product_id', $id)
+            ->where('purchase_order_id', '<>', null)
+            ->get();
+
+        $type = 'PO';
+
+        return view('supply_printable', compact('results','type'));
+    }
+
+    public function previewSO($id)
+    {
+        $results = DB::table('product_details')
+            ->selectRaw('DISTINCT sales_order_id as link,
+            sales_orders.so_no as number, sales_orders.*, customers.name as customer_name')
+            ->join('sales_orders', 'sales_orders.id', 'sales_order_id')
+            ->leftjoin('customers', 'customers.id', 'sales_orders.customer_id')
+            ->where('product_id', $id)
+            ->where('sales_order_id', '<>', null)
+            ->get();
+
+        $type = 'SO';
+
+        return view('supply_printable', compact('results', 'type'));
+    }
 }
