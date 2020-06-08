@@ -37,7 +37,7 @@ class PurchaseInfoController extends Controller
 
         return DataTables::of($purchase_info)->setTransformer(function ($data) {
             $data = $data->toArray();
-            $data['created_at'] = $data['created_at']?Carbon::parse($data['created_at'])->format('F j, Y'):'';
+            $data['created_at'] = $data['created_at'] != null?Carbon::parse($data['created_at'])->format('F j, Y'):'';
             $data['updated_at'] = Carbon::parse($data['updated_at'])->format('F j, Y');
             return $data;
         })->make(true);
