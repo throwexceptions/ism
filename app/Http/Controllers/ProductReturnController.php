@@ -33,7 +33,7 @@ class ProductReturnController extends Controller
 
         return DataTables::of($product_return)->setTransformer(function ($data) {
             $data = $data->toArray();
-            $data['status_created_at'] = Carbon::parse($data['status_created_at'])->format('F j, Y');
+            $data['status_created_at'] = $data['status_created_at'] != null?Carbon::parse($data['status_created_at'])->format('F j, Y'):'';
             return $data;
         })->make(true);
     }
