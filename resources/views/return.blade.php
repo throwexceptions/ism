@@ -126,7 +126,10 @@
                         {data: 'so_no', name: 'so_no', title: 'Reference SO NO.'},
                         {
                             data: function (value) {
-                                return value.status.toUpperCase();
+                                if(value) {
+                                    return value.status.toUpperCase();
+                                }
+                                return 'N/A';
                             }, name: 'status', title: 'Status'
                         },
                         {
