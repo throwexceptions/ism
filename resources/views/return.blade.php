@@ -126,7 +126,7 @@
                         {data: 'so_no', name: 'so_no', title: 'Reference SO NO.'},
                         {
                             data: function (value) {
-                                if(value) {
+                                if(value != null) {
                                     return value.status.toUpperCase();
                                 }
                                 return 'N/A';
