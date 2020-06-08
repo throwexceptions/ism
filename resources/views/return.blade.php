@@ -98,6 +98,7 @@
                 }
             },
             mounted() {
+
                 var $this = this;
                 $this.dt = $('#table-inquiry').DataTable({
                     processing: true,
@@ -123,6 +124,16 @@
                         },
                         {data: 'pr_no', name: 'pr_no', title: 'PR NO.'},
                         {data: 'so_no', name: 'so_no', title: 'Reference SO NO.'},
+                        {
+                            data: function (value) {
+                                return value.status.toUpperCase();
+                            }, name: 'status', title: 'Status'
+                        },
+                        {
+                            data: function (value) {
+                                return value.status_created_at;
+                            }, name: 'return_statuses.created_at', title: 'Status Date'
+                        },
                         {data: 'username', name: 'users.name', title: 'Assigned To'},
                         {data: 'created_at', name: 'purchase_infos.created_at', title: 'Date Created'},
                     ],

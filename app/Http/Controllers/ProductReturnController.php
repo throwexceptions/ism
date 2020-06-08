@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\ProductDetail;
 use App\ProductReturn;
 use App\PurchaseInfo;
+use App\ReturnStatus;
 use App\SalesOrder;
 use App\Summary;
 use Carbon\Carbon;
@@ -23,29 +24,35 @@ class ProductReturnController extends Controller
     public function table()
     {
         $product_return = ProductReturn::query()
-                             ->selectRaw('product_returns.*, users.name as username, customers.name as customer_name,
-                             sales_orders.so_no')
-                             ->leftJoin('customers', 'customers.id', '=', 'product_returns.customer_id')
-                             ->leftJoin('sales_orders', 'sales_orders.id', '=', 'product_returns.sales_order_id')
-                             ->join('users', 'users.id', '=', 'product_returns.assigned_to');
+            ->selectRaw('product_returns.*, users.name as username, customers.name as customer_name,return_statuses.status,
+                             sales_orders.so_no, return_statuses.created_at as status_created_at')
+            ->leftJoin('customers', 'customers.id', '=', 'product_returns.customer_id')
+            ->leftJoin('sales_orders', 'sales_orders.id', '=', 'product_returns.sales_order_id')
+            ->leftJoin(DB::raw('(SELECT * FROM return_statuses ORDER BY created_at desc) as return_statuses'), 'return_statuses.product_return_id', '=', 'product_returns.id')
+            ->join('users', 'users.id', '=', 'product_returns.assigned_to');
 
-        return DataTables::of($product_return)->make(true);
+        return DataTables::of($product_return)->setTransformer(function ($data) {
+            $data = $data->toArray();
+            $data['status_created_at'] = Carbon::parse($data['status_created_at'])->format('F j, Y');
+            return $data;
+        })->make(true);
     }
 
     public function create()
     {
         $product_return = collect([
-            "id"               => "",
-            "customer_id"      => "",
-            "sales_order_id"   => "",
-            "pr_no"            => ProductReturn::generate()->newPRNo(),
-            "return_type"      => "",
-            "contact_person"   => "",
-            "reason"           => "",
-            "remarks"          => "",
-            "assigned_to"      => "",
-            "created_at"       => "",
-            "updated_at"       => "",
+            "id" => "",
+            "customer_id" => "",
+            "sales_order_id" => "",
+            "pr_no" => ProductReturn::generate()->newPRNo(),
+            "return_type" => "",
+            "contact_person" => "",
+            "reason" => "",
+            "remarks" => "",
+            "assigned_to" => "",
+            "created_at" => "",
+            "updated_at" => "",
+            "status" => "",
         ]);
 
         $product_details = collect([]);
@@ -56,11 +63,13 @@ class ProductReturnController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->input();
+        $product_return = new ProductReturn();
+        $id = $product_return->store($request->overview);
 
-        $data['overview']['created_at']  = Carbon::now()->format('Y-m-d');
-        $data['overview']['assigned_to'] = auth()->user()->id;
-        $id                              = DB::table('product_returns')->insertGetId($data['overview']);
+        $return_status = new ReturnStatus();
+        $return_status->store($id, $request->overview);
+
+        $data = $request->input();
 
         if (isset($data['products'])) {
             foreach ($data['products'] as $item) {
@@ -80,24 +89,24 @@ class ProductReturnController extends Controller
     public function show($id)
     {
         $product_return = ProductReturn::query()
-                             ->selectRaw('product_returns.*, users.name as username, customers.name as customer_name,
+            ->selectRaw('product_returns.*, users.name as username, customers.name as customer_name,
                              sales_orders.so_no')
-                             ->leftJoin('customers', 'customers.id', '=', 'product_returns.customer_id')
-                             ->leftJoin('sales_orders', 'sales_orders.id', '=', 'product_returns.sales_order_id')
-                             ->join('users', 'users.id', '=', 'product_returns.assigned_to')
-                             ->get()[0];
+            ->leftJoin('customers', 'customers.id', '=', 'product_returns.customer_id')
+            ->leftJoin('sales_orders', 'sales_orders.id', '=', 'product_returns.sales_order_id')
+            ->join('users', 'users.id', '=', 'product_returns.assigned_to')
+            ->get()[0];
 
         $product_details = ProductDetail::query()
-                            ->selectRaw('products.category, products.unit, product_details.*')
-                            ->where('product_return_id', $id)
-                            ->join('products', 'products.id', 'product_details.product_id')
-                            ->get();
+            ->selectRaw('products.category, products.unit, product_details.*')
+            ->where('product_return_id', $id)
+            ->join('products', 'products.id', 'product_details.product_id')
+            ->get();
 
-        $category        = '';
-        $hold            = [];
+        $category = '';
+        $hold = [];
         foreach ($product_details->toArray() as $value) {
             if ($value['category'] != $category) {
-                $hold[]   = ['category' => $value['category']];
+                $hold[] = ['category' => $value['category']];
                 $category = $value['category'];
             }
             unset($value['manual_id']);
@@ -124,12 +133,12 @@ class ProductReturnController extends Controller
         $data = $request->input();
 
         $product_details = ProductDetail::query()
-                            ->selectRaw('products.category, products.unit, product_details.*')
-                            ->where('product_return_id', $data['id'])
-                            ->join('products', 'products.id', 'product_details.product_id')
-                            ->get()->toArray();
+            ->selectRaw('products.category, products.unit, product_details.*')
+            ->where('product_return_id', $data['id'])
+            ->join('products', 'products.id', 'product_details.product_id')
+            ->get()->toArray();
 
-        foreach($product_details as $item) {
+        foreach ($product_details as $item) {
             DB::table('supplies')->where('product_id', $item['product_id'])->decrement('quantity', $item['qty']);
         }
         ProductReturn::truncate('id', $data['id']);

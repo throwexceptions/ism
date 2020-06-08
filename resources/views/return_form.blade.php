@@ -54,6 +54,16 @@
                                     <label>Product Return No.</label>
                                     <input class="form-control form-control-sm" v-model="overview.pr_no">
                                 </div>
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select class="form-control form-control-sm" v-model="overview.status">
+                                        <option value="">-- Select Type --</option>
+                                        <option value="received">Received</option>
+                                        <option value="rma pull out">RMA Pull Out</option>
+                                        <option value="refund">RMA Returned</option>
+                                        <option value="released">Released</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="col-md-12">
                                 <h4>Product Details</h4>

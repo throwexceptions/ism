@@ -44,12 +44,12 @@ class Supply extends Model
                     ->where('product_id', $value['product_id'])
                     ->sum('product_details.qty');
 
-                $return = DB::table('product_returns')
-                    ->join('product_details', 'product_details.product_return_id', '=', 'product_returns.id')
-                    ->where('product_details.product_id', $value['product_id'])
-                    ->sum('product_details.qty');
+//                $return = DB::table('product_returns')
+//                    ->join('product_details', 'product_details.product_return_id', '=', 'product_returns.id')
+//                    ->where('product_details.product_id', $value['product_id'])
+//                    ->sum('product_details.qty');
 
-                $final_qty = ($po - $so) + $return;
+                $final_qty = $po - $so;
             }
 
             self::query()->where('product_id', $value['product_id'])->update(['quantity' => $final_qty]);
