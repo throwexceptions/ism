@@ -40,11 +40,6 @@ class SalesOrderController extends Controller
         })->make(true);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
     public function create()
     {
         $sales_order = collect([
@@ -94,27 +89,32 @@ class SalesOrderController extends Controller
 
         $id = DB::table('sales_orders')->insertGetId($data['overview']);
 
-        if (isset($data['products'])) {
-            foreach ($data['products'] as $item) {
-                unset($item['unit']);
-                unset($item['category']);
-                unset($item['code']);
-                unset($item['quantity']);
-                if (count($item) > 2) {
-                    $item['sales_order_id'] = $id;
-                    DB::table('product_details')->insert($item);
+        // Insert in product Details
+        $product_details = [];
+        $pd              = false;
+        if(isset($data['products'])) {
+            foreach($data['products'] as $item) {
+                if(count($item) > 2) {
+                    $product_details[] = [
+                        //'purchase_order_id' => $id,
+                        'sales_order_id'    => $id,
+                        //'product_return_id' => '',
+                        'product_id'        => $item['product_id'],
+                        'product_name'      => $item['product_name'],
+                        'notes'             => $item['notes'],
+                        'qty'               => $item['qty'],
+                        'selling_price'     => $item['selling_price'],
+                        'vendor_price'      => $item['vendor_price'],
+                        'discount_item'     => $item['discount_item'],
+                    ];
                 }
             }
 
-            foreach ($data['products'] as $item) {
-                if (count($item) > 2) {
-                    if ('Shipped' == $data['overview']['status']) {
-                        if (Product::isLimited($item['product_id'])) {
-                            Supply::decreCount($item['product_id'], $item['qty']);
-                        }
-                    }
-                }
-            }
+            $pd = DB::table('product_details')->insert($product_details);
+        }
+
+        if($pd) {
+            Supply::recalibrate();
         }
 
         $data['summary']['sales_order_id'] = $id;
@@ -132,37 +132,35 @@ class SalesOrderController extends Controller
         // Update Sales Order Info
         SalesOrder::updateInfo($data['overview']);
 
-        // Reset supply count based on current product details
-        $product_details = ProductDetail::fetchDataSO($data['overview']['id']);
-        foreach ($product_details as $item) {
-            if ('Shipped' == $data['overview']['status']) {
-                if (Product::isLimited($item['product_id'])) {
-                    Supply::increCount($item['product_id'], $item['qty']);
-                }
-            }
-        }
-
         // Delete products that have been reset
         DB::table('product_details')->where('sales_order_id', $data['overview']['id'])->delete();
 
-        // Insert To Product Detail
-        if (isset($data['products'])) {
-            foreach ($data['products'] as $item) {
-                $item['sales_order_id'] = $data['overview']['id'];
-                unset($item['unit']);
-                unset($item['manual_id']);
-                unset($item['category']);
-                unset($item['quantity']);
-                unset($item['code']);
-                if (count($item) > 2) {
-                    DB::table('product_details')->insert($item);
-                    if ('Shipped' == $data['overview']['status']) {
-                        if (Product::isLimited($item['product_id'])) {
-                            Supply::decreCount($item['product_id'], $item['qty']);
-                        }
-                    }
+        // Insert in product Details
+        $product_details = [];
+        $pd              = false;
+        if(isset($data['products'])) {
+            foreach($data['products'] as $item) {
+                if(count($item) > 2) {
+                    $product_details[] = [
+                        //'purchase_order_id' => $id,
+                        'sales_order_id'    => $data['overview']['id'],
+                        //'product_return_id' => '',
+                        'product_id'        => $item['product_id'],
+                        'product_name'      => $item['product_name'],
+                        'notes'             => $item['notes'],
+                        'qty'               => $item['qty'],
+                        'selling_price'     => $item['selling_price'],
+                        'vendor_price'      => $item['vendor_price'],
+                        'discount_item'     => $item['discount_item'],
+                    ];
                 }
             }
+
+            $pd = DB::table('product_details')->insert($product_details);
+        }
+
+        if($pd) {
+            Supply::recalibrate();
         }
 
         // Insert to Summary

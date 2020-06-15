@@ -35,8 +35,8 @@ class PurchaseInfoController extends Controller
             ->leftJoin('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
             ->join('users', 'users.id', '=', 'purchase_infos.assigned_to');
 
-        return DataTables::of($purchase_info)->setTransformer(function ($data) {
-            $data = $data->toArray();
+        return DataTables::of($purchase_info)->setTransformer(function($data) {
+            $data               = $data->toArray();
             $data['created_at'] = Carbon::parse($data['created_at'])->format('F j, Y');
             $data['updated_at'] = Carbon::parse($data['updated_at'])->format('F j, Y');
             return $data;
@@ -46,44 +46,44 @@ class PurchaseInfoController extends Controller
     public function create()
     {
         $purchase_info = collect([
-            "id" => "",
-            "subject" => "",
-            "vendor_id" => "",
-            "requisition_no" => "",
-            "tracking_number" => "",
-            "contact_name" => "",
-            "phone" => "",
-            "due_date" => "",
-            "fax" => "",
-            "carrier" => "",
-            "deliver_to" => "",
-            "shipping_method" => "",
-            "assigned_to" => "",
-            "status" => "Received",
-            "date_received" => "",
-            "po_no" => PurchaseInfo::generate()->newPONo(),
-            "payment_method" => "",
-            "billing_address" => Preference::status('billing_address_fill'),
+            "id"               => "",
+            "subject"          => "",
+            "vendor_id"        => "",
+            "requisition_no"   => "",
+            "tracking_number"  => "",
+            "contact_name"     => "",
+            "phone"            => "",
+            "due_date"         => "",
+            "fax"              => "",
+            "carrier"          => "",
+            "deliver_to"       => "",
+            "shipping_method"  => "",
+            "assigned_to"      => "",
+            "status"           => "Received",
+            "date_received"    => "",
+            "po_no"            => PurchaseInfo::generate()->newPONo(),
+            "payment_method"   => "",
+            "billing_address"  => Preference::status('billing_address_fill'),
             "delivery_address" => Preference::status('delivery_address_fill'),
-            "check_number" => "",
-            "check_writer" => "",
-            "tac" => Preference::status('tac_po_fill'),
-            "description" => "",
-            "updated_at" => Carbon::now()->format('Y-m-d'),
-            "vat_type" => "VAT EX",
+            "check_number"     => "",
+            "check_writer"     => "",
+            "tac"              => Preference::status('tac_po_fill'),
+            "description"      => "",
+            "updated_at"       => Carbon::now()->format('Y-m-d'),
+            "vat_type"         => "VAT EX",
         ]);
 
         $product_details = collect([]);
 
         $summary = collect([
-            "id" => "",
+            "id"                => "",
             "purchase_order_id" => "",
-            "discount" => "0",
-            "shipping" => "0",
-            "sales_tax" => "0",
-            "sales_actual" => "0",
-            "sub_total" => "0",
-            "grand_total" => "0",
+            "discount"          => "0",
+            "shipping"          => "0",
+            "sales_tax"         => "0",
+            "sales_actual"      => "0",
+            "sub_total"         => "0",
+            "grand_total"       => "0",
         ]);
 
         return view('purchase_form', compact('purchase_info', 'product_details', 'summary'));
@@ -93,37 +93,41 @@ class PurchaseInfoController extends Controller
     {
         $data = $request->input();
 
-        if ($data['overview']['payment_method'] != 'Check') {
+        if($data['overview']['payment_method'] != 'Check') {
             $data['overview']['check_number'] = '';
             $data['overview']['check_writer'] = '';
         }
 
-        $data['overview']['created_at'] = Carbon::now()->format('Y-m-d');
+        $data['overview']['created_at']  = Carbon::now()->format('Y-m-d');
         $data['overview']['assigned_to'] = auth()->user()->id;
-        $id = DB::table('purchase_infos')->insertGetId($data['overview']);
+        $id                              = DB::table('purchase_infos')->insertGetId($data['overview']);
 
-        if (isset($data['products'])) {
-            foreach ($data['products'] as $item) {
-                unset($item['category']);
-                unset($item['quantity']);
-                unset($item['code']);
-                unset($item['unit']);
-                if (count($item) > 2) {
-                    $item['purchase_order_id'] = $id;
-                    DB::table('product_details')->insert($item);
+        $product_details = [];
+        $pd              = false;
+        if(isset($data['products'])) {
+            foreach($data['products'] as $item) {
+                if(count($item) > 2) {
+                    $product_details[] = [
+                        'purchase_order_id' => $id,
+                        //'sales_order_id'    => '',
+                        //'product_return_id' => '',
+                        'product_id'        => $item['product_id'],
+                        'product_name'      => $item['product_name'],
+                        'notes'             => $item['notes'],
+                        'qty'               => $item['qty'],
+                        'selling_price'     => $item['selling_price'],
+                        'labor_cost'        => $item['labor_cost'],
+                        'vendor_price'      => $item['vendor_price'],
+                        'discount_item'     => $item['discount_item'],
+                    ];
                 }
             }
 
+            $pd = DB::table('product_details')->insert($product_details);
+        }
 
-            foreach ($data['products'] as $item) {
-                if (count($item) > 2) {
-                    if ('Received' == $data['overview']['status']) {
-                        if (Product::isLimited($item['product_id'])) {
-                            Supply::increCount($item['product_id'], $item['qty']);
-                        }
-                    }
-                }
-            }
+        if($pd) {
+            Supply::recalibrate();
         }
 
         $data['summary']['purchase_order_id'] = $id;
@@ -138,7 +142,7 @@ class PurchaseInfoController extends Controller
 
         unset($data['overview']['vendor_name']);
 
-        if ($data['overview']['payment_method'] != 'Check') {
+        if($data['overview']['payment_method'] != 'Check') {
             $data['overview']['check_number'] = '';
             $data['overview']['check_writer'] = '';
         }
@@ -146,37 +150,36 @@ class PurchaseInfoController extends Controller
         // Update Purchase Order Info
         PurchaseInfo::updateInfo($data['overview']);
 
-        // Reset supply count based on current product details
-        $product_details = ProductDetail::fetchDataPO($data['overview']['id']);
-        foreach ($product_details as $item) {
-            if ('Received' == $data['overview']['status']) {
-                if (Product::isLimited($item['product_id'])) {
-                    Supply::decreCount($item['product_id'], $item['qty']);
-                }
-            }
-        }
-
         // Delete products that have been reset
         DB::table('product_details')->where('purchase_order_id', $data['overview']['id'])->delete();
 
         // Insert new Product Details
-        if (isset($data['products'])) {
-            foreach ($data['products'] as $item) {
-                $item['purchase_order_id'] = $data['overview']['id'];
-                unset($item['unit']);
-                unset($item['manual_id']);
-                unset($item['category']);
-                unset($item['quantity']);
-                unset($item['code']);
-                if (count($item) > 2) {
-                    DB::table('product_details')->insert($item);
-                    if ('Received' == $data['overview']['status']) {
-                        if (Product::isLimited($item['product_id'])) {
-                            Supply::increCount($item['product_id'], $item['qty']);
-                        }
-                    }
+        $product_details = [];
+        $pd              = false;
+        if(isset($data['products'])) {
+            foreach($data['products'] as $item) {
+                if(count($item) > 2) {
+                    $product_details[] = [
+                        'purchase_order_id' => $data['overview']['id'],
+                        //'sales_order_id'    => '',
+                        //'product_return_id' => '',
+                        'product_id'        => $item['product_id'],
+                        'product_name'      => $item['product_name'],
+                        'notes'             => $item['notes'],
+                        'qty'               => $item['qty'],
+                        'selling_price'     => $item['selling_price'],
+                        'labor_cost'        => $item['labor_cost'],
+                        'vendor_price'      => $item['vendor_price'],
+                        'discount_item'     => $item['discount_item'],
+                    ];
                 }
             }
+
+            $pd = DB::table('product_details')->insert($product_details);
+        }
+
+        if($pd) {
+            Supply::recalibrate();
         }
 
         // Insert new summary
@@ -192,9 +195,9 @@ class PurchaseInfoController extends Controller
     {
         // Reset supply count based on current product details
         $product_details = ProductDetail::fetchDataPO($request->id);
-        foreach ($product_details as $item) {
-            if ('Received' == $request->status) {
-                if (Product::isLimited($item['product_id'])) {
+        foreach($product_details as $item) {
+            if('Received' == $request->status) {
+                if(Product::isLimited($item['product_id'])) {
                     Supply::decreCount($item['product_id'], $item['qty']);
                 }
             }
@@ -209,20 +212,20 @@ class PurchaseInfoController extends Controller
 
     public function updateStatus(Request $request)
     {
-        $data = $request->input();
+        $data          = $request->input();
         $purchase_info = DB::table('purchase_infos')->where('id', $data['id'])->get()[0];
 
-        if ($purchase_info->status != $data['status']) {
+        if($purchase_info->status != $data['status']) {
             DB::table('purchase_infos')->where('id', $data['id'])
                 ->update([
-                    'status' => $data['status'],
+                    'status'     => $data['status'],
                     'updated_at' => Carbon::now()->format('Y-m-d')
                 ]);
 
             return ['success' => true];
         }
 
-        if ($purchase_info->vat_type != $data['vat_type']) {
+        if($purchase_info->vat_type != $data['vat_type']) {
             DB::table('purchase_infos')->where('id', $data['id'])
                 ->update(['vat_type' => $data['vat_type']]);
 
@@ -244,38 +247,38 @@ class PurchaseInfoController extends Controller
 
     public function show($id)
     {
-        $data = $this->getOverview($id);
-        $purchase_info = $data['purchase_info'];
+        $data            = $this->getOverview($id);
+        $purchase_info   = $data['purchase_info'];
         $product_details = $data['product_details'];
-        $summary = $data['summary'];
+        $summary         = $data['summary'];
 
         return view('purchase_form', compact('purchase_info', 'product_details', 'summary'));
     }
 
     public function printable($id)
     {
-        $data = $this->getOverview($id);
-        $purchase_info = $data['purchase_info'];
+        $data            = $this->getOverview($id);
+        $purchase_info   = $data['purchase_info'];
         $product_details = $data['product_details'];
-        $summary = $data['summary'];
-        $sections = [];
-        $cnt = -1;
-        foreach ($product_details as $key => $value) {
-            if (count($value) == 1) {
+        $summary         = $data['summary'];
+        $sections        = [];
+        $cnt             = -1;
+        foreach($product_details as $key => $value) {
+            if(count($value) == 1) {
                 $sections[] = [
                     $value['category'] => 0,
                 ];
                 $cnt++;
             } else {
-                $total_selling = $value['qty'] * $value['selling_price'];
-                $total_labor = $value['qty'] * $value['labor_cost'];
+                $total_selling                      = $value['qty'] * $value['selling_price'];
+                $total_labor                        = $value['qty'] * $value['labor_cost'];
                 $sections[$cnt][$value['category']] += $total_labor + ($total_selling - ($total_selling * ($value['discount_item'] / 100)));
             }
         }
 
         $hold_section = $sections;
-        foreach ($hold_section as $index => $section) {
-            foreach ($section as $key => $value) {
+        foreach($hold_section as $index => $section) {
+            foreach($section as $key => $value) {
                 $hold_section[$index] = [$this->converToRoman($index + 1) . '. ' . $key => $value];
             }
         }
@@ -283,10 +286,10 @@ class PurchaseInfoController extends Controller
 
         $pdf = PDF::loadView('purchase_printable',
             [
-                'purchase_info' => $purchase_info,
+                'purchase_info'   => $purchase_info,
                 'product_details' => $product_details,
-                'summary' => $summary,
-                'sections' => $sections,
+                'summary'         => $summary,
+                'sections'        => $sections,
             ]);
 
         return $pdf->setPaper('a4')->download($purchase_info["po_no"] . '_' . $purchase_info["vendor_name"] . '.pdf');
@@ -294,28 +297,28 @@ class PurchaseInfoController extends Controller
 
     public function previewPO($id)
     {
-        $data = $this->getOverview($id);
-        $purchase_info = $data['purchase_info'];
+        $data            = $this->getOverview($id);
+        $purchase_info   = $data['purchase_info'];
         $product_details = $data['product_details'];
-        $summary = $data['summary'];
-        $sections = [];
-        $cnt = -1;
-        foreach ($product_details as $key => $value) {
-            if (count($value) == 1) {
+        $summary         = $data['summary'];
+        $sections        = [];
+        $cnt             = -1;
+        foreach($product_details as $key => $value) {
+            if(count($value) == 1) {
                 $sections[] = [
                     $value['category'] => 0,
                 ];
                 $cnt++;
             } else {
-                $total_selling = $value['qty'] * $value['selling_price'];
-                $total_labor = $value['qty'] * $value['labor_cost'];
+                $total_selling                      = $value['qty'] * $value['selling_price'];
+                $total_labor                        = $value['qty'] * $value['labor_cost'];
                 $sections[$cnt][$value['category']] += $total_labor + ($total_selling - ($total_selling * ($value['discount_item'] / 100)));
             }
         }
 
         $hold_section = $sections;
-        foreach ($hold_section as $index => $section) {
-            foreach ($section as $key => $value) {
+        foreach($hold_section as $index => $section) {
+            foreach($section as $key => $value) {
                 $hold_section[$index] = [$this->converToRoman($index + 1) . '. ' . $key => $value];
             }
         }
@@ -327,21 +330,21 @@ class PurchaseInfoController extends Controller
     public function getOverview($id)
     {
         $purchase_info = PurchaseInfo::query()
-            ->selectRaw('purchase_infos.*, IFNULL(vendors.name, \'\') as vendor_name')
-            ->leftJoin('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
-            ->where('purchase_infos.id', $id)
-            ->get()[0];
+                             ->selectRaw('purchase_infos.*, IFNULL(vendors.name, \'\') as vendor_name')
+                             ->leftJoin('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
+                             ->where('purchase_infos.id', $id)
+                             ->get()[0];
 
         $product_details = ProductDetail::query()
             ->selectRaw('products.category, products.unit, product_details.*')
             ->where('purchase_order_id', $id)
             ->join('products', 'products.id', 'product_details.product_id')
             ->get();
-        $category = '';
-        $hold = [];
-        foreach ($product_details->toArray() as $value) {
-            if ($value['category'] != $category) {
-                $hold[] = ['category' => $value['category']];
+        $category        = '';
+        $hold            = [];
+        foreach($product_details->toArray() as $value) {
+            if($value['category'] != $category) {
+                $hold[]   = ['category' => $value['category']];
                 $category = $value['category'];
             }
             unset($value['manual_id']);
@@ -362,48 +365,48 @@ class PurchaseInfoController extends Controller
 
         $summary = collect([
             'purchase_order_id' => '',
-            'sales_order_id' => '',
-            'discount' => '0',
-            'sub_total' => '0',
-            'shipping' => '0',
-            'sales_tax' => '0',
-            'grand_total' => '0',
+            'sales_order_id'    => '',
+            'discount'          => '0',
+            'sub_total'         => '0',
+            'shipping'          => '0',
+            'sales_tax'         => '0',
+            'grand_total'       => '0',
         ]);
 
-        if (Summary::query()->where('purchase_order_id', $id)->count() > 0) {
+        if(Summary::query()->where('purchase_order_id', $id)->count() > 0) {
             $summary = Summary::query()->where('purchase_order_id', $id)->get()[0];
         }
 
         return [
-            'purchase_info' => $purchase_info,
+            'purchase_info'   => $purchase_info,
             'product_details' => $product_details,
-            'summary' => $summary,
+            'summary'         => $summary,
         ];
     }
 
     public function converToRoman($num)
     {
-        $n = intval($num);
+        $n   = intval($num);
         $res = '';
 
         //array of roman numbers
         $romanNumber_Array = [
-            'M' => 1000,
+            'M'  => 1000,
             'CM' => 900,
-            'D' => 500,
+            'D'  => 500,
             'CD' => 400,
-            'C' => 100,
+            'C'  => 100,
             'XC' => 90,
-            'L' => 50,
+            'L'  => 50,
             'XL' => 40,
-            'X' => 10,
+            'X'  => 10,
             'IX' => 9,
-            'V' => 5,
+            'V'  => 5,
             'IV' => 4,
-            'I' => 1,
+            'I'  => 1,
         ];
 
-        foreach ($romanNumber_Array as $roman => $number) {
+        foreach($romanNumber_Array as $roman => $number) {
             //divide to get  matches
             $matches = intval($n / $number);
 
