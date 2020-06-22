@@ -37,7 +37,7 @@
     </tr>
     <tr>
         <td colspan="3"></td>
-        <td>Ordered: {{ $others }}</td>
+        <td>Quote: {{ $others }}</td>
     </tr>
     </tbody>
 </table>
