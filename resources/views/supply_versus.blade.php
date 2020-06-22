@@ -33,11 +33,11 @@
     </tr>
     <tr>
         <td colspan="3"></td>
-        <td>Shipped: {{ $received }}</td>
+        <td>Received: {{ $received }}</td>
     </tr>
     <tr>
         <td colspan="3"></td>
-        <td>Others: {{ $others }}</td>
+        <td>Ordered: {{ $others }}</td>
     </tr>
     </tbody>
 </table>
