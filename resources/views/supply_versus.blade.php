@@ -1,5 +1,5 @@
 
-<h1 style="margin-top: 50px"> PURCHASE ORDER</h1>
+<h1 style="margin-top: 20px"> PURCHASE ORDER</h1>
 <table border="1">
     <thead>
     <th>PO NUMBER</th>
@@ -8,7 +8,7 @@
     <th>TOTAL</th>
     </thead>
     <tbody>
-    <?php $total = 0; ?>
+    <?php $total_po = 0; ?>
     <?php $received = 0; ?>
     <?php $others = 0; ?>
     @foreach($po as $value)
@@ -24,12 +24,12 @@
             }
             ?>
             <td>{{ $value->total }}</td>
-            <?php $total += $value->total ?>
+            <?php $total_po += $value->total ?>
         </tr>
     @endforeach
     <tr>
         <td colspan="3"></td>
-        <td>Final: {{ $total }}</td>
+        <td>Final: {{ $total_po }}</td>
     </tr>
     <tr>
         <td colspan="3"></td>
@@ -41,7 +41,7 @@
     </tr>
     </tbody>
 </table>
-<h1 style="margin-top: 50px"> SALES ORDER</h1>
+<h1 style="margin-top: 20px"> SALES ORDER</h1>
 <table border="1" >
     <thead>
     <th>SO NUMBER</th>
@@ -50,7 +50,7 @@
     <th>TOTAL</th>
     </thead>
     <tbody>
-    <?php $total = 0; ?>
+    <?php $total_so = 0; ?>
     <?php $shipped = 0; ?>
     <?php $others = 0; ?>
     @foreach($so as $value)
@@ -66,12 +66,12 @@
                 }
             ?>
             <td>{{ $value->total }}</td>
-            <?php $total += $value->total; ?>
+            <?php $total_so += $value->total; ?>
         </tr>
     @endforeach
     <tr>
         <td colspan="3"></td>
-        <td>Final: {{ $total }}</td>
+        <td>Final: {{ $total_so }}</td>
     </tr>
     <tr>
         <td colspan="3"></td>
@@ -83,3 +83,4 @@
     </tr>
     </tbody>
 </table>
+<h2 style="margin-top: 20px">QUANTITY: {{ $total_so }} SO - {{ $total_po }} PO = {{ $total_so - $total_po }}</h2>
