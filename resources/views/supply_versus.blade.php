@@ -83,4 +83,4 @@
     </tr>
     </tbody>
 </table>
-<h2 style="margin-top: 20px">QUANTITY: {{ $shipped }} Shipped - {{ $received }} Received = {{ $total_so - $total_po }}</h2>
+<h2 style="margin-top: 20px">QUANTITY:  {{ $received }} Received - {{ $shipped }} Shipped = {{ $received - $shipped }}</h2>
