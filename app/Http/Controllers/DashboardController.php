@@ -22,26 +22,30 @@ class DashboardController extends Controller
                         ->selectRaw('(supplies.quantity * products.selling_price) total')
                         ->join('products', 'products.id', '=', 'supplies.product_id');
 
-        $assets = 0;
-        foreach ($supply->get()->toArray() as $value) {
-            $assets += $value['total'];
-        }
+        $assets = $this->computeStock($supply);
 
         $supply = Supply::query()
                         ->selectRaw('supplies.quantity total')
                         ->join('products', 'products.id', '=', 'supplies.product_id')
                         ->where('supplies.quantity', '<>', 0);
 
-        $stocks = 0;
-        foreach ($supply->get()->toArray() as $value) {
-            $stocks += $value['total'];
-        }
+        $stocks = $this->computeStock($supply);
 
         $po_count = PurchaseInfo::query()->count();
 
         $so_count = SalesOrder::query()->count();
 
         return view('dashboard', compact('assets', 'stocks', 'po_count', 'so_count'));
+    }
+
+    public function computeStock($result)
+    {
+        $hold = 0;
+        foreach ($result->get()->toArray() as $value) {
+            $hold += $value['total'];
+        }
+
+        return $hold;
     }
 
     public function inStock()
