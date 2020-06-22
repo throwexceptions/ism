@@ -128,7 +128,7 @@ body {
 			</tr>
 			@endif @endforeach
 			<tr class="bg-aliceblue">
-				<td colspan="6"></td>
+				<td colspan="4"></td>
 				<td><strong>Sub-Total</strong></td>
 				<td>{{ $summary->sub_total }}</td>
 			</tr>
