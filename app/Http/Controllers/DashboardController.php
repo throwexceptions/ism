@@ -16,6 +16,8 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        Supply::recalibrate();
+
         $supply = Supply::query()
                         ->selectRaw('(supplies.quantity * products.selling_price) total')
                         ->join('products', 'products.id', '=', 'supplies.product_id');
@@ -116,8 +118,8 @@ class DashboardController extends Controller
     {
         $supply = Supply::query()
                         ->selectRaw(
-                            'products.name, 
-                            products.category, 
+                            'products.name,
+                            products.category,
                             products.manual_id,
                             supplies.quantity,
                             products.selling_price
@@ -137,7 +139,7 @@ class DashboardController extends Controller
     public function poTotalPrintable($start, $end)
     {
         $result = DB::table('purchase_infos')
-                    ->selectRaw('purchase_infos.*, summaries.*, 
+                    ->selectRaw('purchase_infos.*, summaries.*,
             purchase_infos.created_at as date_created, vendors.name as vendor_name')
                     ->leftJoin('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
                     ->leftJoin('summaries', 'summaries.purchase_order_id', '=', 'purchase_infos.id')
