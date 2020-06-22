@@ -107,10 +107,6 @@ body {
 				</th>
 				<th scope="col">(Material)<br> Total Cost
 				</th>
-				<th scope="col">(Labor)<br> Unit Cost
-				</th>
-				<th scope="col">(Labor)<br> Total Cost
-				</th>
 				<th scope="col">Total</th>
 			</tr>
 		</thead>
@@ -124,11 +120,7 @@ body {
 				<td>{{ number_format($product['vendor_price'], 2, '.', '') }}</td>
 				<td>{{ number_format($product['qty'] * $product['vendor_price'], 2,
 					'.', '') }}</td>
-				<td>{{ number_format($product['labor_cost'], 2, '.', '') }}</td>
-				<td>{{ number_format($product['qty'] * $product['labor_cost'], 2,
-					'.', '') }}</td>
-				<td>{{ number_format(($product['qty'] * $product['labor_cost']) +
-					($product['qty'] * $product['vendor_price']), 2, '.', '') }}</td>
+				<td>{{ number_format($product['qty'] * $product['vendor_price'], 2, '.', '') }}</td>
 			</tr>
 			@else
 			<tr class="bg-category">
