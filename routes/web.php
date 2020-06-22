@@ -111,6 +111,7 @@ Route::group(['middleware' => ['auth','web', 'audit']], function () {
     Route::post('/supply/update/quantity', 'SupplyController@updateQuantity')->name('supply.update.quantity');
     Route::get('/supply/po/{id}', 'SupplyController@previewPO')->name('supply.po.preview');
     Route::get('/supply/so/{id}', 'SupplyController@previewSO')->name('supply.so.preview');
+    Route::get('/supply/versus/{id}', 'SupplyController@versus')->name('supply.so.preview');
 
     Route::get('/users', 'UserController@index')->name('users')->middleware('can:useraccounts');
     Route::get('/user/detail/{id}', 'UserController@show')->name('user.detail')->middleware('can:useraccountsupdate');
