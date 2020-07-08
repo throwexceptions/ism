@@ -210,15 +210,17 @@
                         {data: 'so_no', name: 'sales_orders.so_no', title: 'SO NO.'},
                         {
                             data: function(value){
-                                return '<div class="btn-group btn-group-sm shadow-sm btn-block" role="group" aria-label="Basic example">' +
-                                    '<a href="#" class="btn btn-info btn-payment">' + value.payment_status + '</a>' +
+                                var $class_color = value.payment_status === 'UNPAID' ? 'btn-warning' : 'btn-success';
+                                return '<div class="btn-group btn-group-sm shadow-sm btn-block" role="group">' +
+                                    '<a href="#" class="btn ' + $class_color + ' btn-payment">' + value.payment_status + '</a>' +
                                     '</div>'
                             }, name: 'sales_orders.payment_status', title: 'Payment'
                         },
                         {
                             data: function (value) {
-                                return '<div class="btn-group btn-group-sm shadow-sm" role="group" aria-label="Basic example">' +
-                                    '<a href="#" class="btn btn-info btn-status">' + value.status + '</a>' +
+                                var $class_color = value.status === 'Quote' ? 'btn-warning' : 'btn-success';
+                                return '<div class="btn-group btn-group-sm shadow-sm btn-block" role="group">' +
+                                    '<a href="#" class="btn ' + $class_color + ' btn-status">' + value.status + '</a>' +
                                     '</div>'
                             }, name: 'status', title: 'Status'
                         },

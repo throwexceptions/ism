@@ -223,15 +223,17 @@
                         {data: 'po_no', name: 'purchase_infos.po_no', title: 'PO NO.'},
                         {
                             data: function (value) {
+                                var $class_color = value.payment_status === 'UNPAID' ? 'btn-warning' : 'btn-success';
                                 return '<div class="btn-group btn-group-sm shadow-sm btn-block" role="group" aria-label="Basic example">' +
-                                    '<a href="#" class="btn btn-info btn-payment">' + value.payment_status + '</a>' +
+                                    '<a href="#" class="btn ' + $class_color + ' btn-payment">' + value.payment_status + '</a>' +
                                     '</div>'
                             }, name: 'payment_status', title: 'Payment'
                         },
                         {
                             data: function (value) {
+                                var $class_color = value.status === 'Ordered' ? 'btn-warning' : 'btn-success';
                                 return '<div class="btn-group btn-group-sm shadow-sm btn-block" role="group" aria-label="Basic example">' +
-                                    '<a href="#" class="btn btn-info btn-status">' + value.status + '</a>' +
+                                    '<a href="#" class="btn ' + $class_color + ' btn-status">' + value.status + '</a>' +
                                     '</div>'
                             }, name: 'status', title: 'Status'
                         },

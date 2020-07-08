@@ -7057,3 +7057,7 @@ body {
   font-size: 13px;
 }
 
+.btn-group-sm .btn {
+  font-size: 11px !important;
+}
+
