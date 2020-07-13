@@ -19,6 +19,7 @@ class SecurityController extends Controller
         "purchaseorderretrieve",
         "purchaseorderupdate",
         "purchaseorderdestroy",
+        "purchasestatusupdate",
         "salesorder",
         "salesordercreate",
         "salesstatusupdate",

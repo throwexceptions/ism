@@ -116,11 +116,10 @@
                 <td>{{ $product['notes'] }}</td>
                 <td>{{ $product['qty'] }}</td>
                 <td>{{ $product['unit'] }}</td>
-                <td>{{ number_format($product['selling_price'], 2, '.', '') }}</td>
-                <td>{{ number_format($product['qty'] * $product['selling_price'], 2,
-					'.', '') }}</td>
+                <td>{{ number_format($product['selling_price'], 2) }}</td>
+                <td>{{ number_format($product['qty'] * $product['selling_price'], 2) }}</td>
                 <td>{{ number_format(($product['qty'] * $product['labor_cost']) +
-					($product['qty'] * $product['selling_price']), 2, '.', '') }}</td>
+					($product['qty'] * $product['selling_price']), 2) }}</td>
             </tr>
         @else
             <tr class="bg-category">
@@ -130,7 +129,7 @@
     <tr class="bg-aliceblue">
         <td colspan="6"></td>
         <td><strong>Sub-Total</strong></td>
-        <td>{{ $summary->sub_total }}</td>
+        <td>{{ number_format($summary->sub_total, 2) }}</td>
     </tr>
     </tbody>
 </table>
@@ -189,38 +188,38 @@
 							$value)
                     <tr>
                         <td>{{ $key }}</td>
-                        <td style="padding-left: 10px !important;">{{ $value }}</td>
+                        <td style="padding-left: 10px !important;">{{ number_format($value, 2) }}</td>
                     </tr>
                 @endforeach @endforeach
                 <tr>
                     <td align="right" style="padding-top: 10px !important;"><strong>DISCOUNT</strong></td>
                     <td
-                            style="padding-left: 10px !important; padding-top: 10px !important;">{{ $summary->discount }}</td>
+                            style="padding-left: 10px !important; padding-top: 10px !important;">{{ number_format($summary->discount, 2) }}</td>
                 </tr>
                 <tr>
                     <td align="right"><strong>SUB-TOTAL</strong></td>
                     <td style="padding-left: 10px !important;">
-                        {{ number_format($summary->sub_total, 2, '.', '') }}
+                        {{ number_format($summary->sub_total, 2) }}
                     </td>
                 </tr>
                 <tr>
                     <td align="right"><strong>SHIPPING</strong></td>
-                    <td style="padding-left: 10px !important">{{ $summary->shipping }}</td>
+                    <td style="padding-left: 10px !important">{{ number_format($summary->shipping, 2) }}</td>
                 </tr>
                 @if($sales_order->vat_type == 'VAT INC')
                     <tr>
                         <td align="right"><strong>SALES %</strong></td>
-                        <td style="padding-left: 10px !important">{{ $summary->sales_tax }}</td>
+                        <td style="padding-left: 10px !important">{{ number_format($summary->sales_tax, 2) }}</td>
                     </tr>
                     <tr>
                         <td align="right"><strong>SALES TAX</strong></td>
-                        <td style="padding-left: 10px !important">{{ $summary->sales_actual }}</td>
+                        <td style="padding-left: 10px !important">{{ number_format($summary->sales_actual, 2) }}</td>
                     </tr>
                 @endif
                 <tr>
                     <td align="right"><strong>GRAND TOTAL</strong></td>
                     <td style="padding-left: 10px !important">
-                        {{ number_format($summary->grand_total, 2, '.', '') }}
+                        {{ number_format($summary->grand_total, 2) }}
                     </td>
                 </tr>
                 </tbody>

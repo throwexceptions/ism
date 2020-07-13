@@ -37,10 +37,16 @@
                                     <label>Due Date</label>
                                     <input type="date" class="form-control form-control-sm" v-model="overview.due_date">
                                 </div>
-                                <div class="form-group"  v-if="overview.status == 'Received'">
-                                    <label>Received Date</label>
-                                    <input type="date" class="form-control form-control-sm" v-model="overview.updated_at">
-                                </div>
+                                @can('purchasestatusupdate')
+                                    <div class="form-group">
+                                        <label>Status</label>
+                                        <select type="text" class="form-control form-control-sm"
+                                                v-model="overview.status">
+                                            <option value="Ordered">Ordered</option>
+                                            <option value="Received">Received</option>
+                                        </select>
+                                    </div>
+                                @endcan
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -84,13 +90,9 @@
                                         <option value="VAT INC">VAT INC</option>
                                     </select>
                                 </div>
-                                <div class="form-group">
-                                    <label>Status</label>
-                                    <select type="text" class="form-control form-control-sm"
-                                            v-model="overview.status">
-                                        <option value="Ordered">Ordered</option>
-                                        <option value="Received">Received</option>
-                                    </select>
+                                <div class="form-group"  v-if="overview.status == 'Received'">
+                                    <label>Received Date</label>
+                                    <input type="date" class="form-control form-control-sm" v-model="overview.updated_at">
                                 </div>
                             </div>
                             <div class="col-md-12">

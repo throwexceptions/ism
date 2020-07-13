@@ -41,7 +41,7 @@ Route::group(['middleware' => ['auth','web', 'audit']], function () {
     Route::post('/purchase/table', 'PurchaseInfoController@table')->name('purchase.table');
     Route::post('/purchase/update', 'PurchaseInfoController@update')->name('purchase.update');
     Route::post('/purchase/store', 'PurchaseInfoController@store')->name('purchase.store');
-    Route::post('/purchase/status/update', 'PurchaseInfoController@updateStatus')->name('purchase.status.update');
+    Route::post('/purchase/status/update', 'PurchaseInfoController@updateStatus')->name('purchase.status.update')->middleware('can:purchasestatusupdate');
     Route::get('/purchase/print/{id}', 'PurchaseInfoController@printable')->name('purchase.print');
     Route::get('/purchase/preview/{id}', 'PurchaseInfoController@previewPO')->name('purchase.preview');
     Route::post('/purchase/payment/status/update', 'PurchaseInfoController@updatePaymentStatus')->name('purchase.payment.status.update');
