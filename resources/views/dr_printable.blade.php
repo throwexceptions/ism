@@ -129,7 +129,7 @@
     <tr class="bg-aliceblue">
         <td colspan="6"></td>
         <td><strong>Sub-Total</strong></td>
-        <td>{{ number_format($summary->sub_total,2) }}</td>
+        <td>&#8369; {{ number_format($summary->sub_total,2) }}</td>
     </tr>
     </tbody>
 </table>
@@ -217,7 +217,7 @@
                 <tr>
                     <td align="right"><strong>GRAND TOTAL</strong></td>
                     <td style="padding-left: 10px !important">
-                        {{ number_format($summary->grand_total, 2) }}
+                        &#8369; {{ number_format($summary->grand_total, 2) }}
                     </td>
                 </tr>
                 </tbody>
