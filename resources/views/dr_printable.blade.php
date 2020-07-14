@@ -185,7 +185,7 @@
 							$value)
                     <tr>
                         <td>{{ $key }}</td>
-                        <td style="padding-left: 10px !important;">{{ $value }}</td>
+                        <td style="padding-left: 10px !important;">{{ number_format($value,2) }}</td>
                     </tr>
                 @endforeach @endforeach
                 <tr>
