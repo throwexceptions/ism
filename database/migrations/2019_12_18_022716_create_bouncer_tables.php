@@ -45,7 +45,7 @@ class CreateBouncerTables extends Migration
             $table->increments('id');
             $table->integer('role_id')->unsigned()->index();
             $table->integer('entity_id')->unsigned();
-            $table->string('entity_type', 999);
+            $table->string('entity_type', 200);
             $table->integer('restricted_to_id')->unsigned()->nullable();
             $table->string('restricted_to_type')->nullable();
             $table->integer('scope')->nullable()->index();
