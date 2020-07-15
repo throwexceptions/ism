@@ -32,7 +32,7 @@ class CreateBouncerTables extends Migration
             $table->string('name', 200);
             $table->string('title')->nullable();
             $table->integer('level')->unsigned()->nullable();
-            $table->integer('scope', 200)->nullable()->index();
+            $table->integer('scope')->nullable()->index();
             $table->timestamps();
 
             $table->unique(
