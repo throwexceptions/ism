@@ -36,7 +36,7 @@ class CreateBouncerTables extends Migration
             $table->timestamps();
 
             $table->unique(
-                ['name'],
+                ['name', 'scope'],
                 'roles_name_unique'
             );
         });
