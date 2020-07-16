@@ -60,14 +60,15 @@
                                         <option value="VAT INC">VAT INC</option>
                                     </select>
                                 </div>
-
-                                <div class="form-group">
-                                    <label>Status</label>
-                                    <select type="text" class="form-control form-control-sm" v-model="overview.status">
-                                        <option value="Quote">QUOTE</option>
-                                        <option value="Shipped">SHIPPED</option>
-                                    </select>
-                                </div>
+                                @can('salesstatusupdate')
+                                    <div class="form-group">
+                                        <label>Status</label>
+                                        <select type="text" class="form-control form-control-sm" v-model="overview.status">
+                                            <option value="Quote">QUOTE</option>
+                                            <option value="Shipped">SHIPPED</option>
+                                        </select>
+                                    </div>
+                                @endcan
                                 <div class="form-group" v-if="overview.status == 'Shipped'">
                                     <label>Shipped Date</label>
                                     <input type="date" class="ui-datepicker form-control form-control-sm"
