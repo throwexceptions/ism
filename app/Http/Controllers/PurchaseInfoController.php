@@ -59,7 +59,7 @@ class PurchaseInfoController extends Controller
             "deliver_to"       => "",
             "shipping_method"  => "",
             "assigned_to"      => "",
-            "status"           => "Received",
+            "status"           => "Ordered",
             "date_received"    => "",
             "po_no"            => PurchaseInfo::generate()->newPONo(),
             "payment_method"   => "",
