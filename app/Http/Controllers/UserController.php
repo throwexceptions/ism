@@ -100,6 +100,11 @@ class UserController extends Controller
 
     public function list(Request $request)
     {
-        return User::all();
+        return [
+            "results" => DB::table('users')
+                           ->selectRaw("name as id, name as text")
+                           ->whereRaw("name LIKE '%{$request->term}%'")
+                           ->get(),
+        ];
     }
 }

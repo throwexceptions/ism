@@ -546,13 +546,13 @@
                 $('.select2-agent').select2({
                     width: '100%',
                     ajax: {
-                        url: '{{ route('customer.list') }}',
+                        url: '{{ route('user.list') }}',
                         method: 'POST',
                         dataType: 'json'
                     }
                 }).on('select2:select', function (e) {
                     var data = e.params.data;
-                    $this.overview.agent = data.name;
+                    $this.overview.agent = data.text;
                 });
 
                 var newOption = new Option($this.overview.customer_name, $this.overview.customer_id, true, true);

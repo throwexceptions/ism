@@ -124,7 +124,7 @@ Route::group(['middleware' => ['auth','web', 'audit']], function () {
     Route::post('/user/update', 'UserController@update')->name('user.update');
     Route::post('/users/logo/upload', 'UserController@logoUpload')->name('user.logo.upload');
     Route::post('/user/role', 'UserController@getUserRole')->name('user.role');
-    Route::post('/user/list', 'UserController@list')->name('user.role');
+    Route::post('/user/list', 'UserController@list')->name('user.list');
 
     Route::get('/role', 'SecurityController@roles')->name('role')->middleware('can:securityview');
     Route::get('/role/create', 'SecurityController@create')->name('role.create')->middleware('can:securitycreate');
