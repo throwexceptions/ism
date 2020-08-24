@@ -26,16 +26,17 @@ class SalesOrderController extends Controller
     public function table()
     {
         $vendors = SalesOrder::query()
-            ->selectRaw('sales_orders.*, users.name as username, customers.name as customer_name,
+                             ->selectRaw('sales_orders.*, users.name as username, customers.name as customer_name,
                              summaries.grand_total')
-            ->leftJoin('summaries', 'summaries.sales_order_id', '=', 'sales_orders.id')
-            ->leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')
-            ->join('users', 'users.id', '=', 'sales_orders.assigned_to');
+                             ->leftJoin('summaries', 'summaries.sales_order_id', '=', 'sales_orders.id')
+                             ->leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')
+                             ->join('users', 'users.id', '=', 'sales_orders.assigned_to');
 
         return DataTables::of($vendors)->setTransformer(function ($data) {
-            $data = $data->toArray();
+            $data               = $data->toArray();
             $data['created_at'] = Carbon::parse($data['created_at'])->format('F j, Y');
             $data['updated_at'] = Carbon::parse($data['updated_at'])->format('F j, Y');
+
             return $data;
         })->make(true);
     }
@@ -43,38 +44,38 @@ class SalesOrderController extends Controller
     public function create()
     {
         $sales_order = collect([
-            "id" => "",
-            "subject" => "",
-            "customer_id" => "",
-            "owner" => "",
-            "so_no" => SalesOrder::generate()->newSONo(),
-            "agent" => auth()->user()->name,
-            "assigned_to" => "",
-            "fax" => "",
-            "status" => "Quote",
-            "address" => "",
-            "due_date" => "",
+            "id"             => "",
+            "subject"        => "",
+            "customer_id"    => "",
+            "owner"          => "",
+            "so_no"          => SalesOrder::generate()->newSONo(),
+            "agent"          => auth()->user()->name,
+            "assigned_to"    => "",
+            "fax"            => "",
+            "status"         => "Quote",
+            "address"        => "",
+            "due_date"       => "",
             "payment_method" => "",
             "payment_status" => "PAID",
-            "account_name" => Preference::status('account_name'),
-            "account_no" => Preference::status('account_no'),
-            "tac" => Preference::status('tac_so_fill'),
-            "phone" => "",
-            "updated_at" => Carbon::now()->format('Y-m-d'),
-            "vat_type" => "VAT EX",
+            "account_name"   => Preference::status('account_name'),
+            "account_no"     => Preference::status('account_no'),
+            "tac"            => Preference::status('tac_so_fill'),
+            "phone"          => "",
+            "updated_at"     => Carbon::now()->format('Y-m-d'),
+            "vat_type"       => "VAT EX",
         ]);
 
         $product_details = collect([]);
 
         $summary = collect([
-            "id" => "",
+            "id"             => "",
             "sales_order_id" => "",
-            "discount" => "0",
-            "shipping" => "0",
-            "sales_actual" => "0",
-            "sales_tax" => "0",
-            "grand_total" => "0",
-            "sub_total" => "0",
+            "discount"       => "0",
+            "shipping"       => "0",
+            "sales_actual"   => "0",
+            "sales_tax"      => "0",
+            "grand_total"    => "0",
+            "sub_total"      => "0",
         ]);
 
         return view('sales_form', compact('sales_order', 'product_details', 'summary'));
@@ -82,30 +83,30 @@ class SalesOrderController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->input();
-
+        $data                            = $request->input();
+        $data['overview']['so_no']       = SalesOrder::generate()->newSONo();
         $data['overview']['assigned_to'] = auth()->user()->id;
-        $data['overview']['created_at'] = Carbon::now()->format('Y-m-d');
+        $data['overview']['created_at']  = Carbon::now()->format('Y-m-d');
 
         $id = DB::table('sales_orders')->insertGetId($data['overview']);
 
         // Insert in product Details
         $product_details = [];
         $pd              = false;
-        if(isset($data['products'])) {
-            foreach($data['products'] as $item) {
-                if(count($item) > 2) {
+        if (isset($data['products'])) {
+            foreach ($data['products'] as $item) {
+                if (count($item) > 2) {
                     $product_details[] = [
                         //'purchase_order_id' => $id,
-                        'sales_order_id'    => SalesOrder::generate()->newSONo(),
+                        'sales_order_id' => $id,
                         //'product_return_id' => '',
-                        'product_id'        => $item['product_id'],
-                        'product_name'      => $item['product_name'],
-                        'notes'             => $item['notes'],
-                        'qty'               => $item['qty'],
-                        'selling_price'     => $item['selling_price'],
-                        'vendor_price'      => $item['vendor_price'],
-                        'discount_item'     => $item['discount_item'],
+                        'product_id'     => $item['product_id'],
+                        'product_name'   => $item['product_name'],
+                        'notes'          => $item['notes'],
+                        'qty'            => $item['qty'],
+                        'selling_price'  => $item['selling_price'],
+                        'vendor_price'   => $item['vendor_price'],
+                        'discount_item'  => $item['discount_item'],
                     ];
                 }
             }
@@ -113,7 +114,7 @@ class SalesOrderController extends Controller
             $pd = DB::table('product_details')->insert($product_details);
         }
 
-        if($pd) {
+        if ($pd) {
             Supply::recalibrate();
         }
 
@@ -138,20 +139,20 @@ class SalesOrderController extends Controller
         // Insert in product Details
         $product_details = [];
         $pd              = false;
-        if(isset($data['products'])) {
-            foreach($data['products'] as $item) {
-                if(count($item) > 2) {
+        if (isset($data['products'])) {
+            foreach ($data['products'] as $item) {
+                if (count($item) > 2) {
                     $product_details[] = [
                         //'purchase_order_id' => $id,
-                        'sales_order_id'    => $data['overview']['id'],
+                        'sales_order_id' => $data['overview']['id'],
                         //'product_return_id' => '',
-                        'product_id'        => $item['product_id'],
-                        'product_name'      => $item['product_name'],
-                        'notes'             => $item['notes'],
-                        'qty'               => $item['qty'],
-                        'selling_price'     => $item['selling_price'],
-                        'vendor_price'      => $item['vendor_price'],
-                        'discount_item'     => $item['discount_item'],
+                        'product_id'     => $item['product_id'],
+                        'product_name'   => $item['product_name'],
+                        'notes'          => $item['notes'],
+                        'qty'            => $item['qty'],
+                        'selling_price'  => $item['selling_price'],
+                        'vendor_price'   => $item['vendor_price'],
+                        'discount_item'  => $item['discount_item'],
                     ];
                 }
             }
@@ -159,7 +160,7 @@ class SalesOrderController extends Controller
             $pd = DB::table('product_details')->insert($product_details);
         }
 
-        if($pd) {
+        if ($pd) {
             Supply::recalibrate();
         }
 
@@ -192,29 +193,29 @@ class SalesOrderController extends Controller
 
     public function updateStatus(Request $request)
     {
-        $data = $request->input();
+        $data          = $request->input();
         $purchase_info = DB::table('sales_orders')->where('id', $data['id'])->get()[0];
 
         if ($purchase_info->status != $data['status']) {
             DB::table('sales_orders')->where('id', $data['id'])
-                ->update([
-                        'status' => $data['status'],
-                        'updated_at' => Carbon::now()->format('Y-m-d')
-                    ]);
+              ->update([
+                  'status'     => $data['status'],
+                  'updated_at' => Carbon::now()->format('Y-m-d'),
+              ]);
 
             return ['success' => true];
         }
 
         if ($purchase_info->vat_type != $data['vat_type']) {
             DB::table('sales_orders')->where('id', $data['id'])
-                ->update(['vat_type' => $data['vat_type']]);
+              ->update(['vat_type' => $data['vat_type']]);
 
             return ['success' => true];
         }
 
         if ($purchase_info->payment_status != $data['payment_status']) {
             DB::table('sales_orders')->where('id', $data['id'])
-                ->update(['payment_status' => $data['payment_status']]);
+              ->update(['payment_status' => $data['payment_status']]);
 
             return ['success' => true];
         }
@@ -224,22 +225,22 @@ class SalesOrderController extends Controller
 
     public function show($id)
     {
-        $data = $this->getOverview($id);
-        $sales_order = $data['sales_order'];
+        $data            = $this->getOverview($id);
+        $sales_order     = $data['sales_order'];
         $product_details = $data['product_details'];
-        $summary = $data['summary'];
+        $summary         = $data['summary'];
 
         return view('sales_form', compact('sales_order', 'product_details', 'summary'));
     }
 
     public function printable($id)
     {
-        $data = $this->getOverview($id);
-        $sales_order = $data['sales_order'];
+        $data            = $this->getOverview($id);
+        $sales_order     = $data['sales_order'];
         $product_details = $data['product_details'];
-        $summary = $data['summary'];
-        $sections = [];
-        $cnt = -1;
+        $summary         = $data['summary'];
+        $sections        = [];
+        $cnt             = -1;
         foreach ($product_details as $key => $value) {
             if (count($value) == 1) {
                 $sections[] = [
@@ -250,8 +251,8 @@ class SalesOrderController extends Controller
                 if ($cnt == -1) {
                     $cnt = 0;
                 }
-                $total_selling = $value['qty'] * $value['selling_price'];
-                $total_labor = $value['qty'] * $value['labor_cost'];
+                $total_selling                      = $value['qty'] * $value['selling_price'];
+                $total_labor                        = $value['qty'] * $value['labor_cost'];
                 $sections[$cnt][$value['category']] += $total_labor + ($total_selling - ($total_selling * ($value['discount_item'] / 100)));
             }
         }
@@ -266,23 +267,24 @@ class SalesOrderController extends Controller
 
         $pdf = PDF::loadView('sales_printable',
             [
-                'sales_order' => $sales_order,
+                'sales_order'     => $sales_order,
                 'product_details' => $product_details,
-                'summary' => $summary,
-                'sections' => $sections,
+                'summary'         => $summary,
+                'sections'        => $sections,
             ]);
 
-        return $pdf->setPaper('a4')->download('SO ' . $sales_order["so_no"] . ' ' . $sales_order["customer_name"] . '.pdf');
+        return $pdf->setPaper('a4')
+                   ->download('SO ' . $sales_order["so_no"] . ' ' . $sales_order["customer_name"] . '.pdf');
     }
 
     public function quote($id)
     {
-        $data = $this->getOverview($id);
-        $sales_order = $data['sales_order'];
+        $data            = $this->getOverview($id);
+        $sales_order     = $data['sales_order'];
         $product_details = $data['product_details'];
-        $summary = $data['summary'];
-        $sections = [];
-        $cnt = -1;
+        $summary         = $data['summary'];
+        $sections        = [];
+        $cnt             = -1;
         foreach ($product_details as $key => $value) {
             if (count($value) == 1) {
                 $sections[] = [
@@ -290,8 +292,8 @@ class SalesOrderController extends Controller
                 ];
                 $cnt++;
             } else {
-                $total_selling = $value['qty'] * $value['selling_price'];
-                $total_labor = $value['qty'] * $value['labor_cost'];
+                $total_selling                      = $value['qty'] * $value['selling_price'];
+                $total_labor                        = $value['qty'] * $value['labor_cost'];
                 $sections[$cnt][$value['category']] += $total_labor + ($total_selling - ($total_selling * ($value['discount_item'] / 100)));
             }
         }
@@ -306,24 +308,24 @@ class SalesOrderController extends Controller
 
         $pdf = PDF::loadView('quote_printable',
             [
-                'sales_order' => $sales_order,
+                'sales_order'     => $sales_order,
                 'product_details' => $product_details,
-                'summary' => $summary,
-                'sections' => $sections,
+                'summary'         => $summary,
+                'sections'        => $sections,
             ]);
 
         return $pdf->setPaper('a4')
-            ->download('QTN ' . $sales_order["so_no"] . ' ' . $sales_order["customer_name"] . '.pdf');
+                   ->download('QTN ' . $sales_order["so_no"] . ' ' . $sales_order["customer_name"] . '.pdf');
     }
 
     public function deliver($id)
     {
-        $data = $this->getOverview($id);
-        $sales_order = $data['sales_order'];
+        $data            = $this->getOverview($id);
+        $sales_order     = $data['sales_order'];
         $product_details = $data['product_details'];
-        $summary = $data['summary'];
-        $sections = [];
-        $cnt = -1;
+        $summary         = $data['summary'];
+        $sections        = [];
+        $cnt             = -1;
         foreach ($product_details as $key => $value) {
             if (count($value) == 1) {
                 $sections[] = [
@@ -331,8 +333,8 @@ class SalesOrderController extends Controller
                 ];
                 $cnt++;
             } else {
-                $total_selling = $value['qty'] * $value['selling_price'];
-                $total_labor = $value['qty'] * $value['labor_cost'];
+                $total_selling                      = $value['qty'] * $value['selling_price'];
+                $total_labor                        = $value['qty'] * $value['labor_cost'];
                 $sections[$cnt][$value['category']] += $total_labor + ($total_selling - ($total_selling * ($value['discount_item'] / 100)));
             }
         }
@@ -347,24 +349,25 @@ class SalesOrderController extends Controller
 
         $pdf = PDF::loadView('dr_printable',
             [
-                'sales_order' => $sales_order,
+                'sales_order'     => $sales_order,
                 'product_details' => $product_details,
-                'summary' => $summary,
-                'sections' => $sections,
+                'summary'         => $summary,
+                'sections'        => $sections,
             ]);
 
-        return $pdf->setPaper('a4')->download('DR ' . $sales_order["so_no"] . ' ' . $sales_order["customer_name"] . '.pdf');
+        return $pdf->setPaper('a4')
+                   ->download('DR ' . $sales_order["so_no"] . ' ' . $sales_order["customer_name"] . '.pdf');
     }
 
     public function previewSO($id)
     {
-        $data = $this->getOverview($id);
-        $sales_order = $data['sales_order'];
+        $data            = $this->getOverview($id);
+        $sales_order     = $data['sales_order'];
         $product_details = $data['product_details'];
-        $summary = $data['summary'];
+        $summary         = $data['summary'];
 
         $sections = [];
-        $cnt = -1;
+        $cnt      = -1;
         foreach ($product_details as $key => $value) {
             if (count($value) == 1) {
                 $sections[] = [
@@ -372,8 +375,8 @@ class SalesOrderController extends Controller
                 ];
                 $cnt++;
             } else {
-                $total_selling = $value['qty'] * $value['selling_price'];
-                $total_labor = $value['qty'] * $value['labor_cost'];
+                $total_selling                      = $value['qty'] * $value['selling_price'];
+                $total_labor                        = $value['qty'] * $value['labor_cost'];
                 $sections[$cnt][$value['category']] += $total_labor + ($total_selling - ($total_selling * ($value['discount_item'] / 100)));
             }
         }
@@ -392,23 +395,23 @@ class SalesOrderController extends Controller
     public function getOverview($id)
     {
         $sales_order = SalesOrder::query()
-            ->selectRaw('sales_orders.*, IFNULL(customers.name, \'\') as customer_name')
-            ->leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')
-            ->where('sales_orders.id', $id)
-            ->get()[0];
+                                 ->selectRaw('sales_orders.*, IFNULL(customers.name, \'\') as customer_name')
+                                 ->leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')
+                                 ->where('sales_orders.id', $id)
+                                 ->get()[0];
 
         $product_details = ProductDetail::query()
-            ->selectRaw('products.code, products.category, products.unit, products.manual_id, product_details.*, supplies.quantity')
-            ->where('sales_order_id', $id)
-            ->join('products', 'products.id', 'product_details.product_id')
-            ->join('supplies', 'supplies.product_id', 'product_details.product_id')
-            ->get();
+                                        ->selectRaw('products.code, products.category, products.unit, products.manual_id, product_details.*, supplies.quantity')
+                                        ->where('sales_order_id', $id)
+                                        ->join('products', 'products.id', 'product_details.product_id')
+                                        ->join('supplies', 'supplies.product_id', 'product_details.product_id')
+                                        ->get();
 
         $category = '';
-        $hold = [];
+        $hold     = [];
         foreach ($product_details->toArray() as $value) {
             if ($value['category'] != $category) {
-                $hold[] = ['category' => $value['category']];
+                $hold[]   = ['category' => $value['category']];
                 $category = $value['category'];
             }
             unset($value['name']);
@@ -426,12 +429,12 @@ class SalesOrderController extends Controller
 
         $summary = collect([
             'purchase_order_id' => '',
-            'sales_order_id' => '',
-            'discount' => '0',
-            'sub_total' => '0',
-            'shipping' => '0',
-            'sales_tax' => '0',
-            'grand_total' => '0',
+            'sales_order_id'    => '',
+            'discount'          => '0',
+            'sub_total'         => '0',
+            'shipping'          => '0',
+            'sales_tax'         => '0',
+            'grand_total'       => '0',
         ]);
 
         if (Summary::query()->where('sales_order_id', $id)->count() > 0) {
@@ -439,32 +442,32 @@ class SalesOrderController extends Controller
         }
 
         return [
-            'sales_order' => $sales_order,
+            'sales_order'     => $sales_order,
             'product_details' => $product_details,
-            'summary' => $summary,
+            'summary'         => $summary,
         ];
     }
 
     public function converToRoman($num)
     {
-        $n = intval($num);
+        $n   = intval($num);
         $res = '';
 
         //array of roman numbers
         $romanNumber_Array = [
-            'M' => 1000,
+            'M'  => 1000,
             'CM' => 900,
-            'D' => 500,
+            'D'  => 500,
             'CD' => 400,
-            'C' => 100,
+            'C'  => 100,
             'XC' => 90,
-            'L' => 50,
+            'L'  => 50,
             'XL' => 40,
-            'X' => 10,
+            'X'  => 10,
             'IX' => 9,
-            'V' => 5,
+            'V'  => 5,
             'IV' => 4,
-            'I' => 1,
+            'I'  => 1,
         ];
 
         foreach ($romanNumber_Array as $roman => $number) {
@@ -485,9 +488,9 @@ class SalesOrderController extends Controller
     public function getListShipped(Request $request)
     {
         $sales_order = SalesOrder::query()
-            ->selectRaw("id as id, so_no as text")
-            ->where('status', 'Shipped')
-            ->whereRaw("so_no LIKE '%{$request->term}%'");
+                                 ->selectRaw("id as id, so_no as text")
+                                 ->where('status', 'Shipped')
+                                 ->whereRaw("so_no LIKE '%{$request->term}%'");
 
         return [
             "results" => $sales_order->get(),

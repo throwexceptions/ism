@@ -26,19 +26,20 @@ class PurchaseInfoController extends Controller
     public function table()
     {
         $purchase_info = PurchaseInfo::query()
-            ->selectRaw('purchase_infos.id, purchase_infos.subject,
+                                     ->selectRaw('purchase_infos.id, purchase_infos.subject,
                                      purchase_infos.vat_type,purchase_infos.payment_status,
             vendors.name as vendor_name, purchase_infos.tracking_number, purchase_infos.po_no,
             purchase_infos.requisition_no, users.name, purchase_infos.status, purchase_infos.created_at,
             purchase_infos.updated_at, grand_total')
-            ->leftJoin('summaries', 'summaries.purchase_order_id', '=', 'purchase_infos.id')
-            ->leftJoin('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
-            ->join('users', 'users.id', '=', 'purchase_infos.assigned_to');
+                                     ->leftJoin('summaries', 'summaries.purchase_order_id', '=', 'purchase_infos.id')
+                                     ->leftJoin('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
+                                     ->join('users', 'users.id', '=', 'purchase_infos.assigned_to');
 
-        return DataTables::of($purchase_info)->setTransformer(function($data) {
+        return DataTables::of($purchase_info)->setTransformer(function ($data) {
             $data               = $data->toArray();
             $data['created_at'] = Carbon::parse($data['created_at'])->format('F j, Y');
             $data['updated_at'] = Carbon::parse($data['updated_at'])->format('F j, Y');
+
             return $data;
         })->make(true);
     }
@@ -93,22 +94,23 @@ class PurchaseInfoController extends Controller
     {
         $data = $request->input();
 
-        if($data['overview']['payment_method'] != 'Check') {
+        if ($data['overview']['payment_method'] != 'Check') {
             $data['overview']['check_number'] = '';
             $data['overview']['check_writer'] = '';
         }
 
+        $data['overview']['po_no']       = PurchaseInfo::generate()->newPONo();
         $data['overview']['created_at']  = Carbon::now()->format('Y-m-d');
         $data['overview']['assigned_to'] = auth()->user()->id;
         $id                              = DB::table('purchase_infos')->insertGetId($data['overview']);
 
         $product_details = [];
         $pd              = false;
-        if(isset($data['products'])) {
-            foreach($data['products'] as $item) {
-                if(count($item) > 2) {
+        if (isset($data['products'])) {
+            foreach ($data['products'] as $item) {
+                if (count($item) > 2) {
                     $product_details[] = [
-                        'purchase_order_id' => PurchaseInfo::generate()->newPONo(),
+                        'purchase_order_id' => $id,
                         //'sales_order_id'    => '',
                         //'product_return_id' => '',
                         'product_id'        => $item['product_id'],
@@ -126,7 +128,7 @@ class PurchaseInfoController extends Controller
             $pd = DB::table('product_details')->insert($product_details);
         }
 
-        if($pd) {
+        if ($pd) {
             Supply::recalibrate();
         }
 
@@ -142,7 +144,7 @@ class PurchaseInfoController extends Controller
 
         unset($data['overview']['vendor_name']);
 
-        if($data['overview']['payment_method'] != 'Check') {
+        if ($data['overview']['payment_method'] != 'Check') {
             $data['overview']['check_number'] = '';
             $data['overview']['check_writer'] = '';
         }
@@ -156,9 +158,9 @@ class PurchaseInfoController extends Controller
         // Insert new Product Details
         $product_details = [];
         $pd              = false;
-        if(isset($data['products'])) {
-            foreach($data['products'] as $item) {
-                if(count($item) > 2) {
+        if (isset($data['products'])) {
+            foreach ($data['products'] as $item) {
+                if (count($item) > 2) {
                     $product_details[] = [
                         'purchase_order_id' => $data['overview']['id'],
                         //'sales_order_id'    => '',
@@ -178,7 +180,7 @@ class PurchaseInfoController extends Controller
             $pd = DB::table('product_details')->insert($product_details);
         }
 
-        if($pd) {
+        if ($pd) {
             Supply::recalibrate();
         }
 
@@ -195,9 +197,9 @@ class PurchaseInfoController extends Controller
     {
         // Reset supply count based on current product details
         $product_details = ProductDetail::fetchDataPO($request->id);
-        foreach($product_details as $item) {
-            if('Received' == $request->status) {
-                if(Product::isLimited($item['product_id'])) {
+        foreach ($product_details as $item) {
+            if ('Received' == $request->status) {
+                if (Product::isLimited($item['product_id'])) {
                     Supply::decreCount($item['product_id'], $item['qty']);
                 }
             }
@@ -215,19 +217,19 @@ class PurchaseInfoController extends Controller
         $data          = $request->input();
         $purchase_info = DB::table('purchase_infos')->where('id', $data['id'])->get()[0];
 
-        if($purchase_info->status != $data['status']) {
+        if ($purchase_info->status != $data['status']) {
             DB::table('purchase_infos')->where('id', $data['id'])
-                ->update([
-                    'status'     => $data['status'],
-                    'updated_at' => Carbon::now()->format('Y-m-d')
-                ]);
+              ->update([
+                  'status'     => $data['status'],
+                  'updated_at' => Carbon::now()->format('Y-m-d'),
+              ]);
 
             return ['success' => true];
         }
 
-        if($purchase_info->vat_type != $data['vat_type']) {
+        if ($purchase_info->vat_type != $data['vat_type']) {
             DB::table('purchase_infos')->where('id', $data['id'])
-                ->update(['vat_type' => $data['vat_type']]);
+              ->update(['vat_type' => $data['vat_type']]);
 
             return ['success' => true];
         }
@@ -240,7 +242,7 @@ class PurchaseInfoController extends Controller
         $data = $request->input();
 
         DB::table('purchase_infos')->where('id', $data['id'])
-            ->update(['payment_status' => $data['payment_status']]);
+          ->update(['payment_status' => $data['payment_status']]);
 
         return ['success' => true];
     }
@@ -263,8 +265,8 @@ class PurchaseInfoController extends Controller
         $summary         = $data['summary'];
         $sections        = [];
         $cnt             = -1;
-        foreach($product_details as $key => $value) {
-            if(count($value) == 1) {
+        foreach ($product_details as $key => $value) {
+            if (count($value) == 1) {
                 $sections[] = [
                     $value['category'] => 0,
                 ];
@@ -277,8 +279,8 @@ class PurchaseInfoController extends Controller
         }
 
         $hold_section = $sections;
-        foreach($hold_section as $index => $section) {
-            foreach($section as $key => $value) {
+        foreach ($hold_section as $index => $section) {
+            foreach ($section as $key => $value) {
                 $hold_section[$index] = [$this->converToRoman($index + 1) . '. ' . $key => $value];
             }
         }
@@ -303,8 +305,8 @@ class PurchaseInfoController extends Controller
         $summary         = $data['summary'];
         $sections        = [];
         $cnt             = -1;
-        foreach($product_details as $key => $value) {
-            if(count($value) == 1) {
+        foreach ($product_details as $key => $value) {
+            if (count($value) == 1) {
                 $sections[] = [
                     $value['category'] => 0,
                 ];
@@ -317,8 +319,8 @@ class PurchaseInfoController extends Controller
         }
 
         $hold_section = $sections;
-        foreach($hold_section as $index => $section) {
-            foreach($section as $key => $value) {
+        foreach ($hold_section as $index => $section) {
+            foreach ($section as $key => $value) {
                 $hold_section[$index] = [$this->converToRoman($index + 1) . '. ' . $key => $value];
             }
         }
@@ -330,20 +332,20 @@ class PurchaseInfoController extends Controller
     public function getOverview($id)
     {
         $purchase_info = PurchaseInfo::query()
-                             ->selectRaw('purchase_infos.*, IFNULL(vendors.name, \'\') as vendor_name')
-                             ->leftJoin('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
-                             ->where('purchase_infos.id', $id)
-                             ->get()[0];
+                                     ->selectRaw('purchase_infos.*, IFNULL(vendors.name, \'\') as vendor_name')
+                                     ->leftJoin('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
+                                     ->where('purchase_infos.id', $id)
+                                     ->get()[0];
 
         $product_details = ProductDetail::query()
-            ->selectRaw('products.category, products.unit, product_details.*')
-            ->where('purchase_order_id', $id)
-            ->join('products', 'products.id', 'product_details.product_id')
-            ->get();
+                                        ->selectRaw('products.category, products.unit, product_details.*')
+                                        ->where('purchase_order_id', $id)
+                                        ->join('products', 'products.id', 'product_details.product_id')
+                                        ->get();
         $category        = '';
         $hold            = [];
-        foreach($product_details->toArray() as $value) {
-            if($value['category'] != $category) {
+        foreach ($product_details->toArray() as $value) {
+            if ($value['category'] != $category) {
                 $hold[]   = ['category' => $value['category']];
                 $category = $value['category'];
             }
@@ -373,7 +375,7 @@ class PurchaseInfoController extends Controller
             'grand_total'       => '0',
         ]);
 
-        if(Summary::query()->where('purchase_order_id', $id)->count() > 0) {
+        if (Summary::query()->where('purchase_order_id', $id)->count() > 0) {
             $summary = Summary::query()->where('purchase_order_id', $id)->get()[0];
         }
 
@@ -406,7 +408,7 @@ class PurchaseInfoController extends Controller
             'I'  => 1,
         ];
 
-        foreach($romanNumber_Array as $roman => $number) {
+        foreach ($romanNumber_Array as $roman => $number) {
             //divide to get  matches
             $matches = intval($n / $number);
 
