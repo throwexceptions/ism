@@ -103,6 +103,7 @@ class UserController extends Controller
         return [
             "results" => DB::table('users')
                            ->selectRaw("name as id, name as text")
+                           ->whereRaw("name <> 'Super Admin'")
                            ->whereRaw("name LIKE '%{$request->term}%'")
                            ->get(),
         ];
