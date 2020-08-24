@@ -2,8 +2,8 @@
 <html>
 <head>
     <link
-            href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-            rel="stylesheet">
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+        rel="stylesheet">
     <style>
         html * {
             font-size: 12px !important;
@@ -71,12 +71,16 @@
                     <td class="header-content">{{ $sales_order->subject }}</td>
                 </tr>
                 <tr>
-                    <td>Project:</td>
+                    <td>Customer Name:</td>
                     <td class="header-content">{{ $sales_order->customer_name }}</td>
                 </tr>
                 <tr>
-                    <td>Location:</td>
+                    <td>Address:</td>
                     <td class="header-content">{{ $sales_order->address }}</td>
+                </tr>
+                <tr>
+                    <td>Mobile Number:</td>
+                    <td class="header-content">{{ $sales_order->phone }}</td>
                 </tr>
                 <tr>
                     <td>Date:</td>
@@ -179,7 +183,7 @@
         </td>
         <td>
             <table
-                    style="border: 1px solid black; padding-left: 5%; width: 100%">
+                style="border: 1px solid black; padding-left: 5%; width: 100%">
                 <tbody>
                 <tr>
                     <td colspan="2" style="padding-bottom: 8px"><strong>SUMMARY:</strong></td>
@@ -194,7 +198,7 @@
                 <tr>
                     <td align="right" style="padding-top: 10px !important;"><strong>DISCOUNT</strong></td>
                     <td
-                            style="padding-left: 10px !important; padding-top: 10px !important;">{{ number_format($summary->discount, 2) }}</td>
+                        style="padding-left: 10px !important; padding-top: 10px !important;">{{ number_format($summary->discount, 2) }}</td>
                 </tr>
                 <tr>
                     <td align="right"><strong>SUB-TOTAL</strong></td>

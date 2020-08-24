@@ -69,20 +69,20 @@
             <table>
                 <tbody>
                 <tr>
-                    <td>Project Cost Center:</td>
-                    <td class="header-content">{{ $purchase_info->subject }}</td>
+                    <td>Subject:</td>
+                    <td class="header-content">{{ $sales_order->subject }}</td>
                 </tr>
                 <tr>
-                    <td>Project:</td>
-                    <td class="header-content">{{ $purchase_info->vendor_name }}</td>
+                    <td>Customer Name:</td>
+                    <td class="header-content">{{ $sales_order->customer_name }}</td>
                 </tr>
                 <tr>
-                    <td>Statement Type:</td>
-                    <td class="header-content">{{ $purchase_info->status }}</td>
+                    <td>Address:</td>
+                    <td class="header-content">{{ $sales_order->address }}</td>
                 </tr>
                 <tr>
-                    <td>Location:</td>
-                    <td class="header-content">{{ $purchase_info->address }}</td>
+                    <td>Mobile Number:</td>
+                    <td class="header-content">{{ $sales_order->phone }}</td>
                 </tr>
                 <tr>
                     <td>Date:</td>

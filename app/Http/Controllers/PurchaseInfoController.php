@@ -108,7 +108,7 @@ class PurchaseInfoController extends Controller
             foreach($data['products'] as $item) {
                 if(count($item) > 2) {
                     $product_details[] = [
-                        'purchase_order_id' => $id,
+                        'purchase_order_id' => PurchaseInfo::generate()->newPONo(),
                         //'sales_order_id'    => '',
                         //'product_return_id' => '',
                         'product_id'        => $item['product_id'],

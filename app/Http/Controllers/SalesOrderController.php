@@ -97,7 +97,7 @@ class SalesOrderController extends Controller
                 if(count($item) > 2) {
                     $product_details[] = [
                         //'purchase_order_id' => $id,
-                        'sales_order_id'    => $id,
+                        'sales_order_id'    => SalesOrder::generate()->newSONo(),
                         //'product_return_id' => '',
                         'product_id'        => $item['product_id'],
                         'product_name'      => $item['product_name'],

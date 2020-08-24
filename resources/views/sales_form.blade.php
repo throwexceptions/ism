@@ -29,7 +29,10 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Agent</label>
-                                    <input type="text" class="form-control form-control-sm" v-model="overview.agent">
+                                    <select class="form-control form-control-sm select2-agent">
+                                    </select>
+                                    <input v-show="viewType == 2" type="text" class="form-control form-control-sm"
+                                           v-model="overview.agent">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -540,8 +543,23 @@
                     $this.overview.address = data.address;
                 });
 
+                $('.select2-agent').select2({
+                    width: '100%',
+                    ajax: {
+                        url: '{{ route('customer.list') }}',
+                        method: 'POST',
+                        dataType: 'json'
+                    }
+                }).on('select2:select', function (e) {
+                    var data = e.params.data;
+                    $this.overview.agent = data.name;
+                });
+
                 var newOption = new Option($this.overview.customer_name, $this.overview.customer_id, true, true);
                 $('.select2-customer').append(newOption).trigger('change');
+
+                var newOption = new Option($this.overview.agent, $this.overview.agent, true, true);
+                $('.select2-agent').append(newOption).trigger('change');
 
                 if ('{{ Route::currentRouteName() }}' == 'sales.detail') {
                     this.viewType = 0;

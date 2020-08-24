@@ -71,12 +71,16 @@
                     <td class="header-content">{{ $sales_order->subject }}</td>
                 </tr>
                 <tr>
-                    <td>Project:</td>
+                    <td>Customer Name:</td>
                     <td class="header-content">{{ $sales_order->customer_name }}</td>
                 </tr>
                 <tr>
-                    <td>Location:</td>
+                    <td>Address:</td>
                     <td class="header-content">{{ $sales_order->address }}</td>
+                </tr>
+                <tr>
+                    <td>Mobile Number:</td>
+                    <td class="header-content">{{ $sales_order->phone }}</td>
                 </tr>
                 <tr>
                     <td>Date:</td>

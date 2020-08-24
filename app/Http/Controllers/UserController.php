@@ -97,4 +97,9 @@ class UserController extends Controller
 
         return ['success' => true];
     }
+
+    public function list(Request $request)
+    {
+        return User::all();
+    }
 }
