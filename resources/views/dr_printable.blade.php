@@ -90,8 +90,9 @@
                 </tbody>
             </table>
         </td>
-        <td width="150"><img src="{{ asset('app/public/logo/logo.jpg') }}"
-                             width="150" height="150"></td>
+        <td width="20%">
+            <img src="{{ asset('app/public/logo/logo.jpg') }}" height="150">
+        </td>
     </tr>
     </tbody>
 </table>
