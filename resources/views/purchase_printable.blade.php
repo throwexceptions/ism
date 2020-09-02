@@ -70,19 +70,19 @@
                 <tbody>
                 <tr>
                     <td>Subject:</td>
-                    <td class="header-content">{{ $sales_order->subject }}</td>
+                    <td class="header-content">{{ $purchase_info->subject }}</td>
                 </tr>
                 <tr>
                     <td>Customer Name:</td>
-                    <td class="header-content">{{ $sales_order->customer_name }}</td>
+                    <td class="header-content">{{ $purchase_info->customer_name }}</td>
                 </tr>
                 <tr>
                     <td>Address:</td>
-                    <td class="header-content">{{ $sales_order->address }}</td>
+                    <td class="header-content">{{ $purchase_info->address }}</td>
                 </tr>
                 <tr>
                     <td>Mobile Number:</td>
-                    <td class="header-content">{{ $sales_order->phone }}</td>
+                    <td class="header-content">{{ $purchase_info->phone }}</td>
                 </tr>
                 <tr>
                     <td>Date:</td>
