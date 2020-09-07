@@ -16,7 +16,7 @@ class CreatePreferencesTable extends Migration
         Schema::create('preferences', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name', 200)->nullable();
-            $table->string('status', 200)->nullable();
+            $table->text('status')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
