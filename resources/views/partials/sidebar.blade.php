@@ -3,7 +3,11 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
         <div class="sidebar-brand-icon">
-            <img src="{{ asset('app/public/logo/logo.jpg') }}" width="100" height="100">
+            <div class="row">
+                <div class="col-md-12">
+                    <img src="{{ asset('app/public/logo/logo.jpg') }}" style="max-width: 95%;" height="100">
+                </div>
+            </div>
         </div>
         {{--<div class="sidebar-brand-text mx-3">MANAGEMENT</div>--}}
     </a>
