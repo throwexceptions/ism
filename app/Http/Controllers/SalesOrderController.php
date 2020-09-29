@@ -229,6 +229,7 @@ class SalesOrderController extends Controller
         $sales_order     = $data['sales_order'];
         $product_details = $data['product_details'];
         $summary         = $data['summary'];
+        unset($data['name']);
 
         return view('sales_form', compact('sales_order', 'product_details', 'summary'));
     }

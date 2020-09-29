@@ -253,7 +253,7 @@ class PurchaseInfoController extends Controller
         $purchase_info   = $data['purchase_info'];
         $product_details = $data['product_details'];
         $summary         = $data['summary'];
-
+        unset($data['name']);
         return view('purchase_form', compact('purchase_info', 'product_details', 'summary'));
     }
 
