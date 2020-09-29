@@ -94,7 +94,8 @@ class DashboardController extends Controller
         $data   = $request->input();
         $result = DB::table('purchase_infos')
                     ->selectRaw('COALESCE(SUM(summaries.grand_total),0) as total')
-                    ->leftJoin('summaries', 'summaries.purchase_order_id', '=', 'purchase_infos.id');
+                    ->leftJoin('summaries', 'summaries.purchase_order_id', '=', 'purchase_infos.id')
+                    ->where('status', 'Received');
 
         if ($data['start'] != '') {
             $result->whereBetween('purchase_infos.created_at', [$data['start'], $data['end']]);
