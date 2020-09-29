@@ -237,42 +237,28 @@
     <tr>
         <td>
             <table>
+                <thead>
+                <th><strong>Prepared By:</strong></th>
+                <th><strong>Date:</strong></th>
+                </thead>
                 <tbody>
                 <tr>
-                    <td>&nbsp;&nbsp;&nbsp;<strong>Prepared By:</strong>
-                    </td>
-                    <td>&nbsp;&nbsp;&nbsp;<strong>Date:</strong>
-                    </td>
-                </tr>
-                <tr>
-                    <td>&nbsp;&nbsp;&nbsp;___________________</td>
-                    <td pad>&nbsp;&nbsp;&nbsp;___________________</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;&nbsp;&nbsp;<i>Owner's Signature</i>
-                    </td>
-                    <td></td>
+                    <td style="padding-right: 20px !important;">{{ $sales_order->name }} </td>
+                    <td>___________________________</td>
                 </tr>
                 </tbody>
             </table>
         </td>
         <td>
             <table>
+                <thead>
+                <th><strong>Received By:</strong></th>
+                <th><strong>Date:</strong></th>
+                </thead>
                 <tbody>
                 <tr>
-                    <td>&nbsp;&nbsp;&nbsp;<strong>Received By:</strong>
-                    </td>
-                    <td>&nbsp;&nbsp;&nbsp;<strong>Date:</strong>
-                    </td>
-                </tr>
-                <tr>
-                    <td>&nbsp;&nbsp;&nbsp;___________________</td>
-                    <td pad>&nbsp;&nbsp;&nbsp;___________________</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;&nbsp;&nbsp;<i>Signature Over Printed Name</i>
-                    </td>
-                    <td></td>
+                    <td style="padding-right: 20px !important;">___________________</td>
+                    <td>___________________</td>
                 </tr>
                 </tbody>
             </table>

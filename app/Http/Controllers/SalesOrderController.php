@@ -395,8 +395,9 @@ class SalesOrderController extends Controller
     public function getOverview($id)
     {
         $sales_order = SalesOrder::query()
-                                 ->selectRaw('sales_orders.*, IFNULL(customers.name, \'\') as customer_name')
+                                 ->selectRaw('sales_orders.*, IFNULL(customers.name, \'\') as customer_name, users.name')
                                  ->leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')
+                                 ->leftJoin('users', 'users.id', '=', 'sales_orders.assigned_to')
                                  ->where('sales_orders.id', $id)
                                  ->get()[0];
 

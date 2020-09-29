@@ -241,20 +241,21 @@
 </table>
 {{-- CONFORME--}}
 <table style="margin-top: 50px;">
+    <thead>
+    <th width="100">
+        <strong>Received By:</strong>
+    </th>
+    <th>
+        <strong>Date:</strong>
+    </th>
+    </thead>
     <tbody>
     <tr>
-        <td>&nbsp;&nbsp;&nbsp;<strong>Received By:</strong>
-        </td>
-        <td>&nbsp;&nbsp;&nbsp;<strong>Date:</strong>
-        </td>
+        <td>{{ $purchase_info->name }}</td>
+        <td width="200"> ______________________</td>
     </tr>
     <tr>
-        <td>&nbsp;&nbsp;&nbsp;___________________</td>
-        <td pad>&nbsp;&nbsp;&nbsp;___________________</td>
-    </tr>
-    <tr>
-        <td>&nbsp;&nbsp;&nbsp;<i>Owner's Signature</i>
-        </td>
+        <td>&nbsp;</td>
         <td></td>
     </tr>
     </tbody>

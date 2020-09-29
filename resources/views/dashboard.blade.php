@@ -295,7 +295,6 @@
 
                 $('#so_totals').daterangepicker({
                     opens: 'left',
-                    autoUpdateInput: false,
                 }, function (start, end, label) {
                     $this.so_range.start = start.format('YYYY-MM-DD');
                     $this.so_range.end = end.format('YYYY-MM-DD');
@@ -305,7 +304,6 @@
 
                 $('#po_totals').daterangepicker({
                     opens: 'left',
-                    autoUpdateInput: false,
                 }, function (start, end, label) {
                     $this.po_range.start = start.format('YYYY-MM-DD');
                     $this.po_range.end = end.format('YYYY-MM-DD');
