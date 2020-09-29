@@ -250,10 +250,11 @@ class PurchaseInfoController extends Controller
     public function show($id)
     {
         $data            = $this->getOverview($id);
+        unset($data['purchase_info']['name']);
         $purchase_info   = $data['purchase_info'];
         $product_details = $data['product_details'];
         $summary         = $data['summary'];
-        unset($data['name']);
+
         return view('purchase_form', compact('purchase_info', 'product_details', 'summary'));
     }
 

@@ -226,10 +226,10 @@ class SalesOrderController extends Controller
     public function show($id)
     {
         $data            = $this->getOverview($id);
+        unset($data['sales_order']['name']);
         $sales_order     = $data['sales_order'];
         $product_details = $data['product_details'];
         $summary         = $data['summary'];
-        unset($data['name']);
 
         return view('sales_form', compact('sales_order', 'product_details', 'summary'));
     }
