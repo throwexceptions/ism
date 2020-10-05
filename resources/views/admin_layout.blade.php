@@ -142,6 +142,7 @@
         location.reload();
     } ) .DataTable();
 </script>
+@include('sweetalert::alert')
 @yield('scripts')
 </body>
 
