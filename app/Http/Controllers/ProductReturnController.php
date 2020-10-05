@@ -132,15 +132,6 @@ class ProductReturnController extends Controller
     {
         $data = $request->input();
 
-        $product_details = ProductDetail::query()
-            ->selectRaw('products.category, products.unit, product_details.*')
-            ->where('product_return_id', $data['id'])
-            ->join('products', 'products.id', 'product_details.product_id')
-            ->get()->toArray();
-
-        foreach ($product_details as $item) {
-            DB::table('supplies')->where('product_id', $item['product_id'])->decrement('quantity', $item['qty']);
-        }
         ProductReturn::truncate('id', $data['id']);
         ProductDetail::truncate('product_return_id', $data['id']);
 
@@ -216,16 +207,6 @@ class ProductReturnController extends Controller
             $hold[] = $value;
         }
         $product_details = collect($hold);
-
-        $summary = collect([
-            'purchase_order_id' => '',
-            'sales_order_id' => '',
-            'discount' => '0',
-            'sub_total' => '0',
-            'shipping' => '0',
-            'sales_tax' => '0',
-            'grand_total' => '0',
-        ]);
 
         return [
             'sales_order' => $sales_order,
