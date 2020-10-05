@@ -132,8 +132,8 @@ class ProductReturnController extends Controller
     {
         $data = $request->input();
 
-        ProductReturn::truncate('id', $data['id']);
-        ProductDetail::truncate('product_return_id', $data['id']);
+        ProductReturn::query()->where('product_return_id', $data['id'])->delete();
+        ProductDetail::query()->where('product_return_id', $data['id'])->delete();
 
         return ['success' => true];
     }
