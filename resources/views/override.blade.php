@@ -45,11 +45,9 @@
                                         <div class="col-md-5">
                                             <select name="dumpsql" class="form-control">
                                                 @foreach($list as $value)
-                                                    @if($value != '..' && $value != '.')
-                                                        <option value="{{ $value }}">
-                                                            <strong>{{ $value }}</strong>
-                                                        </option>
-                                                    @endif
+                                                    <option value="{{ $value }}">
+                                                        <strong>{{ $value }}</strong>
+                                                    </option>
                                                 @endforeach
                                             </select>
                                         </div>

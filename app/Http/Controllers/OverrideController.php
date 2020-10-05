@@ -13,7 +13,14 @@ class OverrideController extends Controller
 {
     public function index()
     {
-        $list = scandir('backups', SCANDIR_SORT_DESCENDING);
+        $list = scandir('.', SCANDIR_SORT_DESCENDING);
+        $backups = [];
+        foreach ($list as $value) {
+            if(strpos($value, '.sql') > 0) {
+                array_push($backups, $value);
+            }
+        }
+        $list = $backups;
 
         return view('override', compact('list'));
     }
@@ -24,7 +31,7 @@ class OverrideController extends Controller
              ->setDbName(env('DB_DATABASE'))
              ->setUserName(env('DB_USERNAME'))
              ->setPassword(env('DB_PASSWORD'))
-             ->dumpToFile('backups/BACKUP_' . Carbon::now()->format('Y-m-d_h:i:sa') . '.sql');
+             ->dumpToFile('BACKUP_' . Carbon::now()->format('Y-m-d_h:i:sa') . '.sql');
 
         Alert::success('Created Restore Point', 'Restore Point Created!');
 
