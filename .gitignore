@@ -3,6 +3,7 @@
 /public/storage
 /storage/*.key
 /public/backups/*.sql
+/public/*.sql
 /vendor
 /public/app/public/
 .env
