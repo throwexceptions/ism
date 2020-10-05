@@ -46,7 +46,7 @@ class OverrideController extends Controller
         if($request->db){
             switch ($request->db) {
                 case 'po':
-                    DB::table('purchase_info')->delete();
+                    DB::table('purchase_infos')->delete();
                     DB::table('product_details')->whereNull('sales_order_id')->delete();
                 case 'so':
                     DB::table('sales_orders')->delete();
