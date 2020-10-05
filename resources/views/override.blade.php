@@ -29,7 +29,7 @@
                                     </form>
                                 </div>
                                 <label class="control-label col-md-auto mt-1">
-                                    Lastest Backup: <strong>{{ $list[0] }}</strong>
+                                    Lastest Backup: <strong>{{ isset($list[0]) ? $list[0] : ''  }}</strong>
                                 </label>
                             </div>
                             <div class="row col-md-12 mt-2">
