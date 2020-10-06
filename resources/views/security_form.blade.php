@@ -680,6 +680,19 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group row">
+                                            <div class="col-md-auto">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.override">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Override</label>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 {{-- Proce List --}}
                                 <div class="col-md-12 row">
