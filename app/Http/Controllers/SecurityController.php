@@ -10,6 +10,7 @@ use DB;
 class SecurityController extends Controller
 {
     public $array_abilities = [
+        "auditlogs",
         "override",
         "orderform",
         "orderformcreate",

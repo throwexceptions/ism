@@ -267,7 +267,7 @@
                                 <div class="form-group row">
                                     <div class="col-md-12">
                                         <textarea type="text" class="form-control form-control-sm"
-                                                  v-model="overview.tac" rows="5" style="height: 80px;"></textarea>
+                                                  v-model="overview.tac" rows="8"></textarea>
                                     </div>
                                 </div>
                             </div>

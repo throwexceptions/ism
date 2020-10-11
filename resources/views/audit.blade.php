@@ -60,10 +60,8 @@
                         {data: 'created_at', title: 'Timestamp'},
                         {data: 'user', title: 'User'},
                         {data: 'url', title: 'URL'},
-                        {data: 'inputs', title: 'Inputs'},
                     ],
                     drawCallback: function () {
-
                     }
                 });
             }

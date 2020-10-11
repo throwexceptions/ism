@@ -786,6 +786,26 @@
                                         </div>
                                     </div>
                                 </div>
+                                {{-- Audit Logs --}}
+                                <div class="col-md-12 row">
+                                    <div class="col-md-12 mt-4">
+                                        <h3>Audit Logs</h3>
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group row">
+                                            <div class="col-md-auto">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="abilities.auditlogs">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <label class="switch-label">Audit Logs</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             @endif
 
                             <div class="col-md-12">

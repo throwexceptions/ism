@@ -27,6 +27,39 @@
             </div>
         </div>
 
+        <div id="statusModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Status</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Return Type</label>
+                                    <select class="form-control form-control-sm" v-model="overview.status">
+                                        <option value="">-- Select Type --</option>
+                                        <option value="received">Received</option>
+                                        <option value="rma pull out">RMA Pull Out</option>
+                                        <option value="refund">RMA Returned</option>
+                                        <option value="released">Released</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" @click="update">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 @endsection
 
@@ -60,7 +93,7 @@
                 update() {
                     var $this = this;
                     $.ajax({
-                        url: '{{ route('purchase.status.update') }}',
+                        url: '{{ route('return.status.update') }}',
                         method: 'POST',
                         data: $this.overview,
                         success: function (value) {
@@ -126,10 +159,9 @@
                         {data: 'so_no', name: 'so_no', title: 'Reference SO NO.'},
                         {
                             data: function (value) {
-                                if(!value) {
-                                    return value.status.toUpperCase();
-                                }
-                                return 'N/A';
+                                return '<div class="btn-group btn-group-sm shadow-sm btn-block" role="group">' +
+                                    '<a href="#" class="btn btn-info btn-status">' + value.status.toUpperCase() + '</a>' +
+                                    '</div>'
                             }, name: 'status', title: 'Status'
                         },
                         {
@@ -145,10 +177,12 @@
                             let data = $(this).parent().parent().parent();
                             let hold = $this.dt.row(data).data();
                             $this.overview = hold;
-                            console.log(hold);
                         });
                         $('.btn-destroy').on('click', function () {
                             $this.destroy();
+                        });
+                        $('.btn-status').on('click', function () {
+                            $('#statusModal').modal('show');
                         });
                     }
                 });

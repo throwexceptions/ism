@@ -293,6 +293,15 @@
                 $this.getSOTotals();
                 $this.getPOTotals();
 
+                fetch('https://geolocation-db.com/json/')
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then((data) => {
+                        // Work with JSON data here
+                        console.log(data);
+                    });
+
                 $('#so_totals').daterangepicker({
                     opens: 'left',
                 }, function (start, end, label) {

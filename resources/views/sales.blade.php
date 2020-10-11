@@ -243,7 +243,6 @@
                             let data = $(this).parent().parent().parent();
                             let hold = $this.dt.row(data).data();
                             $this.overview = hold;
-                            console.log(hold);
                         });
                         $('.btn-destroy').on('click', function () {
                             $this.destroy();

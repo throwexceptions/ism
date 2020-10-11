@@ -151,6 +151,7 @@ Route::group(['middleware' => ['auth','web', 'audit']], function () {
     Route::post('/return/store', 'ProductReturnController@store')->name('return.store');
     Route::get('/return/view/{id}', 'ProductReturnController@show')->name('return.view');
     Route::get('/return/print/{id}', 'ProductReturnController@printable')->name('return.print');
+    Route::post('/return/status/update', 'ProductReturnController@updateStatus')->name('return.status.update');
 
     Route::get('/pricelist', 'PriceListController@index')->name('pricelist')->middleware('can:pricelist');
     Route::post('/pricelist/upload', 'PriceListController@upload')->name('pricelist.upload')->middleware('can:pricelistupload');
@@ -158,7 +159,7 @@ Route::group(['middleware' => ['auth','web', 'audit']], function () {
     Route::get('/download/pricelist/{id}', 'PriceListController@download')->name('pricelist.download');
     Route::post('/pricelist/table', 'PriceListController@table')->name('pricelist.table');
 
-    Route::get('/audit', 'AuditLogController@index')->name('audit');
+    Route::get('/audit', 'AuditLogController@index')->name('audit')->middleware('can:auditlogs');
     Route::post('/audit/table', 'AuditLogController@table')->name('audit.table');
 
     Route::get('/override', 'OverrideController@index')->name('override')->middleware('can:override');

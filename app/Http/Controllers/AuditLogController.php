@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\AuditLog;
-use App\Product;
-use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use DB;
 
 class AuditLogController extends Controller
 {
@@ -14,10 +12,8 @@ class AuditLogController extends Controller
         return view('audit');
     }
 
-    public function table()
+    public function table(DataTables $dataTables)
     {
-        $audit = AuditLog::all();
-
-        return DataTables::of($audit)->make(true);
+        return $dataTables->queryBuilder(DB::table('audit_logs'))->make(true);
     }
 }

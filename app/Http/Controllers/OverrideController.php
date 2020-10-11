@@ -13,10 +13,10 @@ class OverrideController extends Controller
 {
     public function index()
     {
-        $list = scandir('.', SCANDIR_SORT_DESCENDING);
+        $list    = scandir('.', SCANDIR_SORT_DESCENDING);
         $backups = [];
         foreach ($list as $value) {
-            if(strpos($value, '.sql') > 0) {
+            if (strpos($value, '.sql') > 0) {
                 array_push($backups, $value);
             }
         }
@@ -50,20 +50,31 @@ class OverrideController extends Controller
 
     public function databaseWipe(Request $request)
     {
-        if($request->db){
+        if ($request->db) {
             switch ($request->db) {
                 case 'po':
                     DB::table('purchase_infos')->delete();
                     DB::table('product_details')->whereNull('sales_order_id')->delete();
+                    break;
                 case 'so':
                     DB::table('sales_orders')->delete();
                     DB::table('product_details')->whereNull('purchase_order_id')->delete();
+                    break;
+                case 'customers':
+                    DB::table('customers')->delete();
+                    break;
+                case 'products_inventory':
+                    DB::table('products')->delete();
+                    DB::table('supplies')->delete();
+                    break;
+                case 'vendors':
+                    DB::table('vendors')->delete();
+                    break;
             }
             Alert::success('DB Wiped Successful!', 'Successful Wiped!');
         } else {
             Alert::success('DB Wiped Failed!', 'Please try again!');
         }
-
 
         return redirect()->back();
     }
