@@ -16,7 +16,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <a href="{{ route('return.create') }}" class="btn btn-sm btn-success"><i
-                                            class="fa fa-plus"></i> New Product Return</a>
+                                        class="fa fa-plus"></i> New Product Return</a>
                             </div>
                             <div class="col-md-12 mt-3">
                                 <table id="table-inquiry" class="table table-striped nowrap" style="width:100%"></table>
@@ -157,10 +157,16 @@
                         },
                         {data: 'pr_no', name: 'pr_no', title: 'PR NO.'},
                         {data: 'so_no', name: 'so_no', title: 'Reference SO NO.'},
+                        {data: 'customer_name', name: 'customer_name', title: 'Customer Name'},
                         {
                             data: function (value) {
+                                if (value.status == null)
+                                    hold = 'NONE';
+                                else
+                                    hold = value.status.toUpperCase();
+
                                 return '<div class="btn-group btn-group-sm shadow-sm btn-block" role="group">' +
-                                    '<a href="#" class="btn btn-info btn-status">' + value.status.toUpperCase() + '</a>' +
+                                    '<a href="#" class="btn btn-info btn-status">' + hold + '</a>' +
                                     '</div>'
                             }, name: 'status', title: 'Status'
                         },
@@ -169,8 +175,14 @@
                                 return value.status_created_at;
                             }, name: 'return_statuses.updated_at', title: 'Status Date'
                         },
+                        {data: 'return_type', name: 'return_type', title: 'Return Type'},
+                        {
+                            data: function (value) {
+                                return '<span class="d-inline-block text-truncate" style="max-width: 150px;">'
+                                    + value.remarks + '</span>'
+                            }, name: 'remarks', title: 'Remarks'
+                        },
                         {data: 'username', name: 'users.name', title: 'Assigned To'},
-                        {data: 'created_at', name: 'purchase_infos.created_at', title: 'Date Created'},
                     ],
                     drawCallback: function () {
                         $('table .btn').on('click', function () {
