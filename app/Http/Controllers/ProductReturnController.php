@@ -25,7 +25,7 @@ class ProductReturnController extends Controller
     {
         $product_return = ProductReturn::query()
                                        ->selectRaw('product_returns.*, users.name as username, customers.name as customer_name,return_statuses.status,
-                             sales_orders.so_no, return_statuses.created_at as status_created_at')
+                             sales_orders.so_no, return_statuses.updated_at as status_created_at')
                                        ->leftJoin('customers', 'customers.id', '=', 'product_returns.customer_id')
                                        ->leftJoin('sales_orders', 'sales_orders.id', '=',
                                            'product_returns.sales_order_id')
@@ -37,6 +37,8 @@ class ProductReturnController extends Controller
             $data                      = $data->toArray();
             $data['status_created_at'] = $data['status_created_at'] != null ? Carbon::parse($data['status_created_at'])
                                                                                     ->format('F j, Y') : '';
+            $data['created_at']        = $data['created_at'] != null ? Carbon::parse($data['created_at'])
+                                                                             ->format('F j, Y') : '';
 
             return $data;
         })->make(true);
@@ -135,9 +137,9 @@ class ProductReturnController extends Controller
     public function destroy(Request $request)
     {
         $data = $request->input();
-
-        ProductReturn::query()->where('product_return_id', $data['id'])->delete();
+        ProductReturn::query()->where('id', $data['id'])->delete();
         ProductDetail::query()->where('product_return_id', $data['id'])->delete();
+        ReturnStatus::query()->where('product_return_id', $data['id'])->delete();
 
         return ['success' => true];
     }
@@ -220,7 +222,12 @@ class ProductReturnController extends Controller
 
     public function updateStatus(Request $request)
     {
-        ReturnStatus::query()->where('product_return_id', $request->id)->update(['status' => $request->status,]);
-        dump($request->input());
+        ReturnStatus::query()->where('product_return_id', $request->id)
+                    ->update([
+                        'status'     => $request->status,
+                        'updated_at' => Carbon::now(),
+                    ]);
+
+        return ['success' => true];
     }
 }

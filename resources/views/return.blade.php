@@ -167,7 +167,7 @@
                         {
                             data: function (value) {
                                 return value.status_created_at;
-                            }, name: 'return_statuses.created_at', title: 'Status Date'
+                            }, name: 'return_statuses.updated_at', title: 'Status Date'
                         },
                         {data: 'username', name: 'users.name', title: 'Assigned To'},
                         {data: 'created_at', name: 'purchase_infos.created_at', title: 'Date Created'},
