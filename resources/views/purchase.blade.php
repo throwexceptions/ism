@@ -237,7 +237,7 @@
                                     '</div>'
                             }, name: 'status', title: 'Status'
                         },
-                        {data: 'subject', title: 'Project Cost Center'},
+                        {data: 'subject', title: 'DR/SI'},
                         {data: 'vendor_name', name: 'vendors.name', title: 'Vendor'},
                         {data: 'grand_total', name: 'summaries.grand_total', title: 'Total'},
                         {data: 'name', name: 'users.name', title: 'Assigned'},
