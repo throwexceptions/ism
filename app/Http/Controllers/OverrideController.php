@@ -55,10 +55,12 @@ class OverrideController extends Controller
                 case 'po':
                     DB::table('purchase_infos')->delete();
                     DB::table('product_details')->whereNull('sales_order_id')->delete();
+                    DB::table('summaries')->whereNull('sales_order_id')->delete();
                     break;
                 case 'so':
                     DB::table('sales_orders')->delete();
                     DB::table('product_details')->whereNull('purchase_order_id')->delete();
+                    DB::table('summaries')->whereNull('purchase_order_id')->delete();
                     break;
                 case 'customers':
                     DB::table('customers')->delete();
