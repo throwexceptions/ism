@@ -109,10 +109,11 @@ class SupplyController extends Controller
     {
         $links = DB::table('product_details')
             ->selectRaw('DISTINCT purchase_order_id as link,
-            purchase_infos.po_no  as number')
+            purchase_infos.po_no  as number, purchase_infos.status')
             ->join('purchase_infos', 'purchase_infos.id', 'purchase_order_id')
             ->where('product_id', $request->product_id)
             ->where('purchase_order_id', '<>', null)
+            ->where('purchase_infos.status', 'Received')
             ->get();
 
         return $links;
@@ -122,10 +123,11 @@ class SupplyController extends Controller
     {
         $links = DB::table('product_details')
             ->selectRaw('DISTINCT sales_order_id as link,
-            sales_orders.so_no as number')
+            sales_orders.so_no as number, sales_orders.status')
             ->join('sales_orders', 'sales_orders.id', 'sales_order_id')
             ->where('product_id', $request->product_id)
             ->where('sales_order_id', '<>', null)
+            ->where('sales_orders.status', 'Shipped')
             ->get();
 
         return $links;
