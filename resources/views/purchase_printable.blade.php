@@ -74,7 +74,7 @@
                 </tr>
                 <tr>
                     <td>Customer Name:</td>
-                    <td class="header-content">{{ $purchase_info->customer_name }}</td>
+                    <td class="header-content">{{ $purchase_info->vendor_name }}</td>
                 </tr>
                 <tr>
                     <td>Address:</td>
