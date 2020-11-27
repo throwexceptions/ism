@@ -78,11 +78,11 @@
                 </tr>
                 <tr>
                     <td>Address:</td>
-                    <td class="header-content">{{ $purchase_info->address }}</td>
+                    <td class="header-content">{{ $purchase_info->vendor_address }}</td>
                 </tr>
                 <tr>
                     <td>Mobile Number:</td>
-                    <td class="header-content">{{ $purchase_info->phone }}</td>
+                    <td class="header-content">{{ $purchase_info->vendor_mobile_phone }}</td>
                 </tr>
                 <tr>
                     <td>Date:</td>

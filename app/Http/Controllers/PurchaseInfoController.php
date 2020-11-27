@@ -333,7 +333,8 @@ class PurchaseInfoController extends Controller
     public function getOverview($id)
     {
         $purchase_info = PurchaseInfo::query()
-                                     ->selectRaw('purchase_infos.*, IFNULL(vendors.name, \'\') as vendor_name, users.name')
+                                     ->selectRaw('purchase_infos.*, IFNULL(vendors.name, \'\') as vendor_name, users.name,
+                                     vendors.address as vendor_address, vendors.mobile_phone as vendor_mobile_phone')
                                      ->leftJoin('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
                                      ->leftJoin('users', 'users.id', '=', 'purchase_infos.assigned_to')
                                      ->where('purchase_infos.id', $id)
