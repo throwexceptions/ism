@@ -2,8 +2,8 @@
 
 @section('content')
     <div id='app' class="container-fluid">
-        @include('partials.loading')
-        <!-- Content Row -->
+    @include('partials.loading')
+    <!-- Content Row -->
         <div class="row">
 
             <div class="col-lg-12 mb-4">
@@ -57,22 +57,29 @@
                                 <div class="form-group">
                                     <label>VAT Type</label>
                                     <select type="text" class="form-control form-control-sm"
-                                        v-model="overview.vat_type" v-on:change="grandTotal(parseFloat(summary.sub_total) - parseFloat(summary.discount))">
+                                            v-model="overview.vat_type"
+                                            v-on:change="grandTotal(parseFloat(summary.sub_total) - parseFloat(summary.discount))">
                                         <option value="">-- Select Options --</option>
                                         <option value="VAT EX">VAT EX</option>
                                         <option value="VAT INC">VAT INC</option>
                                     </select>
                                 </div>
-                                    <div class="form-group">
-                                        <label>Status</label>
-                                        <select type="text" class="form-control form-control-sm" v-model="overview.status">
-                                            <option value="Quote">QUOTE</option>
-                                            <option value="Sales">SALES</option>
-                                            @can('salesstatusupdate')
-                                                <option value="Shipped">SHIPPED</option>
-                                            @endcan
-                                        </select>
-                                    </div>
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select type="text" class="form-control form-control-sm" v-model="overview.status">
+                                        <option value="Quote">Quote</option>
+                                        <option value="Sales">Sales</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Delivery Status</label>
+                                    <select type="text" class="form-control form-control-sm" v-model="overview.delivery_status">
+                                        <option value="Not Shipped">Not Shipped</option>
+                                        @can('salesstatusupdate')
+                                            <option value="Shipped">Shipped</option>
+                                        @endcan
+                                    </select>
+                                </div>
                                 <div class="form-group" v-if="overview.status == 'Shipped'">
                                     <label>Shipped Date</label>
                                     <input type="date" class="ui-datepicker form-control form-control-sm"
@@ -199,7 +206,7 @@
                                     <label class="col-form-label col-md-4 col-form-label-sm">Sub Total</label>
                                     <div class="col-md-4">
                                         <input type="text" class="form-control-plaintext form-control-sm"
-                                                v-model="summary.sub_total">
+                                               v-model="summary.sub_total">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -212,9 +219,11 @@
                                 <div class="form-group row" v-show="overview.vat_type == 'VAT INC'">
                                     <label class="col-form-label col-md-4 col-form-label-sm">Sales Tax %</label>
                                     <div class="input-group col-md-4">
-                                        <input type="number" class="form-control form-control-sm" v-model="summary.sales_tax">
+                                        <input type="number" class="form-control form-control-sm"
+                                               v-model="summary.sales_tax">
                                         <div class="input-group-append">
-                                          <span class="input-group-text" id="basic-addon2"><i class="fa fa-percentage"></i></span>
+                                            <span class="input-group-text" id="basic-addon2"><i
+                                                    class="fa fa-percentage"></i></span>
                                         </div>
                                     </div>
                                 </div>
@@ -259,9 +268,9 @@
                                 <a href="{{ route('sales.print', isset($sales_order->id)?$sales_order->id: '') }}"
                                    class="btn btn-primary" v-if="viewType == 2">Sales Order</a>
                                 <a href="{{ route('sales.quote', isset($sales_order->id)?$sales_order->id: '') }}"
-                                    class="btn btn-info" v-if="viewType == 2">Quote</a>
+                                   class="btn btn-info" v-if="viewType == 2">Quote</a>
                                 <a href="{{ route('sales.deliver', isset($sales_order->id)?$sales_order->id: '') }}"
-                                    class="btn btn-success" v-if="viewType == 2">Delivery Receipt</a>
+                                   class="btn btn-success" v-if="viewType == 2">Delivery Receipt</a>
 
                             </div>
                         </div>
@@ -369,13 +378,13 @@
                         this.grandTotal()
                     }
                 },
-                'summary.discount': function(value){
+                'summary.discount': function (value) {
                     this.grandTotal()
                 },
-                'summary.sales_tax': function(value){
+                'summary.sales_tax': function (value) {
                     this.grandTotal()
                 },
-                'summary.shipping': function(value){
+                'summary.shipping': function (value) {
                     this.grandTotal()
                 },
             },
@@ -386,9 +395,9 @@
                     var sales_tax = parseFloat($this.summary.sales_tax);
                     $this.summary.sales_actual = 0;
                     $this.summary.grand_total = $this.summary.sub_total - $this.summary.discount
-                    if($this.overview.vat_type == 'VAT INC') {
+                    if ($this.overview.vat_type == 'VAT INC') {
                         var hold = 0
-                        hold = ($this.summary.grand_total * (1+(sales_tax/100)))
+                        hold = ($this.summary.grand_total * (1 + (sales_tax / 100)))
                         $this.summary.sales_actual = (hold - $this.summary.grand_total).toFixed(2)
                         $this.summary.grand_total = (hold).toFixed(2)
                     }
@@ -568,15 +577,13 @@
                         $("[name='so_no']").addClass('form-control-plaintext').removeClass('form-control');
                         $("[name='so_no']").attr('readonly', 'readonly');
                     }
-                }
-                else if ('{{ Route::currentRouteName() }}' == 'sales.create') {
+                } else if ('{{ Route::currentRouteName() }}' == 'sales.create') {
                     this.viewType = 1;
                     if ('{{ \App\Preference::verify('so_textbox') }}' == '0') {
                         $("[name='so_no']").addClass('form-control-plaintext').removeClass('form-control');
                         $("[name='so_no']").attr('readonly', 'readonly');
                     }
-                }
-                else if ('{{ Route::currentRouteName() }}' == 'sales.view') {
+                } else if ('{{ Route::currentRouteName() }}' == 'sales.view') {
                     this.viewType = 2;
                     $('label').addClass('font-weight-bold');
                     $('.form-control').attr('readonly', 'readonly');

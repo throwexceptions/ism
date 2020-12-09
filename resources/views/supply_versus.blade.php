@@ -59,7 +59,7 @@
             <td>{{ $value->product_name ?? '' }}</td>
             <td>{{ $value->status }}</td>
             <?php
-                if($value->status == 'Shipped') {
+                if($value->delivery_status == 'Shipped') {
                     $shipped += $value->total;
                 } else {
                     $others += $value->total;

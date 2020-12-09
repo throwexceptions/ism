@@ -34,7 +34,7 @@ class Supply extends Model
 
                 $so = DB::table('sales_orders')
                     ->join('product_details', 'product_details.sales_order_id', '=', 'sales_orders.id')
-                    ->where('sales_orders.status', 'Shipped')
+                    ->where('sales_orders.delivery_status', 'Shipped')
                     ->where('product_id', $value['product_id'])
                     ->sum('product_details.qty');
 

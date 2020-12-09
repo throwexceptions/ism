@@ -17,7 +17,7 @@
     </thead>
     <tbody>
         @foreach ($data as $item)
-        @if($item->status == 'Shipped')
+        @if($item->delivery_status == 'Shipped')
         <tr>
             <td>{{ $item->so_no }}</td>
             <td>{{ $item->customer_name }}</td>

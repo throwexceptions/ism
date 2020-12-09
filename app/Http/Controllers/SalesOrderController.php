@@ -44,25 +44,26 @@ class SalesOrderController extends Controller
     public function create()
     {
         $sales_order = collect([
-            "id"             => "",
-            "subject"        => "",
-            "customer_id"    => "",
-            "owner"          => "",
-            "so_no"          => SalesOrder::generate()->newSONo(),
-            "agent"          => auth()->user()->name,
-            "assigned_to"    => "",
-            "fax"            => "",
-            "status"         => "Quote",
-            "address"        => "",
-            "due_date"       => "",
-            "payment_method" => "",
-            "payment_status" => "PAID",
-            "account_name"   => Preference::status('account_name'),
-            "account_no"     => Preference::status('account_no'),
-            "tac"            => Preference::status('tac_so_fill'),
-            "phone"          => "",
-            "updated_at"     => Carbon::now()->format('Y-m-d'),
-            "vat_type"       => "VAT EX",
+            "id"              => "",
+            "subject"         => "",
+            "customer_id"     => "",
+            "owner"           => "",
+            "so_no"           => SalesOrder::generate()->newSONo(),
+            "agent"           => auth()->user()->name,
+            "assigned_to"     => "",
+            "fax"             => "",
+            "status"          => "Quote",
+            "delivery_status" => "Unshipped",
+            "address"         => "",
+            "due_date"        => "",
+            "payment_method"  => "",
+            "payment_status"  => "PAID",
+            "account_name"    => Preference::status('account_name'),
+            "account_no"      => Preference::status('account_no'),
+            "tac"             => Preference::status('tac_so_fill'),
+            "phone"           => "",
+            "updated_at"      => Carbon::now()->format('Y-m-d'),
+            "vat_type"        => "VAT EX",
         ]);
 
         $product_details = collect([]);
@@ -177,7 +178,7 @@ class SalesOrderController extends Controller
         // Reset supply count based on current product details
         $product_details = ProductDetail::fetchDataSO($request->id);
         foreach ($product_details as $item) {
-            if ('Shipped' == $request->status) {
+            if ('Shipped' == $request->delivery_status) {
                 if (Product::isLimited($item['product_id'])) {
                     Supply::increCount($item['product_id'], $item['qty']);
                 }
@@ -199,8 +200,17 @@ class SalesOrderController extends Controller
         if ($purchase_info->status != $data['status']) {
             DB::table('sales_orders')->where('id', $data['id'])
               ->update([
-                  'status'     => $data['status'],
-                  'updated_at' => Carbon::now()->format('Y-m-d'),
+                  'status' => $data['status'],
+              ]);
+
+            return ['success' => true];
+        }
+
+        if ($purchase_info->delivery_status != $data['delivery_status']) {
+            DB::table('sales_orders')->where('id', $data['id'])
+              ->update([
+                  'delivery_status' => $data['delivery_status'],
+                  'updated_at'      => Carbon::now()->format('Y-m-d'),
               ]);
 
             return ['success' => true];
@@ -225,7 +235,7 @@ class SalesOrderController extends Controller
 
     public function show($id)
     {
-        $data            = $this->getOverview($id);
+        $data = $this->getOverview($id);
         unset($data['sales_order']['name']);
         $sales_order     = $data['sales_order'];
         $product_details = $data['product_details'];
@@ -491,7 +501,7 @@ class SalesOrderController extends Controller
     {
         $sales_order = SalesOrder::query()
                                  ->selectRaw("id as id, so_no as text")
-                                 ->where('status', 'Shipped')
+                                 ->where('delivery_status', 'Shipped')
                                  ->whereRaw("so_no LIKE '%{$request->term}%'");
 
         return [

@@ -127,7 +127,7 @@ class SupplyController extends Controller
             ->join('sales_orders', 'sales_orders.id', 'sales_order_id')
             ->where('product_id', $request->product_id)
             ->where('sales_order_id', '<>', null)
-            ->where('sales_orders.status', 'Shipped')
+            ->where('sales_orders.delivery_status', 'Shipped')
             ->get();
 
         return $links;
