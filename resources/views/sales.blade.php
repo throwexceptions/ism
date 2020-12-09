@@ -264,7 +264,7 @@
                                 return '<div class="btn-group btn-group-sm shadow-sm btn-block" role="group">' +
                                     '<a href="#" class="btn ' + $class_color + ' btn-delivery-status">' + value.delivery_status + '</a>' +
                                     '</div>'
-                            }, name: 'status', title: 'Status'
+                            }, name: 'status', title: 'Delivery Status'
                         },
                         {data: 'customer_name', name: 'customers.name', title: 'Customer'},
                         {data: 'subject', name: 'subject', title: 'Subject'},
