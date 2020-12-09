@@ -260,7 +260,7 @@
                         },
                         {
                             data: function (value) {
-                                var $class_color = value.status === 'Unshipped' ? 'btn-warning' : 'btn-success';
+                                var $class_color = value.delivery_status === 'Not Shipped' ? 'btn-warning' : 'btn-success';
                                 return '<div class="btn-group btn-group-sm shadow-sm btn-block" role="group">' +
                                     '<a href="#" class="btn ' + $class_color + ' btn-delivery-status">' + value.delivery_status + '</a>' +
                                     '</div>'
