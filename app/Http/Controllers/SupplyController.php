@@ -183,11 +183,11 @@ class SupplyController extends Controller
 
 
         $so = DB::table('product_details')
-            ->selectRaw('product_name, so.so_no, so.`status`, SUM(qty) as total')
+            ->selectRaw('product_name, so.so_no, so.`status`, SUM(qty) as total, so.delivery_status')
             ->join('sales_orders as so', 'so.id', 'sales_order_id')
             ->where('product_id', $id)
             ->whereNull('purchase_order_id')
-            ->groupBy('so.status', 'product_name', 'so.so_no')->get();
+            ->groupBy('so.status', 'product_name', 'so.so_no', 'so.delivery_status')->get();
 
         return view('supply_versus', compact('po', 'so'));
     }
