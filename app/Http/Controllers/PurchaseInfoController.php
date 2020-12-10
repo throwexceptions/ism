@@ -144,6 +144,7 @@ class PurchaseInfoController extends Controller
 
         unset($data['overview']['vendor_name']);
         unset($data['overview']['vendor_address']);
+        unset($data['overview']['vendor_mobile_phone']);
 
         if ($data['overview']['payment_method'] != 'Check') {
             $data['overview']['check_number'] = '';
