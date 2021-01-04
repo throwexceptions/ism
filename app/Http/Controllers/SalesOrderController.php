@@ -128,6 +128,7 @@ class SalesOrderController extends Controller
     public function update(Request $request)
     {
         $data = $request->input();
+
         unset($data['overview']['unit']);
         unset($data['overview']['customer_name']);
 

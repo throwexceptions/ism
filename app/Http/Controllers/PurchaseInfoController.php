@@ -94,6 +94,10 @@ class PurchaseInfoController extends Controller
     {
         $data = $request->input();
 
+        unset($data['overview']['vendor_name']);
+        unset($data['overview']['vendor_address']);
+        unset($data['overview']['vendor_mobile_phone']);
+
         if ($data['overview']['payment_method'] != 'Check') {
             $data['overview']['check_number'] = '';
             $data['overview']['check_writer'] = '';
