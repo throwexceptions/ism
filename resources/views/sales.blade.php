@@ -252,7 +252,7 @@
                         },
                         {
                             data: function (value) {
-                                var $class_color = ["Quote","Sales"].includes(value.status) ? 'btn-warning' : 'btn-success';
+                                var $class_color = ["Quote"].includes(value.status) ? 'btn-warning' : 'btn-success';
                                 return '<div class="btn-group btn-group-sm shadow-sm btn-block" role="group">' +
                                     '<a href="#" class="btn ' + $class_color + ' btn-status">' + value.status + '</a>' +
                                     '</div>'

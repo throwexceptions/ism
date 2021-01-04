@@ -137,6 +137,9 @@ class PurchaseInfoController extends Controller
         }
 
         $data['summary']['purchase_order_id'] = $id;
+        $data['summary']['discount']          = $data['summary']['discount'] == '' ? '0' : $data['summary']['discount'];
+        $data['summary']['shipping']          = $data['summary']['shipping'] == '' ? '0' : $data['summary']['shipping'];
+
         DB::table('summaries')->insert($data['summary']);
 
         return ['success' => true];
@@ -194,6 +197,10 @@ class PurchaseInfoController extends Controller
         $data['summary']['purchase_order_id'] = $data['overview']['id'];
 
         DB::table('summaries')->where('purchase_order_id', $data['overview']['id'])->delete();
+
+        $data['summary']['discount'] = $data['summary']['discount'] == '' ? '0' : $data['summary']['discount'];
+        $data['summary']['shipping'] = $data['summary']['shipping'] == '' ? '0' : $data['summary']['shipping'];
+
         DB::table('summaries')->insert($data['summary']);
 
         return ['success' => true];
@@ -255,7 +262,7 @@ class PurchaseInfoController extends Controller
 
     public function show($id)
     {
-        $data            = $this->getOverview($id);
+        $data = $this->getOverview($id);
         unset($data['purchase_info']['name']);
         $purchase_info   = $data['purchase_info'];
         $product_details = $data['product_details'];
