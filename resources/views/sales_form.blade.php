@@ -405,6 +405,18 @@
                 },
                 store() {
                     var $this = this;
+
+                    if($this.summary.discount == '' || $this.summary.shipping == '') {
+                        Swal.fire(
+                            'Sorry! Please try again!',
+                            'Discount and shipping is blank.',
+                            'warning'
+                        ).then((result) => {
+                            if (result.value) {
+                            }
+                        });
+                        return false;
+                    }
                     $this.loading = true;
                     $.ajax({
                         url: '{{ route('sales.store') }}',
@@ -430,6 +442,18 @@
                 },
                 update() {
                     var $this = this;
+
+                    if($this.summary.discount == '' || $this.summary.shipping == '') {
+                        Swal.fire(
+                            'Sorry! Please try again!',
+                            'Discount and shipping is blank.',
+                            'warning'
+                        ).then((result) => {
+                            if (result.value) {
+                            }
+                        });
+                        return false;
+                    }
                     $this.loading = true;
                     $.ajax({
                         url: '{{ route('sales.update') }}',

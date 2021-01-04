@@ -16,10 +16,11 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <a href="{{ route('purchase.create') }}" class="btn btn-sm btn-success"><i
-                                            class="fa fa-plus"></i> New Purchase Order</a>
+                                        class="fa fa-plus"></i> New Purchase Order</a>
                             </div>
                             <div class="col-md-12 mt-3">
-                                <table id="table-inquiry" class="table table-striped nowrap table-general" style="width:100%"></table>
+                                <table id="table-inquiry" class="table table-striped nowrap table-general"
+                                       style="width:100%"></table>
                             </div>
                         </div>
                     </div>
@@ -243,7 +244,7 @@
                         {data: 'name', name: 'users.name', title: 'Assigned'},
                         {
                             data: function (value) {
-                                if(value.status == 'Received') {
+                                if (value.status == 'Received') {
                                     return value.updated_at
                                 }
                                 return 'No Date'
