@@ -55,12 +55,40 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" @click="update">Save changes</button>
+                        <button type="button" class="btn btn-primary" @click="updateStatus">Save changes</button>
                     </div>
                 </div>
             </div>
         </div>
 
+        <div id="remarksModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Remarks</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Remarks</label>
+                                    <textarea class="form-control" v-model="overview.remarks">
+
+                                    </textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" @click="update">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -78,20 +106,7 @@
                 }
             },
             methods: {
-                updatePayment() {
-                    var $this = this;
-                    $.ajax({
-                        url: '{{ route('purchase.payment.status.update') }}',
-                        method: 'POST',
-                        data: $this.overview,
-                        success: function (value) {
-                            Swal.fire('Updated!', 'Payment Status has been updated.', 'success');
-                            $this.dt.draw();
-                            $('#paymentModal').modal('hide');
-                        }
-                    })
-                },
-                update() {
+                updateStatus() {
                     var $this = this;
                     $.ajax({
                         url: '{{ route('return.status.update') }}',
@@ -101,8 +116,19 @@
                             Swal.fire('Updated!', 'Status has been updated.', 'success');
                             $this.dt.draw();
                             $('#statusModal').modal('hide');
-                            $('#vatTypeModal').modal('hide');
-                            $('#paymentModal').modal('hide');
+                        }
+                    });
+                },
+                update() {
+                    var $this = this;
+                    $.ajax({
+                        url: '{{ route('return.update') }}',
+                        method: 'POST',
+                        data: $this.overview,
+                        success: function (value) {
+                            Swal.fire('Updated!', 'Remarks has been updated.', 'success');
+                            $this.dt.draw();
+                            $('#remarksModal').modal('hide');
                         }
                     });
                 },
@@ -174,13 +200,21 @@
                         {
                             data: function (value) {
                                 return value.status_created_at;
-                            }, name: 'return_statuses.updated_at', title: 'Status Date'
+                            }, name: 'return_statuses.updated_at', title: 'Date Status'
+                        },
+                        {
+                            data: function (value) {
+                                return value.created_at;
+                            }, name: 'return_statuses.created_at', title: 'Date Created'
                         },
                         {data: 'return_type', name: 'return_type', title: 'Return Type'},
                         {
                             data: function (value) {
-                                return '<span class="d-inline-block text-truncate" style="max-width: 150px;">'
-                                    + value.remarks + '</span>'
+                                return '<div class="btn-group shadow-none btn-block" role="group">' +
+                                    '<a href="#" class="btn p-0 btn-remarks btn-link text-truncate" ' +
+                                    'style="max-width: 120px; box-shadow: 0 0 0 !important;">'
+                                    + value.remarks + '</a>' +
+                                    '</div>'
                             }, name: 'remarks', title: 'Remarks'
                         },
                         {data: 'username', name: 'users.name', title: 'Assigned To'},
@@ -191,11 +225,16 @@
                             let hold = $this.dt.row(data).data();
                             $this.overview = hold;
                         });
+
                         $('.btn-destroy').on('click', function () {
                             $this.destroy();
                         });
+
                         $('.btn-status').on('click', function () {
                             $('#statusModal').modal('show');
+                        });
+                        $('.btn-remarks').on('click', function () {
+                            $('#remarksModal').modal('show');
                         });
                     }
                 });

@@ -152,6 +152,7 @@ Route::group(['middleware' => ['auth','web', 'audit']], function () {
     Route::get('/return/view/{id}', 'ProductReturnController@show')->name('return.view');
     Route::get('/return/print/{id}', 'ProductReturnController@printable')->name('return.print');
     Route::post('/return/status/update', 'ProductReturnController@updateStatus')->name('return.status.update');
+    Route::post('/return/update', 'ProductReturnController@update')->name('return.update');
 
     Route::get('/pricelist', 'PriceListController@index')->name('pricelist')->middleware('can:pricelist');
     Route::post('/pricelist/upload', 'PriceListController@upload')->name('pricelist.upload')->middleware('can:pricelistupload');

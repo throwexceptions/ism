@@ -230,4 +230,14 @@ class ProductReturnController extends Controller
 
         return ['success' => true];
     }
+
+    public function update(Request $request)
+    {
+        ProductReturn::query()->where('id', $request->id)
+                     ->update([
+                         'remarks' => $request->remarks,
+                     ]);
+
+        return ['success' => true];
+    }
 }
