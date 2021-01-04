@@ -193,43 +193,44 @@ class SalesOrderController extends Controller
         return ['success' => true];
     }
 
+    public function updatePaymentStatus(Request $request)
+    {
+        $data = $request->input();
+        DB::table('sales_orders')->where('id', $data['id'])
+          ->update(['payment_status' => $data['payment_status']]);
+
+        return ['success' => true];
+    }
+
+    public function updateVatStatus(Request $request)
+    {
+        $data = $request->input();
+        DB::table('sales_orders')->where('id', $data['id'])
+          ->update(['vat_type' => $data['vat_type']]);
+
+        return ['success' => true];
+    }
+
+    public function updateDeliveryStatus(Request $request)
+    {
+        $data = $request->input();
+
+        DB::table('sales_orders')->where('id', $data['id'])
+          ->update([
+              'delivery_status' => $data['delivery_status'],
+              'updated_at'      => Carbon::now()->format('Y-m-d'),
+          ]);
+
+        return ['success' => true];
+    }
+
     public function updateStatus(Request $request)
     {
-        $data          = $request->input();
-        $purchase_info = DB::table('sales_orders')->where('id', $data['id'])->get()[0];
-
-        if ($purchase_info->status != $data['status']) {
-            DB::table('sales_orders')->where('id', $data['id'])
-              ->update([
-                  'status' => $data['status'],
-              ]);
-
-            return ['success' => true];
-        }
-
-        if ($purchase_info->delivery_status != $data['delivery_status']) {
-            DB::table('sales_orders')->where('id', $data['id'])
-              ->update([
-                  'delivery_status' => $data['delivery_status'],
-                  'updated_at'      => Carbon::now()->format('Y-m-d'),
-              ]);
-
-            return ['success' => true];
-        }
-
-        if ($purchase_info->vat_type != $data['vat_type']) {
-            DB::table('sales_orders')->where('id', $data['id'])
-              ->update(['vat_type' => $data['vat_type']]);
-
-            return ['success' => true];
-        }
-
-        if ($purchase_info->payment_status != $data['payment_status']) {
-            DB::table('sales_orders')->where('id', $data['id'])
-              ->update(['payment_status' => $data['payment_status']]);
-
-            return ['success' => true];
-        }
+        $data = $request->input();
+        DB::table('sales_orders')->where('id', $data['id'])
+          ->update([
+              'status' => $data['status'],
+          ]);
 
         return ['success' => false];
     }

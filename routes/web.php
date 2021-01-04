@@ -60,6 +60,9 @@ Route::group(['middleware' => ['auth','web', 'audit']], function () {
     Route::get('/sales/deliver/{id}', 'SalesOrderController@deliver')->name('sales.deliver');
     Route::get('/sales/preview/{id}', 'SalesOrderController@previewSO')->name('sales.preview');
     Route::post('/sales/shipped/list', 'SalesOrderController@getListShipped')->name('sales.shipped.list');
+    Route::post('/sales/payment/update', 'SalesOrderController@updatePaymentStatus')->name('sales.payment.update')->middleware('can:salespaymentupdate');
+    Route::post('/sales/vat/update', 'SalesOrderController@updateVatStatus')->name('sales.vat.update')->middleware('can:salesvatupdate');
+    Route::post('/sales/delivery/update', 'SalesOrderController@updateDeliveryStatus')->name('sales.delivery.update')->middleware('can:salesdeliveryupdate');
 
     Route::get('/vendors', 'VendorController@index')->name('vendor')->middleware('can:vendors');
     Route::get('/vendors/create', 'VendorController@create')->name('vendor.create')->middleware('can:vendorscreate');

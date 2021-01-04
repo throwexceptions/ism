@@ -24,7 +24,6 @@ class SecurityController extends Controller
         "purchasestatusupdate",
         "salesorder",
         "salesordercreate",
-        "salesstatusupdate",
         "salesorderretrieve",
         "salesorderupdate",
         "salesorderdestroy",
@@ -66,7 +65,11 @@ class SecurityController extends Controller
         "userassign",
         "productreturn",
         "productreturncreate",
-        "productreturndelete"
+        "productreturndelete",
+        "salesstatusupdate",
+        "salespaymentupdate",
+        "salesvatupdate",
+        "salesdeliveryupdate",
     ];
 
     public function roles()

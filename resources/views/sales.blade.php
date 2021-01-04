@@ -83,7 +83,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" @click="update">Save changes</button>
+                        <button type="button" class="btn btn-primary" @click="updateDelivery">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -114,7 +114,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" @click="update">Save changes</button>
+                        <button type="button" class="btn btn-primary" @click="updateVat">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -146,7 +146,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" @click="update">Save changes</button>
+                        <button type="button" class="btn btn-primary" @click="updatePayment">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -181,6 +181,45 @@
                             $('#statusModal').modal('hide');
                             $('#vatTypeModal').modal('hide');
                             $('#paymentModal').modal('hide');
+                        }
+                    });
+                },
+                updatePayment() {
+                    var $this = this;
+                    $.ajax({
+                        url: '{{ route('sales.payment.update') }}',
+                        method: 'POST',
+                        data: $this.overview,
+                        success: function (value) {
+                            Swal.fire('Updated!', 'Status has been updated.', 'success');
+                            $this.dt.draw();
+                            $('#paymentModal').modal('hide');
+                        }
+                    });
+                },
+                updateVat() {
+                    var $this = this;
+                    $.ajax({
+                        url: '{{ route('sales.vat.update') }}',
+                        method: 'POST',
+                        data: $this.overview,
+                        success: function (value) {
+                            Swal.fire('Updated!', 'Status has been updated.', 'success');
+                            $this.dt.draw();
+                            $('#vatTypeModal').modal('hide');
+                        }
+                    });
+                },
+                updateDelivery() {
+                    var $this = this;
+                    $.ajax({
+                        url: '{{ route('sales.delivery.update') }}',
+                        method: 'POST',
+                        data: $this.overview,
+                        success: function (value) {
+                            Swal.fire('Updated!', 'Status has been updated.', 'success');
+                            $this.dt.draw();
+                            $('#deliveryStatusModal').modal('hide');
                         }
                     });
                 },
