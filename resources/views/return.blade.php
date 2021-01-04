@@ -45,8 +45,9 @@
                                         <option value="">-- Select Type --</option>
                                         <option value="received">Received</option>
                                         <option value="rma pull out">RMA Pull Out</option>
-                                        <option value="refund">RMA Returned</option>
+                                        <option value="rma returned">RMA Returned</option>
                                         <option value="released">Released</option>
+                                        <option value="refund">Refund</option>
                                     </select>
                                 </div>
                             </div>

@@ -225,7 +225,7 @@
                     columns: [
                         {
                             data: function (value) {
-                                if (value.status == "Quote") {
+                                if (["Quote","Sales"].includes(value.status)) {
                                     edit = '<a href="/sales/detail/' + value.id + '" class="btn btn-info btn-view"><i class="fa fa-pen"></i></a>';
                                 } else {
                                     edit = '';
@@ -252,7 +252,7 @@
                         },
                         {
                             data: function (value) {
-                                var $class_color = value.status === 'Quote' ? 'btn-warning' : 'btn-success';
+                                var $class_color = ["Quote","Sales"].includes(value.status) ? 'btn-warning' : 'btn-success';
                                 return '<div class="btn-group btn-group-sm shadow-sm btn-block" role="group">' +
                                     '<a href="#" class="btn ' + $class_color + ' btn-status">' + value.status + '</a>' +
                                     '</div>'

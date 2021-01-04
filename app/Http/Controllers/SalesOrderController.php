@@ -53,7 +53,7 @@ class SalesOrderController extends Controller
             "assigned_to"     => "",
             "fax"             => "",
             "status"          => "Quote",
-            "delivery_status" => "Unshipped",
+            "delivery_status" => "Not Shipped",
             "address"         => "",
             "due_date"        => "",
             "payment_method"  => "",
