@@ -457,7 +457,6 @@
                 },
                 update() {
                     var $this = this;
-
                     if($this.summary.discount == '' || $this.summary.shipping == '') {
                         Swal.fire(
                             'Sorry! Please try again!',
@@ -558,6 +557,8 @@
             mounted() {
                 var $this = this;
                 $this.subTotal();
+
+                $this.grandTotal();
 
                 $('#select2-category').select2({
                     width: '100%',
