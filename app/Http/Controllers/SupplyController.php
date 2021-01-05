@@ -50,7 +50,7 @@ class SupplyController extends Controller
                                  product_id
                                  FROM product_details
                                  LEFT JOIN sales_orders ON sales_orders.id = product_details.sales_order_id
-                                 WHERE sales_orders.status LIKE \'Shipped\'
+                                 WHERE sales_orders.delivery_status LIKE \'Shipped\'
                                  and purchase_order_id IS NULL
                                  and product_details.deleted_at IS NULL group by product_id) as so_sum'),
                 'so_sum.product_id', '=', 'supplies.product_id'
