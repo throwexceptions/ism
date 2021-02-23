@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductDetail extends Model
 {
-    use SoftDeletes;
-
     protected $guarded = ['id'];
 
     public static function fetchDataPO($purchase_order_id)
