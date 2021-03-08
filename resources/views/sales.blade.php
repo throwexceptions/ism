@@ -264,7 +264,7 @@
                     columns: [
                         {
                             data: function (value) {
-                                if (["Quote","Sales"].includes(value.status)) {
+                                if (value.delivery_status !== 'Shipped') {
                                     edit = '<a href="/sales/detail/' + value.id + '" class="btn btn-info btn-view"><i class="fa fa-pen"></i></a>';
                                 } else {
                                     edit = '';
