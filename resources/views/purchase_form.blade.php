@@ -419,7 +419,7 @@
                 store() {
                     var $this = this;
 
-                    if($this.summary.discount == '' || $this.summary.shipping == '') {
+                    if($this.summary.discount === '' || $this.summary.shipping === '') {
                         Swal.fire(
                             'Sorry! Please try again!',
                             'Discount and shipping is blank.',
@@ -457,7 +457,7 @@
                 },
                 update() {
                     var $this = this;
-                    if($this.summary.discount == '' || $this.summary.shipping == '') {
+                    if($this.summary.discount === '' || $this.summary.shipping === '') {
                         Swal.fire(
                             'Sorry! Please try again!',
                             'Discount and shipping is blank.',
