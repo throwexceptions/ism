@@ -35,7 +35,7 @@
                                            v-model="overview.agent">
                                 </div>
                                 <div class="form-group">
-                                    <label>Due Date</label>
+                                    <label>Date of Purchased</label>
                                     <input type="date" class="form-control form-control-sm" v-model="overview.due_date">
                                 </div>
                             </div>
