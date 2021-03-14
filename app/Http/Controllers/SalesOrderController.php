@@ -11,7 +11,6 @@ use App\Supply;
 use PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Yajra\DataTables\DataTables;
 use DB;
@@ -454,7 +453,7 @@ class SalesOrderController extends Controller
         if (Summary::query()->where('sales_order_id', $id)->count() > 0) {
             $summary = Summary::query()->where('sales_order_id', $id)->get()[0];
         }
-        //dd($summary);
+
         return [
             'sales_order'     => $sales_order,
             'product_details' => $product_details,

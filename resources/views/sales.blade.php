@@ -317,7 +317,7 @@
                                 return 'No Date'
                             }, name: 'sales_orders.updated_at', title: 'Shipped Date'
                         },
-                        {data: 'created_at', name: 'sales_orders.created_at', title: 'Date Created'},
+                        {data: 'due_date', name: 'due_date', title: 'Due Date'},
                     ],
                     drawCallback: function () {
                         $('table .btn').on('click', function () {

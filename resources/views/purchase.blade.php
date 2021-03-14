@@ -250,7 +250,7 @@
                                 return 'No Date'
                             }, name: 'purchase_infos.updated_at', title: 'Received Date'
                         },
-                        {data: 'created_at', name: 'purchase_infos.created_at', title: 'Date Created'},
+                        {data: 'due_date', name: 'due_date', title: 'Due Date'},
                     ],
                     drawCallback: function () {
                         $('table .btn').on('click', function () {

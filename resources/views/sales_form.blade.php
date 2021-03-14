@@ -34,6 +34,10 @@
                                     <input v-show="viewType == 2" type="text" class="form-control form-control-sm"
                                            v-model="overview.agent">
                                 </div>
+                                <div class="form-group">
+                                    <label>Due Date</label>
+                                    <input type="date" class="form-control form-control-sm" v-model="overview.due_date">
+                                </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
