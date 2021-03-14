@@ -35,6 +35,7 @@ class SalesOrderController extends Controller
             $data               = $data->toArray();
             $data['created_at'] = Carbon::parse($data['created_at'])->format('F j, Y');
             $data['updated_at'] = Carbon::parse($data['updated_at'])->format('F j, Y');
+            $data['due_date']   = isset($data['due_date']) ? Carbon::parse($data['due_date'])->format('F j, Y') : 'No Date';
 
             return $data;
         })->make(true);
