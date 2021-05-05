@@ -33,7 +33,7 @@ class PurchaseInfoController extends Controller
             purchase_infos.updated_at, grand_total, purchase_infos.due_date')
                                      ->leftJoin('summaries', 'summaries.purchase_order_id', '=', 'purchase_infos.id')
                                      ->leftJoin('vendors', 'vendors.id', '=', 'purchase_infos.vendor_id')
-                                     ->join('users', 'users.id', '=', 'purchase_infos.assigned_to');
+                                     ->leftJoin('users', 'users.id', '=', 'purchase_infos.assigned_to');
 
         return DataTables::of($purchase_info)->setTransformer(function ($data) {
             $data               = $data->toArray();

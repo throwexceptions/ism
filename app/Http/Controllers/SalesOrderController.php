@@ -29,7 +29,7 @@ class SalesOrderController extends Controller
                              summaries.grand_total')
                              ->leftJoin('summaries', 'summaries.sales_order_id', '=', 'sales_orders.id')
                              ->leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')
-                             ->join('users', 'users.id', '=', 'sales_orders.assigned_to');
+                             ->leftJoin('users', 'users.id', '=', 'sales_orders.assigned_to');
 
         return DataTables::of($vendors)->setTransformer(function ($data) {
             $data               = $data->toArray();
